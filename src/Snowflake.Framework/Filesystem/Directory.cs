@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Concurrent;
 using System.IO;
 using System.Linq;
 using Zio;
-using System.Threading.Tasks;
-using System.Threading;
-using System.Text;
-using OSFileSystem = Emet.FileSystems.FileSystem;
 using Tsuku.Extensions;
 
 namespace Snowflake.Filesystem
 {
-    internal sealed class Directory : IDeletableDirectory, 
+    internal sealed partial class Directory : IDeletableDirectory, 
             IReadOnlyDirectory, IDirectory, IMoveFromableDirectory, IDeletableMoveFromableDirectory
     {
         internal bool IsDeleted { get; set; } = false;
@@ -32,6 +27,15 @@ namespace Snowflake.Filesystem
             this.Name = "#FSROOT";
         }
 
+        internal IFileSystem RootFileSystem { get; }
+
+        internal DirectoryEntry ThisDirectory { get; }
+        //internal IFileSystem FileSystem { get; }
+
+        public string Name { get; }
+
+        public string RootedPath => this.ThisDirectory.Path.FullName!;
+
         private void CheckDeleted()
         {
             // normal doesn't check symlinks
@@ -45,15 +49,6 @@ namespace Snowflake.Filesystem
                 throw new InvalidOperationException("Directory is already deleted.");
             }
         }
-
-        internal IFileSystem RootFileSystem { get; }
-
-        internal DirectoryEntry ThisDirectory { get; }
-        //internal IFileSystem FileSystem { get; }
-
-        public string Name { get; }
-
-        public string RootedPath => this.ThisDirectory.Path.FullName!;
 
         public bool ContainsDirectory(string directory)
         {
@@ -85,18 +80,11 @@ namespace Snowflake.Filesystem
             return currentDirectory;
         }
 
-        public IEnumerable<IDeletableDirectory> EnumerateDirectories()
-        {
-            this.CheckDeleted();
-            return this.ThisDirectory.EnumerateDirectories()
-                .Select(d => this.OpenDirectory(d.Name));
-        }
+        public IFile OpenFile(string file) => this.OpenFile(file, Guid.NewGuid());
 
-        public IEnumerable<IFile> EnumerateFiles()
+        private IFile OpenFile(string file, Guid inheritGuid)
         {
-            this.CheckDeleted();
-            return this.ThisDirectory.EnumerateFiles()
-                .Select(f => this.OpenFile(f.Name));
+            return this.OpenFile(this.ThisDirectory.Path / Path.GetFileName(file), inheritGuid);
         }
 
         private IFile OpenFile(UPath file, Guid inheritGuid)
@@ -115,103 +103,6 @@ namespace Snowflake.Filesystem
                 rawInfo.SetAttribute(File.SnowflakeFile, guid);
             }
             return new File(this, fileEntry, guid);
-        }
-
-        public DirectoryInfo UnsafeGetPath()
-        {
-            return new DirectoryInfo(this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path));
-        }
-
-        public IFile OpenFile(string file)
-            => this.OpenFile(file, Guid.NewGuid());
-        private IFile OpenFile(string file, Guid inheritGuid)
-        {
-            return this.OpenFile(this.ThisDirectory.Path / Path.GetFileName(file), inheritGuid);
-        }
-
-        public IFile CopyFrom(FileInfo source) => this.CopyFrom(source, false);
-
-        public IFile CopyFrom(FileInfo source, bool overwrite)
-        {
-            this.CheckDeleted();
-            if (!source.Exists()) throw new FileNotFoundException($"{source.FullName} could not be found.");
-            string? fileName = Path.GetFileName(source.Name);
-
-            if (fileName == null) throw new ArgumentException($"Could not get file name for path {source.Name}.");
-
-            source.CopyTo(this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path / fileName), overwrite);
-
-            // Preserve GUID, on Linux xattrs are not preserved from copy.
-            if (!source.TryGetGuidAttribute(File.SnowflakeFile, out Guid existingGuid))
-                existingGuid = Guid.NewGuid();
-
-            return this.OpenFile(fileName, existingGuid);
-        }
-
-        public Task<IFile> CopyFromAsync(FileInfo source, CancellationToken cancellation = default) 
-            => this.CopyFromAsync(source, false, cancellation);
-
-        public async Task<IFile> CopyFromAsync(FileInfo source, bool overwrite, CancellationToken cancellation = default)
-        {
-            this.CheckDeleted();
-            if (!source.Exists()) throw new FileNotFoundException($"{source.FullName} could not be found.");
-            string? fileName = Path.GetFileName(source.Name);
-            if (fileName == null) throw new ArgumentException($"Cannot get file name for path {source.Name}");
-
-            // Preserve GUID
-            if (!source.TryGetGuidAttribute(File.SnowflakeFile, out Guid existingGuid))
-                existingGuid = Guid.NewGuid();
-
-            var file = this.OpenFile(fileName, existingGuid);
-            if (file.Created && !overwrite) throw new IOException($"{source.Name} already exists in the target directory.");
-          
-            using (var newStream = file.OpenStream(FileMode.Create, FileAccess.ReadWrite))
-            using (var sourceStream = source.OpenRead())
-            {
-                await sourceStream.CopyToAsync(newStream, cancellation);
-            }
-
-            return file;
-        }
-
-        public IFile CopyFrom(IReadOnlyFile source, bool overwrite)
-        {
-            if (this.ContainsFile(source.Name) && !overwrite) 
-                throw new IOException($"{source.Name} already exists in the target directory.");
-            return this.CopyFrom(source.UnsafeGetFilePointerPath(), overwrite);
-        }
-
-        public Task<IFile> CopyFromAsync(IReadOnlyFile source, CancellationToken cancellation = default) 
-            => this.CopyFromAsync(source, false, cancellation);
-
-        public async Task<IFile> CopyFromAsync(IReadOnlyFile source, bool overwrite, CancellationToken cancellation = default)
-        {
-            if (this.ContainsFile(source.Name) && !overwrite) throw new IOException($"{source.Name} already exists in the target directory");
-            return await this.CopyFromAsync(source.UnsafeGetFilePointerPath(), overwrite, cancellation);
-        }
-
-        public IFile CopyFrom(IReadOnlyFile source) => this.CopyFrom(source, false);
-
-        public IFile MoveFrom(IFile source) => this.MoveFrom(source, false);
-
-        public IFile MoveFrom(IFile source, bool overwrite)
-        {
-            this.CheckDeleted();
-
-            if (!source.Created) throw new FileNotFoundException($"{source.UnsafeGetFilePointerPath().FullName} could not be found.");
-            if (this.ContainsFile(source.Name) && !overwrite) throw new IOException($"{source.Name} already exists in the target directory");
-            // Preserve GUID
-            
-            if (!source.UnsafeGetFilePointerPath().TryGetGuidAttribute(File.SnowflakeFile, out Guid existingGuid))
-                existingGuid = Guid.NewGuid();
-            var file = this.OpenFile(source.Name, existingGuid);
-
-            // unsafe usage here as optimization.
-            source.UnsafeGetFilePointerPath()
-                .MoveTo(file.UnsafeGetFilePointerPath().ToString(), overwrite);
-
-            source.Delete();
-            return this.OpenFile(file.Name);
         }
 
         public IEnumerable<IFile> EnumerateFilesRecursive()
@@ -243,6 +134,31 @@ namespace Snowflake.Filesystem
                 }
             }
         }
+        public IEnumerable<IDeletableDirectory> EnumerateDirectories()
+        {
+            this.CheckDeleted();
+            return this.ThisDirectory.EnumerateDirectories()
+                .Select(d => this.OpenDirectory(d.Name));
+        }
+
+        public IEnumerable<IFile> EnumerateFiles()
+        {
+            this.CheckDeleted();
+            return this.ThisDirectory.EnumerateFiles()
+                .Select(f => this.OpenFile(f.Name));
+        }
+
+        public DirectoryInfo UnsafeGetPath()
+        {
+            return new DirectoryInfo(this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path));
+        }
+
+        public void Delete()
+        {
+            this.CheckDeleted();
+            this.IsDeleted = true;
+            this.ThisDirectory.Delete(true);
+        }
 
         IReadOnlyDirectory IDirectoryOpeningDirectoryBase<IReadOnlyDirectory>.OpenDirectory(string name)
         {
@@ -269,20 +185,6 @@ namespace Snowflake.Filesystem
         IEnumerable<IReadOnlyFile> IEnumerableDirectoryBase<IReadOnlyDirectory, IReadOnlyFile>.EnumerateFilesRecursive()
         {
             return this.EnumerateFilesRecursive().Select(f => f.AsReadOnly());
-        }
-
-        public void Delete()
-        {
-            this.CheckDeleted();
-            this.IsDeleted = true;
-            this.ThisDirectory.Delete(true);
-        }
-
-        public IFile LinkFrom(FileInfo source) => this.LinkFrom(source, false);
-
-        public IFile LinkFrom(FileInfo source, bool overwrite)
-        {
-            throw new NotImplementedException();
         }
 
         IReadOnlyDirectory IReopenableDirectoryBase<IReadOnlyDirectory>.ReopenAs()
@@ -315,6 +217,11 @@ namespace Snowflake.Filesystem
 
         IDeletableDirectory IDirectoryOpeningDirectoryBase<IDeletableDirectory>.OpenDirectory(string name)
             => this.OpenDirectory(name);
+
+        public static bool IsValidFileName(string name)
+        {
+            return !String.IsNullOrEmpty(name) && name.IndexOfAny(Path.GetInvalidFileNameChars()) == -1;
+        }
     }
 }
 

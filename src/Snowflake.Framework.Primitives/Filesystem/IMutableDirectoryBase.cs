@@ -45,6 +45,33 @@ namespace Snowflake.Filesystem
         IFile CopyFrom(FileInfo source, bool overwrite);
 
         /// <summary>
+        /// Copies a file from an unmanaged <see cref="FileInfo"/> that exists outside of
+        /// a <see cref="IDirectory"/>.
+        /// Do not use this method to copy from a managed <see cref="IDirectory"/>.
+        /// Instead, use <see cref="CopyFrom(IReadOnlyFile)"/>.
+        /// </summary>
+        /// <exception cref="IOException">If a file with the same name exists in the target destination.</exception>
+        /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>
+        /// <param name="source">The <see cref="FileInfo"/></param>
+        /// <param name="targetName">The name of the copied file.</param>
+        /// <returns>The <see cref="IFile"/> that describes the file in the current <see cref="IDirectory"/>.</returns>
+        IFile CopyFrom(FileInfo source, string targetName);
+
+        /// <summary>
+        /// Copies a file from an unmanaged <see cref="FileInfo"/> that exists outside of
+        /// a <see cref="IDirectory"/>.
+        /// Do not use this method to copy from a managed <see cref="IDirectory"/>.
+        /// Instead, use <see cref="CopyFrom(IReadOnlyFile)"/>.
+        /// </summary>
+        /// <exception cref="IOException">If a file with the same name exists in the target destination and <paramref name="overwrite"/> is false.</exception>
+        /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>
+        /// <param name="source">The <see cref="FileInfo"/></param>
+        /// <param name="targetName">The name of the copied file.</param>
+        /// <param name="overwrite">Overwrite the file if it already exists in this <see cref="IDirectory"/></param>
+        /// <returns>The <see cref="IFile"/> that describes the file in the current <see cref="IDirectory"/>.</returns>
+        IFile CopyFrom(FileInfo source, string targetName, bool overwrite);
+
+        /// <summary>
         /// Copies a file asynchronously from an unmanaged <see cref="FileInfo"/> that exists outside of
         /// a <see cref="IDirectory"/>.
         /// Do not use this method to copy from a managed <see cref="IDirectory"/>.
@@ -72,6 +99,35 @@ namespace Snowflake.Filesystem
         Task<IFile> CopyFromAsync(FileInfo source, bool overwrite, CancellationToken cancellation = default);
 
         /// <summary>
+        /// Copies a file asynchronously from an unmanaged <see cref="FileInfo"/> that exists outside of
+        /// a <see cref="IDirectory"/>.
+        /// Do not use this method to copy from a managed <see cref="IDirectory"/>.
+        /// Instead, use <see cref="CopyFrom(IReadOnlyFile)"/>.
+        /// </summary>
+        /// <exception cref="IOException">If a file with the same name exists in the target destination.</exception>
+        /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>
+        /// <param name="source">The <see cref="FileInfo"/></param>
+        /// <param name="targetName">The name of the copied file.</param>
+        /// <param name="cancellation">A cancellation token that is forwarded to the underlying <see cref="Task{TResult}"/>.</param>
+        /// <returns>The <see cref="IFile"/> that describes the file in the current <see cref="IDirectory"/>.</returns>
+        Task<IFile> CopyFromAsync(FileInfo source, string targetName, CancellationToken cancellation = default);
+
+        /// <summary>
+        /// Copies a file asynchronously from an unmanaged <see cref="FileInfo"/> that exists outside of
+        /// a <see cref="IDirectory"/>.
+        /// Do not use this method to copy from a managed <see cref="IDirectory"/>.
+        /// Instead, use <see cref="CopyFrom(IReadOnlyFile)"/>.
+        /// </summary>
+        /// <exception cref="IOException">If a file with the same name exists in the target destination and <paramref name="overwrite"/> is false.</exception>
+        /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>
+        /// <param name="source">The <see cref="FileInfo"/></param>
+        /// <param name="targetName">The name of the copied file.</param>
+        /// <param name="overwrite">Overwrite the file if it already exists in this <see cref="IDirectory"/></param>
+        /// <param name="cancellation">A cancellation token that is forwarded to the underlying <see cref="Task{TResult}"/>.</param>
+        /// <returns>The <see cref="IFile"/> that describes the file in the current <see cref="IDirectory"/>.</returns>
+        Task<IFile> CopyFromAsync(FileInfo source, string targetName, bool overwrite, CancellationToken cancellation = default);
+
+        /// <summary>
         /// Copies a file from a <see cref="IFile"/> from another <see cref="IDirectory"/>, updating the
         /// manifests such that the resulting file has the same <see cref="IReadOnlyFile.FileGuid"/> as the source file.
         /// </summary>
@@ -91,6 +147,29 @@ namespace Snowflake.Filesystem
         /// <param name="overwrite">Overwrite the file if it already exists in this <see cref="IDirectory"/></param>
         /// <returns>The <see cref="IFile"/> that describes the file in the current <see cref="IDirectory"/>.</returns>
         IFile CopyFrom(IReadOnlyFile source, bool overwrite);
+
+        /// <summary>
+        /// Copies a file from a <see cref="IFile"/> from another <see cref="IDirectory"/>, updating the
+        /// manifests such that the resulting file has the same <see cref="IReadOnlyFile.FileGuid"/> as the source file.
+        /// </summary>
+        /// <exception cref="IOException">If a file with the same name exists in the target destination.</exception>
+        /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>
+        /// <param name="source">The <see cref="FileInfo"/></param>
+        /// <param name="targetName">The name of the copied file.</param>
+        /// <returns>The <see cref="IFile"/> that describes the file in the current <see cref="IDirectory"/>.</returns>
+        IFile CopyFrom(IReadOnlyFile source, string targetName);
+
+        /// <summary>
+        /// Copies a file from a <see cref="IFile"/> from another <see cref="IDirectory"/>, updating the
+        /// manifests such that the resulting file has the same <see cref="IReadOnlyFile.FileGuid"/> as the source file.
+        /// </summary>
+        /// <exception cref="IOException">If a file with the same name exists in the target destination and <paramref name="overwrite"/> is false.</exception>
+        /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>
+        /// <param name="source">The <see cref="FileInfo"/></param>
+        /// <param name="targetName">The name of the copied file.</param>
+        /// <param name="overwrite">Overwrite the file if it already exists in this <see cref="IDirectory"/></param>
+        /// <returns>The <see cref="IFile"/> that describes the file in the current <see cref="IDirectory"/>.</returns>
+        IFile CopyFrom(IReadOnlyFile source, string targetName, bool overwrite);
 
         /// <summary>
         /// Copies a file asynchronously from a <see cref="IFile"/> from another <see cref="IDirectory"/>, updating the
@@ -114,6 +193,31 @@ namespace Snowflake.Filesystem
         /// <param name="cancellation">Cancellation token for the asynchronous task.</param>
         /// <returns>The <see cref="IReadOnlyFile"/> that describes the file in the current <see cref="IDeletableDirectory"/>.</returns>
         Task<IFile> CopyFromAsync(IReadOnlyFile source, bool overwrite, CancellationToken cancellation = default);
+
+        /// <summary>
+        /// Copies a file asynchronously from a <see cref="IFile"/> from another <see cref="IDirectory"/>, updating the
+        /// manifests such that the resulting file has the same <see cref="IReadOnlyFile.FileGuid"/> as the source file.
+        /// </summary>
+        /// <exception cref="IOException">If a file with the same name exists in the target destination.</exception>
+        /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>
+        /// <param name="source">The <see cref="FileInfo"/></param>
+        /// <param name="targetName">The name of the copied file.</param>
+        /// <param name="cancellation">Cancellation token for the asynchronous task.</param>
+        /// <returns>The <see cref="IFile"/> that describes the file in the current <see cref="IDeletableDirectory"/>.</returns>
+        Task<IFile> CopyFromAsync(IReadOnlyFile source, string targetName, CancellationToken cancellation = default);
+
+        /// <summary>
+        /// Copies a file asynchronously from a <see cref="IFile"/> from another <see cref="IDeletableDirectory"/>, updating the
+        /// manifests such that the resulting file has the same <see cref="IReadOnlyFile.FileGuid"/> as the source file.
+        /// </summary>
+        /// <exception cref="IOException">If a file with the same name exists in the target destination and <paramref name="overwrite"/> is false.</exception>
+        /// <exception cref="FileNotFoundException">If the source file can not be found.</exception>
+        /// <param name="source">The <see cref="FileInfo"/></param>
+        /// <param name="targetName">The name of the copied file.</param>
+        /// <param name="overwrite">Overwrite the file if it already exists in this <see cref="IDeletableDirectory"/></param>
+        /// <param name="cancellation">Cancellation token for the asynchronous task.</param>
+        /// <returns>The <see cref="IReadOnlyFile"/> that describes the file in the current <see cref="IDeletableDirectory"/>.</returns>
+        Task<IFile> CopyFromAsync(IReadOnlyFile source, string targetName, bool overwrite, CancellationToken cancellation = default);
 
         /// <summary>
         /// Whether or not this directory contains a file.

@@ -89,5 +89,28 @@ namespace Snowflake.Filesystem
         IReadOnlyDirectory IReopenableDirectoryBase<IReadOnlyDirectory>.ReopenAs() => this.Base.AsReadOnly();
         IMoveFromableDirectory IReopenableDirectoryBase<IMoveFromableDirectory>.ReopenAs() => this.Base.AsIndelible().AsMoveFromable();
         public IEnumerable<IDeletableDirectory> EnumerateDirectories() => this.Base.EnumerateDirectories();
+
+        public IFile CopyFrom(System.IO.FileInfo source, string targetName)
+            => this.Base.CopyFrom(source, targetName);
+        public IFile CopyFrom(System.IO.FileInfo source, string targetName, bool overwrite)
+            => this.Base.CopyFrom(source, targetName, overwrite);
+
+        public Task<IFile> CopyFromAsync(System.IO.FileInfo source, string targetName, CancellationToken cancellation = default)
+            => this.Base.CopyFromAsync(source, targetName, cancellation);
+
+        public Task<IFile> CopyFromAsync(System.IO.FileInfo source, string targetName, bool overwrite, CancellationToken cancellation = default)
+            => this.Base.CopyFromAsync(source, targetName, overwrite);
+
+        public IFile CopyFrom(IReadOnlyFile source, string targetName)
+            => this.Base.CopyFrom(source, targetName);
+
+        public IFile CopyFrom(IReadOnlyFile source, string targetName, bool overwrite)
+            => this.Base.CopyFrom(source, targetName, overwrite);
+
+        public Task<IFile> CopyFromAsync(IReadOnlyFile source, string targetName, CancellationToken cancellation = default)
+            => this.Base.CopyFromAsync(source, targetName, cancellation);
+
+        public Task<IFile> CopyFromAsync(IReadOnlyFile source, string targetName, bool overwrite, CancellationToken cancellation = default)
+            => this.Base.CopyFromAsync(source, targetName, overwrite, cancellation);
     }
 }
