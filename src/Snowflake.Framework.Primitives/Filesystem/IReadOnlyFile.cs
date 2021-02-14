@@ -72,6 +72,6 @@ namespace Snowflake.Filesystem
         /// </summary>
         /// <returns>The real file path of the file.</returns>
         [Obsolete("Avoid accessing the underlying file path, and use the object methods instead.")]
-        FileInfo UnsafeGetFilePath();
+        FileInfo UnsafeGetPath();
     }
 }

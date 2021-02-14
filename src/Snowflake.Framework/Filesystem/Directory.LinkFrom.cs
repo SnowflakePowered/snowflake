@@ -31,23 +31,23 @@ namespace Snowflake.Filesystem
             return this.OpenFile(dest);
         }
 
-        public Directory LinkFrom(DirectoryInfo source)
+        public IDeletableDirectory LinkFrom(DirectoryInfo source)
             => this.LinkFrom(source, source.Name);
 
-        public Directory LinkFrom(DirectoryInfo source, bool overwrite)
+        public IDeletableDirectory LinkFrom(DirectoryInfo source, bool overwrite)
             => this.LinkFrom(source, source.Name, overwrite);
 
-        public Directory LinkFrom(DirectoryInfo source, string linkName) => this.LinkFrom(source, linkName, false);
+        public IDeletableDirectory LinkFrom(DirectoryInfo source, string linkName) => this.LinkFrom(source, linkName, false);
 
-        public Directory LinkFrom(DirectoryInfo source, string linkName, bool overwrite)
+        public IDeletableDirectory LinkFrom(DirectoryInfo source, string linkName, bool overwrite)
         {
             this.CheckDeleted();
             string dest = Path.GetFileName(linkName);
             if (!Directory.IsValidFileName(dest))
                 throw new DirectoryNotFoundException($"Filename {dest} is invalid.");
             if (!source.Exists()) throw new FileNotFoundException($"{source.FullName} could not be found.");
-            if (this.ContainsFile(dest)
-                && !overwrite) throw new IOException($"{source.Name} already exists in the target directory");
+            if (this.ContainsFile(dest) && !overwrite)
+                throw new IOException($"{source.Name} already exists in the target directory");
 
             var linkPath = this.ThisDirectory.Path / dest;
 

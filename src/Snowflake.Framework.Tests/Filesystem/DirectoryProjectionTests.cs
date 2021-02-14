@@ -27,16 +27,23 @@ namespace Snowflake.Filesystem
             file1.OpenStream().Close();
             var file2 = dir.OpenFile("MySecondFile");
             file2.OpenStream().Close();
+            var dirProj = dir.OpenDirectory("MyDirectory");
+            dirProj
+                .OpenFile("MyThirdFile")
+                .OpenStream().Close();
 
             var p = new DirectoryProjection();
             p.N("SomeDirectory")
                 .P("project1", file1)
                 .N("DeeperDirectory")
                     .P("project2", file2)
+                    .P("deeperThree", dirProj)
                 .X()
             .X();
 
-
+            using var mountdir = dir.OpenDirectory("mountPoint")
+                .AsDisposable();
+            p.Mount(mountdir);
         }
     }
 }

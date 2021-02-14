@@ -9,6 +9,8 @@ namespace Snowflake.Orchestration.Projections
 {
     public static class DirectoryProjectionExtensions
     {
+        public static DirectoryProjection P(this DirectoryProjection d, string name, IDirectory dir)
+            => d.Project(name, dir);
         public static DirectoryProjection P(this DirectoryProjection d, string name, IFile file)
             => d.Project(name, file);
         public static DirectoryProjection N(this DirectoryProjection d, string name)

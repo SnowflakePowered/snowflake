@@ -23,17 +23,17 @@ namespace Snowflake.Filesystem
 #pragma warning disable CS0618 // Type or member is obsolete
             string dest = Path.GetFileName(targetName);
             if (!Directory.IsValidFileName(dest)) throw new DirectoryNotFoundException($"Filename {dest} is invalid.");
-            if (!source.Created) throw new FileNotFoundException($"{source.UnsafeGetFilePath().FullName} could not be found.");
+            if (!source.Created) throw new FileNotFoundException($"{source.UnsafeGetPath().FullName} could not be found.");
             if (this.ContainsFile(dest) && !overwrite) throw new IOException($"{source.Name} already exists in the target directory");
             // Preserve GUID
 
-            if (!source.UnsafeGetFilePath().TryGetGuidAttribute(File.SnowflakeFile, out Guid existingGuid))
+            if (!source.UnsafeGetPath().TryGetGuidAttribute(File.SnowflakeFile, out Guid existingGuid))
                 existingGuid = Guid.NewGuid();
             var file = this.OpenFile(dest, existingGuid);
 
             // unsafe usage here as optimization.
-            source.UnsafeGetFilePath()
-                .MoveTo(file.UnsafeGetFilePath().ToString(), overwrite);
+            source.UnsafeGetPath()
+                .MoveTo(file.UnsafeGetPath().ToString(), overwrite);
 #pragma warning restore CS0618 // Type or member is obsolete
             source.Delete();
             return this.OpenFile(dest);

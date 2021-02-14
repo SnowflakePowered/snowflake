@@ -64,10 +64,24 @@ namespace Snowflake.Orchestration.Projections
             {
                 throw new ArgumentException("Can not project into an existing projection level.");
             }
-            this.ProjectionState[realName] = file.UnsafeGetFilePath();
+            this.ProjectionState[realName] = file.UnsafeGetPath();
             return this;
         }
-    
+
+        public DirectoryProjection Project(string name, IDirectory dir)
+        {
+            string realName = Path.GetFileName(name);
+            if (this.Children.ContainsKey(realName))
+            {
+                throw new ArgumentException("Can not project into an existing projection level.");
+            }
+            this.ProjectionState[realName] = dir.UnsafeGetPath();
+            return this;
+        }
+
+        public IReadOnlyDirectory Mount(IDisposableDirectory autoDisposingDirectory)
+            => this.Mount(autoDisposingDirectory, "");
+
         public IReadOnlyDirectory Mount(IDisposableDirectory autoDisposingDirectory, string mountRoot)
         {
             IDirectory mountDir;
@@ -89,13 +103,21 @@ namespace Snowflake.Orchestration.Projections
 
             if (this.Parent != null)
             {
-                throw new InvalidOperationException("Can not mount subtreee of projecction.");
+                throw new InvalidOperationException("Can not mount subtreee of projection.");
             }
 
             var activeDir = mountDir;
             foreach (var (name, file) in this.ProjectionState)
             {
-                // todo: project symlink from file to name here.
+                switch (file)
+                {
+                    case DirectoryInfo dirInfo:
+                        activeDir.LinkFrom(dirInfo, name);
+                        break;
+                    case FileInfo fileInfo:
+                        activeDir.LinkFrom(fileInfo, name);
+                        break;
+                }
             }
             
             Stack<(string, DirectoryProjection)> projectionsToProcess = new(this.Children.Select((kvp) => (kvp.Key, kvp.Value)));
@@ -105,7 +127,15 @@ namespace Snowflake.Orchestration.Projections
                 activeDir = activeDir.OpenDirectory(projectionName);
                 foreach (var (name, file) in projectionLevel.ProjectionState)
                 {
-                    // todo: project symlink from file to name here.
+                    switch (file)
+                    {
+                        case DirectoryInfo dirInfo:
+                            activeDir.LinkFrom(dirInfo, name);
+                            break;
+                        case FileInfo fileInfo:
+                            activeDir.LinkFrom(fileInfo, name);
+                            break;
+                    }
                 }
                 foreach (var (name, childProjection) in projectionLevel.Children)
                 {
