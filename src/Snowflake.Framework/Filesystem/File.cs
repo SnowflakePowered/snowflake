@@ -27,7 +27,7 @@ namespace Snowflake.Filesystem
 
         internal Directory ParentDirectory { get; }
 
-        public bool Created => this.UnsafeGetPath().Exists();
+        public bool Created => this.UnsafeGetPath().ContentExists();
 
         public Guid FileGuid { get; }
 

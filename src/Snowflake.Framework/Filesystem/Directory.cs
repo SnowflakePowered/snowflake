@@ -38,8 +38,7 @@ namespace Snowflake.Filesystem
 
         private void CheckDeleted()
         {
-            // normal doesn't check symlinks
-            if (!new DirectoryInfo(this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path)).Exists())
+            if (!new DirectoryInfo(this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path)).Exists)
             {
                 this.IsDeleted = true;
             }
@@ -54,7 +53,7 @@ namespace Snowflake.Filesystem
         {
             UPath fullPath = this.ThisDirectory.Path / ((UPath)directory).ToRelative();
             string realPath = this.RootFileSystem.ConvertPathToInternal(fullPath);
-            return new DirectoryInfo(realPath).Exists();
+            return new DirectoryInfo(realPath).Exists;
         }
 
         public bool ContainsFile(string file)
@@ -63,8 +62,8 @@ namespace Snowflake.Filesystem
             var fullPath = this.ThisDirectory.Path / filePath;
             string realPath = this.RootFileSystem.ConvertPathToInternal(fullPath);
             return
-                new DirectoryInfo(realPath).Exists()
-                || new FileInfo(realPath).Exists();
+                new DirectoryInfo(realPath).Exists
+                || new FileInfo(realPath).Exists;
         }
 
         internal Directory OpenDirectory(string name)

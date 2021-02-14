@@ -40,7 +40,7 @@ namespace Snowflake.Filesystem
         public async Task<IFile> CopyFromAsync(FileInfo source, string targetName, bool overwrite, CancellationToken cancellation = default)
         {
             this.CheckDeleted();
-            if (!source.Exists()) throw new FileNotFoundException($"{source.FullName} could not be found.");
+            if (!source.ContentExists()) throw new FileNotFoundException($"{source.FullName} could not be found.");
             string? fileName = Path.GetFileName(targetName);
             if (!Directory.IsValidFileName(fileName)) throw new DirectoryNotFoundException($"The filename {targetName} is invalid.");
 
