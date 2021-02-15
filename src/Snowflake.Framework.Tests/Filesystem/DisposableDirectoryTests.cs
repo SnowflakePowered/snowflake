@@ -27,7 +27,7 @@ namespace Snowflake.Filesystem.Tests
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
             string test = Path.GetRandomFileName();
-            var dir = new Directory(test, pfs, pfs.GetDirectoryEntry("/"), false);
+            var dir = new Directory(test, pfs, pfs.GetDirectoryEntry("/"));
 
             var deep = dir.OpenDirectory("test/test");
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -43,7 +43,7 @@ namespace Snowflake.Filesystem.Tests
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
             string test = Path.GetRandomFileName();
-            var dir = new Directory(test, pfs, pfs.GetDirectoryEntry("/"), false);
+            var dir = new Directory(test, pfs, pfs.GetDirectoryEntry("/"));
 
        
             var deep = dir.OpenDirectory("test/test");
@@ -61,7 +61,7 @@ namespace Snowflake.Filesystem.Tests
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"), false);
+            var dir = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
             dir.OpenFile("test.txt").OpenStream().Close();
             Assert.Throws<IOException>(() => dir.AsDisposable());
         }
@@ -72,7 +72,7 @@ namespace Snowflake.Filesystem.Tests
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            using var dir = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"), false).AsDisposable();
+            using var dir = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
             var file = dir.OpenFile("test.txt");
             Assert.False(dir.ContainsFile(".manifest"));
             file.OpenStream().Close();
@@ -88,7 +88,7 @@ namespace Snowflake.Filesystem.Tests
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            using var dir = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"), false).AsDisposable();
+            using var dir = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
 
             var tempFile = Path.GetTempFileName();
             var file = dir.OpenFile(tempFile);
@@ -109,9 +109,9 @@ namespace Snowflake.Filesystem.Tests
 
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            using var dir = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"), false).AsDisposable();
+            using var dir = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
             
-            var dir2 = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"), false);
+            var dir2 = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
 
             var tempFile = Path.GetTempFileName();
             var file = dir.OpenFile(tempFile);
@@ -138,9 +138,9 @@ namespace Snowflake.Filesystem.Tests
 
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            using var dir = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"), false).AsDisposable();
+            using var dir = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
 
-            var dir2 = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"), false);
+            var dir2 = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
 
             var tempFile = Path.GetTempFileName();
             var file = dir.OpenFile(tempFile);
@@ -167,7 +167,7 @@ namespace Snowflake.Filesystem.Tests
 
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            using var dir = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"), false).AsDisposable();
+            using var dir = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
 
             var tempFile = Path.GetTempFileName();
             var tempFile2 = Path.GetTempFileName();

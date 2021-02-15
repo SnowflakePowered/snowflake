@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Zio;
-using Tsuku.Extensions;
+using Snowflake.Filesystem.Internal;
 
 namespace Snowflake.Filesystem
 {
@@ -12,19 +12,28 @@ namespace Snowflake.Filesystem
     {
         internal bool IsDeleted { get; set; } = false;
        
+        internal IFileGuidProvider FileGuidProvider { get; }
 
-        internal Directory(string name, IFileSystem rootFs, DirectoryEntry parentDirectory, bool useManifest = true)
+        internal Directory(string name, IFileSystem rootFs, DirectoryEntry parentDirectory)
+            : this(name, rootFs, parentDirectory, TsukuAttrFileGuidProvider.TsukuGuidProvider) { }
+
+        internal Directory(string name, IFileSystem rootFs, DirectoryEntry parentDirectory, IFileGuidProvider fileGuidProvider)
         {
             this.RootFileSystem = rootFs;
             this.ThisDirectory = parentDirectory.CreateSubdirectory(name);
             this.Name = name;
+            this.FileGuidProvider = fileGuidProvider;
         }
 
         internal Directory(IFileSystem rootFs)
+            : this(rootFs, TsukuAttrFileGuidProvider.TsukuGuidProvider) { }
+
+        internal Directory(IFileSystem rootFs, IFileGuidProvider fileGuidProvider)
         {
             this.RootFileSystem = rootFs;
             this.ThisDirectory = rootFs.GetDirectoryEntry("/");
             this.Name = "#FSROOT";
+            this.FileGuidProvider = fileGuidProvider;
         }
 
         internal IFileSystem RootFileSystem { get; }
@@ -92,14 +101,14 @@ namespace Snowflake.Filesystem
             if (this.ContainsDirectory(file.GetName())) throw new IOException("Tried to open a directory as a file.");
             var fileEntry = new FileEntry(this.RootFileSystem, file);
             var rawInfo = new FileInfo(this.RootFileSystem.ConvertPathToInternal(fileEntry.Path));
-            if (rawInfo.TryGetGuidAttribute(File.SnowflakeFile, out Guid guid))
+            if (this.FileGuidProvider.TryGetGuid(rawInfo, out Guid guid))
             {
                 return new File(this, fileEntry, guid);
             }
             guid = inheritGuid;
             if (rawInfo.Exists)
             {
-                rawInfo.SetAttribute(File.SnowflakeFile, guid);
+                this.FileGuidProvider.SetGuid(rawInfo, guid);
             }
             return new File(this, fileEntry, guid);
         }

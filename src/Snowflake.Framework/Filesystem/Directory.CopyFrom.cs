@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tsuku.Extensions;
 
 namespace Snowflake.Filesystem
 {
@@ -42,7 +41,7 @@ namespace Snowflake.Filesystem
             source.CopyTo(this.RootFileSystem.ConvertPathToInternal(this.ThisDirectory.Path / fileName), overwrite);
 
             // Preserve GUID, on Linux xattrs are not preserved from copy.
-            if (!source.TryGetGuidAttribute(File.SnowflakeFile, out Guid existingGuid))
+            if (!this.FileGuidProvider.TryGetGuid(source, out Guid existingGuid))
                 existingGuid = Guid.NewGuid();
 
             return this.OpenFile(fileName, existingGuid);
