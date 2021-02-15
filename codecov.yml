@@ -1,9 +1,6 @@
 codecov:
   branch: master       # the branch to show by default, inherited from your git repository settings
   strict_yaml_branch: master
-  ci:
-    - !codefactor.io
-    - !www.codefactor.io
 coverage:
   precision: 2
   round: down
