@@ -229,6 +229,38 @@ namespace Snowflake.Filesystem.Tests
         }
 
         [Fact]
+        public void DirectoryMoveFromManagedAndRename_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var fs2 = new PhysicalFileSystem();
+
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
+
+            var dir2 = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
+
+            var tempFile = Path.GetTempFileName();
+            var file = dir.OpenFile(tempFile);
+            Guid oldGuid = file.FileGuid;
+            using (var str = file.OpenStream())
+            {
+                str.WriteByte(255);
+            }// safe the file
+
+            var newFile = dir2.MoveFrom(file, "newNonConflictingName", false);
+            Assert.Throws<FileNotFoundException>(() => dir2.MoveFrom(file));
+            Assert.Equal(1, newFile.Length);
+
+            Assert.False(file.Created);
+            Assert.False(dir.ContainsFile(file.Name));
+
+            Assert.True(newFile.Created);
+            Assert.Equal(newFile.FileGuid, file.FileGuid);
+            Assert.Equal(newFile.FileGuid, dir2.OpenFile("newNonConflictingName").FileGuid);
+        }
+
+        [Fact]
         public void FileRename_Test()
         {
             var fs = new PhysicalFileSystem();
