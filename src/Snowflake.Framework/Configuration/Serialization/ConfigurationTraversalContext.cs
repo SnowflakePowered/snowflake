@@ -24,9 +24,9 @@ namespace Snowflake.Configuration.Serialization
         /// Creates a traversal context with the given path resolutions.
         /// 
         /// Use the syntax
-        /// <pre>
+        /// <code>
         /// new ConfigurationTraversalContext(("drive", myDirectory), ("drive2", my2ndDirectory));
-        /// </pre>
+        /// </code>
         /// </summary>
         /// <param name="pathResolutionContext">
         /// A list of tuples of strings and <see cref="IReadOnlyDirectory"/> that specify each
