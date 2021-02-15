@@ -33,15 +33,15 @@ namespace Snowflake.Filesystem
                 .OpenStream().Close();
 
             var p = new DirectoryProjection();
-            p.P("RootFile", file1)
-             .N("SomeDirectory")
-                    .P("project1", file1)
-                    .N("DeeperDirectory")
-                        .P("project2", file2)
-                        .P("deeperThree", dirProj)
-                    .X()
-                    .P("project3", file2)
-                .X();
+            p.Project("RootFile", file1)
+             .Enter("SomeDirectory")
+                    .Project("project1", file1)
+                    .Enter("DeeperDirectory")
+                        .Project("project2", file2)
+                        .Project("deeperThree", dirProj)
+                    .Exit()
+                    .Project("project3", file2)
+                .Exit();
 
             using var mountdir = dir.OpenDirectory("mountPoint")
                 .AsDisposable();
@@ -85,7 +85,7 @@ namespace Snowflake.Filesystem
             var dir = new FS.Directory(test, pfs, pfs.GetDirectoryEntry("/"));
             using var mountdir = dir.OpenDirectory("mountPoint")
                 .AsDisposable();
-            Assert.Throws<InvalidOperationException>(() => new DirectoryProjection().N("no").Mount(mountdir));
+            Assert.Throws<InvalidOperationException>(() => new DirectoryProjection().Enter("no").Mount(mountdir));
         }
     }
 }

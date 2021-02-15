@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Snowflake.Orchestration.Projections
 {
 #pragma warning disable CS0618
-    public class DirectoryProjection
+    public sealed class DirectoryProjection : IDirectoryProjection
     {
         private DirectoryProjection? Parent { get; }
 
@@ -31,11 +31,11 @@ namespace Snowflake.Orchestration.Projections
             this.Parent = parent;
         }
 
-        public DirectoryProjection Enter(string directoryName)
+        public IDirectoryProjection Enter(string directoryName)
         {
-            // todo: check validity
             string realName = Path.GetFileName(directoryName);
-
+            if (!Filesystem.Directory.IsValidFileName(realName))
+                throw new DirectoryNotFoundException($"Name {realName} is invalid.");
             if (this.ProjectionState.ContainsKey(realName))
             {
                 throw new ArgumentException($"Can not enter projected item {realName}.");
@@ -49,18 +49,20 @@ namespace Snowflake.Orchestration.Projections
             return projection;
         }
 
-        public DirectoryProjection Exit()
+        public IDirectoryProjection Exit()
         {
             if (this.Parent == null)
             {
-                throw new InvalidOperationException("Can not exist out of the root directory of a projection.");
+                throw new InvalidOperationException("Can not exit out of the root directory of a projection.");
             }
             return this.Parent;
         }
 
-        public DirectoryProjection Project(string name, IFile file)
+        public IDirectoryProjection Project(string name, IFile file)
         {
             string realName = Path.GetFileName(name);
+            if (!Filesystem.Directory.IsValidFileName(realName))
+                throw new DirectoryNotFoundException($"Name {realName} is invalid.");
             if (this.Children.ContainsKey(realName))
             {
                 throw new ArgumentException("Can not project into an existing projection level.");
@@ -69,9 +71,11 @@ namespace Snowflake.Orchestration.Projections
             return this;
         }
 
-        public DirectoryProjection Project(string name, IDirectory dir)
+        public IDirectoryProjection Project(string name, IDirectory dir)
         {
             string realName = Path.GetFileName(name);
+            if (!Filesystem.Directory.IsValidFileName(realName))
+                throw new DirectoryNotFoundException($"Name {realName} is invalid.");
             if (this.Children.ContainsKey(realName))
             {
                 throw new ArgumentException("Can not project into an existing projection level.");
@@ -86,14 +90,14 @@ namespace Snowflake.Orchestration.Projections
         public IReadOnlyDirectory Mount(IDisposableDirectory autoDisposingDirectory, string mountRoot)
         {
             IDirectory mountDir;
-            if ((mountRoot == "/" || mountRoot == "") && 
+            if ((mountRoot == "/" || mountRoot == "") &&
                 !autoDisposingDirectory.EnumerateFiles().Any() &&
                 !autoDisposingDirectory.EnumerateDirectories().Any())
             {
                 mountDir = autoDisposingDirectory;
             }
             // ContainsFile checks for directories as well.
-            else if (!autoDisposingDirectory.ContainsFile(mountRoot)) 
+            else if (!autoDisposingDirectory.ContainsFile(mountRoot))
             {
                 mountDir = autoDisposingDirectory.OpenDirectory(mountRoot);
             }
@@ -120,7 +124,7 @@ namespace Snowflake.Orchestration.Projections
                         break;
                 }
             }
-            
+
             Stack<(string, DirectoryProjection)> projectionsToProcess = new(this.Children.Select((kvp) => (kvp.Key, kvp.Value)));
             while (projectionsToProcess.Count > 0)
             {
