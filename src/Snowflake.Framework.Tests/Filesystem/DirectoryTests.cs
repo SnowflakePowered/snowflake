@@ -327,7 +327,7 @@ namespace Snowflake.Filesystem.Tests
             var dir = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
 
             System.IO.File.WriteAllText(unmanagedFile, "Hello World!");
-            Assert.Throws<DirectoryNotFoundException>(() => dir.LinkFrom(new FileInfo(unmanagedFile), "$$::^"));
+            Assert.Throws<DirectoryNotFoundException>(() => dir.LinkFrom(new FileInfo(unmanagedFile), "$$::/^"));
         }
 
         [Fact]
@@ -376,7 +376,7 @@ namespace Snowflake.Filesystem.Tests
 
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
             var dir = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
-            Assert.Throws<DirectoryNotFoundException>(() => dir.LinkFrom(dirInfo, "$$::^"));
+            Assert.Throws<DirectoryNotFoundException>(() => dir.LinkFrom(dirInfo, "$$::/^"));
         }
 
 
