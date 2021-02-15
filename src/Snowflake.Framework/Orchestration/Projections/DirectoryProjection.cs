@@ -33,6 +33,7 @@ namespace Snowflake.Orchestration.Projections
 
         public DirectoryProjection Enter(string directoryName)
         {
+            // todo: check validity
             string realName = Path.GetFileName(directoryName);
 
             if (this.ProjectionState.ContainsKey(realName))
