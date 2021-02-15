@@ -19,7 +19,7 @@ coverage:
       default:
         if_no_uploads: error
         target: 50%
-        threshold: 40%
+        threshold: 20%
 
 comment:
   layout: "header, diff, changes, suggestions, sunburst"
