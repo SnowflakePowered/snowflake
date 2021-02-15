@@ -16,12 +16,17 @@ coverage:
         target: auto
         if_no_uploads: error
         set_pending: yes
-        if_no_uploads: error
+        github_checks:
+          annotations: true
+        threshold: 2%
     patch:
       default:
         if_no_uploads: error
-        target: '50'
+        target: 50%
+        threshold: 40%
         set_pending: yes
+        github_checks:
+          annotations: true
 
 comment:
   layout: "header, diff, changes, suggestions, sunburst"
