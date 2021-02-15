@@ -15,7 +15,7 @@ namespace Snowflake.Filesystem
     public class DirectoryProjectionTests
     {
         [Fact]
-        public void Test()
+        public void ProjectionSuccess_Test()
         {
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
@@ -33,17 +33,59 @@ namespace Snowflake.Filesystem
                 .OpenStream().Close();
 
             var p = new DirectoryProjection();
-            p.N("SomeDirectory")
-                .P("project1", file1)
-                .N("DeeperDirectory")
-                    .P("project2", file2)
-                    .P("deeperThree", dirProj)
-                .X()
-            .X();
+            p.P("RootFile", file1)
+             .N("SomeDirectory")
+                    .P("project1", file1)
+                    .N("DeeperDirectory")
+                        .P("project2", file2)
+                        .P("deeperThree", dirProj)
+                    .X()
+                    .P("project3", file2)
+                .X();
 
             using var mountdir = dir.OpenDirectory("mountPoint")
                 .AsDisposable();
-            p.Mount(mountdir);
+            var mountedDirectory = p.Mount(mountdir);
+            Assert.True(mountedDirectory.ContainsDirectory("SomeDirectory"));
+            Assert.True(mountedDirectory.ContainsFile("RootFile"));
+            var someDir = mountedDirectory.OpenDirectory("SomeDirectory");
+            Assert.True(someDir.ContainsFile("project1"));
+            Assert.True(someDir.ContainsDirectory("DeeperDirectory"));
+            Assert.True(someDir.ContainsFile("project3"));
+
+            var deeper = someDir.OpenDirectory("DeeperDirectory");
+            Assert.True(deeper.ContainsDirectory("deeperThree"));
+            Assert.True(deeper.ContainsFile("project2"));
+
+            var deeperLink = deeper.OpenDirectory("deeperThree");
+            Assert.True(deeperLink.ContainsFile("MyThirdFile"));
+        }
+
+        [Fact]
+        public void DirectoryMustBeEmptyToMount_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            string test = Path.GetRandomFileName();
+            var dir = new FS.Directory(test, pfs, pfs.GetDirectoryEntry("/"));
+            using var mountdir = dir.OpenDirectory("mountPoint")
+                .AsDisposable();
+            mountdir.OpenDirectory("dummydir");
+            Assert.Throws<IOException>(() => new DirectoryProjection().Mount(mountdir));
+        }
+
+        [Fact]
+        public void DirectoryCanNotMountSubprojection_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            string test = Path.GetRandomFileName();
+            var dir = new FS.Directory(test, pfs, pfs.GetDirectoryEntry("/"));
+            using var mountdir = dir.OpenDirectory("mountPoint")
+                .AsDisposable();
+            Assert.Throws<InvalidOperationException>(() => new DirectoryProjection().N("no").Mount(mountdir));
         }
     }
 }
