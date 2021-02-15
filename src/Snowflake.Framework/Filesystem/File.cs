@@ -10,8 +10,6 @@ namespace Snowflake.Filesystem
 {
     internal sealed class File : IFile
     {
-        public static readonly string SnowflakeFile = "Snowflake.File";
-
         internal File(Directory parentDirectory, FileEntry file, Guid guid)
         {
             this.RawInfo = file;
@@ -44,7 +42,7 @@ namespace Snowflake.Filesystem
         public Stream OpenStream(FileMode mode, FileAccess rw, FileShare share = FileShare.None)
         {
             var stream = this.RawInfo.Open(mode, rw, share);
-            this.UnsafeGetPath().SetAttribute(File.SnowflakeFile, this.FileGuid);
+            this.ParentDirectory.FileGuidProvider.SetGuid(this.UnsafeGetPath(), this.FileGuid);
             return stream;
         }
 

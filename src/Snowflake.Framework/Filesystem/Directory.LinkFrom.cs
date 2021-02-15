@@ -28,6 +28,8 @@ namespace Snowflake.Filesystem
             var linkPath = this.ThisDirectory.Path / dest;
 
             FileSystem.CreateSymbolicLink(source.FullName, this.RootFileSystem.ConvertPathToInternal(linkPath), FileType.File);
+            // todo GUID semantics (not necessary for tsuku but maybe for db-backed?)
+
             return this.OpenFile(dest);
         }
 

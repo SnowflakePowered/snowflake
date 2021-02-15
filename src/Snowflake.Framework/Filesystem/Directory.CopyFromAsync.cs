@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Tsuku.Extensions;
 
 namespace Snowflake.Filesystem
 {
@@ -45,7 +44,7 @@ namespace Snowflake.Filesystem
             if (!Directory.IsValidFileName(fileName)) throw new DirectoryNotFoundException($"The filename {targetName} is invalid.");
 
             // Preserve GUID
-            if (!source.TryGetGuidAttribute(File.SnowflakeFile, out Guid existingGuid))
+            if (!this.FileGuidProvider.TryGetGuid(source, out Guid existingGuid))
                 existingGuid = Guid.NewGuid();
 
             var file = this.OpenFile(fileName, existingGuid);

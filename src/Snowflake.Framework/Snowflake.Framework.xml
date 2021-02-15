@@ -698,7 +698,7 @@
             <param name="encoding">The encoding applied to the contents of the file.</param>
             <returns>A string containing all text in the file.</returns>
         </member>
-        <member name="M:Snowflake.Filesystem.FileSystemInfoExtensions.Exists(System.IO.FileInfo)">
+        <member name="M:Snowflake.Filesystem.FileSystemInfoExtensions.ContentExists(System.IO.FileInfo)">
             <summary>
             Gets a value indicating whether the specified file exists.
             Unlike <see cref="P:System.IO.FileInfo.Exists"/>, this method follows symbolic links.
@@ -706,7 +706,7 @@
             <param name="this">The <see cref="T:System.IO.FileInfo"/> representing the current file.</param>
             <returns><see langword="true"/> if the file exists on disk and is accessible, <see langword="false"/> otherwise.</returns>
         </member>
-        <member name="M:Snowflake.Filesystem.FileSystemInfoExtensions.Exists(System.IO.DirectoryInfo)">
+        <member name="M:Snowflake.Filesystem.FileSystemInfoExtensions.ContentExists(System.IO.DirectoryInfo)">
             <summary>
             Gets a value indicating whether the specified directory exists.
             Unlike <see cref="P:System.IO.DirectoryInfo.Exists"/>, this method follows symbolic links.
@@ -722,6 +722,32 @@
             <param name="this">The <see cref="T:System.IO.FileInfo"/> representing the current file.</param>
             <returns>The size of the file in bytes, or -1 if the file does not exist or is a directory.</returns>
             <exception cref="T:System.IO.IOException"></exception>
+        </member>
+        <member name="T:Snowflake.Filesystem.IFileGuidProvider">
+            <summary>
+            Abstraction of GUID provisioning for <see cref="T:Snowflake.Filesystem.Directory"/>
+            </summary>
+        </member>
+        <member name="M:Snowflake.Filesystem.IFileGuidProvider.TryGetGuid(System.IO.FileInfo,System.Guid@)">
+            <summary>
+            Tries to get a GUID for the file.
+            </summary>
+            <param name="canonicalPath">
+            The canonical, normalized <see cref="T:Zio.UPath"/> for the directory, relative to the directory root.
+            </param>
+            <param name="rawInfo">The raw <see cref="T:System.IO.FileInfo"/> referring to the file on disk that <paramref name="canonicalPath"/> points to.</param>
+            <param name="guid">The result GUID if it exists, or <see cref="F:System.Guid.Empty"/> if it does not.</param>
+            <returns><see langword="true"/> if a GUID exists and is returned, <see langword="false"/> otherwise.</returns>
+        </member>
+        <member name="M:Snowflake.Filesystem.IFileGuidProvider.SetGuid(System.IO.FileInfo,System.Guid)">
+            <summary>
+            Sets a GUID for a file. 
+            </summary>
+            <param name="canonicalPath">
+            The canonical, normalized <see cref="T:Zio.UPath"/> for the directory, relative to the directory root.
+            </param>
+            <param name="rawInfo">The raw <see cref="T:System.IO.FileInfo"/> referring to the file on disk that <paramref name="canonicalPath"/> points to.</param>
+            <param name="guid">The result GUID if it exists, or <see cref="F:System.Guid.Empty"/> if it does not.</param>
         </member>
         <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonA">
             <inheritdoc/>

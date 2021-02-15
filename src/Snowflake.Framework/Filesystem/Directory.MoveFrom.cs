@@ -27,7 +27,7 @@ namespace Snowflake.Filesystem
             if (this.ContainsFile(dest) && !overwrite) throw new IOException($"{source.Name} already exists in the target directory");
             // Preserve GUID
 
-            if (!source.UnsafeGetPath().TryGetGuidAttribute(File.SnowflakeFile, out Guid existingGuid))
+            if (!this.FileGuidProvider.TryGetGuid(source.UnsafeGetPath(), out Guid existingGuid))
                 existingGuid = Guid.NewGuid();
             var file = this.OpenFile(dest, existingGuid);
 
