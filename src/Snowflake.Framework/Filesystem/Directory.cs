@@ -142,6 +142,7 @@ namespace Snowflake.Filesystem
                 }
             }
         }
+
         public IEnumerable<IDeletableDirectory> EnumerateDirectories()
         {
             this.CheckDeleted();

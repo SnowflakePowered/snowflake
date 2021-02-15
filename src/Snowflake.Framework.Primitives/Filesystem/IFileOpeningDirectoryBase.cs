@@ -12,8 +12,9 @@ namespace Snowflake.Filesystem
     public interface IFileOpeningDirectoryBase<TChildFile>
     {
         /// <summary>
-        /// Opens or creates a file, adding it to the manifest and assigning it a
-        /// unique <see cref="Guid"/>.
+        /// Opens or creates a file handle. No file is written on disk until its stream is opened via
+        /// <see cref="IFile.OpenStream()"/>. If this file is never created, the GUID provided via <see cref="IReadOnlyFile.FileGuid"/>
+        /// may not be consistent.
         /// 
         /// Unlike <see cref="IDirectoryOpeningDirectoryBase{T}.OpenDirectory(string)"/>, you can not use the path separator to
         /// open a nested file. Paths will be truncated with <see cref="Path.GetFileName(string)"/>.
