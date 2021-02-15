@@ -61,9 +61,9 @@ namespace Snowflake.Configuration.Serialization
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+            var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
             dir.OpenDirectory("program")
-              .OpenFile("RMGE01.wbfs").OpenStream().Close();
+              .OpenFile("RMGE01.wbfs").OpenStream(FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite).Close();
             var context = new ConfigurationTraversalContext(("game", dir));
 
             context.TraverseCollection(configuration.Configuration);
@@ -101,7 +101,7 @@ namespace Snowflake.Configuration.Serialization
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
             dir.OpenDirectory("program")
-              .OpenFile("RMGE01.wbfs").OpenStream().Close();
+              .OpenFile("RMGE01.wbfs").OpenStream(FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite).Close();
             var context = new ConfigurationTraversalContext(("game", dir));
             var node = context.TraverseInputTemplate(input, mapping, 0);
         }
@@ -117,7 +117,7 @@ namespace Snowflake.Configuration.Serialization
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
             dir.OpenDirectory("program")
-              .OpenFile("RMGE01.wbfs").OpenStream().Close();
+              .OpenFile("RMGE01.wbfs").OpenStream(FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite).Close();
             configuration.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
             var context = new ConfigurationTraversalContext(("game", dir));
 
@@ -179,7 +179,7 @@ namespace Snowflake.Configuration.Serialization
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
             dir.OpenDirectory("program")
-              .OpenFile("RMGE01.wbfs").OpenStream().Close();
+              .OpenFile("RMGE01.wbfs").OpenStream(FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite).Close();
             configuration.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
             var context = new ConfigurationTraversalContext(("game", dir));
 

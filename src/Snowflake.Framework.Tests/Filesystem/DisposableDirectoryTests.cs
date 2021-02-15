@@ -21,49 +21,48 @@ namespace Snowflake.Filesystem.Tests
         }
 
         [Fact]
+        public void DirectoryFileGuidPersist_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            using var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
+            var file = dir.OpenFile("test.txt");
+            var guid = file.FileGuid;
+            Assert.NotEqual(Guid.Empty, guid);
+            file.OpenStream().Close();
+            Assert.Equal(dir.OpenFile("test.txt").FileGuid, guid);
+        }
+
+        [Fact]
         public void DirectoryDeepCreatePath_Test()
         {
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
             string test = Path.GetRandomFileName();
-            var dir = new Directory(test, pfs, pfs.GetDirectoryEntry("/"));
+            using var dir = new FS.Directory(test, pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
 
-            var deep = dir.OpenDirectory("test/test");
+            var deep = dir.OpenDirectory($"test/test");
 #pragma warning disable CS0618 // Type or member is obsolete
             Assert.Equal(NormalizePath(deep.UnsafeGetPath().FullName), // lgtm [cs/call-to-obsolete-method]
                NormalizePath(Path.Combine(temp, test, "test", "test")));
 #pragma warning restore CS0618 // Type or member is obsolete
+
         }
 
         [Fact]
-        public void DirectoryChildrenNoManifest_Test()
+        public void DirectoryManifestRemove_Test()
         {
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            string test = Path.GetRandomFileName();
-            var dir = new Directory(test, pfs, pfs.GetDirectoryEntry("/"));
-
-       
-            var deep = dir.OpenDirectory("test/test");
-            using (var deepDirDispose = deep.AsDisposable())
-            {
-                Assert.False(deep.ContainsFile(".manifest"));
-            }
-            Assert.True(dir.ContainsDirectory("test"));
-            Assert.False(dir.ContainsDirectory("test/test"));
-        }
-
-        [Fact]
-        public void NonEmptyDirectoryCanNotBeDisposable_Test()
-        {
-            var fs = new PhysicalFileSystem();
-            var temp = Path.GetTempPath();
-            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
-            dir.OpenFile("test.txt").OpenStream().Close();
-            Assert.Throws<IOException>(() => dir.AsDisposable());
+            using var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
+            var file = dir.OpenFile("test.txt");
+            file.Delete();
+            var newFile = dir.OpenFile("test.txt");
+            Assert.NotEqual(newFile.FileGuid, file.FileGuid);
+            //  Assert.True(dir.Manifest.ContainsKey("test.txt"));
         }
 
         [Fact]
@@ -72,11 +71,10 @@ namespace Snowflake.Filesystem.Tests
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            using var dir = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
+            using var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
             var file = dir.OpenFile("test.txt");
-            Assert.False(dir.ContainsFile(".manifest"));
             file.OpenStream().Close();
-            dir.OpenFile("test2.txt").OpenStream().Close();
+            dir.OpenDirectory(Path.GetRandomFileName()).OpenFile("test2.txt").OpenStream().Close();
             var iter = dir.EnumerateFilesRecursive();
             Assert.True(iter.Count() >= 2);
         }
@@ -88,11 +86,10 @@ namespace Snowflake.Filesystem.Tests
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            using var dir = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
+            using var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
 
             var tempFile = Path.GetTempFileName();
             var file = dir.OpenFile(tempFile);
-            Assert.False(dir.ContainsFile(".manifest"));
             using (var str = file.OpenStream()) {
                 str.WriteByte(255);
             }// safe the file
@@ -109,13 +106,12 @@ namespace Snowflake.Filesystem.Tests
 
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            using var dir = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
-            
-            var dir2 = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
+            using var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
+
+            var dir2 = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
 
             var tempFile = Path.GetTempFileName();
             var file = dir.OpenFile(tempFile);
-            Assert.False(dir.ContainsFile(".manifest"));
             using (var str = file.OpenStream())
             {
                 str.WriteByte(255);
@@ -138,13 +134,13 @@ namespace Snowflake.Filesystem.Tests
 
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            using var dir = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
+            using var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
 
-            var dir2 = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
+            var dir2 = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
 
             var tempFile = Path.GetTempFileName();
             var file = dir.OpenFile(tempFile);
-            Assert.False(dir.ContainsFile(".manifest"));
+            Assert.NotEqual(Guid.Empty, file.FileGuid);
             using (var str = file.OpenStream())
             {
                 str.WriteByte(255);
@@ -161,19 +157,83 @@ namespace Snowflake.Filesystem.Tests
         }
 
         [Fact]
+        public void DirectoryMoveFromManaged_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var fs2 = new PhysicalFileSystem();
+
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            using var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
+
+            var dir2 = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
+
+            var tempFile = Path.GetTempFileName();
+            var file = dir.OpenFile(tempFile);
+            Guid oldGuid = file.FileGuid;
+            using (var str = file.OpenStream())
+            {
+                str.WriteByte(255);
+            }// safe the file
+
+            var file2 = dir2.CopyFrom(file);
+
+            Assert.Throws<IOException>(() => dir2.MoveFrom(file));
+            Assert.Equal(1, dir2.MoveFrom(file, true).Length);
+
+            Assert.Equal(oldGuid, file2.FileGuid);
+            Assert.Equal(1, file2.Length);
+
+            Assert.False(file.Created);
+            Assert.False(dir.ContainsFile(file.Name));
+        }
+
+        [Fact]
+        public void DirectoryMoveFromManagedAndRename_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var fs2 = new PhysicalFileSystem();
+
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            using var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
+
+            var dir2 = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
+
+            var tempFile = Path.GetTempFileName();
+            var file = dir.OpenFile(tempFile);
+            Guid oldGuid = file.FileGuid;
+            using (var str = file.OpenStream())
+            {
+                str.WriteByte(255);
+            }// safe the file
+
+            var newFile = dir2.MoveFrom(file, "newNonConflictingName", false);
+            Assert.Throws<FileNotFoundException>(() => dir2.MoveFrom(file));
+            Assert.Equal(1, newFile.Length);
+
+            Assert.False(file.Created);
+            Assert.False(dir.ContainsFile(file.Name));
+
+            Assert.True(newFile.Created);
+            Assert.Equal(newFile.FileGuid, file.FileGuid);
+            Assert.Equal(newFile.FileGuid, dir2.OpenFile("newNonConflictingName").FileGuid);
+        }
+
+        [Fact]
         public void FileRename_Test()
         {
             var fs = new PhysicalFileSystem();
+
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            using var dir = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
+            using var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
 
             var tempFile = Path.GetTempFileName();
             var tempFile2 = Path.GetTempFileName();
 
             var file = dir.OpenFile(tempFile);
             Guid oldGuid = file.FileGuid;
-            Assert.False(dir.ContainsFile(".manifest"));
             using (var str = file.OpenStream())
             {
                 str.WriteByte(255);
@@ -182,6 +242,114 @@ namespace Snowflake.Filesystem.Tests
             file.Rename(tempFile2);
             Assert.Equal(Path.GetFileName(tempFile2), file.Name);
             Assert.Equal(file.FileGuid, dir.OpenFile(tempFile2).FileGuid);
+        }
+
+        [Fact]
+        public void DirectoryDelete_Test()
+        {
+            var fs = new PhysicalFileSystem();
+
+            var temp = Path.GetTempPath();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            using var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
+            var nested = dir.OpenDirectory("nested");
+            var nested2 = nested.OpenDirectory("nested2");
+            nested.Delete();
+            
+            Assert.Throws<InvalidOperationException>(() => nested.EnumerateFiles());
+            Assert.Throws<InvalidOperationException>(() => nested2.EnumerateFiles());
+        }
+
+        [Fact]
+        public void LinkFromFile_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var unmanagedFile = Path.GetTempFileName();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            using var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
+
+            System.IO.File.WriteAllText(unmanagedFile, "Hello World!");
+            var linkedFile = dir.LinkFrom(new FileInfo(unmanagedFile));
+
+            Assert.Equal("Hello World!", linkedFile.ReadAllText());
+            Assert.Equal(linkedFile.FileGuid, dir.OpenFile(Path.GetFileName(unmanagedFile)).FileGuid);
+        }
+
+
+        [Fact]
+        public void LinkFromInvalidFilePath_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var unmanagedFile = Path.GetTempFileName();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            using var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
+
+            System.IO.File.WriteAllText(unmanagedFile, "Hello World!");
+            Assert.Throws<DirectoryNotFoundException>(() => dir.LinkFrom(new FileInfo(unmanagedFile), "$$::\0^"));
+        }
+
+        [Fact]
+        public void LinkFromNonExistentFilePath_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var unmanagedFile = Path.GetTempFileName();
+            System.IO.File.Delete(unmanagedFile);
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            using var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
+
+            Assert.Throws<FileNotFoundException>(() => dir.LinkFrom(new FileInfo(unmanagedFile)));
+        }
+
+
+        [Fact]
+        public void LinkFromDirectory_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var dirInfo = System.IO.Directory.CreateDirectory(Path.Combine(temp, Path.GetRandomFileName()));
+            dirInfo.CreateSubdirectory("Subdirectorytest");
+            var newFile = new FileInfo(Path.Combine(dirInfo.FullName, Path.GetRandomFileName()));
+
+            System.IO.File.WriteAllText(newFile.FullName, "Hello World!");
+
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            using var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
+
+            var linkedDir = dir.LinkFrom(dirInfo);
+            Assert.True(linkedDir.ContainsDirectory("Subdirectorytest"));
+            Assert.Equal("Hello World!", linkedDir.OpenFile(Path.GetFileName(newFile.FullName)).ReadAllText());
+        }
+
+        [Fact]
+        public void LinkFromDirectoryInvalidPath_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var dirInfo = System.IO.Directory.CreateDirectory(Path.Combine(temp, Path.GetRandomFileName()));
+            dirInfo.CreateSubdirectory("Subdirectorytest");
+            var newFile = new FileInfo(Path.Combine(dirInfo.FullName, Path.GetRandomFileName()));
+
+            System.IO.File.WriteAllText(newFile.FullName, "Hello World!");
+
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            using var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
+            Assert.Throws<DirectoryNotFoundException>(() => dir.LinkFrom(dirInfo, "$$::\0^"));
+        }
+
+
+        [Fact]
+        public void LinkFromDirectoryNotFoundPath_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            using var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/")).AsDisposable();
+
+            Assert.Throws<DirectoryNotFoundException>(() => dir.LinkFrom(new DirectoryInfo(Path.GetRandomFileName())));
         }
     }
 }
