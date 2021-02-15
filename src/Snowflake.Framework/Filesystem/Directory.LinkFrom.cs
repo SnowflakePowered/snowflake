@@ -47,7 +47,7 @@ namespace Snowflake.Filesystem
             string dest = Path.GetFileName(linkName);
             if (!Directory.IsValidFileName(dest))
                 throw new DirectoryNotFoundException($"Filename {dest} is invalid.");
-            if (!source.ContentExists()) throw new FileNotFoundException($"{source.FullName} could not be found.");
+            if (!source.ContentExists()) throw new DirectoryNotFoundException($"{source.FullName} could not be found.");
             if (this.ContainsFile(dest) && !overwrite)
                 throw new IOException($"{source.Name} already exists in the target directory");
 

@@ -299,5 +299,97 @@ namespace Snowflake.Filesystem.Tests
             Assert.Throws<InvalidOperationException>(() => nested.EnumerateFiles());
             Assert.Throws<InvalidOperationException>(() => nested2.EnumerateFiles());
         }
+
+        [Fact]
+        public void LinkFromFile_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var unmanagedFile = Path.GetTempFileName();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
+
+            System.IO.File.WriteAllText(unmanagedFile, "Hello World!");
+            var linkedFile = dir.LinkFrom(new FileInfo(unmanagedFile));
+
+            Assert.Equal("Hello World!", linkedFile.ReadAllText());
+            Assert.Equal(linkedFile.FileGuid, dir.OpenFile(Path.GetFileName(unmanagedFile)).FileGuid);
+        }
+
+
+        [Fact]
+        public void LinkFromInvalidFilePath_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var unmanagedFile = Path.GetTempFileName();
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
+
+            System.IO.File.WriteAllText(unmanagedFile, "Hello World!");
+            Assert.Throws<DirectoryNotFoundException>(() => dir.LinkFrom(new FileInfo(unmanagedFile), "$$::^"));
+        }
+
+        [Fact]
+        public void LinkFromNonExistentFilePath_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var unmanagedFile = Path.GetTempFileName();
+            System.IO.File.Delete(unmanagedFile);
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
+
+            Assert.Throws<FileNotFoundException>(() => dir.LinkFrom(new FileInfo(unmanagedFile)));
+        }
+
+
+        [Fact]
+        public void LinkFromDirectory_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var dirInfo = System.IO.Directory.CreateDirectory(Path.Combine(temp, Path.GetRandomFileName()));
+            dirInfo.CreateSubdirectory("Subdirectorytest");
+            var newFile = new FileInfo(Path.Combine(dirInfo.FullName, Path.GetRandomFileName()));
+
+            System.IO.File.WriteAllText(newFile.FullName, "Hello World!");
+
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
+
+            var linkedDir = dir.LinkFrom(dirInfo);
+            Assert.True(linkedDir.ContainsDirectory("Subdirectorytest"));
+            Assert.Equal("Hello World!", linkedDir.OpenFile(Path.GetFileName(newFile.FullName)).ReadAllText());
+        }
+
+        [Fact]
+        public void LinkFromDirectoryInvalidPath_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+            var dirInfo = System.IO.Directory.CreateDirectory(Path.Combine(temp, Path.GetRandomFileName()));
+            dirInfo.CreateSubdirectory("Subdirectorytest");
+            var newFile = new FileInfo(Path.Combine(dirInfo.FullName, Path.GetRandomFileName()));
+
+            System.IO.File.WriteAllText(newFile.FullName, "Hello World!");
+
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
+            Assert.Throws<DirectoryNotFoundException>(() => dir.LinkFrom(dirInfo, "$$::^"));
+        }
+
+
+        [Fact]
+        public void LinkFromDirectoryNotFoundPath_Test()
+        {
+            var fs = new PhysicalFileSystem();
+            var temp = Path.GetTempPath();
+
+            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
+            var dir = new Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
+
+            Assert.Throws<DirectoryNotFoundException>(() => dir.LinkFrom(new DirectoryInfo(Path.GetRandomFileName())));
+        }
     }
 }
