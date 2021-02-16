@@ -60,16 +60,40 @@ namespace Snowflake.Configuration.Generators
             }
 
             string namespaceName = classSymbol.ContainingNamespace.ToDisplayString();
-
+            string tag = RandomString(6);
+            string backingClassName = $"{classSymbol.Name}Proxy_{tag}";
             StringBuilder source = new StringBuilder($@"
 namespace {namespaceName}
 {{
-    public partial interface {classSymbol.Name} : 
-        {configSectionInterface.ToDisplayString()}, {configSectionGenericInterface.Construct(classSymbol).ToDisplayString()}
+    public partial interface {classSymbol.Name}
     {{
+    
+    }}
+
+    public sealed class {backingClassName} : {classSymbol.Name}
+    {{
+        public {backingClassName}(Snowflake.Configuration.ISectionDescriptor sectionDescriptor, Snowflake.Configuration.IConfigurationValueCollection collection) 
+        {{
+            this.__sectionDescriptor = sectionDescriptor;
+            this.__backingCollection = collection;
+            this.PopulateDefaults();
+        }}
+        ISectionDescriptor Descriptor => this.__sectionDescriptor;
+
+    }}
+    
 ");
             source.Append("} }");
             return source.ToString();
+        }
+
+        private static Random random = new Random();
+
+        public static string RandomString(int length)
+        {
+            const string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
         public void Initialize(GeneratorInitializationContext context)
