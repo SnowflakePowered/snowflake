@@ -732,9 +732,6 @@
             <summary>
             Tries to get a GUID for the file.
             </summary>
-            <param name="canonicalPath">
-            The canonical, normalized <see cref="T:Zio.UPath"/> for the directory, relative to the directory root.
-            </param>
             <param name="rawInfo">The raw <see cref="T:System.IO.FileInfo"/> referring to the file on disk that <paramref name="canonicalPath"/> points to.</param>
             <param name="guid">The result GUID if it exists, or <see cref="F:System.Guid.Empty"/> if it does not.</param>
             <returns><see langword="true"/> if a GUID exists and is returned, <see langword="false"/> otherwise.</returns>
@@ -743,9 +740,6 @@
             <summary>
             Sets a GUID for a file. 
             </summary>
-            <param name="canonicalPath">
-            The canonical, normalized <see cref="T:Zio.UPath"/> for the directory, relative to the directory root.
-            </param>
             <param name="rawInfo">The raw <see cref="T:System.IO.FileInfo"/> referring to the file on disk that <paramref name="canonicalPath"/> points to.</param>
             <param name="guid">The result GUID if it exists, or <see cref="F:System.Guid.Empty"/> if it does not.</param>
         </member>

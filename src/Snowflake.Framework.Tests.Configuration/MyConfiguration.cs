@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Snowflake.Framework.Tests.Configuration
 {
     [ConfigurationSection("myconfig", "myconfig")]
-    partial interface MyConfiguration
+    public partial interface MyConfiguration
     {
         [ConfigurationOption("myOption", false)]
         bool MyBoolean { get; set; }

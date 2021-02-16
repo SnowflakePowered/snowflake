@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Filesystem
 {
+    /// <summary>
+    /// Represents a directory that is disposable.
+    /// </summary>
     public interface IDisposableDirectory
         : IDirectory, IDisposable
     {
