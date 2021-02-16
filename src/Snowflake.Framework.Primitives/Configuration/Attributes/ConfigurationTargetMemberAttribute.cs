@@ -30,7 +30,6 @@ namespace Snowflake.Configuration.Attributes
             this.Explode = explode;
         }
 
-
         /// <summary>
         /// The name of the target.
         /// </summary>

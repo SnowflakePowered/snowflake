@@ -12,7 +12,7 @@
       ]
     },
     "documentationRules": {
-      "documentInternalElements": false,
+      "documentInternalElements": false
     }
   }
 }

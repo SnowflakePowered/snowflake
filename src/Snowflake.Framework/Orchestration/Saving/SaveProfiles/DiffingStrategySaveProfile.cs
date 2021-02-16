@@ -31,7 +31,7 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
         private async Task CreateBaseSave(IReadOnlyDirectory saveContents)
         {
             var contentDirectory = this.ProfileRoot.OpenDirectory("base/content");
-            await foreach (var _ in contentDirectory.CopyFromDirectory(saveContents)) { };
+            await foreach (var _ in contentDirectory.CopyFromDirectory(saveContents)) { }
         }
 
         public async override Task<ISaveGame> CreateSave(IReadOnlyDirectory saveContents)
@@ -75,7 +75,7 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
             foreach (var d in saveContents.EnumerateDirectories().Where(d => !baseDir.ContainsDirectory(d.Name)))
             {
                 // Copy all directories not in the base.
-                await foreach (var _ in copyDir.OpenDirectory(d.Name).CopyFromDirectory(d)) { };
+                await foreach (var _ in copyDir.OpenDirectory(d.Name).CopyFromDirectory(d)) { }
             }
 
             var queuedDirs = (from targetDir in saveContents.EnumerateDirectories()
@@ -99,7 +99,6 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
                         rollingHash: rollingHash, blockSize: 32);
                     VCDiffResult result = await decoder.EncodeAsync();
                     if (result != VCDiffResult.SUCCESS) throw new IOException($"Failed to decode delta for {f.Name}");
-
                 }
 
                 var children = from targetDir in diff.EnumerateDirectories()

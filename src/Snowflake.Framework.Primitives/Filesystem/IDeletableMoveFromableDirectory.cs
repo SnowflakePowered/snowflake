@@ -17,9 +17,7 @@ namespace Snowflake.Filesystem
     /// 
     /// A DeletableMoveFromableDirectory allows files to be moved into this directory from other files, as well as being deleted.
     /// </summary>
-    public interface IDeletableMoveFromableDirectory 
+    public interface IDeletableMoveFromableDirectory
         : IDeletableDirectory, IMoveFromableDirectoryBase
-    {
-     
-    }
+    { }
 }
