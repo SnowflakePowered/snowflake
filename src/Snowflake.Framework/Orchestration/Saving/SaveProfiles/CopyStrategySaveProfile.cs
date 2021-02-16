@@ -33,7 +33,7 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
             var saveDirectory = this.ProfileRoot.OpenDirectory(saveName);
             var contentDirectory = saveDirectory.OpenDirectory("content");
 
-            await foreach (var _ in contentDirectory.CopyFromDirectory(saveContents, true)) { };
+            await foreach (var _ in contentDirectory.CopyFromDirectory(saveContents, true)) { }
 
             this.ProfileRoot.OpenFile("latest").WriteAllText(saveName, Encoding.UTF8);
             return this.GetSave(saveDirectory)!;

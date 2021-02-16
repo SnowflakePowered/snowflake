@@ -46,6 +46,5 @@ namespace Snowflake.Filesystem
 
             return this.OpenFile(fileName, existingGuid);
         }
-
     }
 }

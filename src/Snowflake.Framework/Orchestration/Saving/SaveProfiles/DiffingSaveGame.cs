@@ -25,7 +25,7 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
         private async Task CopyRecursiveNonDiffs(IDirectory outputDirectory)
         {
             var baseDir = this.DiffDir.OpenDirectory("copy");
-            await foreach (var _ in outputDirectory.CopyFromDirectory(baseDir, true)) { };
+            await foreach (var _ in outputDirectory.CopyFromDirectory(baseDir, true)) { }
         }
 
         private async Task CopyRecursiveDiffs(IDirectory outputDirectory)
@@ -64,7 +64,6 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
                     using var decoder = new VcDecoder(baseStream, diffStream, outStream);
                     (VCDiffResult result, var _) = await decoder.DecodeAsync();
                     if (result != VCDiffResult.SUCCESS) throw new IOException($"Failed to decode delta for {f.Name}");
-
                 }
 
                 var children = from baseDir in src.EnumerateDirectories()

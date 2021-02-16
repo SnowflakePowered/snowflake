@@ -19,7 +19,5 @@ namespace Snowflake.Filesystem
     /// </summary>
     public interface IMoveFromableDirectory 
         : IDirectory, IMoveFromableDirectoryBase
-    {
-      
-    }
+    { }
 }

@@ -36,7 +36,7 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
             var contentDirectory = saveDirectory.OpenDirectory("content");
 
             // Copy it twice, once for backup, once for head.
-            await foreach (var _ in contentDirectory.CopyFromDirectory(saveContents, true)) { };
+            await foreach (var _ in contentDirectory.CopyFromDirectory(saveContents, true)) { }
 
             if (oldLatestFile.Created)
             {
@@ -51,7 +51,6 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
 
         public override async Task<ISaveGame> CreateSave(ISaveGame saveGame)
         {
-
             var oldLatestFile = this.ProfileRoot.OpenFile("latest");
 
             // todo decide on some way to organize these saves.

@@ -21,7 +21,7 @@ namespace Snowflake.Orchestration.Saving.SaveProfiles
 
         public override async Task ExtractSave(IDirectory outputDirectory)
         {
-            await foreach (var _ in outputDirectory.CopyFromDirectory(this.ContentDirectory, true)) { };
+            await foreach (var _ in outputDirectory.CopyFromDirectory(this.ContentDirectory, true)) { }
         }
     }
 }
