@@ -11,7 +11,6 @@ namespace Snowflake.Framework.Tests.Configuration
         {
            
             var x = new ConfigurationSection<MyConfiguration>();
-
             x.Configuration.MyBoolean = true;
         }
     }

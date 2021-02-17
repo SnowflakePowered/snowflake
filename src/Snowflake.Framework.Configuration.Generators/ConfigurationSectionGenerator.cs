@@ -79,12 +79,12 @@ namespace {namespaceName}
     }}
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public sealed class {backingClassName} : {classSymbol.Name}
+    sealed class {backingClassName} : {classSymbol.Name}
     {{
         readonly Snowflake.Configuration.IConfigurationSectionDescriptor __sectionDescriptor;
         readonly Snowflake.Configuration.IConfigurationValueCollection __backingCollection;
 
-        public {backingClassName}(Snowflake.Configuration.IConfigurationSectionDescriptor sectionDescriptor, Snowflake.Configuration.IConfigurationValueCollection collection) 
+        private {backingClassName}(Snowflake.Configuration.IConfigurationSectionDescriptor sectionDescriptor, Snowflake.Configuration.IConfigurationValueCollection collection) 
         {{
             this.__sectionDescriptor = sectionDescriptor;
             this.__backingCollection = collection;
