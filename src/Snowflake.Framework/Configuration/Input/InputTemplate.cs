@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Castle.Core.Internal;
 using Castle.DynamicProxy;
 using EnumsNET;
 using Snowflake.Configuration.Attributes;

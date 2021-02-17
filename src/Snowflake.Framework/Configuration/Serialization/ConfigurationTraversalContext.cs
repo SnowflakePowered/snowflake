@@ -7,7 +7,6 @@ using System.Linq;
 using Snowflake.Configuration.Attributes;
 using Snowflake.Filesystem;
 using Snowflake.Configuration.Extensions;
-using Castle.Core.Internal;
 using Snowflake.Configuration.Input;
 
 namespace Snowflake.Configuration.Serialization
@@ -114,7 +113,7 @@ namespace Snowflake.Configuration.Serialization
                         && props.PropertyType.GetInterfaces().Contains(typeof(IConfigurationSection)))
                 .ToDictionary(p => p.Name, p =>
                     {
-                        var attribute = p.GetAttribute<ConfigurationTargetMemberAttribute>();
+                        var attribute = p.GetCustomAttribute<ConfigurationTargetMemberAttribute>();
                         return (attribute?.TargetName ?? NullTarget, attribute?.Explode ?? false);
                     });
 
