@@ -15,9 +15,9 @@ namespace Snowflake.Configuration
     /// </summary>
     /// <typeparam name="T">The type of the configuration.</typeparam>
     public class ConfigurationSectionDescriptor<T> : ConfigurationSectionDescriptor, IConfigurationSectionDescriptor
-       where T : class, IConfigurationSection<T>
+       where T : class
     {
-        internal ConfigurationSectionDescriptor(string sectionKey) : base(sectionKey, typeof(T)) { }
+        public ConfigurationSectionDescriptor(string sectionKey) : base(sectionKey, typeof(T)) { }
     }
 
     public class ConfigurationSectionDescriptor: IConfigurationSectionDescriptor

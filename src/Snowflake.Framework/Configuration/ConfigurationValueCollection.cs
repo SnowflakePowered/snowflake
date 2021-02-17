@@ -22,7 +22,7 @@ namespace Snowflake.Configuration
         /// </summary>
         private HashSet<string> EnsuredDescriptors { get; }
 
-        internal ConfigurationValueCollection()
+        public ConfigurationValueCollection()
             : this(Enumerable.Empty<(string section, string option, IConfigurationValue value)>())
         {
         }

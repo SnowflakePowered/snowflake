@@ -1,3 +1,4 @@
+using Snowflake.Configuration;
 using System;
 using Xunit;
 
@@ -8,7 +9,10 @@ namespace Snowflake.Framework.Tests.Configuration
         [Fact]
         public void Test1()
         {
-            var x = ((MyConfiguration)new object()).Descriptor;
+           
+            var x = new ConfigurationSection<MyConfiguration>();
+
+            x.Configuration.MyBoolean = true;
         }
     }
 }

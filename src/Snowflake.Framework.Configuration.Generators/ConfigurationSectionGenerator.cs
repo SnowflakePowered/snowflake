@@ -25,7 +25,7 @@ namespace Snowflake.Configuration.Generators
 
             INamedTypeSymbol configSectionInterface = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationSection");
             INamedTypeSymbol configSectionGenericInterface = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationSection`1");
-
+            INamedTypeSymbol configInstanceAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Generators.ConfigurationGenerationInstanceAttribute");
             List<IPropertySymbol> symbols = new();
             foreach (var prop in receiver.CandidateProperties)
             {
@@ -37,7 +37,9 @@ namespace Snowflake.Configuration.Generators
                 {
                     continue;
                 }
-                if (propSymbol.GetAttributes().Any(attr => attr.AttributeClass.Equals(configOptionAttr, SymbolEqualityComparer.Default)))
+
+                var attrs = propSymbol.GetAttributes().Where(attr => attr.AttributeClass.Equals(configOptionAttr, SymbolEqualityComparer.Default));
+                if (attrs.Any())
                 {
                     symbols.Add(propSymbol);
                 }
@@ -45,14 +47,17 @@ namespace Snowflake.Configuration.Generators
 
             foreach (IGrouping<INamedTypeSymbol, IPropertySymbol> group in symbols.GroupBy(f => f.ContainingType))
             {
-                string classSource = ProcessClass(group.Key, group.ToList(), configSectionInterface, configSectionGenericInterface, context);
+                string classSource = ProcessClass(group.Key, group.ToList(), configSectionInterface, configSectionGenericInterface, configInstanceAttr, context);
                 context.AddSource($"{group.Key.Name}_ConfigurationSection.cs", SourceText.From(classSource, Encoding.UTF8));
             }
         }
 
-        public string ProcessClass(INamedTypeSymbol classSymbol, List<IPropertySymbol> fields, 
+        public string ProcessClass(INamedTypeSymbol classSymbol, List<IPropertySymbol> props,
+
             INamedTypeSymbol configSectionInterface,
-            INamedTypeSymbol configSectionGenericInterface, GeneratorExecutionContext context)
+            INamedTypeSymbol configSectionGenericInterface,
+            INamedTypeSymbol configInstanceAttr,
+            GeneratorExecutionContext context)
         {
             if (!classSymbol.ContainingSymbol.Equals(classSymbol.ContainingNamespace, SymbolEqualityComparer.Default))
             {
@@ -65,25 +70,45 @@ namespace Snowflake.Configuration.Generators
             StringBuilder source = new StringBuilder($@"
 namespace {namespaceName}
 {{
+    using System.ComponentModel;
+
+    [{configInstanceAttr.ToDisplayString()}(typeof({backingClassName}))]
     public partial interface {classSymbol.Name}
     {{
     
     }}
 
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public sealed class {backingClassName} : {classSymbol.Name}
     {{
-        public {backingClassName}(Snowflake.Configuration.ISectionDescriptor sectionDescriptor, Snowflake.Configuration.IConfigurationValueCollection collection) 
+        readonly Snowflake.Configuration.IConfigurationSectionDescriptor __sectionDescriptor;
+        readonly Snowflake.Configuration.IConfigurationValueCollection __backingCollection;
+
+        public {backingClassName}(Snowflake.Configuration.IConfigurationSectionDescriptor sectionDescriptor, Snowflake.Configuration.IConfigurationValueCollection collection) 
         {{
             this.__sectionDescriptor = sectionDescriptor;
             this.__backingCollection = collection;
-            this.PopulateDefaults();
         }}
-        ISectionDescriptor Descriptor => this.__sectionDescriptor;
-
-    }}
-    
 ");
-            source.Append("} }");
+
+            foreach (var prop in props)
+            {
+                source.Append($@"
+{prop.Type.ToDisplayString()} {classSymbol.Name}.{prop.Name}
+{{
+    get {{ return ({prop.Type.ToDisplayString()})this.__backingCollection[this.__sectionDescriptor, nameof({prop.ToDisplayString()})]?.Value; }}
+    set {{ 
+            var existingValue = this.__backingCollection[this.__sectionDescriptor, nameof({prop.ToDisplayString()})];
+            if (existingValue != null && value != null) {{ existingValue.Value = value; }}
+            if (existingValue != null && value == null && this.__sectionDescriptor[nameof({prop.ToDisplayString()})].Type == typeof(string)) 
+            {{ existingValue.Value = this.__sectionDescriptor[nameof({prop.ToDisplayString()})].Unset; }}
+        }}
+}}
+");
+            }
+
+            
+            source.Append("}}");
             return source.ToString();
         }
 
