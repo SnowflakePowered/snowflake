@@ -13,7 +13,7 @@ namespace Snowflake.Configuration
     /// </summary>
     /// <typeparam name="T">The type of the configuration collection</typeparam>
     public interface IConfigurationCollection<out T> : IConfigurationCollection
-        where T : class, IConfigurationCollection<T>
+        where T : class
     {
         /// <summary>
         /// Gets the configuration instance which holds the configuration sections.

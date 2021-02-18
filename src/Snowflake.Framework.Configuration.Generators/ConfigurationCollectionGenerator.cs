@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Snowflake.Configuration.Generators
 {
     [Generator]
-    public sealed class ConfigurationSectionGenerator : ISourceGenerator
+    public sealed class ConfigurationCollectionGenerator : ISourceGenerator
     {
         public void Execute(GeneratorExecutionContext context)
         {
@@ -20,11 +20,11 @@ namespace Snowflake.Configuration.Generators
                 return;
             var compilation = context.Compilation;
             CSharpParseOptions options = (compilation as CSharpCompilation).SyntaxTrees[0].Options as CSharpParseOptions;
-            INamedTypeSymbol configSectionAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.ConfigurationSectionAttribute");
-            INamedTypeSymbol configOptionAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.ConfigurationOptionAttribute");
+            INamedTypeSymbol configTargetAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.ConfigurationTargetAttribute");
+            INamedTypeSymbol configTargetMember = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.ConfigurationTargetMemberAttribute");
 
-            INamedTypeSymbol configSectionInterface = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationSection");
-            INamedTypeSymbol configSectionGenericInterface = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationSection`1");
+            INamedTypeSymbol configCollectionInterface = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationCollection");
+            INamedTypeSymbol configSectionGenericInterface = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationCollection`1");
             INamedTypeSymbol configInstanceAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Generators.ConfigurationGenerationInstanceAttribute");
             List<IPropertySymbol> symbols = new();
             foreach (var prop in receiver.CandidateProperties)
@@ -32,13 +32,13 @@ namespace Snowflake.Configuration.Generators
                 SemanticModel model = compilation.GetSemanticModel(prop.SyntaxTree);
                 var propSymbol = model.GetDeclaredSymbol(prop);
                 if (!propSymbol.ContainingType.GetAttributes()
-                    .Any(attr => attr.AttributeClass.Equals(configSectionAttr, SymbolEqualityComparer.Default))
+                    .Any(attr => attr.AttributeClass.Equals(configTargetAttribute, SymbolEqualityComparer.Default))
                     && propSymbol.ContainingType.TypeKind != TypeKind.Interface)
                 {
                     continue;
                 }
 
-                var attrs = propSymbol.GetAttributes().Where(attr => attr.AttributeClass.Equals(configOptionAttr, SymbolEqualityComparer.Default));
+                var attrs = propSymbol.GetAttributes().Where(attr => attr.AttributeClass.Equals(configTargetMember, SymbolEqualityComparer.Default));
                 if (attrs.Any())
                 {
                     symbols.Add(propSymbol);
@@ -47,15 +47,15 @@ namespace Snowflake.Configuration.Generators
 
             foreach (IGrouping<INamedTypeSymbol, IPropertySymbol> group in symbols.GroupBy(f => f.ContainingType))
             {
-                string classSource = ProcessClass(group.Key, group.ToList(), configSectionInterface, configSectionGenericInterface, configInstanceAttr, context);
-                context.AddSource($"{group.Key.Name}_ConfigurationSection.cs", SourceText.From(classSource, Encoding.UTF8));
+                string classSource = ProcessClass(group.Key, group.ToList(), configCollectionInterface, configSectionGenericInterface, configInstanceAttr, context);
+                context.AddSource($"{group.Key.Name}_ConfigurationCollection.cs", SourceText.From(classSource, Encoding.UTF8));
             }
         }
 
         public string ProcessClass(INamedTypeSymbol classSymbol, List<IPropertySymbol> props,
 
-            INamedTypeSymbol configSectionInterface,
-            INamedTypeSymbol configSectionGenericInterface,
+            INamedTypeSymbol configCollectionInterface,
+            INamedTypeSymbol configCollectionGenericInterface,
             INamedTypeSymbol configInstanceAttr,
             GeneratorExecutionContext context)
         {
@@ -81,32 +81,30 @@ namespace {namespaceName}
     [EditorBrowsable(EditorBrowsableState.Never)]
     sealed class {backingClassName} : {classSymbol.Name}
     {{
-        readonly Snowflake.Configuration.IConfigurationSectionDescriptor __sectionDescriptor;
         readonly Snowflake.Configuration.IConfigurationValueCollection __backingCollection;
-
-        private {backingClassName}(Snowflake.Configuration.IConfigurationSectionDescriptor sectionDescriptor, Snowflake.Configuration.IConfigurationValueCollection collection) 
+        private {backingClassName}(Snowflake.Configuration.IConfigurationValueCollection collection) 
         {{
-            this.__sectionDescriptor = sectionDescriptor;
             this.__backingCollection = collection;
-        }}
+        
 ");
-
             foreach (var prop in props)
             {
                 source.Append($@"
-{prop.Type.ToDisplayString()} {classSymbol.Name}.{prop.Name}
-{{
-    get {{ return ({prop.Type.ToDisplayString()})this.__backingCollection[this.__sectionDescriptor, nameof({prop.ToDisplayString()})]?.Value; }}
-    set {{ 
-            var existingValue = this.__backingCollection[this.__sectionDescriptor, nameof({prop.ToDisplayString()})];
-            if (existingValue != null && value != null) {{ existingValue.Value = value; }}
-            if (existingValue != null && value == null && this.__sectionDescriptor[nameof({prop.ToDisplayString()})].Type == typeof(string)) 
-            {{ existingValue.Value = this.__sectionDescriptor[nameof({prop.ToDisplayString()})].Unset; }}
-        }}
-}}
+ this.backing__{prop.Name} = new Snowflake.Configuration.ConfigurationSection<{prop.Type.ToDisplayString()}>(this.__backingCollection, ""{prop.Name}""); 
 ");
             }
 
+            source.Append("}");
+            foreach (var prop in props)
+            {
+                source.Append($@"
+private Snowflake.Configuration.ConfigurationSection<{prop.Type.ToDisplayString()}> backing__{prop.Name};
+{prop.Type.ToDisplayString()} {classSymbol.Name}.{prop.Name}
+{{
+    get {{ return this.backing__{prop.Name}.Configuration; }}
+}}
+");
+            }
             
             source.Append("}}");
             return source.ToString();
@@ -129,7 +127,7 @@ namespace {namespaceName}
             //    Debugger.Launch();
             //}
 #endif 
-            context.RegisterForSyntaxNotifications(() => new PropertyAttributeSyntaxReceiver(2));
+            context.RegisterForSyntaxNotifications(() => new PropertyAttributeSyntaxReceiver(1));
         }
     }
 }

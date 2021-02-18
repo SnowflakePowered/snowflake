@@ -1,4 +1,5 @@
 using Snowflake.Configuration;
+using Snowflake.Configuration.Tests;
 using System;
 using Xunit;
 
@@ -11,7 +12,9 @@ namespace Snowflake.Framework.Tests.Configuration
         {
            
             var x = new ConfigurationSection<MyConfiguration>();
+            var y = new ConfigurationCollection<ExampleConfigurationCollection>();
             x.Configuration.MyBoolean = true;
+            
         }
     }
 }

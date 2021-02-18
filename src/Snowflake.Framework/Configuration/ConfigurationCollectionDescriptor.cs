@@ -16,7 +16,7 @@ namespace Snowflake.Configuration
     /// </summary>
     /// <typeparam name="T">The type of the configuration collection</typeparam>
     public class ConfigurationCollectionDescriptor<T> : IConfigurationCollectionDescriptor
-        where T : class, IConfigurationCollection
+        where T : class
     {
         /// <inheritdoc/>
         public IEnumerable<string> SectionKeys { get; }

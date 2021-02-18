@@ -55,7 +55,7 @@ namespace Snowflake.Configuration
         /// <typeparam name="T">The type of the configuration collection</typeparam>
         /// <returns>The collection descriptor for <see cref="T:self"/></returns>
         internal static IConfigurationCollectionDescriptor GetCollectionDescriptor<T>()
-            where T : class, IConfigurationCollection<T>
+            where T : class
         {
             if (collectionDescriptors.ContainsKey(typeof(T)))
             {
