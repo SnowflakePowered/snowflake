@@ -80,7 +80,6 @@ namespace Snowflake.Configuration
             where T : class, IConfigurationSection<T>
         {
             var typedValues = new List<(string, string, IConfigurationValue)>();
-            var descriptor = new ConfigurationSectionDescriptor<T>(sectionName);
            
             foreach (var (option, value) in values)
             {

@@ -16,8 +16,9 @@ namespace Snowflake.Configuration.Generators
     {
         public void Execute(GeneratorExecutionContext context)
         {
-            if (!(context.SyntaxReceiver is PropertyAttributeSyntaxReceiver receiver))
+            if (context.SyntaxReceiver is not ConfigurationTemplateInterfaceSyntaxReceiver receiver)
                 return;
+            bool errorOccured = false;
             var compilation = context.Compilation;
             CSharpParseOptions options = (compilation as CSharpCompilation).SyntaxTrees[0].Options as CSharpParseOptions;
             INamedTypeSymbol configSectionAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.ConfigurationSectionAttribute");
@@ -27,23 +28,71 @@ namespace Snowflake.Configuration.Generators
             INamedTypeSymbol configSectionGenericInterface = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationSection`1");
             INamedTypeSymbol configInstanceAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Generators.ConfigurationGenerationInstanceAttribute");
             List<IPropertySymbol> symbols = new();
-            foreach (var prop in receiver.CandidateProperties)
+
+            foreach (var iface in receiver.CandidateInterfaces)
             {
-                SemanticModel model = compilation.GetSemanticModel(prop.SyntaxTree);
-                var propSymbol = model.GetDeclaredSymbol(prop);
-                if (!propSymbol.ContainingType.GetAttributes()
-                    .Any(attr => attr.AttributeClass.Equals(configSectionAttr, SymbolEqualityComparer.Default))
-                    && propSymbol.ContainingType.TypeKind != TypeKind.Interface)
+                var model = compilation.GetSemanticModel(iface.SyntaxTree);
+                var ifaceSymbol = model.GetDeclaredSymbol(iface);
+                var memberSyntax = iface.Members;
+
+                if (memberSyntax.FirstOrDefault(m => m is not PropertyDeclarationSyntax) is MemberDeclarationSyntax badSyntax)
                 {
+                    var badSymbol = model.GetDeclaredSymbol(badSyntax);
+                    context.ReportError(1004, "Invalid members in template interface.",
+                        $"Template interface '{ifaceSymbol.Name}' must only declare property members. " +
+                        $"{badSymbol.Kind} '{ifaceSymbol.Name}.{badSymbol?.Name}' is not a property.",
+                        badSyntax.GetLocation(), ref errorOccured);
                     continue;
                 }
 
-                var attrs = propSymbol.GetAttributes().Where(attr => attr.AttributeClass.Equals(configOptionAttr, SymbolEqualityComparer.Default));
-                if (attrs.Any())
+                if (!iface.Modifiers.Any(p => p.IsKind(SyntaxKind.PartialKeyword)))
                 {
+                    context.ReportError(1001,
+                               "Unextendible template interface",
+                               $"Template interface '{ifaceSymbol.Name}' must be marked partial.",
+                               iface.GetLocation(), ref errorOccured);
+                    continue;
+                }
+
+                foreach (var prop in memberSyntax.Cast<PropertyDeclarationSyntax>())
+                {
+                    var propSymbol = model.GetDeclaredSymbol(prop);
+                    if (!propSymbol.ContainingType.GetAttributes()
+                        .Any(attr => attr.AttributeClass.Equals(configSectionAttr, SymbolEqualityComparer.Default))
+                        && propSymbol.ContainingType.TypeKind != TypeKind.Interface)
+                    {
+                        continue;
+                    }
+
+                    var attrs = propSymbol.GetAttributes().Where(attr => attr.AttributeClass.Equals(configOptionAttr, SymbolEqualityComparer.Default));
+                    if (!attrs.Any())
+                    {
+                        context.ReportError(1013, "Undecorated section property member",
+                                   $"Property {propSymbol.Name} must be decorated with a ConfigurationOptionAttribute.",
+                               prop.GetLocation(), ref errorOccured);
+                        continue;
+                    }
+
+                    if (attrs.First().ConstructorArguments.Length == 1)
+                    {
+                        // todo: check if GUID
+                    }
+
+                    var defaultValue = attrs.First().ConstructorArguments.Skip(1).First();
+                    if (!SymbolEqualityComparer.Default.Equals(defaultValue.Type, propSymbol.Type))
+                    {
+                        context.ReportError(1014, "Mismatched default value type",
+                                   $"Property {propSymbol.Name} is of type '{propSymbol.Type}' but has default value of type '{defaultValue.Type}'.",
+                               prop.GetLocation(), ref errorOccured);
+                        continue;
+                    }
+
                     symbols.Add(propSymbol);
                 }
             }
+
+            if (errorOccured)
+                return;
 
             foreach (IGrouping<INamedTypeSymbol, IPropertySymbol> group in symbols.GroupBy(f => f.ContainingType))
             {
@@ -65,21 +114,26 @@ namespace Snowflake.Configuration.Generators
             }
 
             string namespaceName = classSymbol.ContainingNamespace.ToDisplayString();
+            string generatedNamespaceName = $"Snowflake.Configuration.GeneratedConfigurationProxies.Section_{namespaceName}";
+
             string tag = RandomString(6);
             string backingClassName = $"{classSymbol.Name}Proxy_{tag}";
             StringBuilder source = new StringBuilder($@"
 namespace {namespaceName}
 {{
-    using System.ComponentModel;
-
-    [{configInstanceAttr.ToDisplayString()}(typeof({backingClassName}))]
+    [{configInstanceAttr.ToDisplayString()}(typeof({generatedNamespaceName}.{backingClassName}))]
     public partial interface {classSymbol.Name}
     {{
     
     }}
 
+}}
+
+namespace {generatedNamespaceName}
+{{
+    using System.ComponentModel;
     [EditorBrowsable(EditorBrowsableState.Never)]
-    sealed class {backingClassName} : {classSymbol.Name}
+    sealed class {backingClassName} : {classSymbol.ToDisplayString()}
     {{
         readonly Snowflake.Configuration.IConfigurationSectionDescriptor __sectionDescriptor;
         readonly Snowflake.Configuration.IConfigurationValueCollection __backingCollection;
@@ -94,7 +148,7 @@ namespace {namespaceName}
             foreach (var prop in props)
             {
                 source.Append($@"
-{prop.Type.ToDisplayString()} {classSymbol.Name}.{prop.Name}
+{prop.Type.ToDisplayString()} {classSymbol.ToDisplayString()}.{prop.Name}
 {{
     get {{ return ({prop.Type.ToDisplayString()})this.__backingCollection[this.__sectionDescriptor, nameof({prop.ToDisplayString()})]?.Value; }}
     set {{ 
@@ -107,7 +161,7 @@ namespace {namespaceName}
 ");
             }
 
-            
+
             source.Append("}}");
             return source.ToString();
         }
@@ -129,7 +183,7 @@ namespace {namespaceName}
             //    Debugger.Launch();
             //}
 #endif 
-            context.RegisterForSyntaxNotifications(() => new PropertyAttributeSyntaxReceiver(2));
+            context.RegisterForSyntaxNotifications(() => new ConfigurationTemplateInterfaceSyntaxReceiver("ConfigurationSection"));
         }
     }
 }

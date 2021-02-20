@@ -10,7 +10,17 @@ namespace Snowflake.Framework.Tests.Configuration
     [ConfigurationSection("myconfig", "myconfig")]
     public partial interface MyConfiguration
     {
-        [ConfigurationOption("myOption", false)]
+        [ConfigurationOption("Hello", true)]
         bool MyBoolean { get; set; }
+
+        [ConfigurationOption("myenum", MyEnum.World)]
+        MyEnum MyEnum { get; set; }
+
+    }
+
+    public enum MyEnum
+    {
+        Hello,
+        World
     }
 }

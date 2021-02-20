@@ -20,6 +20,5 @@ namespace Snowflake.Configuration.Tests
     {
         [ConfigurationTargetMember("#dolphin")]
         MyConfiguration ExampleConfiguration { get; }
-
     }
 }
