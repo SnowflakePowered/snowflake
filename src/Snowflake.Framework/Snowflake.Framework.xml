@@ -19,12 +19,6 @@
         <member name="P:Snowflake.Configuration.ConfigurationCollection`1.Item(System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Configuration.CollectionCircularInterceptor`1.Intercept(Castle.DynamicProxy.IInvocation)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.CollectionInterceptor`1.Intercept(Castle.DynamicProxy.IInvocation)">
-            <inheritdoc/>
-        </member>
         <member name="T:Snowflake.Configuration.ConfigurationCollectionDescriptor`1">
             <summary>
             Default implementation for <see cref="T:Snowflake.Configuration.IConfigurationCollectionDescriptor"/>

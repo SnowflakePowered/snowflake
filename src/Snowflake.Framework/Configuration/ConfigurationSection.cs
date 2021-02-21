@@ -23,21 +23,20 @@ namespace Snowflake.Configuration
 
         /// <inheritdoc/>
         public IReadOnlyDictionary<string, IConfigurationValue> Values
-            => ImmutableDictionary.CreateRange(this.configurationInterceptor.Values[this.Descriptor]);
+            => ImmutableDictionary.CreateRange(this.ValueCollection[this.Descriptor]);
 
         public IConfigurationValueCollection ValueCollection { get; }
 
         /// <inheritdoc/>
         public object? this[string key]
         {
-            get { return configurationInterceptor.Values[this.Descriptor, key]?.Value; }
+            //todo: make work
+            get => this.ValueCollection[this.Descriptor, key]?.Value; 
             set
             {
-                this.configurationInterceptor.Values[this.Descriptor, key]!.Value = value!;
+                this.ValueCollection[this.Descriptor, key]!.Value = value!;
             }
         }
-
-        private readonly ConfigurationInterceptor configurationInterceptor;
 
         public ConfigurationSection()
             : this(new ConfigurationValueCollection(), typeof(T).Name)
@@ -47,7 +46,6 @@ namespace Snowflake.Configuration
         public ConfigurationSection(IConfigurationValueCollection values, string sectionKey)
         {
             this.Descriptor = new ConfigurationSectionDescriptor<T>(sectionKey);
-            this.configurationInterceptor = new ConfigurationInterceptor(this.Descriptor, values);
             // if this is a CVC base implementation, we should ensure defaults.
             (values as ConfigurationValueCollection)?.EnsureSectionDefaults(this.Descriptor);
             this.ValueCollection = values;
@@ -60,11 +58,6 @@ namespace Snowflake.Configuration
                 (T)Instantiate.CreateInstance(genInstance.InstanceType,
                     new[] { typeof(IConfigurationSectionDescriptor), typeof(IConfigurationValueCollection) },
                     Expression.Constant(this.Descriptor), Expression.Constant(this.ValueCollection));
-            //this.Configuration =
-            //    ConfigurationDescriptorCache
-            //        .GetProxyGenerator()
-            //        .CreateInterfaceProxyWithoutTarget<T>(new ConfigurationCircularInterceptor<T>(this),
-            //            configurationInterceptor);
         }
 
         /// <inheritdoc/>

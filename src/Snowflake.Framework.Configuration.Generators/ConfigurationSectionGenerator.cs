@@ -27,6 +27,7 @@ namespace Snowflake.Configuration.Generators
             INamedTypeSymbol configSectionInterface = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationSection");
             INamedTypeSymbol configSectionGenericInterface = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationSection`1");
             INamedTypeSymbol configInstanceAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Generators.ConfigurationGenerationInstanceAttribute");
+            INamedTypeSymbol guidType = compilation.GetTypeByMetadataName("System.Guid");
             List<IPropertySymbol> symbols = new();
 
             foreach (var iface in receiver.CandidateInterfaces)
@@ -38,7 +39,7 @@ namespace Snowflake.Configuration.Generators
                 if (memberSyntax.FirstOrDefault(m => m is not PropertyDeclarationSyntax) is MemberDeclarationSyntax badSyntax)
                 {
                     var badSymbol = model.GetDeclaredSymbol(badSyntax);
-                    context.ReportError(1004, "Invalid members in template interface.",
+                    context.ReportError(DiagnosticError.InvalidMembers, "Invalid members in template interface.",
                         $"Template interface '{ifaceSymbol.Name}' must only declare property members. " +
                         $"{badSymbol.Kind} '{ifaceSymbol.Name}.{badSymbol?.Name}' is not a property.",
                         badSyntax.GetLocation(), ref errorOccured);
@@ -47,7 +48,7 @@ namespace Snowflake.Configuration.Generators
 
                 if (!iface.Modifiers.Any(p => p.IsKind(SyntaxKind.PartialKeyword)))
                 {
-                    context.ReportError(1001,
+                    context.ReportError(DiagnosticError.UnextendibleInterface,
                                "Unextendible template interface",
                                $"Template interface '{ifaceSymbol.Name}' must be marked partial.",
                                iface.GetLocation(), ref errorOccured);
@@ -57,33 +58,57 @@ namespace Snowflake.Configuration.Generators
                 foreach (var prop in memberSyntax.Cast<PropertyDeclarationSyntax>())
                 {
                     var propSymbol = model.GetDeclaredSymbol(prop);
-                    if (!propSymbol.ContainingType.GetAttributes()
-                        .Any(attr => attr.AttributeClass.Equals(configSectionAttr, SymbolEqualityComparer.Default))
-                        && propSymbol.ContainingType.TypeKind != TypeKind.Interface)
+
+                    if (prop.AccessorList.Accessors.Any(a => a.Body != null || a.ExpressionBody != null))
                     {
+                        context.ReportError(DiagnosticError.UnexpectedBody, "Unexpected property body",
+                                  $"Property {propSymbol.Name} can not declare a body.",
+                              prop.GetLocation(), ref errorOccured);
+                        continue;
+                    }
+
+                    if (!prop.AccessorList.Accessors.Any(a => a.IsKind(SyntaxKind.SetAccessorDeclaration)))
+                    {
+                        context.ReportError(DiagnosticError.MissingSetter, "Missing set accessor",
+                                  $"Property {propSymbol.Name} must declare a setter.",
+                              prop.GetLocation(), ref errorOccured);
+                        continue;
+                    }
+
+                    if (!prop.AccessorList.Accessors.Any(a => a.IsKind(SyntaxKind.GetAccessorDeclaration)))
+                    {
+                        context.ReportError(DiagnosticError.MissingSetter, "Missing get accessor",
+                                $"Property {propSymbol.Name} must declare a getter.",
+                            prop.GetLocation(), ref errorOccured);
                         continue;
                     }
 
                     var attrs = propSymbol.GetAttributes().Where(attr => attr.AttributeClass.Equals(configOptionAttr, SymbolEqualityComparer.Default));
                     if (!attrs.Any())
                     {
-                        context.ReportError(1013, "Undecorated section property member",
+                        context.ReportError(DiagnosticError.UndecoratedProperty, "Undecorated section property member",
                                    $"Property {propSymbol.Name} must be decorated with a ConfigurationOptionAttribute.",
                                prop.GetLocation(), ref errorOccured);
                         continue;
                     }
 
-                    if (attrs.First().ConstructorArguments.Length == 1)
+                    // If it has a second arg, then it must not be GUID-based 
+                    if (attrs.First().ConstructorArguments.Skip(1).FirstOrDefault().Type is ITypeSymbol defaultType)
                     {
-                        // todo: check if GUID
+                        if (!SymbolEqualityComparer.Default.Equals(defaultType, propSymbol.Type))
+                        {
+                            context.ReportError(DiagnosticError.MismatchedType, "Mismatched default value type",
+                                    $"Property {propSymbol.Name} is of type '{propSymbol.Type}' but has default value of type '{defaultType}'.",
+                                    prop.GetLocation(), ref errorOccured);
+                            continue;
+                        }
+                        //todo check enums are all decorated
                     }
-
-                    var defaultValue = attrs.First().ConstructorArguments.Skip(1).First();
-                    if (!SymbolEqualityComparer.Default.Equals(defaultValue.Type, propSymbol.Type))
+                    else if (attrs.First().ConstructorArguments.Length == 1 && !SymbolEqualityComparer.Default.Equals(propSymbol.Type, guidType))
                     {
-                        context.ReportError(1014, "Mismatched default value type",
-                                   $"Property {propSymbol.Name} is of type '{propSymbol.Type}' but has default value of type '{defaultValue.Type}'.",
-                               prop.GetLocation(), ref errorOccured);
+                        context.ReportError(DiagnosticError.MismatchedType, "Mismatched default value type",
+                                $"Property {propSymbol.Name} is of type '{propSymbol.Type}' but needs to be of type '{guidType}'.",
+                                prop.GetLocation(), ref errorOccured);
                         continue;
                     }
 
@@ -110,7 +135,13 @@ namespace Snowflake.Configuration.Generators
         {
             if (!classSymbol.ContainingSymbol.Equals(classSymbol.ContainingNamespace, SymbolEqualityComparer.Default))
             {
-                return null; //TODO: issue a diagnostic that it must be top level
+                bool errorOccured = false;
+                context.ReportError(DiagnosticError.NotTopLevel,
+                           "Template interface not top level.",
+                           $"Collection template interface {classSymbol.Name} must be defined within an enclosing top-level namespace.",
+                           classSymbol.Locations.First(), ref errorOccured);
+
+                return null;
             }
 
             string namespaceName = classSymbol.ContainingNamespace.ToDisplayString();

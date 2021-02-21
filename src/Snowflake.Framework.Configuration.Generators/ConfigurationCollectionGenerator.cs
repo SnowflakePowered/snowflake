@@ -21,6 +21,7 @@ namespace Snowflake.Configuration.Generators
             CSharpParseOptions options = (compilation as CSharpCompilation).SyntaxTrees[0].Options as CSharpParseOptions;
             INamedTypeSymbol configTargetAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.ConfigurationTargetAttribute");
             INamedTypeSymbol configTargetMember = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.ConfigurationTargetMemberAttribute");
+            INamedTypeSymbol configSectionAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.ConfigurationSectionAttribute");
 
             INamedTypeSymbol configCollectionInterface = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationCollection");
             INamedTypeSymbol configSectionGenericInterface = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationCollection`1");
@@ -36,7 +37,7 @@ namespace Snowflake.Configuration.Generators
                 if (memberSyntax.FirstOrDefault(m => m is not PropertyDeclarationSyntax) is MemberDeclarationSyntax badSyntax)
                 {
                     var badSymbol = model.GetDeclaredSymbol(badSyntax);
-                    context.ReportError(1004, "Invalid members in template interface.", 
+                    context.ReportError(DiagnosticError.InvalidMembers, "Invalid members in template interface.", 
                         $"Template interface '{ifaceSymbol.Name}' must only declare property members. " +
                         $"{badSymbol.Kind} '{ifaceSymbol.Name}.{badSymbol?.Name}' is not a property.",
                         badSyntax.GetLocation(), ref errorOccured);
@@ -45,7 +46,7 @@ namespace Snowflake.Configuration.Generators
 
                 if (!iface.Modifiers.Any(p => p.IsKind(SyntaxKind.PartialKeyword)))
                 {
-                    context.ReportError(1001,
+                    context.ReportError(DiagnosticError.UnextendibleInterface,
                                "Unextendible template interface",
                                $"Template interface '{ifaceSymbol.Name}' must be marked partial.",
                                iface.GetLocation(), ref errorOccured);
@@ -58,13 +59,36 @@ namespace Snowflake.Configuration.Generators
                     
                     // todo: error check prop
                     // (only getter? idk, what are restritions on configcollections?)
-
-                    var attrs = propSymbol.GetAttributes()
-                        .Where(attr => attr.AttributeClass.Equals(configTargetMember, SymbolEqualityComparer.Default));
-                    if (attrs.Any())
+                    if (prop.AccessorList.Accessors.Any(x => x.IsKind(SyntaxKind.SetAccessorDeclaration)))
                     {
-                        symbols.Add(propSymbol);
+                        context.ReportError(DiagnosticError.UnexpectedSetter,
+                            "Unexpected setter in template property",
+                            $"Collection template property {propSymbol.Name} can not have a setter.", iface.GetLocation(), ref errorOccured);
                     }
+
+                    if (propSymbol.Type.TypeKind != TypeKind.Interface)
+                    {
+                        context.ReportError(DiagnosticError.NotAConfigurationSection,
+                           "Configuration collection template members must be interfaces.",
+                           $"'{propSymbol.Name}' is not an interface.", iface.GetLocation(), ref errorOccured);
+                        continue;
+                    }
+
+                    if (!propSymbol.Type.DeclaringSyntaxReferences
+                        .Select(s => s.GetSyntax())
+                        .Where(s => s is InterfaceDeclarationSyntax)
+                        .Cast<InterfaceDeclarationSyntax>()
+                        .Select(i => compilation.GetSemanticModel(i.SyntaxTree).GetDeclaredSymbol(i))
+                        .SelectMany(i => i.GetAttributes())
+                        .Any(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, configSectionAttr)))
+                    {
+                        context.ReportError(DiagnosticError.NotAConfigurationSection,
+                           "Configuration collection template members must be marked with ConfigurationSectionAttribute.",
+                           $"Template type '{propSymbol.Type}' for property '{propSymbol.Name}' is not marked with ConfigurationSectionAttribute.", prop.GetLocation(), ref errorOccured);
+                        continue;
+                    }
+
+                    symbols.Add(propSymbol);
                 }
             }
 
@@ -87,7 +111,13 @@ namespace Snowflake.Configuration.Generators
         {
             if (!classSymbol.ContainingSymbol.Equals(classSymbol.ContainingNamespace, SymbolEqualityComparer.Default))
             {
-                return null; //TODO: issue a diagnostic that it must be top level
+                bool errorOccured = false;
+                context.ReportError(DiagnosticError.NotTopLevel,
+                           "Template interface not top level.",
+                           $"Collection template interface {classSymbol.Name} must be defined within an enclosing top-level namespace.",
+                           classSymbol.Locations.First(), ref errorOccured);
+
+                return null;
             }
 
             string namespaceName = classSymbol.ContainingNamespace.ToDisplayString();
@@ -99,6 +129,7 @@ namespace {namespaceName}
 {{
     [{configInstanceAttr.ToDisplayString()}(typeof({generatedNamespaceName}.{backingClassName}))]
     public partial interface {classSymbol.Name}
+        : Snowflake.Configuration.Generators.IConfigurationCollectionGeneratedProxy
     {{
     
     }}
@@ -107,20 +138,28 @@ namespace {namespaceName}
 namespace {generatedNamespaceName}
 {{
     using System.ComponentModel;
+    using System.Collections.Generic;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     sealed class {backingClassName} : {classSymbol.ToDisplayString()}
     {{
         readonly Snowflake.Configuration.IConfigurationValueCollection __backingCollection;
+        readonly Dictionary<string, Snowflake.Configuration.IConfigurationSection> __configurationSections; 
+
+        IReadOnlyDictionary<string, Snowflake.Configuration.IConfigurationSection> 
+            Snowflake.Configuration.Generators.IConfigurationCollectionGeneratedProxy.Values => __configurationSections;
+
         private {backingClassName}(Snowflake.Configuration.IConfigurationValueCollection collection) 
         {{
             this.__backingCollection = collection;
+            this.__configurationSections = new Dictionary<string, Snowflake.Configuration.IConfigurationSection>();
         
 ");
             foreach (var prop in props)
             {
                 source.Append($@"
- this.backing__{prop.Name} = new Snowflake.Configuration.ConfigurationSection<{prop.Type.ToDisplayString()}>(this.__backingCollection, ""{prop.Name}""); 
+this.backing__{prop.Name} = new Snowflake.Configuration.ConfigurationSection<{prop.Type.ToDisplayString()}>(this.__backingCollection, ""{prop.Name}""); 
+this.__configurationSections[""{prop.Name}""] = this.backing__{prop.Name};
 ");
             }
 
@@ -158,7 +197,7 @@ private Snowflake.Configuration.ConfigurationSection<{prop.Type.ToDisplayString(
             //}
 #endif 
             // todo: explicit configuration collection attribute
-            context.RegisterForSyntaxNotifications(() => new ConfigurationTemplateInterfaceSyntaxReceiver("ConfigurationTarget"));
+            context.RegisterForSyntaxNotifications(() => new ConfigurationTemplateInterfaceSyntaxReceiver("ConfigurationCollection"));
         }
     }
 }
