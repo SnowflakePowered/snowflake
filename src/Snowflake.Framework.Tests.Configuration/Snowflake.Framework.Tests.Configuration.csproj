@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Snowflake.Framework.Configuration.Generators\Snowflake.Framework.Configuration.Generators.csproj"
+    <ProjectReference Include="..\Snowflake.Framework.Generators\Snowflake.Framework.Generators.csproj"
                       OutputItemType="Analyzer"
                       ReferenceOutputAssembly="false"
                       />
