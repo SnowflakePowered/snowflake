@@ -29,7 +29,9 @@ namespace Snowflake.Configuration.Generators
             INamedTypeSymbol configSectionGenericInterface = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationSection`1");
             INamedTypeSymbol configInstanceAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Generators.ConfigurationGenerationInstanceAttribute");
             INamedTypeSymbol guidType = compilation.GetTypeByMetadataName("System.Guid");
+            INamedTypeSymbol selectionOptionAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.SelectionOptionAttribute");
             INamedTypeSymbol deviceCapabilityType = compilation.GetTypeByMetadataName("Snowflake.Input.Device.DeviceCapability");
+
             List<IPropertySymbol> configOptionSymbols = new();
             List<IPropertySymbol> inputOptionSymbols = new();
 
@@ -101,7 +103,8 @@ namespace Snowflake.Configuration.Generators
 
                     if (configOptionAttrs.Any())
                     {
-                        ConfigurationSectionGenerator.VerifyOptionProperty(context, inputTemplateAttrs.First(), prop, propSymbol, guidType, ref errorOccured);
+                        ConfigurationSectionGenerator
+                            .VerifyOptionProperty(context, configOptionAttrs.First(), prop, propSymbol, guidType, selectionOptionAttr, ref errorOccured);
                         if (!errorOccured)
                             configOptionSymbols.Add(propSymbol);
                     } 
@@ -221,7 +224,7 @@ namespace {generatedNamespaceName}
             //    Debugger.Launch();
             //}
 #endif 
-            context.RegisterForSyntaxNotifications(() => new ConfigurationTemplateInterfaceSyntaxReceiver("ConfigurationSection"));
+            context.RegisterForSyntaxNotifications(() => new ConfigurationTemplateInterfaceSyntaxReceiver("InputTemplate"));
         }
     }
 }

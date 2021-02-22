@@ -32,5 +32,6 @@ namespace Snowflake.Configuration.Generators
         MissingGetter = 1008,
         NotAConfigurationSection = 1009,
         NotTopLevel = 1010,
+        UndecoratedEnum = 1011,
     }
 }

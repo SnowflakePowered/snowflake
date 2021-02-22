@@ -28,6 +28,7 @@ namespace Snowflake.Configuration.Generators
             INamedTypeSymbol configSectionGenericInterface = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationSection`1");
             INamedTypeSymbol configInstanceAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Generators.ConfigurationGenerationInstanceAttribute");
             INamedTypeSymbol guidType = compilation.GetTypeByMetadataName("System.Guid");
+            INamedTypeSymbol selectionOptionAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.SelectionOptionAttribute");
             List<IPropertySymbol> symbols = new();
 
             foreach (var iface in receiver.CandidateInterfaces)
@@ -93,7 +94,7 @@ namespace Snowflake.Configuration.Generators
                     }
 
                     var attr = attrs.First();
-                    ConfigurationSectionGenerator.VerifyOptionProperty(context, attr, prop, propSymbol, guidType, ref errorOccured);
+                    ConfigurationSectionGenerator.VerifyOptionProperty(context, attr, prop, propSymbol, guidType, selectionOptionAttr, ref errorOccured);
                     if (!errorOccured) 
                         symbols.Add(propSymbol);
                 }
@@ -185,6 +186,7 @@ namespace {generatedNamespaceName}
             GeneratorExecutionContext context,
             AttributeData attr, PropertyDeclarationSyntax prop, IPropertySymbol propSymbol,
             INamedTypeSymbol guidType,
+            INamedTypeSymbol selectionOptionAttr,
             ref bool errorOccured)
         {
             // If it has a second arg, then it must not be GUID-based 
@@ -196,7 +198,27 @@ namespace {generatedNamespaceName}
                             $"Property {propSymbol.Name} is of type '{propSymbol.Type}' but has default value of type '{defaultType}'.",
                             prop.GetLocation(), ref errorOccured);
                 }
-                //todo check enums are all decorated
+                
+                if (propSymbol.Type.TypeKind == TypeKind.Enum)
+                {
+                    var enumDecls = propSymbol.Type.DeclaringSyntaxReferences.Select(s => s.GetSyntax())
+                        .Cast<EnumDeclarationSyntax>();
+                    foreach (var enumDecl in enumDecls)
+                    {
+                        var enumModel = context.Compilation.GetSemanticModel(enumDecl.SyntaxTree);
+                        var enumSymbol = enumModel.GetDeclaredSymbol(enumDecl);
+                        foreach (var enumMember in enumDecl.Members)
+                        {
+                            var memberSymbol = enumModel.GetDeclaredSymbol(enumMember);
+                            if (!memberSymbol.GetAttributes().Any(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, selectionOptionAttr)))
+                            {
+                                context.ReportError(DiagnosticError.UndecoratedProperty, "Undecorated selection option enum member",
+                                    $"Enum member '{memberSymbol.Name}' must be decorated with SelectionOptionAttribute.",
+                                    enumMember.GetLocation(), ref errorOccured);
+                            }
+                        }
+                    }
+                }
             }
             else if (attr.ConstructorArguments.Length == 1 && !SymbolEqualityComparer.Default.Equals(propSymbol.Type, guidType))
             {
@@ -221,7 +243,7 @@ namespace {generatedNamespaceName}
             //    Debugger.Launch();
             //}
 #endif 
-            context.RegisterForSyntaxNotifications(() => new ConfigurationTemplateInterfaceSyntaxReceiver("InputTemplate"));
+            context.RegisterForSyntaxNotifications(() => new ConfigurationTemplateInterfaceSyntaxReceiver("ConfigurationSection"));
         }
     }
 }

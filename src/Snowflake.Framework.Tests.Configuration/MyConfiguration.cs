@@ -13,8 +13,8 @@ namespace Snowflake.Framework.Tests.Configuration
         [ConfigurationOption("Hello", true)]
         bool MyBoolean { get; set; }
 
-        //[ConfigurationOption("myenum", MyEnum.World)]
-        //MyEnum MyEnum { get; set; }
+        [ConfigurationOption("myenum", MyEnum.World)]
+        MyEnum MyEnum { get; set; }
 
         [ConfigurationOption("ss")]
         Guid MyResource { get; set; }
@@ -23,7 +23,9 @@ namespace Snowflake.Framework.Tests.Configuration
 
     public enum MyEnum
     {
+        [SelectionOption("hello")]
         Hello,
+        [SelectionOption("world")]
         World
     }
 }
