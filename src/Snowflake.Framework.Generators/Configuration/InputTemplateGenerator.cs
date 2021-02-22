@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Snowflake.Configuration.Generators
 {
     [Generator]
-    public sealed class ConfigurationSectionGenerator : ISourceGenerator
+    public sealed class InputTemplateGenerator : ISourceGenerator
     {
         public void Execute(GeneratorExecutionContext context)
         {
@@ -23,12 +23,15 @@ namespace Snowflake.Configuration.Generators
             CSharpParseOptions options = (compilation as CSharpCompilation).SyntaxTrees[0].Options as CSharpParseOptions;
             INamedTypeSymbol configSectionAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.ConfigurationSectionAttribute");
             INamedTypeSymbol configOptionAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.ConfigurationOptionAttribute");
+            INamedTypeSymbol inputOptionAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Input.InputOptionAttribute");
 
             INamedTypeSymbol configSectionInterface = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationSection");
             INamedTypeSymbol configSectionGenericInterface = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationSection`1");
             INamedTypeSymbol configInstanceAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Generators.ConfigurationGenerationInstanceAttribute");
             INamedTypeSymbol guidType = compilation.GetTypeByMetadataName("System.Guid");
-            List<IPropertySymbol> symbols = new();
+            INamedTypeSymbol deviceCapabilityType = compilation.GetTypeByMetadataName("Snowflake.Input.Device.DeviceCapability");
+            List<IPropertySymbol> configOptionSymbols = new();
+            List<IPropertySymbol> inputOptionSymbols = new();
 
             foreach (var iface in receiver.CandidateInterfaces)
             {
@@ -83,8 +86,12 @@ namespace Snowflake.Configuration.Generators
                         continue;
                     }
 
-                    var attrs = propSymbol.GetAttributes().Where(attr => attr.AttributeClass.Equals(configOptionAttr, SymbolEqualityComparer.Default));
-                    if (!attrs.Any())
+                    var configOptionAttrs = propSymbol.GetAttributes()
+                            .Where(attr => attr.AttributeClass.Equals(configOptionAttr, SymbolEqualityComparer.Default));
+                    var inputTemplateAttrs = propSymbol.GetAttributes()
+                            .Where(attr => attr.AttributeClass.Equals(inputOptionAttr, SymbolEqualityComparer.Default));
+
+                    if (!configOptionAttrs.Any() && !inputTemplateAttrs.Any())
                     {
                         context.ReportError(DiagnosticError.UndecoratedProperty, "Undecorated section property member",
                                    $"Property {propSymbol.Name} must be decorated with a ConfigurationOptionAttribute.",
@@ -92,23 +99,41 @@ namespace Snowflake.Configuration.Generators
                         continue;
                     }
 
-                    var attr = attrs.First();
-                    ConfigurationSectionGenerator.VerifyOptionProperty(context, attr, prop, propSymbol, guidType, ref errorOccured);
-                    if (!errorOccured) 
-                        symbols.Add(propSymbol);
+                    if (configOptionAttrs.Any())
+                    {
+                        ConfigurationSectionGenerator.VerifyOptionProperty(context, inputTemplateAttrs.First(), prop, propSymbol, guidType, ref errorOccured);
+                        if (!errorOccured)
+                            configOptionSymbols.Add(propSymbol);
+                    } 
+                    else if (inputTemplateAttrs.Any())
+                    {
+                        InputTemplateGenerator.VerifyOptionProperty(context, inputTemplateAttrs.First(), prop, propSymbol, deviceCapabilityType, ref errorOccured);
+                        if (!errorOccured)
+                            inputOptionSymbols.Add(propSymbol);
+                    }
+
+              
                 }
 
                 if (errorOccured)
                     return;
-
-                string classSource = ProcessClass(ifaceSymbol, symbols, configSectionInterface, configSectionGenericInterface, configInstanceAttr, context);
-                context.AddSource($"{ifaceSymbol.Name}_ConfigurationSection.cs", SourceText.From(classSource, Encoding.UTF8));
+                string classSource = ProcessClass(ifaceSymbol, configOptionSymbols, inputOptionSymbols, configSectionInterface, configSectionGenericInterface, configInstanceAttr, context);
+                context.AddSource($"{ifaceSymbol.Name}_InputTemplateSecion.cs", SourceText.From(classSource, Encoding.UTF8));
 
             }
         }
 
-        
-        public string ProcessClass(INamedTypeSymbol classSymbol, List<IPropertySymbol> props,
+        public static void VerifyOptionProperty(
+            GeneratorExecutionContext context,
+            AttributeData attr, PropertyDeclarationSyntax prop, IPropertySymbol propSymbol,
+            INamedTypeSymbol deviceCapabilityType,
+            ref bool errorOccured)
+        {
+            
+        }
+
+        public string ProcessClass(INamedTypeSymbol classSymbol, List<IPropertySymbol> configOptionProps,
+            List<IPropertySymbol> inputOptionProps,
 
             INamedTypeSymbol configSectionInterface,
             INamedTypeSymbol configSectionGenericInterface,
@@ -158,7 +183,7 @@ namespace {generatedNamespaceName}
         }}
 ");
 
-            foreach (var prop in props)
+            foreach (var prop in configOptionProps)
             {
                 source.Append($@"
 {prop.Type.ToDisplayString()} {classSymbol.ToDisplayString()}.{prop.Name}
@@ -181,31 +206,6 @@ namespace {generatedNamespaceName}
 
         private static Random random = new Random();
 
-        public static void VerifyOptionProperty(
-            GeneratorExecutionContext context,
-            AttributeData attr, PropertyDeclarationSyntax prop, IPropertySymbol propSymbol,
-            INamedTypeSymbol guidType,
-            ref bool errorOccured)
-        {
-            // If it has a second arg, then it must not be GUID-based 
-            if (attr.ConstructorArguments.Skip(1).FirstOrDefault().Type is ITypeSymbol defaultType)
-            {
-                if (!SymbolEqualityComparer.Default.Equals(defaultType, propSymbol.Type))
-                {
-                    context.ReportError(DiagnosticError.MismatchedType, "Mismatched default value type",
-                            $"Property {propSymbol.Name} is of type '{propSymbol.Type}' but has default value of type '{defaultType}'.",
-                            prop.GetLocation(), ref errorOccured);
-                }
-                //todo check enums are all decorated
-            }
-            else if (attr.ConstructorArguments.Length == 1 && !SymbolEqualityComparer.Default.Equals(propSymbol.Type, guidType))
-            {
-                context.ReportError(DiagnosticError.MismatchedType, "Mismatched default value type",
-                        $"Property {propSymbol.Name} is of type '{propSymbol.Type}' but needs to be of type '{guidType}'.",
-                        prop.GetLocation(), ref errorOccured);
-            }
-        }
-
         public static string RandomString(int length)
         {
             const string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -221,7 +221,7 @@ namespace {generatedNamespaceName}
             //    Debugger.Launch();
             //}
 #endif 
-            context.RegisterForSyntaxNotifications(() => new ConfigurationTemplateInterfaceSyntaxReceiver("InputTemplate"));
+            context.RegisterForSyntaxNotifications(() => new ConfigurationTemplateInterfaceSyntaxReceiver("ConfigurationSection"));
         }
     }
 }
