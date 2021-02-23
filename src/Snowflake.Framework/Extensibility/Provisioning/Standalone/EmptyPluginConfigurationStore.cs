@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
+using Snowflake.Configuration.Generators;
 using Snowflake.Extensibility.Configuration;
 
 namespace Snowflake.Extensibility.Provisioning.Standalone
@@ -23,13 +24,13 @@ namespace Snowflake.Extensibility.Provisioning.Standalone
         }
 
         public IConfigurationSection<T> Get<T>()
-            where T : class, IConfigurationSection<T>
+            where T : class
         {
             return new ConfigurationSection<T>();
         }
 
         public void Set<T>(IConfigurationSection<T> configuration)
-            where T : class, IConfigurationSection<T>
+            where T : class
         {
             return;
         }
@@ -40,7 +41,7 @@ namespace Snowflake.Extensibility.Provisioning.Standalone
         }
 
         public Task<IConfigurationSection<T>> GetAsync<T>()
-            where T : class, IConfigurationSection<T>
+            where T : class
         {
             return Task.FromResult((IConfigurationSection<T>)new ConfigurationSection<T>());
         }

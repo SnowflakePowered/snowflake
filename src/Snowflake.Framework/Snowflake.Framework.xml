@@ -36,11 +36,6 @@
             lifetime of the application.
             </summary>
         </member>
-        <member name="M:Snowflake.Configuration.ConfigurationDescriptorCache.GetProxyGenerator">
-            <summary>
-            Gets a reused proxy generator that survives for the lifetime of the application.
-            </summary>
-        </member>
         <member name="M:Snowflake.Configuration.ConfigurationDescriptorCache.GetSectionDescriptor``1(System.String)">
             <summary>
             Gets a new or existing section descriptor
@@ -194,24 +189,6 @@
             </summary>
             <param name="elementMappings">The dictionary of mappings from <see cref="T:Snowflake.Input.Device.DeviceCapability"/> to input configuration string.</param>
         </member>
-        <member name="P:Snowflake.Configuration.Input.InputConfigurationSection`1.Configuration">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.Input.InputConfigurationSection`1.Descriptor">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.Input.InputConfigurationSection`1.Values">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.Input.InputConfigurationSection`1.Item(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.Input.InputConfigurationSection`1.GetEnumerator">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.Input.InputConfigurationSection`1.System#Collections#IEnumerable#GetEnumerator">
-            <inheritdoc/>
-        </member>
         <member name="P:Snowflake.Configuration.Input.InputOption.OptionType">
             <inheritdoc/>
         </member>
@@ -252,24 +229,6 @@
             <inheritdoc/>
         </member>
         <member name="M:Snowflake.Configuration.Input.InputTemplate`1.GetEnumerator">
-            <inheritdoc/>
-        </member>
-        <member name="T:Snowflake.Configuration.Interceptors.ConfigurationCircularInterceptor`1">
-            <summary>
-            Interceptor to allow circular reference within <see cref="T:Snowflake.Configuration.ConfigurationSection`1"/>
-            </summary>
-            <typeparam name="T"></typeparam>
-        </member>
-        <member name="M:Snowflake.Configuration.Interceptors.ConfigurationCircularInterceptor`1.Intercept(Castle.DynamicProxy.IInvocation)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.Interceptors.ConfigurationInterceptor.Intercept(Castle.DynamicProxy.IInvocation)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.Interceptors.InputTemplateCircularInterceptor`1.Intercept(Castle.DynamicProxy.IInvocation)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.Interceptors.InputTemplateInterceptor`1.Intercept(Castle.DynamicProxy.IInvocation)">
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Configuration.SelectionOptionDescriptor.DisplayName">

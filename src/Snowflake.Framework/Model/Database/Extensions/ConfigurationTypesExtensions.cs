@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Snowflake.Configuration;
+using Snowflake.Configuration.Generators;
 using Snowflake.Model.Database.Models;
 
 namespace Snowflake.Model.Database.Extensions
@@ -12,7 +13,7 @@ namespace Snowflake.Model.Database.Extensions
     {
         public static ConfigurationProfileModel AsModel<T>
             (this IConfigurationCollection<T> @this, string prototypeName)
-            where T : class, IConfigurationCollection<T>
+            where T : class
         {
             return new ConfigurationProfileModel
             {
@@ -24,7 +25,7 @@ namespace Snowflake.Model.Database.Extensions
 
         public static ConfigurationProfileModel AsModel<T>
             (this IConfigurationSection<T> @this, string prototypeName)
-            where T : class, IConfigurationSection<T>
+            where T : class
         {
             return new ConfigurationProfileModel
             {
@@ -74,7 +75,7 @@ namespace Snowflake.Model.Database.Extensions
         }
 
         public static IConfigurationCollection<T> AsConfiguration<T>(this ConfigurationProfileModel model)
-            where T : class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollectionGeneratedProxy
         {
             var values = model.Values.Select(v => (v.SectionKey, v.OptionKey, (v.Value, v.Guid, v.ValueType)));
             var valueCollection = ConfigurationValueCollection.MakeExistingValueCollection<T>
@@ -83,7 +84,7 @@ namespace Snowflake.Model.Database.Extensions
         }
 
         public static IConfigurationSection<T> AsConfigurationSection<T>(this ConfigurationProfileModel model)
-            where T : class, IConfigurationSection<T>
+            where T : class
         {
             var sectionKey = model.Values.First().SectionKey;
             var values = model.Values.Select(v => (v.OptionKey, (v.Value, v.Guid, v.ValueType)));

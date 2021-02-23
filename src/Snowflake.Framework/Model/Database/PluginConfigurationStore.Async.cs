@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Configuration;
+using Snowflake.Configuration.Generators;
 using Snowflake.Extensibility.Configuration;
 using Snowflake.Model.Database.Extensions;
 using Snowflake.Model.Database.Models;
@@ -52,7 +53,7 @@ namespace Snowflake.Model.Database
         }
 
         public async Task<IConfigurationSection<T>> GetAsync<T>()
-            where T : class, IConfigurationSection<T>
+            where T : class
         {
             await using var context = new DatabaseContext(Options.Options);
             var entity = await context.ConfigurationProfiles

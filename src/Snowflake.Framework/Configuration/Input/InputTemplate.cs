@@ -5,13 +5,8 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Castle.DynamicProxy;
 using EnumsNET;
-using Snowflake.Configuration.Attributes;
 using Snowflake.Configuration.Generators;
-using Snowflake.Configuration.Interceptors;
 using Snowflake.Configuration.Utility;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
@@ -93,22 +88,12 @@ namespace Snowflake.Configuration.Input
             if (genInstance == null)
                 throw new InvalidOperationException("Not generated!"); // todo: mark with interface to fail at compile time.
 
-            //var configDescriptor = new ConfigurationSectionDescriptor<T>(typeof(T).Name);
-            //((ConfigurationValueCollection) this.ValueCollection).EnsureSectionDefaults(configDescriptor);
-
-            //this.inputTemplateInterceptor = new InputTemplateInterceptor<T>(map.ToDictionary(m => m.Key, m => m.Value),
-            //    this.ValueCollection,
-            //    configDescriptor);
-            //var circular = new InputTemplateCircularInterceptor<T>(this);
-
             this.Template =
               (T)Instantiate.CreateInstance(genInstance.InstanceType,
                   new[] { typeof(IConfigurationSectionDescriptor), typeof(IConfigurationValueCollection), typeof(Dictionary<string, DeviceCapability>) },
                   Expression.Constant(this.Descriptor), Expression.Constant(this.ValueCollection), 
                   Expression.Constant(map.ToDictionary(m => m.Key, m => m.Value)));
             this.Configuration = new ConfigurationSection<T>(this.ValueCollection, this.Descriptor, this.Template);
-
-            //this.Template = generator.CreateInterfaceProxyWithoutTarget<T>(circular, this.inputTemplateInterceptor);
         }
 
         /// <inheritdoc/>

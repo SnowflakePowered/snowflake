@@ -15,7 +15,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Castle.Core" Version="4.4.1" PrivateAssets="Compile" />
     <PackageReference Include="Emet.FileSystems" Version="0.0.3" PrivateAssets="Compile" />
     <PackageReference Include="Enums.NET" Version="4.0.0" PrivateAssets="Compile" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="5.0.2" PrivateAssets="Compile" />
@@ -33,6 +32,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
+    <ProjectReference Include="..\Snowflake.Framework.Generators\Snowflake.Framework.Generators.csproj" 
+                      PrivateAssets="contentfiles;build"
+      ReferenceOutputAssembly="true"
+                      OutputItemType="analyzer"/>
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />

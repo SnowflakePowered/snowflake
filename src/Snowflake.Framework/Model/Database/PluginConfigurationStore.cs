@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Configuration;
+using Snowflake.Configuration.Generators;
 using Snowflake.Extensibility.Configuration;
 using Snowflake.Model.Database.Exceptions;
 using Snowflake.Model.Database.Extensions;
@@ -75,7 +76,7 @@ namespace Snowflake.Model.Database
         }
 
         public IConfigurationSection<T> Get<T>()
-            where T : class, IConfigurationSection<T>
+            where T : class
         {
             using var context = new DatabaseContext(Options.Options);
             var entity = context.ConfigurationProfiles
@@ -92,7 +93,7 @@ namespace Snowflake.Model.Database
         }
 
         public void Set<T>(IConfigurationSection<T> configuration)
-            where T : class, IConfigurationSection<T>
+            where T : class
         {
             using var context = new DatabaseContext(Options.Options);
             var entity = context.ConfigurationProfiles

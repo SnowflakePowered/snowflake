@@ -9,6 +9,7 @@ using Snowflake.Configuration.Extensions;
 using System.Reflection;
 using System.ComponentModel;
 using EnumsNET;
+using Snowflake.Configuration.Generators;
 
 namespace Snowflake.Configuration
 {
@@ -50,7 +51,7 @@ namespace Snowflake.Configuration
         public static IConfigurationValueCollection MakeExistingValueCollection<T>
         (IEnumerable<(string section, string option, (string stringValue, Guid guid, ConfigurationOptionType type) value)> values,
             Guid collectionGuid)
-            where T : class, IConfigurationCollection, IConfigurationCollection<T>
+            where T : class
         {
             var typedValues = new List<(string, string, IConfigurationValue)>();
             foreach ((string section, string option, (string stringValue, Guid guid, ConfigurationOptionType type) value) in values)
@@ -77,7 +78,7 @@ namespace Snowflake.Configuration
         (IEnumerable<(string option, (string stringValue, Guid guid, ConfigurationOptionType type) value)> values,
             string sectionName,
             Guid collectionGuid)
-            where T : class, IConfigurationSection<T>
+            where T : class
         {
             var typedValues = new List<(string, string, IConfigurationValue)>();
            

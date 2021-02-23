@@ -23,7 +23,7 @@ namespace Snowflake.Extensibility.Configuration
         /// <typeparam name="T">The type of configuration collection</typeparam>
         /// <returns>The configuration collection associated with this game record. </returns>
         IConfigurationSection<T> Get<T>()
-            where T : class, IConfigurationSection<T>;
+            where T : class;
 
         /// <summary>
         /// Retrieves the configuration collection associated with this game record.
@@ -34,7 +34,7 @@ namespace Snowflake.Extensibility.Configuration
         /// <typeparam name="T">The type of configuration collection</typeparam>
         /// <returns>The configuration collection associated with this game record. </returns>
         Task<IConfigurationSection<T>> GetAsync<T>()
-            where T : class, IConfigurationSection<T>;
+            where T : class;
 
         /// <summary>
         /// Saves and persists a configuration collection to the store.
@@ -42,7 +42,7 @@ namespace Snowflake.Extensibility.Configuration
         /// <typeparam name="T">The type of configuration collection</typeparam>
         /// <param name="configuration">The configuration to save to the store</param>
         void Set<T>(IConfigurationSection<T> configuration)
-            where T : class, IConfigurationSection<T>;
+            where T : class;
 
         /// <summary>
         /// Saves and persists a configuration collection to the store.

@@ -4,15 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Castle.DynamicProxy;
-using Snowflake.Configuration.Extensions;
 using Snowflake.Configuration.Generators;
 using Snowflake.Configuration.Utility;
 
 namespace Snowflake.Configuration
 {
     public class ConfigurationCollection<T> : IConfigurationCollection<T>
-        where T : class
+        where T : class, IConfigurationCollectionGeneratedProxy
     {
         /// <inheritdoc/>
         public T Configuration { get; }

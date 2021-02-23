@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Snowflake.Configuration.Generators;
-using Snowflake.Configuration.Interceptors;
 using Snowflake.Configuration.Utility;
 
 namespace Snowflake.Configuration

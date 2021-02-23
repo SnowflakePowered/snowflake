@@ -29,7 +29,8 @@ namespace Snowflake.Framework.Tests.Configuration
                          IDeviceEnumerator.VirtualVendorID,
                          new XInputDeviceInstance(0).DefaultLayout);
 
-            var z = new InputTemplate<IRetroArchInput>(mapcol, 0);
+            IInputTemplate<IRetroArchInput> z = new InputTemplate<IRetroArchInput>(mapcol, 0);
+            
             z[ControllerElement.ButtonA] = DeviceCapability.Button120;
             z.Template.InputDevice = 15;
         }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
+using Snowflake.Configuration.Generators;
 using Snowflake.Model.Database;
 using Snowflake.Model.Records.Game;
 
@@ -33,7 +34,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
         }
 
         public IConfigurationCollection<T> CreateNewProfile<T>(string sourceName, string profile)
-            where T : class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollectionGeneratedProxy
         {
             return this.ConfigurationStore
                 .CreateConfigurationForGame<T>(this.GameRecord, sourceName, profile);
@@ -46,20 +47,20 @@ namespace Snowflake.Model.Game.LibraryExtensions
         }
 
         public Task<IConfigurationCollection<T>> CreateNewProfileAsync<T>(string sourceName, string profile)
-            where T : class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollectionGeneratedProxy
         {
             return this.ConfigurationStore
                 .CreateConfigurationForGameAsync<T>(this.GameRecord, sourceName, profile);
         }
 
         public IConfigurationCollection<T>? GetProfile<T>(string sourceName, Guid collectionGuid)
-            where T : class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollectionGeneratedProxy
         {
             return this.ConfigurationStore.GetConfiguration<T>(this.GameRecord.RecordID, sourceName, collectionGuid);
         }
 
         public Task<IConfigurationCollection<T>?> GetProfileAsync<T>(string sourceName, Guid collectionGuid)
-            where T : class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollectionGeneratedProxy
         {
             return this.ConfigurationStore.GetConfigurationAsync<T>(this.GameRecord.RecordID, sourceName, collectionGuid);
         }

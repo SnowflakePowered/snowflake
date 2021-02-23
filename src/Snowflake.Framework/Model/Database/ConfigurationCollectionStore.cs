@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Configuration;
+using Snowflake.Configuration.Generators;
 using Snowflake.Model.Database.Exceptions;
 using Snowflake.Model.Database.Extensions;
 using Snowflake.Model.Database.Models;
@@ -36,7 +37,7 @@ namespace Snowflake.Model.Database
         }
 
         public IConfigurationCollection<T> CreateConfiguration<T>(string sourceName)
-            where T : class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollectionGeneratedProxy
         {
             var collection = new ConfigurationCollection<T>();
 
@@ -50,7 +51,7 @@ namespace Snowflake.Model.Database
 
         public IConfigurationCollection<T> CreateConfigurationForGame<T>(IGameRecord gameRecord,
             string sourceName, string profileName)
-            where T : class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollectionGeneratedProxy
         {
             var collection = new ConfigurationCollection<T>();
 
@@ -156,7 +157,7 @@ namespace Snowflake.Model.Database
         }
 
         public IConfigurationCollection<T>? GetConfiguration<T>(Guid valueCollectionGuid)
-            where T : class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollectionGeneratedProxy
         {
             using var context = new DatabaseContext(this.Options.Options);
             var config = context.ConfigurationProfiles
@@ -167,7 +168,7 @@ namespace Snowflake.Model.Database
 
         public IConfigurationCollection<T>? GetConfiguration<T>(Guid gameGuid,
             string sourceName, Guid valueCollectionGuid)
-            where T : class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollectionGeneratedProxy
         {
             using var context = new DatabaseContext(this.Options.Options);
             var profileJunction = context.GameRecordsConfigurationProfiles

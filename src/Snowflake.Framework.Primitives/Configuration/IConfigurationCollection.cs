@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Snowflake.Configuration.Attributes;
-using Snowflake.Configuration.Generators;
 
 namespace Snowflake.Configuration
 {

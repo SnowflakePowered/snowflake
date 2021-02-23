@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Configuration;
+using Snowflake.Configuration.Generators;
 using Snowflake.Model.Database.Exceptions;
 using Snowflake.Model.Database.Extensions;
 using Snowflake.Model.Database.Models;
@@ -16,7 +17,7 @@ namespace Snowflake.Model.Database
     internal partial class ConfigurationCollectionStore
     {
         public async Task<IConfigurationCollection<T>> CreateConfigurationAsync<T>(string sourceName)
-            where T : class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollectionGeneratedProxy
         {
             var collection = new ConfigurationCollection<T>();
 
@@ -30,7 +31,7 @@ namespace Snowflake.Model.Database
 
         public async Task<IConfigurationCollection<T>> CreateConfigurationForGameAsync<T>(IGameRecord gameRecord,
             string sourceName, string profileName)
-            where T : class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollectionGeneratedProxy
         {
             var collection = new ConfigurationCollection<T>();
 
@@ -127,7 +128,7 @@ namespace Snowflake.Model.Database
         }
 
         public async Task<IConfigurationCollection<T>?> GetConfigurationAsync<T>(Guid valueCollectionGuid)
-            where T : class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollectionGeneratedProxy
         {
             await using var context = new DatabaseContext(this.Options.Options);
             var config = await context.ConfigurationProfiles
@@ -138,7 +139,7 @@ namespace Snowflake.Model.Database
 
         public async Task<IConfigurationCollection<T>?> GetConfigurationAsync<T>(Guid gameGuid,
             string sourceName, Guid valueCollectionGuid)
-            where T : class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollectionGeneratedProxy
         {
             await using var context = new DatabaseContext(this.Options.Options);
             var profileJunction = await context.GameRecordsConfigurationProfiles
