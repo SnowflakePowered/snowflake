@@ -10,7 +10,7 @@ namespace Snowflake.Configuration.Input
     /// </summary>
     /// <typeparam name="T">The type of input configuration</typeparam>
     public interface IInputTemplate<out T> : IInputTemplate, IConfigurationSection<T>
-        where T : class, IInputTemplate<T>
+        where T : class
     {
         /// <summary>
         /// Gets the template in which the values are stored for this input configuration

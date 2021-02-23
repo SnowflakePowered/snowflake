@@ -64,30 +64,6 @@ namespace Snowflake.Configuration.Generators
                 {
                     var propSymbol = model.GetDeclaredSymbol(prop);
 
-                    if (prop.AccessorList.Accessors.Any(a => a.Body != null || a.ExpressionBody != null))
-                    {
-                        context.ReportError(DiagnosticError.UnexpectedBody, "Unexpected property body",
-                                  $"Property {propSymbol.Name} can not declare a body.",
-                              prop.GetLocation(), ref errorOccured);
-                        continue;
-                    }
-
-                    if (!prop.AccessorList.Accessors.Any(a => a.IsKind(SyntaxKind.SetAccessorDeclaration)))
-                    {
-                        context.ReportError(DiagnosticError.MissingSetter, "Missing set accessor",
-                                  $"Property {propSymbol.Name} must declare a setter.",
-                              prop.GetLocation(), ref errorOccured);
-                        continue;
-                    }
-
-                    if (!prop.AccessorList.Accessors.Any(a => a.IsKind(SyntaxKind.GetAccessorDeclaration)))
-                    {
-                        context.ReportError(DiagnosticError.MissingSetter, "Missing get accessor",
-                                $"Property {propSymbol.Name} must declare a getter.",
-                            prop.GetLocation(), ref errorOccured);
-                        continue;
-                    }
-
                     var configOptionAttrs = propSymbol.GetAttributes()
                             .Where(attr => attr.AttributeClass.Equals(configOptionAttr, SymbolEqualityComparer.Default));
                     var inputTemplateAttrs = propSymbol.GetAttributes()
@@ -96,7 +72,8 @@ namespace Snowflake.Configuration.Generators
                     if (!configOptionAttrs.Any() && !inputTemplateAttrs.Any())
                     {
                         context.ReportError(DiagnosticError.UndecoratedProperty, "Undecorated section property member",
-                                   $"Property {propSymbol.Name} must be decorated with a ConfigurationOptionAttribute.",
+                                   $"Property {propSymbol.Name} must be decorated with either a " +
+                                   $"ConfigurationOptionAttribute or InputOptionAttribute.",
                                prop.GetLocation(), ref errorOccured);
                         continue;
                     }
@@ -121,7 +98,7 @@ namespace Snowflake.Configuration.Generators
                 if (errorOccured)
                     return;
                 string classSource = ProcessClass(ifaceSymbol, configOptionSymbols, inputOptionSymbols, configSectionInterface, configSectionGenericInterface, configInstanceAttr, context);
-                context.AddSource($"{ifaceSymbol.Name}_InputTemplateSecion.cs", SourceText.From(classSource, Encoding.UTF8));
+                context.AddSource($"{ifaceSymbol.Name}_InputTemplateSection.cs", SourceText.From(classSource, Encoding.UTF8));
 
             }
         }
@@ -132,7 +109,28 @@ namespace Snowflake.Configuration.Generators
             INamedTypeSymbol deviceCapabilityType,
             ref bool errorOccured)
         {
-            
+
+            if (!prop.AccessorList.Accessors.Any(a => a.IsKind(SyntaxKind.GetAccessorDeclaration)))
+            {
+                context.ReportError(DiagnosticError.MissingSetter, "Missing get accessor",
+                        $"Property {propSymbol.Name} must declare a getter.",
+                    prop.GetLocation(), ref errorOccured);
+            }
+
+            if (prop.AccessorList.Accessors.Any(a => a.IsKind(SyntaxKind.SetAccessorDeclaration)))
+            {
+                context.ReportError(DiagnosticError.UnexpectedSetter, "Unexpected set accessor",
+                          $"Property {propSymbol.Name} must not declare a setter.",
+                      prop.GetLocation(), ref errorOccured);
+            }
+
+
+            if (prop.AccessorList.Accessors.Any(a => a.Body != null || a.ExpressionBody != null))
+            {
+                context.ReportError(DiagnosticError.UnexpectedBody, "Unexpected property body",
+                          $"Property {propSymbol.Name} can not declare a body.",
+                      prop.GetLocation(), ref errorOccured);
+            }
         }
 
         public string ProcessClass(INamedTypeSymbol classSymbol, List<IPropertySymbol> configOptionProps,
@@ -155,7 +153,7 @@ namespace Snowflake.Configuration.Generators
             }
 
             string namespaceName = classSymbol.ContainingNamespace.ToDisplayString();
-            string generatedNamespaceName = $"Snowflake.Configuration.GeneratedConfigurationProxies.Section_{namespaceName}";
+            string generatedNamespaceName = $"Snowflake.Configuration.GeneratedConfigurationProxies.Section__Input{namespaceName}";
 
             string tag = RandomString(6);
             string backingClassName = $"{classSymbol.Name}Proxy_{tag}";
@@ -164,6 +162,7 @@ namespace {namespaceName}
 {{
     [{configInstanceAttr.ToDisplayString()}(typeof({generatedNamespaceName}.{backingClassName}))]
     public partial interface {classSymbol.Name}
+        : Snowflake.Configuration.Generators.IInputTemplateGeneratedProxy
     {{
     
     }}
@@ -173,16 +172,34 @@ namespace {namespaceName}
 namespace {generatedNamespaceName}
 {{
     using System.ComponentModel;
+    using System.Collections.Generic;
     [EditorBrowsable(EditorBrowsableState.Never)]
     sealed class {backingClassName} : {classSymbol.ToDisplayString()}
     {{
         readonly Snowflake.Configuration.IConfigurationSectionDescriptor __sectionDescriptor;
         readonly Snowflake.Configuration.IConfigurationValueCollection __backingCollection;
+        readonly Dictionary<string, Snowflake.Input.Device.DeviceCapability> __backingMap;
 
-        private {backingClassName}(Snowflake.Configuration.IConfigurationSectionDescriptor sectionDescriptor, Snowflake.Configuration.IConfigurationValueCollection collection) 
+        IReadOnlyDictionary<string, Snowflake.Input.Device.DeviceCapability> 
+            Snowflake.Configuration.Generators.IInputTemplateGeneratedProxy.Values => __backingMap;
+
+        Snowflake.Input.Device.DeviceCapability Snowflake.Configuration.Generators.IInputTemplateGeneratedProxy.this[string keyName] 
+        {{
+            set {{
+                if (this.__backingMap.ContainsKey(keyName))
+                    this.__backingMap[keyName] = value;
+            }}
+        }}
+
+        private {backingClassName}(
+Snowflake.Configuration.IConfigurationSectionDescriptor sectionDescriptor, 
+Snowflake.Configuration.IConfigurationValueCollection collection,
+Dictionary<string, Snowflake.Input.Device.DeviceCapability> mapping
+) 
         {{
             this.__sectionDescriptor = sectionDescriptor;
             this.__backingCollection = collection;
+            this.__backingMap = mapping;
         }}
 ");
 
@@ -202,6 +219,21 @@ namespace {generatedNamespaceName}
 ");
             }
 
+            foreach (var prop in inputOptionProps)
+            {
+                source.Append($@"
+Snowflake.Input.Device.DeviceCapability {classSymbol.ToDisplayString()}.{prop.Name}
+{{
+    get {{ 
+        if (this.__backingMap.TryGetValue(nameof({prop.ToDisplayString()}), out Snowflake.Input.Device.DeviceCapability value)) {{
+            return value;
+        }} else {{
+            return Snowflake.Input.Device.DeviceCapability.None;
+        }}
+    }}
+}}
+");
+            }
 
             source.Append("}}");
             return source.ToString();

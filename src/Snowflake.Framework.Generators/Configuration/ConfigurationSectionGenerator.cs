@@ -68,22 +68,6 @@ namespace Snowflake.Configuration.Generators
                         continue;
                     }
 
-                    if (!prop.AccessorList.Accessors.Any(a => a.IsKind(SyntaxKind.SetAccessorDeclaration)))
-                    {
-                        context.ReportError(DiagnosticError.MissingSetter, "Missing set accessor",
-                                  $"Property {propSymbol.Name} must declare a setter.",
-                              prop.GetLocation(), ref errorOccured);
-                        continue;
-                    }
-
-                    if (!prop.AccessorList.Accessors.Any(a => a.IsKind(SyntaxKind.GetAccessorDeclaration)))
-                    {
-                        context.ReportError(DiagnosticError.MissingSetter, "Missing get accessor",
-                                $"Property {propSymbol.Name} must declare a getter.",
-                            prop.GetLocation(), ref errorOccured);
-                        continue;
-                    }
-
                     var attrs = propSymbol.GetAttributes().Where(attr => attr.AttributeClass.Equals(configOptionAttr, SymbolEqualityComparer.Default));
                     if (!attrs.Any())
                     {
@@ -128,7 +112,7 @@ namespace Snowflake.Configuration.Generators
             }
 
             string namespaceName = classSymbol.ContainingNamespace.ToDisplayString();
-            string generatedNamespaceName = $"Snowflake.Configuration.GeneratedConfigurationProxies.Section_{namespaceName}";
+            string generatedNamespaceName = $"Snowflake.Configuration.GeneratedConfigurationProxies.Section__Section{namespaceName}";
 
             string tag = RandomString(6);
             string backingClassName = $"{classSymbol.Name}Proxy_{tag}";
@@ -164,7 +148,7 @@ namespace {generatedNamespaceName}
                 source.Append($@"
 {prop.Type.ToDisplayString()} {classSymbol.ToDisplayString()}.{prop.Name}
 {{
-    get {{ return ({prop.Type.ToDisplayString()})this.__backingCollection[this.__sectionDescriptor, nameof({prop.ToDisplayString()})]?.Value; }}
+    get {{ return ({prop.Type.ToDisplayString()})this.__backingCollection[this.__sectionDescriptor, nameof({prop.ToDisplayString()})].Value; }}
     set {{ 
             var existingValue = this.__backingCollection[this.__sectionDescriptor, nameof({prop.ToDisplayString()})];
             if (existingValue != null && value != null) {{ existingValue.Value = value; }}
@@ -189,6 +173,28 @@ namespace {generatedNamespaceName}
             INamedTypeSymbol selectionOptionAttr,
             ref bool errorOccured)
         {
+
+            if (!prop.AccessorList.Accessors.Any(a => a.IsKind(SyntaxKind.SetAccessorDeclaration)))
+            {
+                context.ReportError(DiagnosticError.MissingSetter, "Missing set accessor",
+                          $"Property {propSymbol.Name} must declare a setter.",
+                      prop.GetLocation(), ref errorOccured);
+            }
+
+            if (!prop.AccessorList.Accessors.Any(a => a.IsKind(SyntaxKind.GetAccessorDeclaration)))
+            {
+                context.ReportError(DiagnosticError.MissingSetter, "Missing get accessor",
+                        $"Property {propSymbol.Name} must declare a getter.",
+                    prop.GetLocation(), ref errorOccured);
+            }
+
+            if (prop.AccessorList.Accessors.Any(a => a.Body != null || a.ExpressionBody != null))
+            {
+                context.ReportError(DiagnosticError.UnexpectedBody, "Unexpected property body",
+                          $"Property {propSymbol.Name} can not declare a body.",
+                      prop.GetLocation(), ref errorOccured);
+            }
+
             // If it has a second arg, then it must not be GUID-based 
             if (attr.ConstructorArguments.Skip(1).FirstOrDefault().Type is ITypeSymbol defaultType)
             {

@@ -43,21 +43,37 @@ namespace Snowflake.Configuration
         {
         }
 
-        public ConfigurationSection(IConfigurationValueCollection values, string sectionKey)
+        public ConfigurationSection(IConfigurationValueCollection values, 
+            IConfigurationSectionDescriptor sectionDescriptor)
         {
-            this.Descriptor = new ConfigurationSectionDescriptor<T>(sectionKey);
+            this.Descriptor = sectionDescriptor;
             // if this is a CVC base implementation, we should ensure defaults.
             (values as ConfigurationValueCollection)?.EnsureSectionDefaults(this.Descriptor);
             this.ValueCollection = values;
-
             var genInstance = typeof(T).GetCustomAttribute<ConfigurationGenerationInstanceAttribute>();
             if (genInstance == null)
                 throw new InvalidOperationException("Not generated!"); // todo: mark with interface to fail at compile time.
-            
+
             this.Configuration =
                 (T)Instantiate.CreateInstance(genInstance.InstanceType,
                     new[] { typeof(IConfigurationSectionDescriptor), typeof(IConfigurationValueCollection) },
                     Expression.Constant(this.Descriptor), Expression.Constant(this.ValueCollection));
+        }
+
+        public ConfigurationSection(IConfigurationValueCollection values,
+           IConfigurationSectionDescriptor sectionDescriptor, T configurationInstance)
+        {
+            this.Descriptor = sectionDescriptor;
+            // if this is a CVC base implementation, we should ensure defaults.
+            (values as ConfigurationValueCollection)?.EnsureSectionDefaults(this.Descriptor);
+            this.ValueCollection = values;
+            this.Configuration = configurationInstance;
+        }
+
+        public ConfigurationSection(IConfigurationValueCollection values, string sectionKey)
+            : this(values, new ConfigurationSectionDescriptor<T>(sectionKey))
+        {
+            
         }
 
         /// <inheritdoc/>

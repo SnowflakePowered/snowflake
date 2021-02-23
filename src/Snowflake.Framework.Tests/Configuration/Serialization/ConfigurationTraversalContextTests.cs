@@ -93,6 +93,7 @@ namespace Snowflake.Configuration.Serialization
                             IDeviceEnumerator.VirtualVendorID,
                             new XInputDeviceInstance(0).DefaultLayout);
             IDeviceInputMapping mapping = new TestInputMapping();
+            
             var input =
              new InputTemplate<IRetroArchInput>(mapcol).Template;
 

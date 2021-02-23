@@ -158,8 +158,8 @@ namespace {generatedNamespaceName}
             foreach (var prop in props)
             {
                 source.Append($@"
-this.backing__{prop.Name} = new Snowflake.Configuration.ConfigurationSection<{prop.Type.ToDisplayString()}>(this.__backingCollection, ""{prop.Name}""); 
-this.__configurationSections[""{prop.Name}""] = this.backing__{prop.Name};
+this.backing__{prop.Name} = new Snowflake.Configuration.ConfigurationSection<{prop.Type.ToDisplayString()}>(this.__backingCollection, nameof({classSymbol.ToDisplayString()}.{prop.Name})); 
+this.__configurationSections[nameof({classSymbol.ToDisplayString()}.{prop.Name})] = this.backing__{prop.Name};
 ");
             }
 

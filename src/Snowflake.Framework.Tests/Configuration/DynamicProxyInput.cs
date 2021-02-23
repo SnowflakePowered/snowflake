@@ -29,6 +29,7 @@ namespace Snowflake.Configuration.Tests
             x[ControllerElement.ButtonA] = DeviceCapability.Hat0S;
             Assert.Equal(DeviceCapability.Hat0S, x.Template.InputPlayerABtn);
             Assert.Equal(x.Template.Configuration.InputPlayerA, x.Template.InputPlayerA);
+           
         }
 
         [Fact]
