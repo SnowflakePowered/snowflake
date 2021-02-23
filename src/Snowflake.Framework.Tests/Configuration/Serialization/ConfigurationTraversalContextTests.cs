@@ -184,7 +184,7 @@ namespace Snowflake.Configuration.Serialization
             configuration.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
             var context = new ConfigurationTraversalContext(("game", dir));
 
-            var list = context.TraverseCollection(configuration.Configuration, new (string, IAbstractConfigurationNode)[] 
+            var list = context.TraverseCollection(configuration, new (string, IAbstractConfigurationNode)[] 
             {
                 ("#dolphin", new IntegralConfigurationNode("TestNestedExtra", 1036)),
                 ("#dolphin", new ListConfigurationNode("TestNestedExtraList", new IAbstractConfigurationNode[] { new StringConfigurationNode("TestNestedTwo", "StrVal")}))

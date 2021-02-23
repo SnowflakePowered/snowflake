@@ -9,7 +9,7 @@ using Snowflake.Configuration.Tests;
 
 namespace Snowflake.Configuration.Tests
 {
-    public interface
+    public partial interface
         NullDefaultConfigurationCollection : IConfigurationCollection<NullDefaultConfigurationCollection>
     {
         NullDefaultConfigurationSection NullConfiguration { get; set; }

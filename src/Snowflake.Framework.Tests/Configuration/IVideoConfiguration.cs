@@ -5,7 +5,7 @@ using Snowflake.Configuration.Attributes;
 namespace Snowflake.Configuration.Tests
 {
     [ConfigurationSection("video", "video")]
-    public interface IVideoConfiguration : IConfigurationSection<IVideoConfiguration>
+    public partial interface IVideoConfiguration
     {
         [ConfigurationOption("video_black_frame_insertion", false, DisplayName = "Video Black Frame Insertion")]
         bool VideoBlackFrameInsertion { get; set; }

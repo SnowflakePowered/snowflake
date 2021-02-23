@@ -62,6 +62,8 @@
     <ProjectReference Include="..\Snowflake.Support.GraphQL.Server\Snowflake.Support.GraphQL.Server.csproj" />
     <ProjectReference Include="..\Snowflake.Support.PluginManager\Snowflake.Support.PluginManager.csproj" />
     <ProjectReference Include="..\Snowflake.Support.StoneProvider\Snowflake.Support.StoneProvider.csproj" />
+    <ProjectReference Include="..\Snowflake.Framework.Generators\Snowflake.Framework.Generators.csproj" OutputItemType="analyzer"
+                     ReferenceOutputAssembly="false"/>
   </ItemGroup>
 
   <ItemGroup>

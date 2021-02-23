@@ -98,10 +98,6 @@ namespace Snowflake.Configuration.Serialization
         public IReadOnlyDictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>>
             TraverseCollection(IConfigurationCollection collection, IEnumerable<(string targetName, IAbstractConfigurationNode node)> extraNodes)
         {
-            if (collection.GetType().IsGenericType
-                && collection.GetType().GetGenericTypeDefinition() == typeof(ConfigurationCollection<>))
-                throw new InvalidOperationException("Can not traverse on the wrapping type of ConfigurationCollection<T>, you must traverse on the Configuration property.");
-
             // Get each target for each section.
             var targetMappings = collection
                 .GetType()

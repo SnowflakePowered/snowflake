@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Snowflake.Configuration
 {
     [ConfigurationTarget("#cemu")]
-    public interface CemuConfigurationCollection : IConfigurationCollection<CemuConfigurationCollection>
+    public partial interface CemuConfigurationCollection : IConfigurationCollection<CemuConfigurationCollection>
     {
         [ConfigurationTargetMember("#cemu", true)]
         CemuRootConfigSection Content { get; set; }
@@ -18,14 +18,14 @@ namespace Snowflake.Configuration
     }
 
     [ConfigurationSection("content", "Main Config")]
-    public interface CemuRootConfigSection : IConfigurationSection<CemuRootConfigSection>
+    public partial interface CemuRootConfigSection
     {
         [ConfigurationOption("fullscreen", true)]
         bool Fullscreen { get; set; }
     }
 
     [ConfigurationSection("gamelist", "Gamelist Config")]
-    public interface GameListConfig : IConfigurationSection<GameListConfig>
+    public partial interface GameListConfig 
     {
         [ConfigurationOption("style", 0)]
         int Style { get; set; }

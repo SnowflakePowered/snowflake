@@ -13,7 +13,7 @@ using Snowflake.Input.Device;
 namespace Snowflake.Configuration.Tests
 {
     [InputTemplate("input")]
-    public interface IRetroArchInput : IInputTemplate<IRetroArchInput>
+    public partial interface IRetroArchInput
     {
         [ConfigurationOption("input_device_p{N}", 0)]
         int InputDevice { get; set; }
@@ -28,7 +28,7 @@ namespace Snowflake.Configuration.Tests
         DeviceCapability InputPlayerTurboBtn { get; }
 
         [InputOption("input_player{N}_turbo_axis", DeviceCapabilityClass.ControllerAxis, ControllerElement.NoElement)]
-        DeviceCapability InputPlayerTurboAxis { get; set; }
+        DeviceCapability InputPlayerTurboAxis { get; }
 
         [InputOption("input_player{N}_b", DeviceCapabilityClass.Keyboard, ControllerElement.ButtonB)]
         DeviceCapability InputPlayerB { get; }

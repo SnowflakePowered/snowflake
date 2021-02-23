@@ -53,6 +53,15 @@ namespace Snowflake.Configuration.Generators
                     continue;
                 }
 
+                if (iface.BaseList.ChildNodes().Any())
+                {
+                    context.ReportError(DiagnosticError.UnextendibleInterface,
+                               "Unextendible template interface",
+                               $"Template interface '{ifaceSymbol.Name}' can not extend another interface (todo: recursively sort out extending interfaces)",
+                               iface.GetLocation(), ref errorOccured);
+                    continue;
+                }
+
                 foreach (var prop in memberSyntax.Cast<PropertyDeclarationSyntax>())
                 {
                     var propSymbol = model.GetDeclaredSymbol(prop);

@@ -15,7 +15,7 @@ namespace Snowflake.Configuration.Tests
 
     [ConfigurationTarget("TestCycle1", "TestCycle2")]
     [ConfigurationTarget("TestCycle2", "TestCycle1")]
-    public interface ExampleConfigurationCollection : IConfigurationCollection<ExampleConfigurationCollection>
+    public interface ExampleConfigurationCollection
     {
         [ConfigurationTargetMember("#dolphin")]
         ExampleConfigurationSection ExampleConfiguration { get; }

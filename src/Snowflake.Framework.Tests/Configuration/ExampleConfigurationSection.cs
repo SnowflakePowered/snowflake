@@ -24,7 +24,7 @@ namespace Snowflake.Configuration
     */
 
     [ConfigurationSection("Display", "Display")]
-    public interface ExampleConfigurationSection : IConfigurationSection<ExampleConfigurationSection>
+    public partial  interface ExampleConfigurationSection
     {
         [ConfigurationOption("FullscreenResolution", FullscreenResolution.Auto)]
         FullscreenResolution FullscreenResolution { get; set; }

@@ -10,14 +10,14 @@ using Snowflake.Configuration.Tests;
 namespace Snowflake.Configuration.Tests
 {
     [ConfigurationTarget("target")]
-    public interface
-        MissingPathConfigurationCollection : IConfigurationCollection<MissingPathConfigurationCollection>
+    public partial interface
+        MissingPathConfigurationCollection
     {
         [ConfigurationTargetMember("target")] MissingPathConfigurationSection PathConfiguration { get; set; }
     }
 
     [ConfigurationSection("NoPath", "NoPath")]
-    public interface MissingPathConfigurationSection : IConfigurationSection<MissingPathConfigurationSection>
+    public partial interface MissingPathConfigurationSection
     {
         [ConfigurationOption("BadPath", "/my/bad/path", PathType.Directory)]
         string BadPath { get; set; }

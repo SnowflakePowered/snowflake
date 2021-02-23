@@ -144,7 +144,7 @@ namespace Snowflake.Extensibility.Tests
 
             await store.SetAsync(configSection);
             configSection.Configuration.FullscreenResolution = FullscreenResolution.Resolution1280X768;
-            await store.SetAsync(configSection.Configuration.Values["FullscreenResolution"].Guid, configSection.Configuration.Values["FullscreenResolution"].Value);
+            await store.SetAsync(configSection.Values["FullscreenResolution"].Guid, configSection.Configuration.Values["FullscreenResolution"].Value);
 
             var retrievedConfig =await store.GetAsync<ExampleConfigurationSection>();
             Assert.NotNull(retrievedConfig);

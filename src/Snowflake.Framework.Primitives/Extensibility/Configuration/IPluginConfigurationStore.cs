@@ -50,7 +50,7 @@ namespace Snowflake.Extensibility.Configuration
         /// <typeparam name="T">The type of configuration collection</typeparam>
         /// <param name="configuration">The configuration to save to the store</param>
         Task SetAsync<T>(IConfigurationSection<T> configuration)
-            where T : class, IConfigurationSection<T>;
+            where T : class;
 
         /// <summary>
         /// Updates a single <em>existing</em> configuration value, this will do nothing if the GUID is not found in

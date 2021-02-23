@@ -70,7 +70,7 @@ namespace Snowflake.Model.Database
         }
 
         public async Task SetAsync<T>(IConfigurationSection<T> configuration)
-            where T : class, IConfigurationSection<T>
+            where T : class
         {
             await using var context = new DatabaseContext(Options.Options);
             var entity = await context.ConfigurationProfiles
