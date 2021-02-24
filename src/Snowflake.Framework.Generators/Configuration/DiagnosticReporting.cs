@@ -10,9 +10,9 @@ namespace Snowflake.Configuration.Generators
         internal static void ReportError(this GeneratorExecutionContext context, DiagnosticError code, string title, string message, Location location, ref bool errorOccured)
         {
             var diag =  Diagnostic.Create(
-                        new DiagnosticDescriptor($"SFC{(int)code}", title,
+                        new DiagnosticDescriptor($"SFG{(int)code}", title,
                             message,
-                            "Snowflake.Configuration.Generators", DiagnosticSeverity.Error, true),
+                            "Snowflake.Framework.Generators", DiagnosticSeverity.Error, true),
                         location);
             context.ReportDiagnostic(diag);
             errorOccured = true;

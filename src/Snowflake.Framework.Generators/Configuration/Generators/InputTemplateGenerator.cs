@@ -26,6 +26,7 @@ namespace Snowflake.Configuration.Generators
 
             foreach (var iface in receiver.CandidateInterfaces)
             {
+                errorOccured = false;
                 var configOptionSymbols = new List<IPropertySymbol>();
                 var inputOptionSymbols = new List<IPropertySymbol>();
 
@@ -33,42 +34,9 @@ namespace Snowflake.Configuration.Generators
                 var ifaceSymbol = model.GetDeclaredSymbol(iface);
                 var memberSyntax = iface.Members;
 
-                if (ifaceSymbol == null)
-                {
-                    context.ReportError(DiagnosticError.InvalidMembers, "Interface not found.",
-                     $"Template interface '{iface.Identifier.Text}' was not found. " +
-                     $"Template interface '{iface.Identifier.Text}' was not found.",
-                     iface.GetLocation(), ref errorOccured);
-                    return;
-                }
-
-                if (memberSyntax.FirstOrDefault(m => m is not PropertyDeclarationSyntax) is MemberDeclarationSyntax badSyntax)
-                {
-                    var badSymbol = model.GetDeclaredSymbol(badSyntax);
-                    context.ReportError(DiagnosticError.InvalidMembers, "Invalid members in template interface.",
-                        $"Template interface '{ifaceSymbol.Name}' must only declare property members. " +
-                        $"{badSymbol?.Kind} '{ifaceSymbol.Name}.{badSymbol?.Name}' is not a property.",
-                        badSyntax.GetLocation(), ref errorOccured);
+                ConfigurationSectionGenerator.VerifyTemplateInterface(context, model, iface, ifaceSymbol, ref errorOccured);
+                if (errorOccured)
                     continue;
-                }
-
-                if (!iface.Modifiers.Any(p => p.IsKind(SyntaxKind.PartialKeyword)))
-                {
-                    context.ReportError(DiagnosticError.UnextendibleInterface,
-                               "Unextendible template interface",
-                               $"Template interface '{ifaceSymbol.Name}' must be marked partial.",
-                               iface.GetLocation(), ref errorOccured);
-                    continue;
-                }
-
-                if (iface.BaseList != null && iface.BaseList.ChildNodes().Any())
-                {
-                    context.ReportError(DiagnosticError.UnextendibleInterface,
-                               "Unextendible template interface",
-                               $"Template interface '{ifaceSymbol.Name}' can not extend another interface (todo: recursively sort out extending interfaces)",
-                               iface.GetLocation(), ref errorOccured);
-                    continue;
-                }
 
                 foreach (var prop in memberSyntax.Cast<PropertyDeclarationSyntax>())
                 {
@@ -114,11 +82,11 @@ namespace Snowflake.Configuration.Generators
                 }
 
                 if (errorOccured)
-                    return;
-                string? classSource = ProcessClass(ifaceSymbol, configOptionSymbols, inputOptionSymbols, types, context);
+                    continue;
+                string? classSource = ProcessClass(ifaceSymbol!, configOptionSymbols, inputOptionSymbols, types, context);
                 if (classSource != null)
                 {
-                    context.AddSource($"{ifaceSymbol.Name}_InputTemplateSection.cs", SourceText.From(classSource, Encoding.UTF8));
+                    context.AddSource($"{ifaceSymbol!.Name}_InputTemplateSection.cs", SourceText.From(classSource, Encoding.UTF8));
                 }
             }
         }

@@ -4,7 +4,6 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,47 +25,15 @@ namespace Snowflake.Configuration.Generators
 
             foreach (var iface in receiver.CandidateInterfaces)
             {
+                errorOccured = false;
                 var symbols = new List<IPropertySymbol>();
                 var model = compilation.GetSemanticModel(iface.SyntaxTree);
                 var ifaceSymbol = model.GetDeclaredSymbol(iface);
                 var memberSyntax = iface.Members;
 
-                if (ifaceSymbol == null)
-                {
-                    context.ReportError(DiagnosticError.InvalidMembers, "Interface not found.",
-                     $"Template interface '{iface.Identifier.Text}' was not found. " +
-                     $"Template interface '{iface.Identifier.Text}' was not found.",
-                     iface.GetLocation(), ref errorOccured);
-                    return;
-                }
-
-                if (memberSyntax.FirstOrDefault(m => m is not PropertyDeclarationSyntax) is MemberDeclarationSyntax badSyntax)
-                {
-                    var badSymbol = model.GetDeclaredSymbol(badSyntax);
-                    context.ReportError(DiagnosticError.InvalidMembers, "Invalid members in template interface.",
-                        $"Template interface '{ifaceSymbol.Name}' must only declare property members. " +
-                        $"{badSymbol?.Kind} '{ifaceSymbol.Name}.{badSymbol?.Name}' is not a property.",
-                        badSyntax.GetLocation(), ref errorOccured);
+                ConfigurationSectionGenerator.VerifyTemplateInterface(context, model, iface, ifaceSymbol, ref errorOccured);
+                if (errorOccured)
                     continue;
-                }
-
-                if (!iface.Modifiers.Any(p => p.IsKind(SyntaxKind.PartialKeyword)))
-                {
-                    context.ReportError(DiagnosticError.UnextendibleInterface,
-                               "Unextendible template interface",
-                               $"Template interface '{ifaceSymbol.Name}' must be marked partial.",
-                               iface.GetLocation(), ref errorOccured);
-                    continue;
-                }
-                
-                if (iface.BaseList != null && iface.BaseList.ChildNodes().Any())
-                {
-                    context.ReportError(DiagnosticError.UnextendibleInterface,
-                               "Unextendible template interface",
-                               $"Template interface '{ifaceSymbol.Name}' can not extend another interface (todo: recursively sort out extending interfaces)",
-                               iface.GetLocation(), ref errorOccured);
-                    continue;
-                }
 
                 foreach (var prop in memberSyntax.Cast<PropertyDeclarationSyntax>())
                 {
@@ -86,12 +53,12 @@ namespace Snowflake.Configuration.Generators
                 }
 
                 if (errorOccured)
-                    return;
+                    continue;
 
-                string? classSource = ProcessClass(ifaceSymbol, symbols, types, context);
+                string? classSource = ProcessClass(ifaceSymbol!, symbols, types, context);
                 if (classSource != null)
                 {
-                    context.AddSource($"{ifaceSymbol.Name}_ConfigurationSection.cs", SourceText.From(classSource, Encoding.UTF8));
+                    context.AddSource($"{ifaceSymbol!.Name}_ConfigurationSection.cs", SourceText.From(classSource, Encoding.UTF8));
                 }
             }
         }
@@ -171,7 +138,7 @@ namespace {generatedNamespaceName}
             GeneratorExecutionContext context,
             PropertyDeclarationSyntax prop, IPropertySymbol propSymbol,
             ConfigurationTypes types,
-            ref bool errorOccured)
+            ref bool errorOccurred)
         {
             var attrs = propSymbol.GetAttributes()
                        .Where(attr => attr?.AttributeClass?.Equals(types.ConfigurationOptionAttribute, SymbolEqualityComparer.Default) == true);
@@ -180,7 +147,7 @@ namespace {generatedNamespaceName}
             {
                 context.ReportError(DiagnosticError.UndecoratedProperty, "Undecorated section property member",
                            $"Property {propSymbol.Name} must be decorated with a ConfigurationOptionAttribute.",
-                       prop.GetLocation(), ref errorOccured);
+                       prop.GetLocation(), ref errorOccurred);
             }
 
 
@@ -188,21 +155,21 @@ namespace {generatedNamespaceName}
             {
                 context.ReportError(DiagnosticError.MissingSetter, "Missing set accessor",
                           $"Property '{propSymbol.Name}' must declare a setter.",
-                      prop.GetLocation(), ref errorOccured);
+                      prop.GetLocation(), ref errorOccurred);
             }
 
             if (prop.AccessorList == null || !prop.AccessorList.Accessors.Any(a => a.IsKind(SyntaxKind.GetAccessorDeclaration)))
             {
                 context.ReportError(DiagnosticError.MissingSetter, "Missing get accessor",
                         $"Property '{propSymbol.Name}' must declare a getter.",
-                    prop.GetLocation(), ref errorOccured);
+                    prop.GetLocation(), ref errorOccurred);
             }
 
             if (prop.AccessorList != null && prop.AccessorList.Accessors.Any(a => a.Body != null || a.ExpressionBody != null))
             {
                 context.ReportError(DiagnosticError.UnexpectedBody, "Unexpected property body",
                           $"Property '{propSymbol.Name}' can not declare a body.",
-                      prop.GetLocation(), ref errorOccured);
+                      prop.GetLocation(), ref errorOccurred);
             }
             if (!attrs.Any())
                 return;
@@ -214,7 +181,7 @@ namespace {generatedNamespaceName}
                 {
                     context.ReportError(DiagnosticError.MismatchedType, "Mismatched default value type",
                             $"Property {propSymbol.Name} is of type '{propSymbol.Type}' but has default value of type '{defaultType}'.",
-                            prop.GetLocation(), ref errorOccured);
+                            prop.GetLocation(), ref errorOccurred);
                 }
                 
                 if (propSymbol.Type.TypeKind == TypeKind.Enum)
@@ -232,14 +199,14 @@ namespace {generatedNamespaceName}
                             {
                                 context.ReportError(DiagnosticError.InvalidMembers, "Enum member not found.",
                                     $"Enum member '{enumMember.Identifier.Text}' was not found.",
-                                    enumMember.GetLocation(), ref errorOccured);
+                                    enumMember.GetLocation(), ref errorOccurred);
                                 continue;
                             }
                             if (!memberSymbol.GetAttributes().Any(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.SelectionOptionAttribute)))
                             {
                                 context.ReportError(DiagnosticError.UndecoratedProperty, "Undecorated selection option enum member",
                                     $"Enum member '{memberSymbol.Name}' must be decorated with SelectionOptionAttribute.",
-                                    enumMember.GetLocation(), ref errorOccured);
+                                    enumMember.GetLocation(), ref errorOccurred);
                             }
                         }
                     }
@@ -249,8 +216,53 @@ namespace {generatedNamespaceName}
             {
                 context.ReportError(DiagnosticError.MismatchedType, "Mismatched default value type",
                         $"Property {propSymbol.Name} is of type '{propSymbol.Type}' but needs to be of type '{types.System_Guid}'.",
-                        prop.GetLocation(), ref errorOccured);
+                        prop.GetLocation(), ref errorOccurred);
             }
+        }
+
+        internal static void VerifyTemplateInterface(
+            GeneratorExecutionContext context,
+            SemanticModel model, 
+            InterfaceDeclarationSyntax iface,
+            INamedTypeSymbol? ifaceSymbol,
+            ref bool errorOccurred)
+        {
+            var memberSyntax = iface.Members;
+
+            if (ifaceSymbol == null)
+            {
+                context.ReportError(DiagnosticError.InvalidMembers, "Interface not found.",
+                 $"Template interface '{iface.Identifier.Text}' was not found. " +
+                 $"Template interface '{iface.Identifier.Text}' was not found.",
+                 iface.GetLocation(), ref errorOccurred);
+                return;
+            }
+
+            if (memberSyntax.FirstOrDefault(m => m is not PropertyDeclarationSyntax) is MemberDeclarationSyntax badSyntax)
+            {
+                var badSymbol = model.GetDeclaredSymbol(badSyntax);
+                context.ReportError(DiagnosticError.InvalidMembers, "Invalid members in template interface.",
+                    $"Template interface '{ifaceSymbol.Name}' must only declare property members. " +
+                    $"{badSymbol?.Kind} '{ifaceSymbol.Name}.{badSymbol?.Name}' is not a property.",
+                    badSyntax.GetLocation(), ref errorOccurred);
+            }
+
+            if (!iface.Modifiers.Any(p => p.IsKind(SyntaxKind.PartialKeyword)))
+            {
+                context.ReportError(DiagnosticError.UnextendibleInterface,
+                           "Unextendible template interface",
+                           $"Template interface '{ifaceSymbol.Name}' must be marked partial.",
+                           iface.GetLocation(), ref errorOccurred);
+            }
+
+            if (iface.BaseList != null && iface.BaseList.ChildNodes().Any())
+            {
+                context.ReportError(DiagnosticError.UnextendibleInterface,
+                           "Unextendible template interface",
+                           $"Template interface '{ifaceSymbol.Name}' is not allowed to extend another interface.",
+                           iface.GetLocation(), ref errorOccurred);
+            }
+
         }
 
         public static string RandomString(int length)
