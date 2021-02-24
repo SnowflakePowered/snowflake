@@ -29,7 +29,6 @@ namespace Snowflake.Configuration
         /// <inheritdoc/>
         public object? this[string key]
         {
-            //todo: make work
             get => this.ValueCollection[this.Descriptor, key]?.Value; 
             set
             {

@@ -123,7 +123,7 @@ namespace Snowflake.Model.Database
             (var value in
                 context.ConfigurationValues.Where(v => v.ValueCollectionGuid == guid))
             {
-                var realValue = configurationCollection[value.SectionKey]?[value.OptionKey]
+                var realValue = configurationCollection.GetSection(value.SectionKey)?[value.OptionKey]
                     ?.AsConfigurationStringValue();
                 if (realValue == value.Value || realValue == null) continue;
                 value.Value = realValue;

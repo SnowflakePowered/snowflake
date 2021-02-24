@@ -42,7 +42,7 @@ namespace Snowflake.Configuration
         /// <inheritdoc/>
         public IEnumerator<KeyValuePair<string, IConfigurationSection>> GetEnumerator()
         {
-            var values = (this.Configuration as IConfigurationCollectionGeneratedProxy)?.Values;
+            var values = this.Configuration.GetValueDictionary();
 
             return this.Descriptor.SectionKeys.Select(k => new KeyValuePair<string, IConfigurationSection?>(
                     k, values?[k]))?
@@ -54,18 +54,29 @@ namespace Snowflake.Configuration
         /// <inheritdoc/>
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        /// <inheritdoc/>
-        public IConfigurationSection? this[string sectionName]
+        public IConfigurationSection<TSection> GetSection<TSection>(Expression<Func<T, TSection>> expression) where TSection : class
         {
-            get
+            if (expression.Body is not MemberExpression member)
+                throw new ArgumentException(string.Format(
+                    "Expression '{0}' refers to a method, not a property.",
+                     expression.ToString()));
+
+            if (this.GetSection(member.Member.Name) as IConfigurationSection<TSection> is IConfigurationSection<TSection> section)
             {
-                var values = (this.Configuration as IConfigurationCollectionGeneratedProxy)?.Values;
-                if (values != null && values.TryGetValue(sectionName, out var section))
-                {
-                    return section;
-                }
-                return null;
+                return section;
             }
+            throw new InvalidOperationException($"Unable to find section {member.Member.Name}. Something went horribly wrong.");
+        }
+
+        /// <inheritdoc/>
+        public IConfigurationSection? GetSection(string sectionName)
+        {
+            var values = this.Configuration.GetValueDictionary();
+            if (values != null && values.TryGetValue(sectionName, out var section))
+            {
+                return section;
+            }
+            return null;
         }
     }
 }

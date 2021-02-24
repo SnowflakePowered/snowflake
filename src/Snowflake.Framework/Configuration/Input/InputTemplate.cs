@@ -26,22 +26,22 @@ namespace Snowflake.Configuration.Input
 
         /// <inheritdoc/>
         public IReadOnlyDictionary<string, DeviceCapability> Values
-            => ImmutableDictionary.CreateRange(this.Template.Values);
+            => this.Template.GetValueDictionary();
 
         /// <inheritdoc/>
         IEnumerable<IInputOption> IInputTemplate.Options =>
-            ImmutableList.CreateRange(this._Options.Select(p => p.Value));
+            ImmutableList.CreateRange(this.Options.Values);
 
         private IConfigurationSection<T> Configuration { get; }
 
-        private IDictionary<string, IInputOption> _Options { get; }
+        private IDictionary<string, IInputOption> Options { get; }
 
         /// <inheritdoc/>
         public DeviceCapability this[ControllerElement virtualElement]
         {
             set
             {
-                IEnumerable<string> optionKeys = from option in this._Options
+                IEnumerable<string> optionKeys = from option in this.Options
                                     where option.Value.TargetElement == virtualElement
                                     where FlagEnums.HasAnyFlags(option.Value.OptionType, value.GetClass())
                                     select option.Key;
@@ -64,7 +64,7 @@ namespace Snowflake.Configuration.Input
             this.PlayerIndex = playerIndex;
             this.Descriptor = new ConfigurationSectionDescriptor<T>(typeof(T).Name);
 
-            this._Options = (from prop in typeof(T).GetProperties()
+            this.Options = (from prop in typeof(T).GetProperties()
                     let inputOptionAttribute = prop.GetCustomAttribute<InputOptionAttribute>()
                     where inputOptionAttribute != null
                     let name = prop.Name
@@ -72,13 +72,13 @@ namespace Snowflake.Configuration.Input
                 .ToDictionary(o => o.name,
                     o => o.option);
             var overrides = (from element in mappedElements
-                from key in this._Options.Keys
-                let option = this._Options[key]
+                from key in this.Options.Keys
+                let option = this.Options[key]
                 let target = option.TargetElement
                 where element.LayoutElement == target
                 where FlagEnums.HasAnyFlags(option.OptionType, element.DeviceCapability.GetClass())
                 select (key, element.DeviceCapability)).ToDictionary(d => d.key, d => d.DeviceCapability);
-            var map = from key in this._Options.Keys
+            var map = from key in this.Options.Keys
                 let value = overrides.ContainsKey(key) ? overrides[key] : DeviceCapability.None
                 select new KeyValuePair<string, DeviceCapability>(key, value);
            
