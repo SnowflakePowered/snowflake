@@ -156,6 +156,8 @@ namespace {namespaceName}
 
 namespace {generatedNamespaceName}
 {{
+#pragma warning disable CS0472
+#pragma warning disable CS8073
     using System.ComponentModel;
     using System.Collections.Generic;
     using System.Collections.Immutable;
@@ -223,7 +225,10 @@ Dictionary<string, {types.DeviceCapability.ToDisplayString()}> mapping
 ");
             }
 
-            source.Append("}}");
+            source.Append(@"
+#pragma warning restore CS0472
+#pragma warning restore CS8073
+}}");
             return source.ToString();
         }
 
