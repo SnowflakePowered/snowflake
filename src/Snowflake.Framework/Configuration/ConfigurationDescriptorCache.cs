@@ -15,8 +15,8 @@ namespace Snowflake.Configuration
     /// </summary>
     internal static class ConfigurationDescriptorCache
     {
-        private static IImmutableDictionary<Type, IConfigurationSectionDescriptor> sectionDescriptors =
-            ImmutableDictionary<Type, IConfigurationSectionDescriptor>.Empty;
+        private static IImmutableDictionary<(string sectionKey, Type), IConfigurationSectionDescriptor> sectionDescriptors =
+            ImmutableDictionary<(string sectionKey, Type), IConfigurationSectionDescriptor>.Empty;
 
         private static IImmutableDictionary<Type, IConfigurationCollectionDescriptor> collectionDescriptors =
             ImmutableDictionary<Type, IConfigurationCollectionDescriptor>.Empty;
@@ -27,15 +27,15 @@ namespace Snowflake.Configuration
         /// <typeparam name="T">The type of the configuration section</typeparam>
         /// <returns>The section descriptor for <see cref="T:self"/></returns>
         internal static IConfigurationSectionDescriptor GetSectionDescriptor<T>(string sectionKey)
-            where T : class, IConfigurationSection<T>
+            where T : class
         {
-            if (sectionDescriptors.ContainsKey(typeof(T)))
+            if (sectionDescriptors.ContainsKey((sectionKey, typeof(T))))
             {
-                return sectionDescriptors[typeof(T)];
+                return sectionDescriptors[(sectionKey, typeof(T))];
             }
 
-            sectionDescriptors = sectionDescriptors.Add(typeof(T), new ConfigurationSectionDescriptor<T>(sectionKey));
-            return sectionDescriptors[typeof(T)];
+            sectionDescriptors = sectionDescriptors.Add((sectionKey, typeof(T)), new ConfigurationSectionDescriptor<T>(sectionKey));
+            return sectionDescriptors[(sectionKey, typeof(T))];
         }
 
         /// <summary>

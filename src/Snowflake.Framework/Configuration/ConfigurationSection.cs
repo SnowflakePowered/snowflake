@@ -69,7 +69,7 @@ namespace Snowflake.Configuration
         }
 
         public ConfigurationSection(IConfigurationValueCollection values, string sectionKey)
-            : this(values, new ConfigurationSectionDescriptor<T>(sectionKey))
+            : this(values, ConfigurationDescriptorCache.GetSectionDescriptor<T>(sectionKey))
         {
             
         }

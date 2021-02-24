@@ -19,7 +19,8 @@ namespace Snowflake.Configuration.Input
     {
         /// <inheritdoc/>
         public int PlayerIndex { get; }
-        public ConfigurationSectionDescriptor<T> Descriptor { get; }
+
+        public IConfigurationSectionDescriptor Descriptor { get; }
 
         /// <inheritdoc/>
         public T Template { get; }
@@ -62,7 +63,7 @@ namespace Snowflake.Configuration.Input
         public InputConfiguration(IControllerElementMappingProfile mappedElements, int playerIndex = 0)
         {
             this.PlayerIndex = playerIndex;
-            this.Descriptor = new ConfigurationSectionDescriptor<T>(typeof(T).Name);
+            this.Descriptor = ConfigurationDescriptorCache.GetSectionDescriptor<T>(typeof(T).Name);
 
             this.Options = (from prop in typeof(T).GetProperties()
                     let inputOptionAttribute = prop.GetCustomAttribute<InputOptionAttribute>()
