@@ -9,20 +9,17 @@ namespace Snowflake.Configuration.Input
     /// can be serialized. The implementation of which is a wrapper around an interface that implements this interface.
     /// </summary>
     /// <typeparam name="T">The type of input configuration</typeparam>
-    public interface IInputTemplate<out T> : IInputTemplate, IConfigurationSection<T>
+    public interface IInputConfiguration<out T> : IInputConfiguration, IConfigurationSection<T>
         where T : class
     {
-        /// <summary>
-        /// Gets the template in which the values are stored for this input configuration
-        /// </summary>
-        T Template { get; }
+ 
     }
 
     /// <summary>
     /// Represents an input configuration template from which valid input configuration
     /// can be serialized.
     /// </summary>
-    public interface IInputTemplate : IConfigurationSection
+    public interface IInputConfiguration : IConfigurationSection
     {
         /// <summary>
         /// Gets the controller index of this template instance.

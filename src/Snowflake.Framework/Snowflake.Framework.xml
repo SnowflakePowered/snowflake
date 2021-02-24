@@ -189,6 +189,36 @@
             </summary>
             <param name="elementMappings">The dictionary of mappings from <see cref="T:Snowflake.Input.Device.DeviceCapability"/> to input configuration string.</param>
         </member>
+        <member name="P:Snowflake.Configuration.Input.InputConfiguration`1.PlayerIndex">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputConfiguration`1.Template">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputConfiguration`1.Values">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputConfiguration`1.Snowflake#Configuration#Input#IInputConfiguration#Options">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputConfiguration`1.Item(Snowflake.Input.Controller.ControllerElement)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputConfiguration`1.Snowflake#Configuration#IConfigurationSection#Values">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputConfiguration`1.Snowflake#Configuration#IConfigurationSection#Descriptor">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputConfiguration`1.Snowflake#Configuration#IConfigurationSection#Item(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputConfiguration`1.Snowflake#Configuration#IConfigurationSection{T}#Configuration">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.Input.InputConfiguration`1.GetEnumerator">
+            <inheritdoc/>
+        </member>
         <member name="P:Snowflake.Configuration.Input.InputOption.OptionType">
             <inheritdoc/>
         </member>
@@ -199,36 +229,6 @@
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Configuration.Input.InputOption.KeyName">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.PlayerIndex">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Template">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Values">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Snowflake#Configuration#Input#IInputTemplate#Options">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Item(Snowflake.Input.Controller.ControllerElement)">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Snowflake#Configuration#IConfigurationSection#Values">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Snowflake#Configuration#IConfigurationSection#Descriptor">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Snowflake#Configuration#IConfigurationSection#Item(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Snowflake#Configuration#IConfigurationSection{T}#Configuration">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.Input.InputTemplate`1.GetEnumerator">
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Configuration.SelectionOptionDescriptor.DisplayName">
@@ -387,7 +387,7 @@
             <summary>
             Serializes a configuration node that encapsulates a <see cref="T:Snowflake.Input.Controller.ControllerElement"/>.
             
-            This is only used when serializing syntax trees that came from <see cref="T:Snowflake.Configuration.Input.IInputTemplate"/>.
+            This is only used when serializing syntax trees that came from <see cref="T:Snowflake.Configuration.Input.IInputConfiguration"/>.
             </summary>
             <param name="node">The node to serialize.</param>
             <param name="context">The serialization context.</param>

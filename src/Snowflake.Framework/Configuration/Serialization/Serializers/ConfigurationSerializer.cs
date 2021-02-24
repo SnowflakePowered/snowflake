@@ -180,7 +180,7 @@ namespace Snowflake.Configuration.Serialization.Serializers
         /// <summary>
         /// Serializes a configuration node that encapsulates a <see cref="ControllerElement"/>.
         /// 
-        /// This is only used when serializing syntax trees that came from <see cref="IInputTemplate"/>.
+        /// This is only used when serializing syntax trees that came from <see cref="IInputConfiguration"/>.
         /// </summary>
         /// <param name="node">The node to serialize.</param>
         /// <param name="context">The serialization context.</param>

@@ -37,7 +37,7 @@ namespace Snowflake.Model.Database
         }
 
         public IConfigurationCollection<T> CreateConfiguration<T>(string sourceName)
-            where T : class, IConfigurationCollectionGeneratedProxy
+            where T : class, IConfigurationCollectionTemplate
         {
             var collection = new ConfigurationCollection<T>();
 
@@ -51,7 +51,7 @@ namespace Snowflake.Model.Database
 
         public IConfigurationCollection<T> CreateConfigurationForGame<T>(IGameRecord gameRecord,
             string sourceName, string profileName)
-            where T : class, IConfigurationCollectionGeneratedProxy
+            where T : class, IConfigurationCollectionTemplate
         {
             var collection = new ConfigurationCollection<T>();
 
@@ -157,7 +157,7 @@ namespace Snowflake.Model.Database
         }
 
         public IConfigurationCollection<T>? GetConfiguration<T>(Guid valueCollectionGuid)
-            where T : class, IConfigurationCollectionGeneratedProxy
+            where T : class, IConfigurationCollectionTemplate
         {
             using var context = new DatabaseContext(this.Options.Options);
             var config = context.ConfigurationProfiles
@@ -168,7 +168,7 @@ namespace Snowflake.Model.Database
 
         public IConfigurationCollection<T>? GetConfiguration<T>(Guid gameGuid,
             string sourceName, Guid valueCollectionGuid)
-            where T : class, IConfigurationCollectionGeneratedProxy
+            where T : class, IConfigurationCollectionTemplate
         {
             using var context = new DatabaseContext(this.Options.Options);
             var profileJunction = context.GameRecordsConfigurationProfiles

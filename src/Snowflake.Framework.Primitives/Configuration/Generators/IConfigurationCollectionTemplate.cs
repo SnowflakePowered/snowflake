@@ -9,8 +9,8 @@ namespace Snowflake.Configuration.Generators
     /// <summary>
     /// Automatically implemented by generated configuration collection proxies
     /// </summary>
-    public interface IConfigurationSectionGeneratedProxy
+    public interface IConfigurationCollectionTemplate
     {
-        IConfigurationSectionDescriptor GetDescriptor();
+        IReadOnlyDictionary<string, IConfigurationSection> GetValueDictionary();
     }
 }

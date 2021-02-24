@@ -29,7 +29,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
         /// <returns>A new configuration profile . If a configuration profile with the same
         /// source name and profile name exist, this will throw an exception.</returns>
         IConfigurationCollection<T> CreateNewProfile<T>(string sourceName, string profile)
-            where T : class, IConfigurationCollectionGeneratedProxy;
+            where T : class, IConfigurationCollectionTemplate;
 
         /// <summary>
         /// Asychronously creates a new <see cref="IConfigurationCollection{T}"/> profile for this game.
@@ -47,7 +47,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
         /// <returns>A new configuration profile . If a configuration profile with the same
         /// source name and profile name exist, this will throw an exception.</returns>
         Task<IConfigurationCollection<T>> CreateNewProfileAsync<T>(string sourceName, string profile)
-            where T : class, IConfigurationCollectionGeneratedProxy;
+            where T : class, IConfigurationCollectionTemplate;
 
         /// <summary>
         /// Gets all the names of profiles for this <see cref="IGame"/>, grouped by source.
@@ -64,7 +64,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
         /// <typeparam name="T">The configuration prototype.</typeparam>
         /// <returns>The previously added configuration profile. If this can not be found, throws an exception.</returns>
         IConfigurationCollection<T>? GetProfile<T>(string sourceName, Guid collectionGuid)
-            where T : class, IConfigurationCollectionGeneratedProxy;
+            where T : class, IConfigurationCollectionTemplate;
 
         /// <summary>
         /// Asychronously gets the specific, registered configuration profile with the given <paramref name="sourceName"/>,
@@ -75,7 +75,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
         /// <typeparam name="T">The configuration prototype.</typeparam>
         /// <returns>The previously added configuration profile. If this can not be found, throws an exception.</returns>
         Task<IConfigurationCollection<T>?> GetProfileAsync<T>(string sourceName, Guid collectionGuid)
-            where T : class, IConfigurationCollectionGeneratedProxy;
+            where T : class, IConfigurationCollectionTemplate;
 
         /// <summary>
         /// Deletes the profile with the given source name and profile.
@@ -108,7 +108,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
         /// <typeparam name="T">The configuration collection prototype.</typeparam>
         /// <returns>The <see cref="IConfigurationCollection{T}"/> with the given GUID.</returns>
         IConfigurationCollection<T>? GetProfile<T>(Guid valueCollectionGuid)
-            where T : class, IConfigurationCollectionGeneratedProxy;
+            where T : class, IConfigurationCollectionTemplate;
 
         /// <summary>
         /// Asynchronously gets the <see cref="IConfigurationCollection{T}"/> configuration profile
@@ -118,7 +118,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
         /// <typeparam name="T">The configuration collection prototype.</typeparam>
         /// <returns>The <see cref="IConfigurationCollection{T}"/> with the given GUID.</returns>
         Task<IConfigurationCollection<T>?> GetProfileAsync<T>(Guid valueCollectionGuid)
-            where T : class, IConfigurationCollectionGeneratedProxy;
+            where T : class, IConfigurationCollectionTemplate;
 
         /// <summary>
         /// Deletes the profile with the given <paramref name="valueCollectionGuid"/>

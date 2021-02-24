@@ -97,14 +97,16 @@ namespace {namespaceName}
 
 namespace {generatedNamespaceName}
 {{
+#pragma warning disable CS8073 CS0472
     using System.ComponentModel;
     [EditorBrowsable(EditorBrowsableState.Never)]
     sealed class {backingClassName} : {classSymbol.ToDisplayString()}
     {{
-        readonly Snowflake.Configuration.IConfigurationSectionDescriptor __sectionDescriptor;
-        readonly Snowflake.Configuration.IConfigurationValueCollection __backingCollection;
+        readonly {types.IConfigurationSectionDescriptor.ToDisplayString()}  __sectionDescriptor;
+        readonly {types.IConfigurationValueCollection.ToDisplayString()}  __backingCollection;
 
-        private {backingClassName}(Snowflake.Configuration.IConfigurationSectionDescriptor sectionDescriptor, Snowflake.Configuration.IConfigurationValueCollection collection) 
+        private {backingClassName}({types.IConfigurationSectionDescriptor.ToDisplayString()} sectionDescriptor, 
+            {types.IConfigurationValueCollection.ToDisplayString()} collection) 
         {{
             this.__sectionDescriptor = sectionDescriptor;
             this.__backingCollection = collection;
@@ -127,8 +129,9 @@ namespace {generatedNamespaceName}
 ");
             }
 
-
-            source.Append("}}");
+            source.Append(@"
+#pragma warning restore CS8073 CS0472
+}}");
             return source.ToString();
         }
 

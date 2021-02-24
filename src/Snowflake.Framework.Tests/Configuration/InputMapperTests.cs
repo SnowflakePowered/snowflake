@@ -163,7 +163,7 @@ namespace Snowflake.Configuration.Tests
                            IDeviceEnumerator.VirtualVendorID,
                            new XInputDeviceInstance(0).DefaultLayout);
 
-            var template = new InputTemplate<IRetroArchInput>(mapcol, 0);
+            var template = new InputConfiguration<IRetroArchInput>(mapcol, 0);
 
             Assert.Equal(DeviceCapability.Button0, template.Template.InputPlayerABtn);
             template[ControllerElement.ButtonA] = DeviceCapability.Button1;

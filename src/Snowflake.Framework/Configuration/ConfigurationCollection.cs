@@ -10,7 +10,7 @@ using Snowflake.Configuration.Utility;
 namespace Snowflake.Configuration
 {
     public class ConfigurationCollection<T> : IConfigurationCollection<T>
-        where T : class, IConfigurationCollectionGeneratedProxy
+        where T : class, IConfigurationCollectionTemplate
     {
         /// <inheritdoc/>
         public T Configuration { get; }
@@ -44,8 +44,9 @@ namespace Snowflake.Configuration
         {
             var values = this.Configuration.GetValueDictionary();
 
-            return this.Descriptor.SectionKeys.Select(k => new KeyValuePair<string, IConfigurationSection?>(
-                    k, values?[k]))?
+            return this.Descriptor
+                .SectionKeys.Select(k => new KeyValuePair<string, IConfigurationSection?>(
+                    k, values[k]))
                 .GetEnumerator() ?? 
                 Enumerable.Empty<KeyValuePair<string, IConfigurationSection>>().GetEnumerator(); 
             // re-iterate to ensure order

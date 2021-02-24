@@ -80,7 +80,7 @@ namespace Snowflake.Configuration.Serialization
             IDeviceInputMapping mapping = new TestInputMapping();
 
             var input =
-             new InputTemplate<IRetroArchInput>(mapcol);
+             new InputConfiguration<IRetroArchInput>(mapcol);
 
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();

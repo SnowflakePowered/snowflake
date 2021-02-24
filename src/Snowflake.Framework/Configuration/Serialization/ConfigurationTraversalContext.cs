@@ -179,7 +179,7 @@ namespace Snowflake.Configuration.Serialization
         }
 
         public IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>
-            TraverseInputTemplate(IInputTemplate template,
+            TraverseInputTemplate(IInputConfiguration template,
             IDeviceInputMapping mapping,
             int index,
             string indexer = "{N}")

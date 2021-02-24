@@ -24,10 +24,15 @@ namespace Snowflake.Configuration.Generators
 
             this.IConfigurationCollection = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationCollection");
             this.IConfigurationCollectionGeneric = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationCollection`1");
-
+            this.IConfigurationSectionDescriptor = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationSectionDescriptor");
+            this.IConfigurationValueCollection = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationValueCollection");
 
             this.DeviceCapability = compilation.GetTypeByMetadataName("Snowflake.Input.Device.DeviceCapability");
             this.System_Guid = compilation.GetTypeByMetadataName("System.Guid");
+
+            this.IInputConfigurationTemplate = compilation.GetTypeByMetadataName("Snowflake.Configuration.Generators.IInputConfigurationTemplate");
+            this.IConfigurationCollectionTemplate = compilation.GetTypeByMetadataName("Snowflake.Configuration.Generators.IConfigurationCollectionTemplate");
+
         }
 
         public bool AllAvailable()
@@ -44,7 +49,11 @@ namespace Snowflake.Configuration.Generators
                    && this.IConfigurationCollection != null
                    && this.IConfigurationCollectionGeneric != null
                    && this.DeviceCapability != null
-                   && this.System_Guid != null;
+                   && this.System_Guid != null
+                   && this.IInputConfigurationTemplate != null
+                   && this.IConfigurationCollectionTemplate != null
+                   && this.IConfigurationSectionDescriptor != null 
+                   && this.IConfigurationValueCollection != null;
         }
 
         public bool CheckContext(GeneratorExecutionContext context, ref bool errorOccured)
@@ -70,7 +79,11 @@ namespace Snowflake.Configuration.Generators
         public INamedTypeSymbol ConfigurationTargetMemberAttribute { get; }
         public INamedTypeSymbol IConfigurationCollection { get; }
         public INamedTypeSymbol IConfigurationCollectionGeneric { get; }
+        public INamedTypeSymbol IConfigurationSectionDescriptor { get; }
+        public INamedTypeSymbol IConfigurationValueCollection { get; }
         public INamedTypeSymbol DeviceCapability { get; }
         public INamedTypeSymbol System_Guid { get; }
+        public INamedTypeSymbol IInputConfigurationTemplate { get; }
+        public INamedTypeSymbol IConfigurationCollectionTemplate { get; }
     }
 }

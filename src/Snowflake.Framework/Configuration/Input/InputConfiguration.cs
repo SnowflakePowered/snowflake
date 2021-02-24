@@ -14,8 +14,8 @@ using Snowflake.Input.Device;
 
 namespace Snowflake.Configuration.Input
 {
-    public class InputTemplate<T> : IInputTemplate<T>
-        where T : class, IInputTemplateGeneratedProxy
+    public class InputConfiguration<T> : IInputConfiguration<T>
+        where T : class, IInputConfigurationTemplate
     {
         /// <inheritdoc/>
         public int PlayerIndex { get; }
@@ -29,7 +29,7 @@ namespace Snowflake.Configuration.Input
             => this.Template.GetValueDictionary();
 
         /// <inheritdoc/>
-        IEnumerable<IInputOption> IInputTemplate.Options =>
+        IEnumerable<IInputOption> IInputConfiguration.Options =>
             ImmutableList.CreateRange(this.Options.Values);
 
         private IConfigurationSection<T> Configuration { get; }
@@ -59,7 +59,7 @@ namespace Snowflake.Configuration.Input
             }
         }
 
-        public InputTemplate(IControllerElementMappingProfile mappedElements, int playerIndex = 0)
+        public InputConfiguration(IControllerElementMappingProfile mappedElements, int playerIndex = 0)
         {
             this.PlayerIndex = playerIndex;
             this.Descriptor = new ConfigurationSectionDescriptor<T>(typeof(T).Name);

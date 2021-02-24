@@ -168,7 +168,7 @@ namespace {namespaceName}
 {{
     [{types.ConfigurationGenerationInstanceAttribute.ToDisplayString()}(typeof({generatedNamespaceName}.{backingClassName}))]
     public partial interface {classSymbol.Name}
-        : Snowflake.Configuration.Generators.IConfigurationCollectionGeneratedProxy
+        : {types.IConfigurationCollectionTemplate.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}
     {{
     
     }}
@@ -183,21 +183,24 @@ namespace {generatedNamespaceName}
     [EditorBrowsable(EditorBrowsableState.Never)]
     sealed class {backingClassName} : {classSymbol.ToDisplayString()}
     {{
-        readonly Snowflake.Configuration.IConfigurationValueCollection __backingCollection;
-        readonly Dictionary<string, Snowflake.Configuration.IConfigurationSection> __configurationSections; 
+        readonly {types.IConfigurationValueCollection.ToDisplayString()} __backingCollection;
+        readonly Dictionary<string, {types.IConfigurationSection.ToDisplayString()}> __configurationSections; 
 
-        IReadOnlyDictionary<string, Snowflake.Configuration.IConfigurationSection> 
-            Snowflake.Configuration.Generators.IConfigurationCollectionGeneratedProxy.GetValueDictionary() 
+        IReadOnlyDictionary<string, {types.IConfigurationSection.ToDisplayString()}> 
+            {types.IConfigurationCollectionTemplate.ToDisplayString()}.GetValueDictionary() 
                 => ImmutableDictionary.CreateRange(__configurationSections);
 
-        private {backingClassName}(Snowflake.Configuration.IConfigurationValueCollection collection) 
+        private {backingClassName}({types.IConfigurationValueCollection.ToDisplayString()} collection) 
         {{
             this.__backingCollection = collection;
-            this.__configurationSections = new Dictionary<string, Snowflake.Configuration.IConfigurationSection>();
+            this.__configurationSections = new Dictionary<string, {types.IConfigurationSection.ToDisplayString()}>();
         
 ");
             foreach (var prop in props)
             {
+                // We can't parameterize ConfigurationSection<T> because Snowflake.Framework needs to consume 
+                // Snowflake.Framework.Generator for EmptyPluginConfiguration, and 
+                // 
                 source.Append($@"
 this.backing__{prop.Name} = new Snowflake.Configuration.ConfigurationSection<{prop.Type.ToDisplayString()}>(this.__backingCollection, nameof({classSymbol.ToDisplayString()}.{prop.Name})); 
 this.__configurationSections[nameof({classSymbol.ToDisplayString()}.{prop.Name})] = this.backing__{prop.Name};
@@ -208,7 +211,7 @@ this.__configurationSections[nameof({classSymbol.ToDisplayString()}.{prop.Name})
             foreach (var prop in props)
             {
                 source.Append($@"
-private Snowflake.Configuration.ConfigurationSection<{prop.Type.ToDisplayString()}> backing__{prop.Name};
+private {types.IConfigurationSection.ToDisplayString()}<{prop.Type.ToDisplayString()}> backing__{prop.Name};
 {prop.Type.ToDisplayString()} {classSymbol.ToDisplayString()}.{prop.Name}
 {{
     get {{ return this.backing__{prop.Name}.Configuration; }}

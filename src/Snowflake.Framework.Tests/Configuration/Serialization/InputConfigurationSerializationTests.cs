@@ -35,7 +35,7 @@ namespace Snowflake.Configuration.Serialization
                             new XInputDeviceInstance(0).DefaultLayout);
             IDeviceInputMapping mapping = new TestInputMapping();
             var input =
-             new InputTemplate<IRetroArchInput>(mapcol);
+             new InputConfiguration<IRetroArchInput>(mapcol);
 
 
             var fs = new PhysicalFileSystem();
@@ -64,7 +64,7 @@ namespace Snowflake.Configuration.Serialization
                            new XInputDeviceInstance(0).DefaultLayout);
             IDeviceInputMapping mapping = new TestInputMapping();
             var input =
-             new InputTemplate<IRetroArchInput>(mapcol);
+             new InputConfiguration<IRetroArchInput>(mapcol);
 
 
             var fs = new PhysicalFileSystem();
@@ -93,7 +93,7 @@ namespace Snowflake.Configuration.Serialization
                            new XInputDeviceInstance(0).DefaultLayout);
             IDeviceInputMapping mapping = new TestInputMapping();
             var input =
-             new InputTemplate<IRetroArchInput>(mapcol);
+             new InputConfiguration<IRetroArchInput>(mapcol);
 
 
             var fs = new PhysicalFileSystem();
@@ -122,7 +122,7 @@ namespace Snowflake.Configuration.Serialization
                           new XInputDeviceInstance(0).DefaultLayout);
             IDeviceInputMapping mapping = new TestInputMapping();
             var input =
-             new InputTemplate<IRetroArchInput>(mapcol);
+             new InputConfiguration<IRetroArchInput>(mapcol);
 
 
             var fs = new PhysicalFileSystem();

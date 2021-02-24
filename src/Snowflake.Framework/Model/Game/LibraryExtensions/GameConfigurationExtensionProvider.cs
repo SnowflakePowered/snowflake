@@ -39,7 +39,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
         }
 
         public IConfigurationCollection<T>? GetProfile<T>(Guid valueCollectionGuid)
-            where T : class, IConfigurationCollectionGeneratedProxy
+            where T : class, IConfigurationCollectionTemplate
         {
             return this.CollectionStore.GetConfiguration<T>(valueCollectionGuid);
         }

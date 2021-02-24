@@ -147,7 +147,7 @@ namespace {namespaceName}
 {{
     [{types.ConfigurationGenerationInstanceAttribute.ToDisplayString()}(typeof({generatedNamespaceName}.{backingClassName}))]
     public partial interface {classSymbol.Name}
-        : Snowflake.Configuration.Generators.IInputTemplateGeneratedProxy
+        : {types.IInputConfigurationTemplate.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}
     {{
     
     }}
@@ -162,15 +162,16 @@ namespace {generatedNamespaceName}
     [EditorBrowsable(EditorBrowsableState.Never)]
     sealed class {backingClassName} : {classSymbol.ToDisplayString()}
     {{
-        readonly Snowflake.Configuration.IConfigurationSectionDescriptor __sectionDescriptor;
-        readonly Snowflake.Configuration.IConfigurationValueCollection __backingCollection;
-        readonly Dictionary<string, Snowflake.Input.Device.DeviceCapability> __backingMap;
+        readonly {types.IConfigurationSectionDescriptor.ToDisplayString()} __sectionDescriptor;
+        readonly {types.IConfigurationValueCollection.ToDisplayString()}  __backingCollection;
+        readonly Dictionary<string, {types.DeviceCapability.ToDisplayString()}> __backingMap;
 
-        IReadOnlyDictionary<string, Snowflake.Input.Device.DeviceCapability> 
-            Snowflake.Configuration.Generators.IInputTemplateGeneratedProxy.GetValueDictionary() 
+        IReadOnlyDictionary<string, {types.DeviceCapability.ToDisplayString()}> 
+            {types.IInputConfigurationTemplate.ToDisplayString()}.GetValueDictionary() 
                 => ImmutableDictionary.CreateRange(this.__backingMap);
 
-        Snowflake.Input.Device.DeviceCapability Snowflake.Configuration.Generators.IInputTemplateGeneratedProxy.this[string keyName] 
+        {types.DeviceCapability.ToDisplayString()} 
+            {types.IInputConfigurationTemplate.ToDisplayString()}.this[string keyName] 
         {{
             set {{
                 if (this.__backingMap.ContainsKey(keyName))
@@ -179,9 +180,9 @@ namespace {generatedNamespaceName}
         }}
 
         private {backingClassName}(
-Snowflake.Configuration.IConfigurationSectionDescriptor sectionDescriptor, 
-Snowflake.Configuration.IConfigurationValueCollection collection,
-Dictionary<string, Snowflake.Input.Device.DeviceCapability> mapping
+{types.IConfigurationSectionDescriptor.ToDisplayString()} sectionDescriptor, 
+{types.IConfigurationValueCollection.ToDisplayString()} collection,
+Dictionary<string, {types.DeviceCapability.ToDisplayString()}> mapping
 ) 
         {{
             this.__sectionDescriptor = sectionDescriptor;
@@ -209,13 +210,13 @@ Dictionary<string, Snowflake.Input.Device.DeviceCapability> mapping
             foreach (var prop in inputOptionProps)
             {
                 source.Append($@"
-Snowflake.Input.Device.DeviceCapability {classSymbol.ToDisplayString()}.{prop.Name}
+{types.DeviceCapability.ToDisplayString()} {classSymbol.ToDisplayString()}.{prop.Name}
 {{
     get {{ 
         if (this.__backingMap.TryGetValue(nameof({prop.ToDisplayString()}), out Snowflake.Input.Device.DeviceCapability value)) {{
             return value;
         }} else {{
-            return Snowflake.Input.Device.DeviceCapability.None;
+            return {types.DeviceCapability.ToDisplayString()}.None;
         }}
     }}
 }}

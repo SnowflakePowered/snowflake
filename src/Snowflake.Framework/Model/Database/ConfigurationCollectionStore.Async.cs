@@ -17,7 +17,7 @@ namespace Snowflake.Model.Database
     internal partial class ConfigurationCollectionStore
     {
         public async Task<IConfigurationCollection<T>> CreateConfigurationAsync<T>(string sourceName)
-            where T : class, IConfigurationCollectionGeneratedProxy
+            where T : class, IConfigurationCollectionTemplate
         {
             var collection = new ConfigurationCollection<T>();
 
@@ -31,7 +31,7 @@ namespace Snowflake.Model.Database
 
         public async Task<IConfigurationCollection<T>> CreateConfigurationForGameAsync<T>(IGameRecord gameRecord,
             string sourceName, string profileName)
-            where T : class, IConfigurationCollectionGeneratedProxy
+            where T : class, IConfigurationCollectionTemplate
         {
             var collection = new ConfigurationCollection<T>();
 
@@ -128,7 +128,7 @@ namespace Snowflake.Model.Database
         }
 
         public async Task<IConfigurationCollection<T>?> GetConfigurationAsync<T>(Guid valueCollectionGuid)
-            where T : class, IConfigurationCollectionGeneratedProxy
+            where T : class, IConfigurationCollectionTemplate
         {
             await using var context = new DatabaseContext(this.Options.Options);
             var config = await context.ConfigurationProfiles
@@ -139,7 +139,7 @@ namespace Snowflake.Model.Database
 
         public async Task<IConfigurationCollection<T>?> GetConfigurationAsync<T>(Guid gameGuid,
             string sourceName, Guid valueCollectionGuid)
-            where T : class, IConfigurationCollectionGeneratedProxy
+            where T : class, IConfigurationCollectionTemplate
         {
             await using var context = new DatabaseContext(this.Options.Options);
             var profileJunction = await context.GameRecordsConfigurationProfiles

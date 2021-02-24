@@ -75,7 +75,7 @@ namespace Snowflake.Model.Database.Extensions
         }
 
         public static IConfigurationCollection<T> AsConfiguration<T>(this ConfigurationProfileModel model)
-            where T : class, IConfigurationCollectionGeneratedProxy
+            where T : class, IConfigurationCollectionTemplate
         {
             var values = model.Values.Select(v => (v.SectionKey, v.OptionKey, (v.Value, v.Guid, v.ValueType)));
             var valueCollection = ConfigurationValueCollection.MakeExistingValueCollection<T>
