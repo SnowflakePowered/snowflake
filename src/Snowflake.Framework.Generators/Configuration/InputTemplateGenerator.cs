@@ -20,32 +20,9 @@ namespace Snowflake.Configuration.Generators
                 return;
             bool errorOccured = false;
             var compilation = context.Compilation;
-            INamedTypeSymbol? configSectionAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.ConfigurationSectionAttribute");
-            INamedTypeSymbol? configOptionAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.ConfigurationOptionAttribute");
-            INamedTypeSymbol? inputOptionAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Input.InputOptionAttribute");
-
-            INamedTypeSymbol? configSectionInterface = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationSection");
-            INamedTypeSymbol? configSectionGenericInterface = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationSection`1");
-            INamedTypeSymbol? configInstanceAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Generators.ConfigurationGenerationInstanceAttribute");
-            INamedTypeSymbol? selectionOptionAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.SelectionOptionAttribute");
-            INamedTypeSymbol? deviceCapabilityType = compilation.GetTypeByMetadataName("Snowflake.Input.Device.DeviceCapability");
-            INamedTypeSymbol guidType = compilation.GetTypeByMetadataName("System.Guid")!;
-
-            if (configSectionAttr == null
-                || configOptionAttr == null
-                || inputOptionAttr == null
-                || configSectionInterface == null
-                || configSectionGenericInterface == null
-                || configInstanceAttr == null
-                || selectionOptionAttr == null
-                || deviceCapabilityType == null)
-            {
-                context.ReportError(DiagnosticError.FrameworkNotFound,
-                           "Snowflake Framework Not Found",
-                           $"Snowflake framework types were not found.",
-                           Location.None, ref errorOccured);
+            var types = new ConfigurationTypes(compilation);
+            if (!types.CheckContext(context, ref errorOccured))
                 return;
-            }
 
             foreach (var iface in receiver.CandidateInterfaces)
             {
@@ -106,9 +83,9 @@ namespace Snowflake.Configuration.Generators
                     }
 
                     var configOptionAttrs = propSymbol.GetAttributes()
-                            .Where(attr => attr.AttributeClass?.Equals(configOptionAttr, SymbolEqualityComparer.Default) == true);
+                            .Where(attr => attr.AttributeClass?.Equals(types.ConfigurationOptionAttribute, SymbolEqualityComparer.Default) == true);
                     var inputTemplateAttrs = propSymbol.GetAttributes()
-                            .Where(attr => attr.AttributeClass?.Equals(inputOptionAttr, SymbolEqualityComparer.Default) == true);
+                            .Where(attr => attr.AttributeClass?.Equals(types.InputOptionAttribute, SymbolEqualityComparer.Default) == true);
 
                     if (!configOptionAttrs.Any() && !inputTemplateAttrs.Any())
                     {
@@ -122,13 +99,13 @@ namespace Snowflake.Configuration.Generators
                     if (configOptionAttrs.Any())
                     {
                         ConfigurationSectionGenerator
-                            .VerifyOptionProperty(context, configOptionAttrs.First(), prop, propSymbol, guidType, selectionOptionAttr, ref errorOccured);
+                            .VerifyOptionProperty(context, prop, propSymbol, types, ref errorOccured);
                         if (!errorOccured)
                             configOptionSymbols.Add(propSymbol);
                     } 
                     else if (inputTemplateAttrs.Any())
                     {
-                        InputTemplateGenerator.VerifyOptionProperty(context, inputTemplateAttrs.First(), prop, propSymbol, deviceCapabilityType, ref errorOccured);
+                        InputTemplateGenerator.VerifyOptionProperty(context, prop, propSymbol, ref errorOccured);
                         if (!errorOccured)
                             inputOptionSymbols.Add(propSymbol);
                     }
@@ -138,7 +115,7 @@ namespace Snowflake.Configuration.Generators
 
                 if (errorOccured)
                     return;
-                string? classSource = ProcessClass(ifaceSymbol, configOptionSymbols, inputOptionSymbols, configSectionInterface, configSectionGenericInterface, configInstanceAttr, context);
+                string? classSource = ProcessClass(ifaceSymbol, configOptionSymbols, inputOptionSymbols, types, context);
                 if (classSource != null)
                 {
                     context.AddSource($"{ifaceSymbol.Name}_InputTemplateSection.cs", SourceText.From(classSource, Encoding.UTF8));
@@ -148,8 +125,7 @@ namespace Snowflake.Configuration.Generators
 
         public static void VerifyOptionProperty(
             GeneratorExecutionContext context,
-            AttributeData attr, PropertyDeclarationSyntax prop, IPropertySymbol propSymbol,
-            INamedTypeSymbol deviceCapabilityType,
+            PropertyDeclarationSyntax prop, IPropertySymbol propSymbol,
             ref bool errorOccured)
         {
 
@@ -174,14 +150,12 @@ namespace Snowflake.Configuration.Generators
                           $"Property '{propSymbol.Name}' can not declare a body.",
                       prop.GetLocation(), ref errorOccured);
             }
+
         }
 
-        public string? ProcessClass(INamedTypeSymbol classSymbol, List<IPropertySymbol> configOptionProps,
+        private string? ProcessClass(INamedTypeSymbol classSymbol, List<IPropertySymbol> configOptionProps,
             List<IPropertySymbol> inputOptionProps,
-
-            INamedTypeSymbol configSectionInterface,
-            INamedTypeSymbol configSectionGenericInterface,
-            INamedTypeSymbol configInstanceAttr,
+            ConfigurationTypes types,
             GeneratorExecutionContext context)
         {
             if (!classSymbol.ContainingSymbol.Equals(classSymbol.ContainingNamespace, SymbolEqualityComparer.Default))
@@ -203,7 +177,7 @@ namespace Snowflake.Configuration.Generators
             StringBuilder source = new StringBuilder($@"
 namespace {namespaceName}
 {{
-    [{configInstanceAttr.ToDisplayString()}(typeof({generatedNamespaceName}.{backingClassName}))]
+    [{types.ConfigurationGenerationInstanceAttribute.ToDisplayString()}(typeof({generatedNamespaceName}.{backingClassName}))]
     public partial interface {classSymbol.Name}
         : Snowflake.Configuration.Generators.IInputTemplateGeneratedProxy
     {{

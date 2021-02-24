@@ -20,28 +20,9 @@ namespace Snowflake.Configuration.Generators
                 return;
             bool errorOccured = false;
             var compilation = context.Compilation;
-            INamedTypeSymbol? configSectionAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.ConfigurationSectionAttribute");
-            INamedTypeSymbol? configOptionAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.ConfigurationOptionAttribute");
-                            
-            INamedTypeSymbol? configSectionInterface = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationSection");
-            INamedTypeSymbol? configSectionGenericInterface = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationSection`1");
-            INamedTypeSymbol? configInstanceAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Generators.ConfigurationGenerationInstanceAttribute");
-            INamedTypeSymbol? selectionOptionAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.SelectionOptionAttribute");
-            INamedTypeSymbol guidType = compilation.GetTypeByMetadataName("System.Guid")!;
-
-            if (configSectionAttr == null 
-                || configOptionAttr == null
-                || configSectionInterface == null
-                || configSectionGenericInterface == null
-                || configInstanceAttr == null
-                || selectionOptionAttr == null)
-            {
-                context.ReportError(DiagnosticError.FrameworkNotFound,
-                             "Snowflake Framework Not Found",
-                             $"Snowflake framework types were not found.",
-                             Location.None, ref errorOccured);
+            var types = new ConfigurationTypes(compilation);
+            if (!types.CheckContext(context, ref errorOccured))
                 return;
-            }
 
             foreach (var iface in receiver.CandidateInterfaces)
             {
@@ -98,17 +79,8 @@ namespace Snowflake.Configuration.Generators
                          prop.GetLocation(), ref errorOccured);
                         continue;
                     }
-                    var attrs = propSymbol.GetAttributes().Where(attr => attr?.AttributeClass?.Equals(configOptionAttr, SymbolEqualityComparer.Default) == true);
-                    if (!attrs.Any())
-                    {
-                        context.ReportError(DiagnosticError.UndecoratedProperty, "Undecorated section property member",
-                                   $"Property {propSymbol.Name} must be decorated with a ConfigurationOptionAttribute.",
-                               prop.GetLocation(), ref errorOccured);
-                        continue;
-                    }
-
-                    var attr = attrs.First();
-                    ConfigurationSectionGenerator.VerifyOptionProperty(context, attr, prop, propSymbol, guidType, selectionOptionAttr, ref errorOccured);
+                   
+                    ConfigurationSectionGenerator.VerifyOptionProperty(context, prop, propSymbol, types, ref errorOccured);
                     if (!errorOccured) 
                         symbols.Add(propSymbol);
                 }
@@ -116,7 +88,7 @@ namespace Snowflake.Configuration.Generators
                 if (errorOccured)
                     return;
 
-                string? classSource = ProcessClass(ifaceSymbol, symbols, configSectionInterface, configSectionGenericInterface, configInstanceAttr, context);
+                string? classSource = ProcessClass(ifaceSymbol, symbols, types, context);
                 if (classSource != null)
                 {
                     context.AddSource($"{ifaceSymbol.Name}_ConfigurationSection.cs", SourceText.From(classSource, Encoding.UTF8));
@@ -125,11 +97,8 @@ namespace Snowflake.Configuration.Generators
         }
 
         
-        public string? ProcessClass(INamedTypeSymbol classSymbol, List<IPropertySymbol> props,
-
-            INamedTypeSymbol configSectionInterface,
-            INamedTypeSymbol configSectionGenericInterface,
-            INamedTypeSymbol configInstanceAttr,
+        private string? ProcessClass(INamedTypeSymbol classSymbol, List<IPropertySymbol> props,
+            ConfigurationTypes types,
             GeneratorExecutionContext context)
         {
             if (!classSymbol.ContainingSymbol.Equals(classSymbol.ContainingNamespace, SymbolEqualityComparer.Default))
@@ -151,7 +120,7 @@ namespace Snowflake.Configuration.Generators
             StringBuilder source = new StringBuilder($@"
 namespace {namespaceName}
 {{
-    [{configInstanceAttr.ToDisplayString()}(typeof({generatedNamespaceName}.{backingClassName}))]
+    [{types.ConfigurationGenerationInstanceAttribute.ToDisplayString()}(typeof({generatedNamespaceName}.{backingClassName}))]
     public partial interface {classSymbol.Name}
     {{
     
@@ -198,13 +167,22 @@ namespace {generatedNamespaceName}
 
         private static Random random = new Random();
 
-        public static void VerifyOptionProperty(
+        internal static void VerifyOptionProperty(
             GeneratorExecutionContext context,
-            AttributeData attr, PropertyDeclarationSyntax prop, IPropertySymbol propSymbol,
-            INamedTypeSymbol guidType,
-            INamedTypeSymbol selectionOptionAttr,
+            PropertyDeclarationSyntax prop, IPropertySymbol propSymbol,
+            ConfigurationTypes types,
             ref bool errorOccured)
         {
+            var attrs = propSymbol.GetAttributes()
+                       .Where(attr => attr?.AttributeClass?.Equals(types.ConfigurationOptionAttribute, SymbolEqualityComparer.Default) == true);
+
+            if (!attrs.Any())
+            {
+                context.ReportError(DiagnosticError.UndecoratedProperty, "Undecorated section property member",
+                           $"Property {propSymbol.Name} must be decorated with a ConfigurationOptionAttribute.",
+                       prop.GetLocation(), ref errorOccured);
+            }
+
 
             if (prop.AccessorList == null || !prop.AccessorList.Accessors.Any(a => a.IsKind(SyntaxKind.SetAccessorDeclaration)))
             {
@@ -226,7 +204,9 @@ namespace {generatedNamespaceName}
                           $"Property '{propSymbol.Name}' can not declare a body.",
                       prop.GetLocation(), ref errorOccured);
             }
-
+            if (!attrs.Any())
+                return;
+            var attr = attrs.First();
             // If it has a second arg, then it must not be GUID-based 
             if (attr.ConstructorArguments.Skip(1).FirstOrDefault().Type is ITypeSymbol defaultType)
             {
@@ -255,7 +235,7 @@ namespace {generatedNamespaceName}
                                     enumMember.GetLocation(), ref errorOccured);
                                 continue;
                             }
-                            if (!memberSymbol.GetAttributes().Any(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, selectionOptionAttr)))
+                            if (!memberSymbol.GetAttributes().Any(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.SelectionOptionAttribute)))
                             {
                                 context.ReportError(DiagnosticError.UndecoratedProperty, "Undecorated selection option enum member",
                                     $"Enum member '{memberSymbol.Name}' must be decorated with SelectionOptionAttribute.",
@@ -265,10 +245,10 @@ namespace {generatedNamespaceName}
                     }
                 }
             }
-            else if (attr.ConstructorArguments.Length == 1 && !SymbolEqualityComparer.Default.Equals(propSymbol.Type, guidType))
+            else if (attr.ConstructorArguments.Length == 1 && !SymbolEqualityComparer.Default.Equals(propSymbol.Type, types.System_Guid))
             {
                 context.ReportError(DiagnosticError.MismatchedType, "Mismatched default value type",
-                        $"Property {propSymbol.Name} is of type '{propSymbol.Type}' but needs to be of type '{guidType}'.",
+                        $"Property {propSymbol.Name} is of type '{propSymbol.Type}' but needs to be of type '{types.System_Guid}'.",
                         prop.GetLocation(), ref errorOccured);
             }
         }

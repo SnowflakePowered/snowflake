@@ -19,27 +19,9 @@ namespace Snowflake.Configuration.Generators
                 return;
             bool errorOccured = false;
             var compilation = context.Compilation;
-            INamedTypeSymbol? configTargetAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.ConfigurationTargetAttribute");
-            INamedTypeSymbol? configTargetMember = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.ConfigurationTargetMemberAttribute");
-            INamedTypeSymbol? configSectionAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.ConfigurationSectionAttribute");
-                            
-            INamedTypeSymbol? configCollectionInterface = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationCollection");
-            INamedTypeSymbol? configSectionGenericInterface = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationCollection`1");
-            INamedTypeSymbol? configInstanceAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Generators.ConfigurationGenerationInstanceAttribute");
-
-            if (configTargetAttribute == null
-                || configTargetMember == null 
-                || configSectionAttr == null
-                || configCollectionInterface == null
-                || configSectionGenericInterface == null
-                || configInstanceAttr == null)
-            {
-                context.ReportError(DiagnosticError.FrameworkNotFound,
-                            "Snowflake Framework Not Found",
-                            $"Snowflake framework types were not found.",
-                            Location.None, ref errorOccured);
+            var types = new ConfigurationTypes(compilation);
+            if (!types.CheckContext(context, ref errorOccured))
                 return;
-            }
 
             foreach (var iface in receiver.CandidateInterfaces)
             {
@@ -86,7 +68,7 @@ namespace Snowflake.Configuration.Generators
                     continue;
                 }
 
-                var targetAttrs = ifaceSymbol.GetAttributes().Where(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, configTargetAttribute));
+                var targetAttrs = ifaceSymbol.GetAttributes().Where(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationTargetAttribute));
 
                 if (targetAttrs.Any())
                 {
@@ -175,7 +157,7 @@ namespace Snowflake.Configuration.Generators
                         .Select(i => compilation.GetSemanticModel(i.SyntaxTree).GetDeclaredSymbol(i))
                         .Where(i => i != null)
                         .SelectMany(i => i!.GetAttributes())
-                        .Any(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, configSectionAttr)))
+                        .Any(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationSectionAttribute)))
                     {
                         context.ReportError(DiagnosticError.NotAConfigurationSection,
                            "Configuration collection template members must be marked with ConfigurationSectionAttribute.",
@@ -189,7 +171,7 @@ namespace Snowflake.Configuration.Generators
                 if (errorOccured)
                     return;
 
-                string? classSource = ProcessClass(ifaceSymbol, symbols, configCollectionInterface, configSectionGenericInterface, configInstanceAttr, context);
+                string? classSource = ProcessClass(ifaceSymbol, symbols, types, context);
                 if (classSource != null)
                 {
                     context.AddSource($"{ifaceSymbol.Name}_ConfigurationCollection.cs", SourceText.From(classSource, Encoding.UTF8));
@@ -197,11 +179,8 @@ namespace Snowflake.Configuration.Generators
             }
         }
 
-        public string? ProcessClass(INamedTypeSymbol classSymbol, List<IPropertySymbol> props,
-
-            INamedTypeSymbol configCollectionInterface,
-            INamedTypeSymbol configCollectionGenericInterface,
-            INamedTypeSymbol configInstanceAttr,
+        private string? ProcessClass(INamedTypeSymbol classSymbol, List<IPropertySymbol> props,
+            ConfigurationTypes types,
             GeneratorExecutionContext context)
         {
             if (!classSymbol.ContainingSymbol.Equals(classSymbol.ContainingNamespace, SymbolEqualityComparer.Default))
@@ -222,7 +201,7 @@ namespace Snowflake.Configuration.Generators
             StringBuilder source = new StringBuilder($@"
 namespace {namespaceName}
 {{
-    [{configInstanceAttr.ToDisplayString()}(typeof({generatedNamespaceName}.{backingClassName}))]
+    [{types.ConfigurationGenerationInstanceAttribute.ToDisplayString()}(typeof({generatedNamespaceName}.{backingClassName}))]
     public partial interface {classSymbol.Name}
         : Snowflake.Configuration.Generators.IConfigurationCollectionGeneratedProxy
     {{

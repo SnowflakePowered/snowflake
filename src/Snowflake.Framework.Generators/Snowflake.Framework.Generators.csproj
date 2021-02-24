@@ -13,5 +13,6 @@
   </ItemGroup>
   <PropertyGroup>
     <WarningsAsErrors>NU1605;8604;8061;8602;8603;8612;8613;8620</WarningsAsErrors>
+    <RootNamespace>Snowflake.Generators</RootNamespace>
   </PropertyGroup>
 </Project>
