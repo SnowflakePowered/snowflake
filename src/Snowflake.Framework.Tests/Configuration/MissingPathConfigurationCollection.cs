@@ -10,10 +10,11 @@ using Snowflake.Configuration.Tests;
 namespace Snowflake.Configuration.Tests
 {
     [ConfigurationTarget("target")]
+    [ConfigurationCollection]
     public partial interface
         MissingPathConfigurationCollection
     {
-        [ConfigurationTargetMember("target")] MissingPathConfigurationSection PathConfiguration { get; set; }
+        [ConfigurationTargetMember("target")] MissingPathConfigurationSection PathConfiguration { get; }
     }
 
     [ConfigurationSection("NoPath", "NoPath")]

@@ -65,7 +65,7 @@ namespace Snowflake.Configuration.Serialization
               .OpenFile("RMGE01.wbfs").OpenStream(FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite).Close();
             var context = new ConfigurationTraversalContext(("game", dir));
 
-            context.TraverseCollection(configuration.Configuration);
+            context.TraverseCollection(configuration);
         }
 
         [Fact]

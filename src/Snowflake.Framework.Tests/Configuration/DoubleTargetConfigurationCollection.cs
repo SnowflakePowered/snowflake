@@ -12,7 +12,8 @@ namespace Snowflake.Configuration.Tests
     [ConfigurationTarget("#target")]
     [ConfigurationTarget("#target2", "#target")]
     [ConfigurationTarget("#target2", "#target")]
-    public interface DoubleTargetConfigurationCollection : IConfigurationCollection<DoubleTargetConfigurationCollection>
+    [ConfigurationCollection]
+    public partial interface DoubleTargetConfigurationCollection
     {
         [ConfigurationTargetMember("#target")]
         ExampleConfigurationSection ExampleConfiguration { get; }

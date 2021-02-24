@@ -43,10 +43,9 @@ namespace Snowflake.Configuration.Generators
                 return;
             }
 
-            List<IPropertySymbol> symbols = new();
-
             foreach (var iface in receiver.CandidateInterfaces)
             {
+                var symbols = new List<IPropertySymbol>();
                 var model = compilation.GetSemanticModel(iface.SyntaxTree);
                 var ifaceSymbol = model.GetDeclaredSymbol(iface);
                 var memberSyntax = iface.Members;

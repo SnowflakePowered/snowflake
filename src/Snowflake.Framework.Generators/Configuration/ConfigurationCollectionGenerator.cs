@@ -26,7 +26,6 @@ namespace Snowflake.Configuration.Generators
             INamedTypeSymbol? configCollectionInterface = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationCollection");
             INamedTypeSymbol? configSectionGenericInterface = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationCollection`1");
             INamedTypeSymbol? configInstanceAttr = compilation.GetTypeByMetadataName("Snowflake.Configuration.Generators.ConfigurationGenerationInstanceAttribute");
-            List<IPropertySymbol> symbols = new();
 
             if (configTargetAttribute == null
                 || configTargetMember == null 
@@ -44,6 +43,8 @@ namespace Snowflake.Configuration.Generators
 
             foreach (var iface in receiver.CandidateInterfaces)
             {
+                var symbols = new List<IPropertySymbol>();
+
                 var model = compilation.GetSemanticModel(iface.SyntaxTree);
                 var ifaceSymbol = model.GetDeclaredSymbol(iface);
                 var memberSyntax = iface.Members;
@@ -140,17 +141,14 @@ namespace Snowflake.Configuration.Generators
 
                     symbols.Add(propSymbol);
                 }
-            }
 
-            if (errorOccured)
-                return;
+                if (errorOccured)
+                    return;
 
-            foreach (IGrouping<INamedTypeSymbol, IPropertySymbol> group in symbols.GroupBy(f => f.ContainingType))
-            {
-                string? classSource = ProcessClass(group.Key, group.ToList(), configCollectionInterface, configSectionGenericInterface, configInstanceAttr, context);
+                string? classSource = ProcessClass(ifaceSymbol, symbols, configCollectionInterface, configSectionGenericInterface, configInstanceAttr, context);
                 if (classSource != null)
                 {
-                    context.AddSource($"{group.Key.Name}_ConfigurationCollection.cs", SourceText.From(classSource, Encoding.UTF8));
+                    context.AddSource($"{ifaceSymbol.Name}_ConfigurationCollection.cs", SourceText.From(classSource, Encoding.UTF8));
                 }
             }
         }
