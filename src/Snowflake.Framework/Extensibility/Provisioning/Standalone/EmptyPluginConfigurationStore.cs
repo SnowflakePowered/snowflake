@@ -47,7 +47,7 @@ namespace Snowflake.Extensibility.Provisioning.Standalone
         }
 
         public Task SetAsync<T>(IConfigurationSection<T> configuration)
-            where T : class, IConfigurationSection<T>
+            where T : class
         {
             return Task.CompletedTask;
         }

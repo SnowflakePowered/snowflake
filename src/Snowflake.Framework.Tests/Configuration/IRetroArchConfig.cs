@@ -10,8 +10,9 @@ using Snowflake.Configuration.Serialization.Serializers.Implementations;
 namespace Snowflake.Configuration.Tests
 {
     [ConfigurationTarget("#retroarch")]
-    public interface IRetroArchConfig : IConfigurationCollection<IRetroArchConfig>
+    [ConfigurationCollection]
+    public partial interface IRetroArchConfig 
     {
-        [ConfigurationTargetMember("#retroarch")] IVideoConfiguration VideoConfiguration { get; set; }
+        [ConfigurationTargetMember("#retroarch")] IVideoConfiguration VideoConfiguration { get; }
     }
 }

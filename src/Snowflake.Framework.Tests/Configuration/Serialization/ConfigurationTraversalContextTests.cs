@@ -33,8 +33,7 @@ namespace Snowflake.Configuration.Serialization
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
 
             var context = new ConfigurationTraversalContext();
-
-            Assert.Throws<KeyNotFoundException>(() => context.TraverseCollection(configuration.Configuration));
+            Assert.Throws<KeyNotFoundException>(() => context.TraverseCollection(configuration));
         }
 
         [Fact]
@@ -49,7 +48,7 @@ namespace Snowflake.Configuration.Serialization
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
 
             var context = new ConfigurationTraversalContext();
-            Assert.Throws<ArgumentException>(() => context.TraverseCollection(configuration.Configuration));
+            Assert.Throws<ArgumentException>(() => context.TraverseCollection(configuration));
         }
 
         [Fact]
@@ -93,9 +92,9 @@ namespace Snowflake.Configuration.Serialization
                             IDeviceEnumerator.VirtualVendorID,
                             new XInputDeviceInstance(0).DefaultLayout);
             IDeviceInputMapping mapping = new TestInputMapping();
-            
+
             var input =
-             new InputTemplate<IRetroArchInput>(mapcol).Template;
+             new InputTemplate<IRetroArchInput>(mapcol);
 
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
@@ -122,7 +121,7 @@ namespace Snowflake.Configuration.Serialization
             configuration.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
             var context = new ConfigurationTraversalContext(("game", dir));
 
-            var list = context.TraverseCollection(configuration.Configuration);
+            var list = context.TraverseCollection(configuration);
             Assert.Equal(2, list.Count);
             Assert.Equal(2, list["#dolphin"].Value.Count);
             Assert.DoesNotContain("TestCycle1", list.Keys);

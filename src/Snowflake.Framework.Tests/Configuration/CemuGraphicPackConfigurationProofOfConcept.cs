@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 namespace Snowflake.Configuration
 {
     [ConfigurationTarget("#cemu")]
-    public partial interface CemuConfigurationCollection : IConfigurationCollection<CemuConfigurationCollection>
+    [ConfigurationCollection]
+    public partial interface CemuConfigurationCollection
     {
         [ConfigurationTargetMember("#cemu", true)]
-        CemuRootConfigSection Content { get; set; }
+        CemuRootConfigSection Content { get; }
 
         [ConfigurationTargetMember("#cemu")]
-        GameListConfig Style { get; set; }
+        GameListConfig Style { get; }
     }
 
     [ConfigurationSection("content", "Main Config")]

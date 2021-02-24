@@ -9,14 +9,15 @@ using Snowflake.Configuration.Tests;
 
 namespace Snowflake.Configuration.Tests
 {
+    [ConfigurationCollection]
     public partial interface
-        NullDefaultConfigurationCollection : IConfigurationCollection<NullDefaultConfigurationCollection>
+        NullDefaultConfigurationCollection
     {
-        NullDefaultConfigurationSection NullConfiguration { get; set; }
+        NullDefaultConfigurationSection NullConfiguration { get; }
     }
 
     [ConfigurationSection("Null", "Null")]
-    public interface NullDefaultConfigurationSection : IConfigurationSection<NullDefaultConfigurationSection>
+    public partial interface NullDefaultConfigurationSection
     {
         [ConfigurationOption("NullDefault", null, "UNSET")]
         string NullDefault { get; set; }

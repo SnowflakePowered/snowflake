@@ -21,7 +21,7 @@ namespace Snowflake.Framework.Tests.Configuration
             var y = new ConfigurationCollection<ExampleConfigurationCollection>();
 
             y.Configuration.Sections.MyBoolean = true;
-            var b = (y.Configuration as IConfigurationCollectionGeneratedProxy).Values["Sections"].Descriptor;
+            var b = y.Configuration.GetValueDictionary()["Sections"].Descriptor;
             x.Configuration.MyBoolean = true;
             var mapcol = new ControllerElementMappingProfile("Keyboard",
                          "TEST_CONTROLLER",

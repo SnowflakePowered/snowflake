@@ -16,7 +16,7 @@
         <member name="M:Snowflake.Configuration.ConfigurationCollection`1.System#Collections#IEnumerable#GetEnumerator">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Configuration.ConfigurationCollection`1.Item(System.String)">
+        <member name="M:Snowflake.Configuration.ConfigurationCollection`1.GetSection(System.String)">
             <inheritdoc/>
         </member>
         <member name="T:Snowflake.Configuration.ConfigurationCollectionDescriptor`1">

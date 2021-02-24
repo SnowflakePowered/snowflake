@@ -19,7 +19,8 @@ namespace Snowflake.Configuration.Tests
             var configuration =
                 new ConfigurationCollection<ExampleConfigurationCollection>(new ConfigurationValueCollection(values));
             Assert.Equal("Test", configuration.Configuration.ExampleConfiguration.ISOPath0);
-            Assert.Equal(Guid.Empty, configuration.Configuration.ExampleConfiguration.Values["ISOPath0"].Guid);
+            
+            Assert.Equal(Guid.Empty, configuration.GetSection(c => c.ExampleConfiguration).Values["ISOPath0"].Guid);
         }
 
         [Fact]
@@ -39,19 +40,20 @@ namespace Snowflake.Configuration.Tests
                 ConfigurationValueCollection.MakeExistingValueCollection<ExampleConfigurationCollection>(values,
                     Guid.Empty);
             var configuration = new ConfigurationCollection<ExampleConfigurationCollection>(collection);
+            
             Assert.Equal("Test", configuration.Configuration.ExampleConfiguration.ISOPath0);
             Assert.Equal(FullscreenResolution.Resolution1024X600,
                 configuration.Configuration.ExampleConfiguration.FullscreenResolution);
-            Assert.Equal(isoPath, configuration.Configuration.ExampleConfiguration.Values["ISOPath0"].Guid);
+            Assert.Equal(isoPath, configuration.GetSection(e => e.ExampleConfiguration).Values["ISOPath0"].Guid);
             Assert.Equal(fsR,
-                configuration.Configuration.ExampleConfiguration.Values["FullscreenResolution"].Guid);
+                configuration.GetSection(e => e.ExampleConfiguration).Values["FullscreenResolution"].Guid);
         }
 
         [Fact]
         public void Defaults_Tests()
         {
             var configuration = new ConfigurationCollection<ExampleConfigurationCollection>();
-            Assert.Equal(configuration.Configuration.ExampleConfiguration.Descriptor["FullscreenResolution"].Default,
+            Assert.Equal(configuration.GetSection(e => e.ExampleConfiguration).Descriptor["FullscreenResolution"].Default,
                 configuration.Configuration.ExampleConfiguration.FullscreenResolution);
         }
 
@@ -59,15 +61,7 @@ namespace Snowflake.Configuration.Tests
         public void Descriptor_Tests()
         {
             var configuration = new ConfigurationCollection<ExampleConfigurationCollection>();
-            Assert.Equal("Display", configuration.Configuration.ExampleConfiguration.Descriptor.SectionName);
-        }
-
-        [Fact]
-        public void Nested_Test()
-        {
-            var configuration = new ConfigurationCollection<ExampleConfigurationCollection>();
-            Assert.Equal(configuration.Configuration.ExampleConfiguration.Descriptor["FullscreenResolution"].Default,
-                configuration.Configuration.ExampleConfiguration.Configuration.Configuration.FullscreenResolution);
+            Assert.Equal("Display", configuration.GetSection(e => e.ExampleConfiguration).Descriptor.SectionName);
         }
 
         [Fact]

@@ -69,7 +69,8 @@ namespace Snowflake.Model.Tests
             var configStore = new ConfigurationCollectionStore(optionsBuilder);
             var config = configStore
                 .CreateConfiguration<ExampleConfigurationCollection>("TestConfiguration");
-            var setValue = config.ValueCollection[config.Configuration.ExampleConfiguration.Descriptor,
+            
+            var setValue = config.ValueCollection[config.GetSection(e => e.ExampleConfiguration).Descriptor,
                 nameof(config.Configuration.ExampleConfiguration.FullscreenResolution)];
             config.Configuration.ExampleConfiguration.FullscreenResolution
                 = Configuration.FullscreenResolution.Resolution3840X2160;
@@ -87,7 +88,7 @@ namespace Snowflake.Model.Tests
             var configStore = new ConfigurationCollectionStore(optionsBuilder);
             var config = configStore
                 .CreateConfiguration<ExampleConfigurationCollection>("TestConfiguration");
-            var setValue = config.ValueCollection[config.Configuration.ExampleConfiguration.Descriptor,
+            var setValue = config.ValueCollection[config.GetSection(e => e.ExampleConfiguration).Descriptor,
                 nameof(config.Configuration.ExampleConfiguration.FullscreenResolution)];
             config.Configuration.ExampleConfiguration.FullscreenResolution
                 = Configuration.FullscreenResolution.Resolution3840X2160;
@@ -104,7 +105,7 @@ namespace Snowflake.Model.Tests
             var configStore = new ConfigurationCollectionStore(optionsBuilder);
             var config = configStore
                 .CreateConfiguration<ExampleConfigurationCollection>("TestConfiguration");
-            var setValue = config.ValueCollection[config.Configuration.ExampleConfiguration.Descriptor,
+            var setValue = config.ValueCollection[config.GetSection(e => e.ExampleConfiguration).Descriptor,
                 nameof(config.Configuration.ExampleConfiguration.FullscreenResolution)];
             config.Configuration.ExampleConfiguration.FullscreenResolution
                 = Configuration.FullscreenResolution.Resolution3840X2160;

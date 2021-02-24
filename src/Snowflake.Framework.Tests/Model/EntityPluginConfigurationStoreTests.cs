@@ -58,7 +58,7 @@ namespace Snowflake.Extensibility.Tests
 
             store.Set(configSection);
             configSection.Configuration.FullscreenResolution = FullscreenResolution.Resolution1280X768;
-            store.Set(configSection.Configuration.Values["FullscreenResolution"].Guid, configSection.Configuration.Values["FullscreenResolution"].Value);
+            store.Set(configSection.Values["FullscreenResolution"].Guid, configSection.Values["FullscreenResolution"].Value);
 
             var retrievedConfig = store.Get<ExampleConfigurationSection>();
             Assert.NotNull(retrievedConfig);
@@ -87,8 +87,8 @@ namespace Snowflake.Extensibility.Tests
             configSection.Configuration.Fullscreen = true;
             store.Set(new[]
             {
-                (configSection.Configuration.Values["FullscreenResolution"].Guid, configSection.Configuration.Values["FullscreenResolution"].Value),
-                (configSection.Configuration.Values["Fullscreen"].Guid, configSection.Configuration.Values["Fullscreen"].Value),
+                (configSection.Values["FullscreenResolution"].Guid, configSection.Values["FullscreenResolution"].Value),
+                (configSection.Values["Fullscreen"].Guid, configSection.Values["Fullscreen"].Value),
             });
 
             var retrievedConfig = store.Get<ExampleConfigurationSection>();
@@ -144,7 +144,7 @@ namespace Snowflake.Extensibility.Tests
 
             await store.SetAsync(configSection);
             configSection.Configuration.FullscreenResolution = FullscreenResolution.Resolution1280X768;
-            await store.SetAsync(configSection.Values["FullscreenResolution"].Guid, configSection.Configuration.Values["FullscreenResolution"].Value);
+            await store.SetAsync(configSection.Values["FullscreenResolution"].Guid, configSection.Values["FullscreenResolution"].Value);
 
             var retrievedConfig =await store.GetAsync<ExampleConfigurationSection>();
             Assert.NotNull(retrievedConfig);
@@ -173,8 +173,8 @@ namespace Snowflake.Extensibility.Tests
             configSection.Configuration.Fullscreen = true;
             await store.SetAsync(new[]
             {
-                (configSection.Configuration.Values["FullscreenResolution"].Guid, configSection.Configuration.Values["FullscreenResolution"].Value),
-                (configSection.Configuration.Values["Fullscreen"].Guid, configSection.Configuration.Values["Fullscreen"].Value),
+                (configSection.Values["FullscreenResolution"].Guid, configSection.Values["FullscreenResolution"].Value),
+                (configSection.Values["Fullscreen"].Guid, configSection.Values["Fullscreen"].Value),
             });
 
             var retrievedConfig = await store.GetAsync<ExampleConfigurationSection>();
