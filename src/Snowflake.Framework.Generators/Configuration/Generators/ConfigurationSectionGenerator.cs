@@ -97,7 +97,8 @@ namespace {namespaceName}
 
 namespace {generatedNamespaceName}
 {{
-#pragma warning disable CS8073 CS0472
+#pragma warning disable CS0472
+#pragma warning disable CS8073
     using System.ComponentModel;
     [EditorBrowsable(EditorBrowsableState.Never)]
     sealed class {backingClassName} : {classSymbol.ToDisplayString()}
@@ -130,7 +131,8 @@ namespace {generatedNamespaceName}
             }
 
             source.Append(@"
-#pragma warning restore CS8073 CS0472
+#pragma warning restore CS0472
+#pragma warning restore CS8073
 }}");
             return source.ToString();
         }
