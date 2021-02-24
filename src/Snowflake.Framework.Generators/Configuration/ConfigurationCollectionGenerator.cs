@@ -86,6 +86,50 @@ namespace Snowflake.Configuration.Generators
                     continue;
                 }
 
+                var targetAttrs = ifaceSymbol.GetAttributes().Where(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, configTargetAttribute));
+
+                if (targetAttrs.Any())
+                {
+                    var rootTargets = new HashSet<string>();
+                    var childTargets = new HashSet<(string, string)>();
+                    foreach (var targetAttr in targetAttrs)
+                    {
+                        if (targetAttr.ConstructorArguments.Length == 1)
+                        {
+                            string rootTarget = (string)targetAttr.ConstructorArguments[0].Value!;
+                            if (!rootTargets.Contains(rootTarget))
+                            {
+                                rootTargets.Add(rootTarget);
+                            } 
+                            else
+                            {
+                                context.ReportError(DiagnosticError.DuplicatedTarget,
+                                 "Duplicate configuration target declared.",
+                                 $"A root configuration target called '{rootTarget}' has already been declared for template interface '{ifaceSymbol.Name}'",
+                                    targetAttr.ApplicationSyntaxReference?.GetSyntax().GetLocation() ?? Location.None, ref errorOccured);
+                                continue;
+                            }
+                        } 
+                        else if (targetAttr.ConstructorArguments.Length == 2)
+                        {
+                            (string childTarget, string parentTarget) = ((string)targetAttr.ConstructorArguments[0].Value!, 
+                                (string)targetAttr.ConstructorArguments[1].Value!);
+                            if (!childTargets.Contains((parentTarget, childTarget)))
+                            {
+                                childTargets.Add((parentTarget, childTarget));
+                            }
+                            else
+                            {
+                                context.ReportError(DiagnosticError.DuplicatedTarget,
+                                   "Duplicate configuration target declared.",
+                                   $"A configuration target from '{parentTarget}' to '{childTarget}' has already been declared for template interface '{ifaceSymbol.Name}'",
+                                      targetAttr.ApplicationSyntaxReference?.GetSyntax().GetLocation() ?? Location.None, ref errorOccured);
+                                    continue;
+                            }
+                        }
+                    }
+                }
+                    
                 foreach (var prop in memberSyntax.Cast<PropertyDeclarationSyntax>())
                 {
                     var propSymbol = model.GetDeclaredSymbol(prop);
@@ -104,8 +148,8 @@ namespace Snowflake.Configuration.Generators
 
                     if (prop.AccessorList == null || !prop.AccessorList.Accessors.Any(x => x.IsKind(SyntaxKind.GetAccessorDeclaration)))
                     {
-                        context.ReportError(DiagnosticError.MissingSetter, "Missing get accessor",
-                            $"Property {propSymbol.Name} must declare a getter.",
+                        context.ReportError(DiagnosticError.MissingGetter, "Missing get accessor",
+                            $"Property '{propSymbol.Name}' must declare a getter.",
                             prop.GetLocation(), ref errorOccured);
                     }
 
@@ -113,7 +157,7 @@ namespace Snowflake.Configuration.Generators
                     {
                         context.ReportError(DiagnosticError.UnexpectedSetter,
                             "Unexpected setter in template property",
-                            $"Collection template property {propSymbol.Name} can not have a setter.", iface.GetLocation(), ref errorOccured);
+                            $"Collection template property '{propSymbol.Name}' can not have a setter.", iface.GetLocation(), ref errorOccured);
                     }
 
                     if (propSymbol.Type.TypeKind != TypeKind.Interface)

@@ -26,7 +26,7 @@ namespace Snowflake.Configuration
             var sections =
                 (from props in typeof(T).GetPublicProperties()
                     where props.GetIndexParameters().Length == 0 
-                        && props.PropertyType.GetInterfaces().Contains(typeof(IConfigurationSection))
+                        && props.PropertyType.IsInterface
                     select props).ToImmutableList();
             this.SectionKeys = ImmutableList.CreateRange(from props in sections select props.Name);
         }

@@ -50,7 +50,19 @@ namespace Snowflake.Configuration.Serialization
 
         private static IEnumerable<IConfigurationTarget> ResolveConfigurationTargets(IConfigurationCollection collection)
         {
-            var targets = collection.GetType().GetPublicAttributes<ConfigurationTargetAttribute>();
+            Type? collectionType =
+                collection.GetType()
+                .GetInterfaces()
+                .Where(i => i.IsGenericType)
+                .SelectMany(i => i.GetGenericArguments())
+                .FirstOrDefault(i => i.GetCustomAttribute<ConfigurationCollectionAttribute>() != null);
+
+            if (collectionType == null)
+            {
+                throw new InvalidOperationException("Input configuration collection does not wrap a template type!");
+            }
+
+            var targets = collectionType.GetPublicAttributes<ConfigurationTargetAttribute>();
             var rootTargets = targets.Where(t => t.IsRoot);
             List<ConfigurationTarget> configurationTargets = new List<ConfigurationTarget>();
            
@@ -98,25 +110,36 @@ namespace Snowflake.Configuration.Serialization
         public IReadOnlyDictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>>
             TraverseCollection(IConfigurationCollection collection, IEnumerable<(string targetName, IAbstractConfigurationNode node)> extraNodes)
         {
-            // Get each target for each section.
-            var targetMappings = collection
-                .GetType()
+            Type? collectionType =
+                collection.GetType()
                 .GetInterfaces()
-                // This is a hack to get the declaring interface.
-                .FirstOrDefault(i => i.GetCustomAttributes<ConfigurationTargetAttribute>().Count() != 0)?
+                .Where(i => i.IsGenericType)
+                .SelectMany(i => i.GetGenericArguments())
+                .FirstOrDefault(i => i.GetCustomAttribute<ConfigurationCollectionAttribute>() != null);
+
+            if (collectionType == null)
+            {
+                throw new InvalidOperationException("Input configuration collection does not wrap a template type!");
+            }
+
+            var targetAttributes = collectionType.GetCustomAttributes<ConfigurationTargetAttribute>();
+            
+            // If there are no targets, then there is nothing to do.
+            if (!targetAttributes.Any()) 
+                return new Dictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>>();
+
+            // Get each target for each section.
+            var targetMappings = collectionType
                 .GetPublicProperties()
                 .Where(props => props.GetIndexParameters().Length == 0
-                        && props.PropertyType.GetInterfaces().Contains(typeof(IConfigurationSection)))
+                        && props.PropertyType.IsInterface)
                 .ToDictionary(p => p.Name, p =>
-                    {
-                        var attribute = p.GetCustomAttribute<ConfigurationTargetMemberAttribute>();
-                        return (attribute?.TargetName ?? NullTarget, attribute?.Explode ?? false);
-                    });
+                {
+                    var attribute = p.GetCustomAttribute<ConfigurationTargetMemberAttribute>();
+                    return (attribute?.TargetName ?? NullTarget, attribute?.Explode ?? false);
+                });
 
-            // If there are no targets, then there is nothing to do.
-            if (targetMappings == null) return new Dictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>>();
-
-            var flatTargets = collection.GetType().GetPublicAttributes<ConfigurationTargetAttribute>()
+            var flatTargets = targetAttributes
                 .ToDictionary(t => t.TargetName, t => (target: t, nodes: new List<IAbstractConfigurationNode>()));
 
             foreach (var (targetName, node) in extraNodes)

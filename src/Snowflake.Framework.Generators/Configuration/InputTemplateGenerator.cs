@@ -156,14 +156,14 @@ namespace Snowflake.Configuration.Generators
             if (prop.AccessorList == null || !prop.AccessorList.Accessors.Any(a => a.IsKind(SyntaxKind.GetAccessorDeclaration)))
             {
                 context.ReportError(DiagnosticError.MissingSetter, "Missing get accessor",
-                        $"Property {propSymbol.Name} must declare a getter.",
+                        $"Property '{propSymbol.Name}' must declare a getter.",
                     prop.GetLocation(), ref errorOccured);
             }
 
             if (prop.AccessorList == null || prop.AccessorList.Accessors.Any(a => a.IsKind(SyntaxKind.SetAccessorDeclaration)))
             {
                 context.ReportError(DiagnosticError.UnexpectedSetter, "Unexpected set accessor",
-                          $"Property {propSymbol.Name} must not declare a setter.",
+                          $"Property '{propSymbol.Name}' must not declare a setter.",
                       prop.GetLocation(), ref errorOccured);
             }
 
@@ -171,7 +171,7 @@ namespace Snowflake.Configuration.Generators
             if (prop.AccessorList != null && prop.AccessorList.Accessors.Any(a => a.Body != null || a.ExpressionBody != null))
             {
                 context.ReportError(DiagnosticError.UnexpectedBody, "Unexpected property body",
-                          $"Property {propSymbol.Name} can not declare a body.",
+                          $"Property '{propSymbol.Name}' can not declare a body.",
                       prop.GetLocation(), ref errorOccured);
             }
         }
