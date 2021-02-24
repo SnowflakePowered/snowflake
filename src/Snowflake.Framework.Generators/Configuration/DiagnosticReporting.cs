@@ -33,5 +33,6 @@ namespace Snowflake.Configuration.Generators
         NotAConfigurationSection = 1009,
         NotTopLevel = 1010,
         UndecoratedEnum = 1011,
+        FrameworkNotFound = 1111,
     }
 }
