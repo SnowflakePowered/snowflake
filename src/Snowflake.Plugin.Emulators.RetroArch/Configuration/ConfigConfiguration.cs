@@ -4,7 +4,7 @@ using Snowflake.Configuration.Attributes;
 namespace Snowflake.Plugin.Emulators.RetroArch.Configuration
 {
     [ConfigurationSection("config", "Configuration Options")]
-    public interface ConfigConfiguration : IConfigurationSection<ConfigConfiguration>
+    public partial interface ConfigConfiguration
     {
         [ConfigurationOption("config_save_on_exit", false, DisplayName = "Save Config on exit", Private = true)]
         bool ConfigSaveOnExit { get; set; }

@@ -165,14 +165,14 @@ namespace Snowflake.Configuration.Tests
 
             var template = new InputConfiguration<IRetroArchInput>(mapcol, 0);
 
-            Assert.Equal(DeviceCapability.Button0, template.Template.InputPlayerABtn);
+            Assert.Equal(DeviceCapability.Button0, template.Configuration.InputPlayerABtn);
             template[ControllerElement.ButtonA] = DeviceCapability.Button1;
             template[ControllerElement.ButtonA] = DeviceCapability.Key2;
             template[ControllerElement.ButtonA] = DeviceCapability.Axis0Negative;
 
-            Assert.Equal(DeviceCapability.Button1, template.Template.InputPlayerABtn);
-            Assert.Equal(DeviceCapability.Key2, template.Template.InputPlayerA);
-            Assert.Equal(DeviceCapability.Axis0Negative, template.Template.InputPlayerAAxis);
+            Assert.Equal(DeviceCapability.Button1, template.Configuration.InputPlayerABtn);
+            Assert.Equal(DeviceCapability.Key2, template.Configuration.InputPlayerA);
+            Assert.Equal(DeviceCapability.Axis0Negative, template.Configuration.InputPlayerAAxis);
         }
     }
 }

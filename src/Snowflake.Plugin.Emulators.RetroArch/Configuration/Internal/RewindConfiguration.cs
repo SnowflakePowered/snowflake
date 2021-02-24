@@ -5,7 +5,7 @@ using Snowflake.Configuration.Attributes;
 namespace Snowflake.Plugin.Emulators.RetroArch.Configuration.Internal
 {
     [ConfigurationSection("rewind", "Rewind Options")]
-    public interface RewindConfiguration : IConfigurationSection<RewindConfiguration>
+    public partial interface RewindConfiguration
     {
         [ConfigurationOption("rewind_enable", false, DisplayName = "Enable Rewind", Private = true)]
         bool RewindEnable { get; set; }

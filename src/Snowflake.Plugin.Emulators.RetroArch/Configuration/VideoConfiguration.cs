@@ -8,7 +8,7 @@ using Snowflake.Plugin.Emulators.RetroArch.Shaders;
 namespace Snowflake.Plugin.Emulators.RetroArch.Configuration
 {
     [ConfigurationSection("video", "Video Options")]
-    public interface VideoConfiguration : IConfigurationSection<VideoConfiguration>
+    public partial interface VideoConfiguration
     {
         [ConfigurationOption("video_black_frame_insertion", false, DisplayName = "Video Black Frame Insertion")]
         bool VideoBlackFrameInsertion { get; set; }

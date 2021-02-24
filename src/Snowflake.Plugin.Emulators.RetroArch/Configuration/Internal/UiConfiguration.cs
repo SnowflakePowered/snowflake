@@ -5,7 +5,7 @@ using Snowflake.Configuration.Attributes;
 namespace Snowflake.Plugin.Emulators.RetroArch.Configuration.Internal
 {
     [ConfigurationSection("ui", "UI Options")]
-    public interface UiConfiguration : IConfigurationSection<UiConfiguration>
+    public partial interface UiConfiguration
     {
         [ConfigurationOption("ui_companion_enable", false, DisplayName = "Ui Companion Enable")]
         bool UiCompanionEnable { get; set; }

@@ -4,7 +4,7 @@ using Snowflake.Configuration.Attributes;
 namespace Snowflake.Plugin.Emulators.RetroArch.Configuration
 {
     [ConfigurationSection("framethottle", "Framethrottle")]
-    public interface FramethrottleConfiguration : IConfigurationSection<FramethrottleConfiguration>
+    public partial interface FramethrottleConfiguration
     {
         [ConfigurationOption("fastforward_ratio", 0.000000, DisplayName = "Maximum Run Speed")]
         double FastforwardRatio { get; set; }

@@ -5,7 +5,7 @@ using Snowflake.Configuration.Attributes;
 namespace Snowflake.Plugin.Emulators.RetroArch.Configuration.Internal
 {
     [ConfigurationSection("user", "User Options")]
-    public interface UserConfiguration : IConfigurationSection<UserConfiguration>
+    public partial interface UserConfiguration
     {
         // todo check max
         [ConfigurationOption("user_language", 0, DisplayName = "User Language", Private = true)]

@@ -7,7 +7,7 @@ using Snowflake.Plugin.Emulators.RetroArch.Selections.AudioConfiguration;
 namespace Snowflake.Plugin.Emulators.RetroArch.Configuration
 {
     [ConfigurationSection("audio", "Audio Options")]
-    public interface AudioConfiguration : IConfigurationSection<AudioConfiguration>
+    public partial interface AudioConfiguration
     {
         [ConfigurationOption("audio_block_frames", 0, DisplayName = "Block Frames", Private = true)]
         int AudioBlockFrames { get; set; }

@@ -10,7 +10,7 @@ using Snowflake.Plugin.Emulators.RetroArch.Adapters.Higan.Selections;
 namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Higan.Configuration
 {
     [ConfigurationSection("bsnes", "BSNES Settings")]
-    public interface BsnesCoreConfiguration : IConfigurationSection<BsnesCoreConfiguration>
+    public partial interface BsnesCoreConfiguration
     {
         [ConfigurationOption("flag#performanceprofile", PerformanceProfile.Performance,
             DisplayName = "Performance Profile", Flag = true)]

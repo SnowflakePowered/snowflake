@@ -5,7 +5,7 @@ using Snowflake.Configuration.Attributes;
 namespace Snowflake.Plugin.Emulators.RetroArch.Configuration.Internal
 {
     [ConfigurationSection("network", "Network Options")]
-    public interface NetworkConfiguration : IConfigurationSection<NetworkConfiguration>
+    public partial interface NetworkConfiguration
     {
         [ConfigurationOption("network_cmd_enable", true, DisplayName = "Network Cmd Enable", Private = true)]
         bool NetworkCmdEnable { get; set; }

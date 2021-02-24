@@ -5,7 +5,7 @@ using Snowflake.Configuration.Attributes;
 namespace Snowflake.Plugin.Emulators.RetroArch.Configuration.Internal
 {
     [ConfigurationSection("threaded", "Threaded Options")]
-    public interface ThreadedConfiguration : IConfigurationSection<ThreadedConfiguration>
+    public partial interface ThreadedConfiguration
     {
         // this probably shouldn't be touched
         [ConfigurationOption("threaded_data_runloop_enable", true, DisplayName = "Threaded Data Runloop Enable",

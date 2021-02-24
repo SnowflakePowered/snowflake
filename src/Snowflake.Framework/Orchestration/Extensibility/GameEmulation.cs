@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
+using Snowflake.Configuration.Generators;
 
 namespace Snowflake.Orchestration.Extensibility
 {
@@ -60,12 +61,12 @@ namespace Snowflake.Orchestration.Extensibility
     }
 
     public abstract class GameEmulation<TConfigurationCollection> : GameEmulation
-        where TConfigurationCollection : class, IConfigurationCollection<TConfigurationCollection>
+        where TConfigurationCollection : class, IConfigurationCollectionTemplate
     {
-        public TConfigurationCollection ConfigurationProfile { get; }
+        public IConfigurationCollection<TConfigurationCollection> ConfigurationProfile { get; }
 
         public GameEmulation(IGame game,
-           TConfigurationCollection configuration,
+           IConfigurationCollection<TConfigurationCollection> configuration,
            IEnumerable<IEmulatedController> controllerPorts,
            ISaveProfile saveProfile) : base(game, controllerPorts, saveProfile)
         {

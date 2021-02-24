@@ -9,7 +9,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Configuration.Internal
     ///     Since we wrap this, we don't care about this.
     /// </summary>
     [ConfigurationSection("bundle", "Bundle Options")]
-    public interface BundleConfiguration : IConfigurationSection<BundleConfiguration>
+    public partial interface BundleConfiguration
     {
         [ConfigurationOption("bundle_assets_extract_enable", false, DisplayName = "Bundle Assets Extract Enable",
             Private = true)]

@@ -5,7 +5,7 @@ using Snowflake.Configuration.Attributes;
 namespace Snowflake.Plugin.Emulators.RetroArch.Configuration.Internal
 {
     [ConfigurationSection("core", "Core Options")]
-    public interface CoreConfiguration : IConfigurationSection<CoreConfiguration>
+    public partial interface CoreConfiguration
     {
         [ConfigurationOption("core_set_supports_no_game_enable", true, DisplayName = "Core Set Supports No Game Enable",
             Private = true)]

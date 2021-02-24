@@ -5,7 +5,7 @@ using Snowflake.Configuration.Attributes;
 namespace Snowflake.Plugin.Emulators.RetroArch.Configuration
 {
     [ConfigurationSection("pause", "Pause Options")]
-    public interface PauseConfiguration : IConfigurationSection<PauseConfiguration>
+    public partial interface PauseConfiguration
     {
         [ConfigurationOption("pause_nonactive", true, DisplayName = "Pause when not in focus")]
         bool PauseNonactive { get; set; }

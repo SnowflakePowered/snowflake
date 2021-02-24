@@ -9,7 +9,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Configuration.Internal
     ///     (XBOX Only Setting?)
     /// </summary>
     [ConfigurationSection("flicker", "Filter Options")]
-    public interface FilterConfiguration : IConfigurationSection<FilterConfiguration>
+    public partial interface FilterConfiguration 
     {
         [ConfigurationOption("flicker_filter_enable", false, DisplayName = "Flicker Filter Enable", Private = true)]
         bool FlickerFilterEnable { get; set; }

@@ -5,7 +5,7 @@ using Snowflake.Configuration.Attributes;
 namespace Snowflake.Plugin.Emulators.RetroArch.Configuration.Internal
 {
     [ConfigurationSection("location", "Location Options")]
-    public interface LocationConfiguration : IConfigurationSection<LocationConfiguration>
+    public partial interface LocationConfiguration
     {
         /// <summary>
         ///     Gets or sets a value indicating whether not applicable on Desktop devices

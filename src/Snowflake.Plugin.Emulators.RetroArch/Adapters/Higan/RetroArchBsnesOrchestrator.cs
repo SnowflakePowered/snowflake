@@ -71,7 +71,7 @@ namespace Snowflake.Adapters.Higan
                 .GetProfile<HiganRetroArchConfiguration>(nameof(RetroArchBsnesOrchestrator), 
                 configurationProfileGuid);
             var gameEmulation = new RetroArchBsnesGameEmulation(game,
-                configuration.Configuration,
+                configuration,
                 controllerPorts,
                 saveProfile,
                 this.Mappings,

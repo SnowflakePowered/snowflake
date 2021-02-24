@@ -12,7 +12,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Configuration.Internal
     ///     by the simplicity of only exposing core settings using "Simple".
     /// </summary>
     [ConfigurationSection("menu", "Menu Options")]
-    public interface MenuConfiguration : IConfigurationSection<MenuConfiguration>
+    public partial interface MenuConfiguration
     {
         [ConfigurationOption("dpi_override_enable", true, DisplayName = "Dpi Override Enable", Private = true)]
         bool DpiOverrideEnable { get; set; }

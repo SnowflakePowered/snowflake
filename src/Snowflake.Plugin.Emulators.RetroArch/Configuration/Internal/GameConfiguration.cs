@@ -5,7 +5,7 @@ using Snowflake.Configuration.Attributes;
 namespace Snowflake.Plugin.Emulators.RetroArch.Configuration.Internal
 {
     [ConfigurationSection("game", "Game Options")]
-    public interface GameConfiguration : IConfigurationSection<GameConfiguration>
+    public partial interface GameConfiguration
     {
         [ConfigurationOption("game_specific_options", false, DisplayName = "Game Specific Options", Private = true)]
         bool GameSpecificOptions { get; set; }

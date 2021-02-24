@@ -9,7 +9,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Configuration.Internal
     ///     Perhaps enable this in a future update
     /// </summary>
     [ConfigurationSection("cheevos", "Cheevos Options")]
-    public interface AchievementConfiguration : IConfigurationSection<AchievementConfiguration>
+    public partial interface AchievementConfiguration
     {
         [ConfigurationOption("cheevos_enable", false, DisplayName = "Enable RetroArchivements", Private = true)]
         bool CheevosEnable { get; set; }

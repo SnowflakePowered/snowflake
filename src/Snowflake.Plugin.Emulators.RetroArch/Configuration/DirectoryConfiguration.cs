@@ -5,7 +5,7 @@ using Snowflake.Configuration.Attributes;
 namespace Snowflake.Plugin.Emulators.RetroArch.Configuration
 {
     [ConfigurationSection("directory", "Directory Options")]
-    public interface DirectoryConfiguration : IConfigurationSection<DirectoryConfiguration>
+    public partial interface DirectoryConfiguration
     {
         [ConfigurationOption("assets_directory", "default", PathType.Raw, DisplayName = "Assets Directory", 
             Private = true)]

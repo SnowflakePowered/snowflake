@@ -23,17 +23,17 @@ namespace Snowflake.Configuration.Input
         public IConfigurationSectionDescriptor Descriptor { get; }
 
         /// <inheritdoc/>
-        public T Template { get; }
-
+        public T Configuration { get; }
+        
         /// <inheritdoc/>
         public IReadOnlyDictionary<string, DeviceCapability> Values
-            => this.Template.GetValueDictionary();
+            => this.Configuration.GetValueDictionary();
 
         /// <inheritdoc/>
         IEnumerable<IInputOption> IInputConfiguration.Options =>
             ImmutableList.CreateRange(this.Options.Values);
 
-        private IConfigurationSection<T> Configuration { get; }
+        private IConfigurationSection<T> ConfigurationSection { get; }
 
         private IDictionary<string, IInputOption> Options { get; }
 
@@ -55,7 +55,7 @@ namespace Snowflake.Configuration.Input
 
                 foreach (string optionKey in optionKeys)
                 {
-                    this.Template[optionKey] = value;
+                    this.Configuration[optionKey] = value;
                 }
             }
         }
@@ -89,39 +89,37 @@ namespace Snowflake.Configuration.Input
             if (genInstance == null)
                 throw new InvalidOperationException("Not generated!"); // todo: mark with interface to fail at compile time.
 
-            this.Template =
+            this.Configuration =
               (T)Instantiate.CreateInstance(genInstance.InstanceType,
                   new[] { typeof(IConfigurationSectionDescriptor), typeof(IConfigurationValueCollection), typeof(Dictionary<string, DeviceCapability>) },
                   Expression.Constant(this.Descriptor), Expression.Constant(this.ValueCollection), 
                   Expression.Constant(map.ToDictionary(m => m.Key, m => m.Value)));
-            this.Configuration = new ConfigurationSection<T>(this.ValueCollection, this.Descriptor, this.Template);
+            this.ConfigurationSection = new ConfigurationSection<T>(this.ValueCollection, this.Descriptor, this.Configuration);
         }
 
         /// <inheritdoc/>
-        IReadOnlyDictionary<string, IConfigurationValue> IConfigurationSection.Values => this.Configuration.Values;
+        IReadOnlyDictionary<string, IConfigurationValue> IConfigurationSection.Values => this.ConfigurationSection.Values;
 
         /// <inheritdoc/>
-        IConfigurationSectionDescriptor IConfigurationSection.Descriptor => this.Configuration.Descriptor;
+        IConfigurationSectionDescriptor IConfigurationSection.Descriptor => this.ConfigurationSection.Descriptor;
 
         /// <inheritdoc/>
         object? IConfigurationSection.this[string key]
         {
-            get { return this.Configuration[key]; }
-            set { this.Configuration[key] = value; }
+            get { return this.ConfigurationSection[key]; }
+            set { this.ConfigurationSection[key] = value; }
         }
 
         /// <inheritdoc/>
-        T IConfigurationSection<T>.Configuration => this.Configuration.Configuration;
-
         public IConfigurationValueCollection ValueCollection { get; }
 
         /// <inheritdoc/>
         public IEnumerator<KeyValuePair<IConfigurationOptionDescriptor, IConfigurationValue>> GetEnumerator()
         {
-            return this.Configuration.Descriptor.Options
+            return this.ConfigurationSection.Descriptor.Options
                 .Select(o =>
                     new KeyValuePair<IConfigurationOptionDescriptor, IConfigurationValue>(o, 
-                    this.Configuration.Values[o.OptionKey]))
+                    this.ConfigurationSection.Values[o.OptionKey]))
                 .GetEnumerator();
         }
 

@@ -192,7 +192,7 @@
         <member name="P:Snowflake.Configuration.Input.InputConfiguration`1.PlayerIndex">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Configuration.Input.InputConfiguration`1.Template">
+        <member name="P:Snowflake.Configuration.Input.InputConfiguration`1.Configuration">
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Configuration.Input.InputConfiguration`1.Values">
@@ -213,7 +213,7 @@
         <member name="P:Snowflake.Configuration.Input.InputConfiguration`1.Snowflake#Configuration#IConfigurationSection#Item(System.String)">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Configuration.Input.InputConfiguration`1.Snowflake#Configuration#IConfigurationSection{T}#Configuration">
+        <member name="P:Snowflake.Configuration.Input.InputConfiguration`1.ValueCollection">
             <inheritdoc/>
         </member>
         <member name="M:Snowflake.Configuration.Input.InputConfiguration`1.GetEnumerator">

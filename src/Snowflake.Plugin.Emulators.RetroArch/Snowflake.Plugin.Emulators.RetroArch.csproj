@@ -18,6 +18,8 @@
 
   <ItemGroup>
     <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
+    <ProjectReference Include="..\Snowflake.Framework.Generators\Snowflake.Framework.Generators.csproj" OutputItemType="analyzer"
+                  PrivateAssets="build"/>
   </ItemGroup>
 
   <ItemGroup>

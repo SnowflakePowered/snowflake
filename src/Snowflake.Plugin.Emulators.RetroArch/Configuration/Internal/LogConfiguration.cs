@@ -5,7 +5,7 @@ using Snowflake.Configuration.Attributes;
 namespace Snowflake.Plugin.Emulators.RetroArch.Configuration.Internal
 {
     [ConfigurationSection("log", "Log Options")]
-    public interface LogConfiguration : IConfigurationSection<LogConfiguration>
+    public partial interface LogConfiguration
     {
         [ConfigurationOption("log_verbosity", false, DisplayName = "Log Verbosity", Private = true)]
         bool LogVerbosity { get; set; }

@@ -25,6 +25,7 @@ namespace Snowflake.Configuration.Generators
 
             foreach (var iface in receiver.CandidateInterfaces)
             {
+                // todo: allow implementing inherited ifaces for collections
                 errorOccured = false;
                 var symbols = new List<IPropertySymbol>();
 
@@ -32,7 +33,7 @@ namespace Snowflake.Configuration.Generators
                 var ifaceSymbol = model.GetDeclaredSymbol(iface);
                 var memberSyntax = iface.Members;
 
-                ConfigurationSectionGenerator.VerifyTemplateInterface(context, model, iface, ifaceSymbol, ref errorOccured);
+                ConfigurationCollectionGenerator.VerifyTemplateInterface(context, model, iface, ifaceSymbol, ref errorOccured);
                 if (errorOccured)
                     continue;
 
@@ -144,6 +145,42 @@ namespace Snowflake.Configuration.Generators
             }
         }
 
+        internal static void VerifyTemplateInterface(
+        GeneratorExecutionContext context,
+        SemanticModel model,
+        InterfaceDeclarationSyntax iface,
+        INamedTypeSymbol? ifaceSymbol,
+        ref bool errorOccurred)
+        {
+            var memberSyntax = iface.Members;
+
+            if (ifaceSymbol == null)
+            {
+                context.ReportError(DiagnosticError.InvalidMembers, "Interface not found.",
+                 $"Template interface '{iface.Identifier.Text}' was not found. " +
+                 $"Template interface '{iface.Identifier.Text}' was not found.",
+                 iface.GetLocation(), ref errorOccurred);
+                return;
+            }
+
+            if (memberSyntax.FirstOrDefault(m => m is not PropertyDeclarationSyntax) is MemberDeclarationSyntax badSyntax)
+            {
+                var badSymbol = model.GetDeclaredSymbol(badSyntax);
+                context.ReportError(DiagnosticError.InvalidMembers, "Invalid members in template interface.",
+                    $"Template interface '{ifaceSymbol.Name}' must only declare property members. " +
+                    $"{badSymbol?.Kind} '{ifaceSymbol.Name}.{badSymbol?.Name}' is not a property.",
+                    badSyntax.GetLocation(), ref errorOccurred);
+            }
+
+            if (!iface.Modifiers.Any(p => p.IsKind(SyntaxKind.PartialKeyword)))
+            {
+                context.ReportError(DiagnosticError.UnextendibleInterface,
+                           "Unextendible template interface",
+                           $"Template interface '{ifaceSymbol.Name}' must be marked partial.",
+                           iface.GetLocation(), ref errorOccurred);
+            }
+        }
+
         private string? ProcessClass(INamedTypeSymbol classSymbol, List<IPropertySymbol> props,
             ConfigurationTypes types,
             GeneratorExecutionContext context)
@@ -199,8 +236,7 @@ namespace {generatedNamespaceName}
             foreach (var prop in props)
             {
                 // We can't parameterize ConfigurationSection<T> because Snowflake.Framework needs to consume 
-                // Snowflake.Framework.Generator for EmptyPluginConfiguration, and 
-                // 
+                // Snowflake.Framework.Generator for EmptyPluginConfiguration, and it is not available at generator time.
                 source.Append($@"
 this.backing__{prop.Name} = new Snowflake.Configuration.ConfigurationSection<{prop.Type.ToDisplayString()}>(this.__backingCollection, nameof({classSymbol.ToDisplayString()}.{prop.Name})); 
 this.__configurationSections[nameof({classSymbol.ToDisplayString()}.{prop.Name})] = this.backing__{prop.Name};

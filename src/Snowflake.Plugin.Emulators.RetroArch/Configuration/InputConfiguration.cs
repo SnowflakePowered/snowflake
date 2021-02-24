@@ -6,7 +6,7 @@ using Snowflake.Plugin.Emulators.RetroArch.Selections.InputConfiguration;
 namespace Snowflake.Plugin.Emulators.RetroArch.Configuration
 {
     [ConfigurationSection("input", "Input Options")]
-    public interface InputConfiguration : IConfigurationSection<InputConfiguration>
+    public partial interface InputConfiguration
     {
         [ConfigurationOption("auto_remaps_enable", false, DisplayName = "Auto Remaps Enable", Private = true)]
         bool AutoRemapsEnable { get; set; }

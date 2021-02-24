@@ -6,7 +6,7 @@ using Snowflake.Configuration.Attributes;
 namespace Snowflake.Plugin.Emulators.RetroArch.Configuration.Internal
 {
     [ConfigurationSection("record", "Record Options")]
-    public interface RecordConfiguration : IConfigurationSection<RecordConfiguration>
+    public partial interface RecordConfiguration
     {
         // this can be enum but the only other possible value is null.
         [ConfigurationOption("record_driver", "ffmpeg", DisplayName = "Record Driver", Private = true)]

@@ -5,7 +5,7 @@ using Snowflake.Configuration.Attributes;
 namespace Snowflake.Plugin.Emulators.RetroArch.Configuration.Internal
 {
     [ConfigurationSection("stdin", "Stdin Options")]
-    public interface StdinConfiguration : IConfigurationSection<StdinConfiguration>
+    public partial interface StdinConfiguration
     {
         // use network cmds on windows instead
         [ConfigurationOption("stdin_cmd_enable", false, DisplayName = "Enable Commands through STDIN", Private = true)]

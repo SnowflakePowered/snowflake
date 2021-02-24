@@ -5,7 +5,7 @@ using Snowflake.Configuration.Attributes;
 namespace Snowflake.Plugin.Emulators.RetroArch.Configuration
 {
     [ConfigurationSection("save", "Save Options")]
-    public interface SaveConfiguration : IConfigurationSection<SaveConfiguration>
+    public partial interface SaveConfiguration
     {
         [ConfigurationOption("autosave_interval", 10, DisplayName = "Autosave Interval (seconds)", Increment = 10)]
         int AutosaveInterval { get; set; }

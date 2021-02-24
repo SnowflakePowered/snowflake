@@ -8,7 +8,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Configuration.Internal
     ///     Menu is completely disabled.
     /// </summary>
     [ConfigurationSection("xmb", "Xmb Options")]
-    public interface XmbConfiguration : IConfigurationSection<XmbConfiguration>
+    public partial interface XmbConfiguration
     {
         [ConfigurationOption("xmb_alpha_factor", 75, DisplayName = "Xmb Alpha Factor", Private = true)]
         int XmbAlphaFactor { get; set; }

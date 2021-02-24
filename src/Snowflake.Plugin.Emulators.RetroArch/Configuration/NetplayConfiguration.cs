@@ -8,7 +8,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Configuration
     ///     Netplay mode will probably be handled by the core through a separate API.
     /// </summary>
     [ConfigurationSection("netplay", "Netplay Options")]
-    public interface NetplayConfiguration : IConfigurationSection<NetplayConfiguration>
+    public partial interface NetplayConfiguration
     {
         [ConfigurationOption("netplay_client_swap_input", true, DisplayName = "Netplay Client Swap Input",
             Private = true)]

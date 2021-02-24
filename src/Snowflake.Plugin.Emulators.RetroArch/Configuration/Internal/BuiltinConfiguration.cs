@@ -5,7 +5,7 @@ using Snowflake.Configuration.Attributes;
 namespace Snowflake.Plugin.Emulators.RetroArch.Configuration.Internal
 {
     [ConfigurationSection("builtin", "Builtin Options")]
-    public interface BuiltinConfiguration : IConfigurationSection<BuiltinConfiguration>
+    public partial interface BuiltinConfiguration
     {
         [ConfigurationOption("builtin_imageviewer_enable", true, DisplayName = "Builtin Imageviewer Enable",
             Private = true)]

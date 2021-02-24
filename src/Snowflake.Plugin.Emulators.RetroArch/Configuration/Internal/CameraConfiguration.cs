@@ -8,7 +8,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Configuration.Internal
     ///     Not applicable on Desktop OS
     /// </summary>
     [ConfigurationSection("camera", "Camera Options")]
-    public interface CameraConfiguration : IConfigurationSection<CameraConfiguration>
+    public partial interface CameraConfiguration
     {
         [ConfigurationOption("camera_allow", false, DisplayName = "Camera Allow", Private = true)]
         bool CameraAllow { get; set; }
