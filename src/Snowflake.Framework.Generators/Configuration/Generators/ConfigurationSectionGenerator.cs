@@ -4,6 +4,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,22 +18,38 @@ namespace Snowflake.Configuration.Generators
         {
             if (context.SyntaxReceiver is not ConfigurationTemplateInterfaceSyntaxReceiver receiver)
                 return;
-            bool errorOccured = false;
+            bool errorOccurred = false;
             var compilation = context.Compilation;
             var types = new ConfigurationTypes(compilation);
-            if (!types.CheckContext(context, ref errorOccured))
+            if (!types.CheckContext(context, ref errorOccurred))
                 return;
 
-            foreach (var iface in receiver.CandidateInterfaces)
-            {
-                errorOccured = false;
-                var symbols = new List<IPropertySymbol>();
-                var model = compilation.GetSemanticModel(iface.SyntaxTree);
-                var ifaceSymbol = model.GetDeclaredSymbol(iface);
-                var memberSyntax = iface.Members;
 
-                ConfigurationSectionGenerator.VerifyTemplateInterface(context, model, iface, ifaceSymbol, ref errorOccured);
-                if (errorOccured)
+            foreach (var rootInterface in receiver.CandidateInterfaces)
+            {
+                errorOccurred = false;
+                var symbols = new List<IPropertySymbol>();
+                var model = compilation.GetSemanticModel(rootInterface.SyntaxTree);
+                var ifaceSymbol = model.GetDeclaredSymbol(rootInterface);
+                if (ifaceSymbol == null)
+                {
+                    context.ReportError(DiagnosticError.InvalidMembers, "Interface not found.",
+                         $"Template interface '{rootInterface.Identifier.Text}' was not found. " +
+                         $"Template interface '{rootInterface.Identifier.Text}' was not found.",
+                         Location.None, ref errorOccurred);
+                    continue;
+                }
+
+                var allInterfaces = ifaceSymbol.AllInterfaces;
+  
+                // todo ensure not null
+                var allDecls = ifaceSymbol.DeclaringSyntaxReferences;
+                // get partials..
+                var memberSyntax = allDecls.Select(s => s.GetSyntax())
+                    .Cast<InterfaceDeclarationSyntax>().SelectMany(i => i.Members);
+
+                ConfigurationSectionGenerator.VerifyTemplateInterface(context, model, memberSyntax, rootInterface.Identifier.Text, ifaceSymbol, ref errorOccurred);
+                if (errorOccurred)
                     continue;
 
                 foreach (var prop in memberSyntax.Cast<PropertyDeclarationSyntax>())
@@ -43,16 +60,16 @@ namespace Snowflake.Configuration.Generators
                         context.ReportError(DiagnosticError.InvalidMembers, "Property not found.",
                          $"Template property '{prop.Identifier.Text}' was not found. " +
                          $"Template property '{prop.Identifier.Text}' was not found.",
-                         prop.GetLocation(), ref errorOccured);
+                         prop.GetLocation(), ref errorOccurred);
                         continue;
                     }
                    
-                    ConfigurationSectionGenerator.VerifyOptionProperty(context, prop, propSymbol, types, ref errorOccured);
-                    if (!errorOccured) 
+                    ConfigurationSectionGenerator.VerifyOptionProperty(context, prop, propSymbol, types, ref errorOccurred);
+                    if (!errorOccurred) 
                         symbols.Add(propSymbol);
                 }
 
-                if (errorOccured)
+                if (errorOccurred)
                     continue;
 
                 string? classSource = ProcessClass(ifaceSymbol!, symbols, types, context);
@@ -154,8 +171,6 @@ namespace {generatedNamespaceName}
                            $"Property {propSymbol.Name} must be decorated with a ConfigurationOptionAttribute.",
                        prop.GetLocation(), ref errorOccurred);
             }
-
-
             if (prop.AccessorList == null || !prop.AccessorList.Accessors.Any(a => a.IsKind(SyntaxKind.SetAccessorDeclaration)))
             {
                 context.ReportError(DiagnosticError.MissingSetter, "Missing set accessor",
@@ -228,18 +243,17 @@ namespace {generatedNamespaceName}
         internal static void VerifyTemplateInterface(
             GeneratorExecutionContext context,
             SemanticModel model, 
-            InterfaceDeclarationSyntax iface,
+            IEnumerable<MemberDeclarationSyntax> memberSyntax,
+            string ifaceName,
             INamedTypeSymbol? ifaceSymbol,
             ref bool errorOccurred)
         {
-            var memberSyntax = iface.Members;
-
             if (ifaceSymbol == null)
             {
                 context.ReportError(DiagnosticError.InvalidMembers, "Interface not found.",
-                 $"Template interface '{iface.Identifier.Text}' was not found. " +
-                 $"Template interface '{iface.Identifier.Text}' was not found.",
-                 iface.GetLocation(), ref errorOccurred);
+                 $"Template interface '{ifaceName}' was not found. " +
+                 $"Template interface '{ifaceName}' was not found.",
+                 Location.None, ref errorOccurred);
                 return;
             }
 
@@ -252,21 +266,21 @@ namespace {generatedNamespaceName}
                     badSyntax.GetLocation(), ref errorOccurred);
             }
 
-            if (!iface.Modifiers.Any(p => p.IsKind(SyntaxKind.PartialKeyword)))
-            {
-                context.ReportError(DiagnosticError.UnextendibleInterface,
-                           "Unextendible template interface",
-                           $"Template interface '{ifaceSymbol.Name}' must be marked partial.",
-                           iface.GetLocation(), ref errorOccurred);
-            }
+            //if (!iface.Modifiers.Any(p => p.IsKind(SyntaxKind.PartialKeyword)))
+            //{
+            //    context.ReportError(DiagnosticError.UnextendibleInterface,
+            //               "Unextendible template interface",
+            //               $"Template interface '{ifaceSymbol.Name}' must be marked partial.",
+            //               iface.GetLocation(), ref errorOccurred);
+            //}
 
-            if (iface.BaseList != null && iface.BaseList.ChildNodes().Any())
-            {
-                context.ReportError(DiagnosticError.UnextendibleInterface,
-                           "Unextendible template interface",
-                           $"Template interface '{ifaceSymbol.Name}' is not allowed to extend another interface.",
-                           iface.GetLocation(), ref errorOccurred);
-            }
+            //if (iface.BaseList != null && iface.BaseList.ChildNodes().Any())
+            //{
+            //    context.ReportError(DiagnosticError.UnextendibleInterface,
+            //               "Unextendible template interface",
+            //               $"Template interface '{ifaceSymbol.Name}' is not allowed to extend another interface.",
+            //               iface.GetLocation(), ref errorOccurred);
+            //}
 
         }
 

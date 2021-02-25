@@ -34,7 +34,7 @@ namespace Snowflake.Configuration.Generators
                 var ifaceSymbol = model.GetDeclaredSymbol(iface);
                 var memberSyntax = iface.Members;
 
-                ConfigurationSectionGenerator.VerifyTemplateInterface(context, model, iface, ifaceSymbol, ref errorOccured);
+                ConfigurationSectionGenerator.VerifyTemplateInterface(context, model, memberSyntax, iface.Identifier.Text, ifaceSymbol, ref errorOccured);
                 if (errorOccured)
                     continue;
 

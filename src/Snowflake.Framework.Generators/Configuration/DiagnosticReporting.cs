@@ -34,6 +34,8 @@ namespace Snowflake.Configuration.Generators
         NotTopLevel = 1010,
         UndecoratedEnum = 1011,
         DuplicatedTarget = 1012,
+        DuplicateProperty = 1013,
         FrameworkNotFound = 1111,
+
     }
 }
