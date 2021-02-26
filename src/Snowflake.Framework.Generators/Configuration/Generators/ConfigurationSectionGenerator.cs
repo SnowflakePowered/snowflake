@@ -25,54 +25,55 @@ namespace Snowflake.Configuration.Generators
                 return;
 
 
-            foreach (var rootInterface in receiver.CandidateInterfaces)
+            foreach (var ifaceSyntax in receiver.CandidateInterfaces)
             {
                 errorOccurred = false;
-                var symbols = new List<IPropertySymbol>();
-                var model = compilation.GetSemanticModel(rootInterface.SyntaxTree);
-                var ifaceSymbol = model.GetDeclaredSymbol(rootInterface);
+                var model = compilation.GetSemanticModel(ifaceSyntax.SyntaxTree);
+                var ifaceSymbol = model.GetDeclaredSymbol(ifaceSyntax);
                 if (ifaceSymbol == null)
                 {
                     context.ReportError(DiagnosticError.InvalidMembers, "Interface not found.",
-                         $"Template interface '{rootInterface.Identifier.Text}' was not found. " +
-                         $"Template interface '{rootInterface.Identifier.Text}' was not found.",
+                         $"Template interface '{ifaceSyntax.Identifier.Text}' was not found. " +
+                         $"Template interface '{ifaceSyntax.Identifier.Text}' was not found.",
                          Location.None, ref errorOccurred);
                     continue;
                 }
 
-                var allInterfaces = ifaceSymbol.AllInterfaces;
-  
-                // todo ensure not null
-                var allDecls = ifaceSymbol.DeclaringSyntaxReferences;
-                // get partials..
-                var memberSyntax = allDecls.Select(s => s.GetSyntax())
-                    .Cast<InterfaceDeclarationSyntax>().SelectMany(i => i.Members);
-
-                ConfigurationSectionGenerator.VerifyTemplateInterface(context, model, memberSyntax, rootInterface.Identifier.Text, ifaceSymbol, ref errorOccurred);
-                if (errorOccurred)
-                    continue;
-
-                foreach (var prop in memberSyntax.Cast<PropertyDeclarationSyntax>())
+                if (!ifaceSymbol.ContainingSymbol.Equals(ifaceSymbol.ContainingNamespace, SymbolEqualityComparer.Default))
                 {
-                    var propSymbol = model.GetDeclaredSymbol(prop);
-                    if (propSymbol == null)
-                    {
-                        context.ReportError(DiagnosticError.InvalidMembers, "Property not found.",
-                         $"Template property '{prop.Identifier.Text}' was not found. " +
-                         $"Template property '{prop.Identifier.Text}' was not found.",
-                         prop.GetLocation(), ref errorOccurred);
-                        continue;
-                    }
-                   
-                    ConfigurationSectionGenerator.VerifyOptionProperty(context, prop, propSymbol, types, ref errorOccurred);
-                    if (!errorOccurred) 
-                        symbols.Add(propSymbol);
+                    bool errorOccured = false;
+                    context.ReportError(DiagnosticError.NotTopLevel,
+                               "Template interface not top level.",
+                               $"Collection template interface {ifaceSymbol.Name} must be defined within an enclosing top-level namespace.",
+                               ifaceSyntax.GetLocation(), ref errorOccured);
                 }
 
-                if (errorOccurred)
-                    continue;
+                if (!ifaceSyntax.Modifiers.Any(p => p.IsKind(SyntaxKind.PartialKeyword)))
+                {
+                    context.ReportError(DiagnosticError.UnextendibleInterface,
+                               "Unextendible template interface",
+                               $"Template interface '{ifaceSymbol.Name}' must be marked partial.",
+                               ifaceSyntax.GetLocation(), ref errorOccurred);
+                }
 
-                string? classSource = ProcessClass(ifaceSymbol!, symbols, types, context);
+                var properties = new List<(INamedTypeSymbol, IPropertySymbol)>();
+                var seenProps = new HashSet<string>();
+
+                foreach (var childIface in ifaceSymbol.AllInterfaces.Reverse().Concat(new[] { ifaceSymbol }))
+                {
+                    // No need to check if child interfaces are partial because we only add to the root interface.
+                    foreach (var member in childIface.GetMembers())
+                    {
+                        if (ConfigurationSectionGenerator.VerifyOptionProperty(context,
+                            types, member, ifaceSymbol, in seenProps,
+                            out var property))
+                        {
+                            properties.Add((childIface, property!));
+                        }
+                    }
+                }
+            
+                string? classSource = ProcessClass(ifaceSymbol!, properties, types, context);
                 if (classSource != null)
                 {
                     context.AddSource($"{ifaceSymbol!.Name}_ConfigurationSection.cs", SourceText.From(classSource, Encoding.UTF8));
@@ -81,7 +82,7 @@ namespace Snowflake.Configuration.Generators
         }
 
         
-        private string? ProcessClass(INamedTypeSymbol classSymbol, List<IPropertySymbol> props,
+        private string? ProcessClass(INamedTypeSymbol classSymbol, List<(INamedTypeSymbol, IPropertySymbol)> props,
             ConfigurationTypes types,
             GeneratorExecutionContext context)
         {
@@ -131,10 +132,10 @@ namespace {generatedNamespaceName}
         }}
 ");
 
-            foreach (var prop in props)
+            foreach ((var iface, var prop) in props)
             {
                 source.Append($@"
-{prop.Type.ToDisplayString()} {classSymbol.ToDisplayString()}.{prop.Name}
+{prop.Type.ToDisplayString()} {iface.ToDisplayString()}.{prop.Name}
 {{
     get {{ return ({prop.Type.ToDisplayString()})this.__backingCollection[this.__sectionDescriptor, nameof({prop.ToDisplayString()})].Value; }}
     set {{ 
@@ -156,88 +157,122 @@ namespace {generatedNamespaceName}
 
         private static Random random = new Random();
 
-        internal static void VerifyOptionProperty(
+        internal static bool VerifyOptionProperty(
             GeneratorExecutionContext context,
-            PropertyDeclarationSyntax prop, IPropertySymbol propSymbol,
             ConfigurationTypes types,
-            ref bool errorOccurred)
+            ISymbol member,
+            INamedTypeSymbol ifaceSymbol,
+            in HashSet<string> seenProperties,
+            out IPropertySymbol? propertyResult)
         {
-            var attrs = propSymbol.GetAttributes()
+            bool errorOccurred = false;
+            // Ignore accessors, we only care about the property declaration.
+            if (member is IMethodSymbol accessor && accessor.AssociatedSymbol is IPropertySymbol)
+            {
+                propertyResult = null;
+                return false;
+            }
+
+            if (member is not IPropertySymbol property)
+            {
+                context.ReportError(DiagnosticError.InvalidMembers, "Invalid members in template interface.",
+                   $"Template interface '{ifaceSymbol.Name}' must only declare property members. " +
+                   $"{member.Kind} '{ifaceSymbol.Name}.{member.Name}' is not a property.",
+                   member.Locations.First(), ref errorOccurred);
+                propertyResult = null;
+                return !errorOccurred;
+            }
+
+            var propertySyntax = (PropertyDeclarationSyntax)property.DeclaringSyntaxReferences.First().GetSyntax();
+            var propertyLocation = propertySyntax.GetLocation();
+
+            if (seenProperties.Contains(property.Name))
+            {
+                context.ReportError(DiagnosticError.DuplicateProperty,
+                   "Duplicate template property key.",
+                   $"A template property named '{property.Name}' already exists. Template interfaces are not allowed to hide or override inherited properties.",
+                   propertyLocation, ref errorOccurred);
+            }
+
+            var propAttr = property.GetAttributes()
                        .Where(attr => attr?.AttributeClass?.Equals(types.ConfigurationOptionAttribute, SymbolEqualityComparer.Default) == true);
 
-            if (!attrs.Any())
+            if (!propAttr.Any())
             {
                 context.ReportError(DiagnosticError.UndecoratedProperty, "Undecorated section property member",
-                           $"Property {propSymbol.Name} must be decorated with a ConfigurationOptionAttribute.",
-                       prop.GetLocation(), ref errorOccurred);
+                           $"Property {property.Name} must be decorated with a ConfigurationOptionAttribute.",
+                       propertySyntax.GetLocation(), ref errorOccurred);
             }
-            if (prop.AccessorList == null || !prop.AccessorList.Accessors.Any(a => a.IsKind(SyntaxKind.SetAccessorDeclaration)))
+
+            if (propertySyntax.AccessorList == null || !propertySyntax.AccessorList.Accessors.Any(a => a.IsKind(SyntaxKind.SetAccessorDeclaration)))
             {
                 context.ReportError(DiagnosticError.MissingSetter, "Missing set accessor",
-                          $"Property '{propSymbol.Name}' must declare a setter.",
-                      prop.GetLocation(), ref errorOccurred);
+                          $"Property '{property.Name}' must declare a setter.",
+                      propertySyntax.GetLocation(), ref errorOccurred);
             }
 
-            if (prop.AccessorList == null || !prop.AccessorList.Accessors.Any(a => a.IsKind(SyntaxKind.GetAccessorDeclaration)))
+            if (propertySyntax.AccessorList == null || !propertySyntax.AccessorList.Accessors.Any(a => a.IsKind(SyntaxKind.GetAccessorDeclaration)))
             {
                 context.ReportError(DiagnosticError.MissingSetter, "Missing get accessor",
-                        $"Property '{propSymbol.Name}' must declare a getter.",
-                    prop.GetLocation(), ref errorOccurred);
+                        $"Property '{property.Name}' must declare a getter.",
+                    propertySyntax.GetLocation(), ref errorOccurred);
             }
 
-            if (prop.AccessorList != null && prop.AccessorList.Accessors.Any(a => a.Body != null || a.ExpressionBody != null))
+            if (propertySyntax.AccessorList != null && propertySyntax.AccessorList.Accessors.Any(a => a.Body != null || a.ExpressionBody != null))
             {
                 context.ReportError(DiagnosticError.UnexpectedBody, "Unexpected property body",
-                          $"Property '{propSymbol.Name}' can not declare a body.",
-                      prop.GetLocation(), ref errorOccurred);
+                          $"Property '{property.Name}' can not declare a body.",
+                      propertySyntax.GetLocation(), ref errorOccurred);
             }
-            if (!attrs.Any())
-                return;
-            var attr = attrs.First();
+
+            if (!propAttr.Any())
+            {
+                propertyResult = null;
+                return false;
+            }
+
+            var attr = propAttr.First();
             // If it has a second arg, then it must not be GUID-based 
             if (attr.ConstructorArguments.Skip(1).FirstOrDefault().Type is ITypeSymbol defaultType)
             {
-                if (!SymbolEqualityComparer.Default.Equals(defaultType, propSymbol.Type))
+                if (!SymbolEqualityComparer.Default.Equals(defaultType, property.Type))
                 {
                     context.ReportError(DiagnosticError.MismatchedType, "Mismatched default value type",
-                            $"Property {propSymbol.Name} is of type '{propSymbol.Type}' but has default value of type '{defaultType}'.",
-                            prop.GetLocation(), ref errorOccurred);
+                            $"Property {property.Name} is of type '{property.Type}' but has default value of type '{defaultType}'.",
+                            propertySyntax.GetLocation(), ref errorOccurred);
                 }
                 
-                if (propSymbol.Type.TypeKind == TypeKind.Enum)
+                if (property.Type.TypeKind == TypeKind.Enum)
                 {
-                    var enumDecls = propSymbol.Type.DeclaringSyntaxReferences.Select(s => s.GetSyntax())
-                        .Cast<EnumDeclarationSyntax>();
-                    foreach (var enumDecl in enumDecls)
+                    var enumMembers = property.Type.GetMembers();
+                    foreach (var enumMember in enumMembers)
                     {
-                        var enumModel = context.Compilation.GetSemanticModel(enumDecl.SyntaxTree);
-                        var enumSymbol = enumModel.GetDeclaredSymbol(enumDecl);
-                        foreach (var enumMember in enumDecl.Members)
+                        // Enums should only have Fields and Constructors (Methods)
+                        if (enumMember.Kind != SymbolKind.Field)
+                            continue;
+                        if (!enumMember.GetAttributes()
+                            .Any(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.SelectionOptionAttribute)))
                         {
-                            var memberSymbol = enumModel.GetDeclaredSymbol(enumMember);
-                            if (memberSymbol == null)
-                            {
-                                context.ReportError(DiagnosticError.InvalidMembers, "Enum member not found.",
-                                    $"Enum member '{enumMember.Identifier.Text}' was not found.",
-                                    enumMember.GetLocation(), ref errorOccurred);
-                                continue;
-                            }
-                            if (!memberSymbol.GetAttributes().Any(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.SelectionOptionAttribute)))
-                            {
-                                context.ReportError(DiagnosticError.UndecoratedProperty, "Undecorated selection option enum member",
-                                    $"Enum member '{memberSymbol.Name}' must be decorated with SelectionOptionAttribute.",
-                                    enumMember.GetLocation(), ref errorOccurred);
-                            }
+                            context.ReportError(DiagnosticError.UndecoratedProperty, "Undecorated selection option enum member",
+                                $"Enum member '{enumMember.Name}' must be decorated with SelectionOptionAttribute.",
+                                enumMember.Locations.First(), ref errorOccurred);
                         }
                     }
                 }
             }
-            else if (attr.ConstructorArguments.Length == 1 && !SymbolEqualityComparer.Default.Equals(propSymbol.Type, types.System_Guid))
+            else if (attr.ConstructorArguments.Length == 1 && !SymbolEqualityComparer.Default.Equals(property.Type, types.System_Guid))
             {
                 context.ReportError(DiagnosticError.MismatchedType, "Mismatched default value type",
-                        $"Property {propSymbol.Name} is of type '{propSymbol.Type}' but needs to be of type '{types.System_Guid}'.",
-                        prop.GetLocation(), ref errorOccurred);
+                        $"Property {property.Name} is of type '{property.Type}' but needs to be of type '{types.System_Guid}'.",
+                        propertySyntax.GetLocation(), ref errorOccurred);
             }
+
+            if (!errorOccurred)
+            {
+                seenProperties.Add(property.Name);
+            }
+            propertyResult = property;
+            return !errorOccurred;
         }
 
         internal static void VerifyTemplateInterface(
@@ -257,14 +292,7 @@ namespace {generatedNamespaceName}
                 return;
             }
 
-            if (memberSyntax.FirstOrDefault(m => m is not PropertyDeclarationSyntax) is MemberDeclarationSyntax badSyntax)
-            {
-                var badSymbol = model.GetDeclaredSymbol(badSyntax);
-                context.ReportError(DiagnosticError.InvalidMembers, "Invalid members in template interface.",
-                    $"Template interface '{ifaceSymbol.Name}' must only declare property members. " +
-                    $"{badSymbol?.Kind} '{ifaceSymbol.Name}.{badSymbol?.Name}' is not a property.",
-                    badSyntax.GetLocation(), ref errorOccurred);
-            }
+
 
             //if (!iface.Modifiers.Any(p => p.IsKind(SyntaxKind.PartialKeyword)))
             //{

@@ -25,10 +25,7 @@ namespace Snowflake.Configuration.Generators
 
             foreach (var ifaceSyntax in receiver.CandidateInterfaces)
             {
-                // todo: allow implementing inherited ifaces for collections
                 errorOccurred = false;
-                var symbols = new List<IPropertySymbol>();
-
                 var model = compilation.GetSemanticModel(ifaceSyntax.SyntaxTree);
                 var ifaceSymbol = model.GetDeclaredSymbol(ifaceSyntax);
                 if (ifaceSymbol == null)
@@ -61,11 +58,8 @@ namespace Snowflake.Configuration.Generators
                 var seenProps = new HashSet<string>();
                 var targetAttrs = new List<AttributeData>();
 
-                targetAttrs.AddRange(ifaceSymbol.GetAttributes()
-                       .Where(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationTargetAttribute)));
-
                 // Verify collection props bottom up.
-                foreach (var childIface in ifaceSymbol.AllInterfaces.Reverse())
+                foreach (var childIface in ifaceSymbol.AllInterfaces.Reverse().Concat(new[] { ifaceSymbol }))
                 {
                     // No need to check if child interfaces are partial because we only add to the root interface.
                     foreach (var member in childIface.GetMembers())
@@ -81,14 +75,6 @@ namespace Snowflake.Configuration.Generators
                     // Add child targets to list while we're at it.
                     targetAttrs.AddRange(childIface.GetAttributes()
                         .Where(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationTargetAttribute)));
-                }
-
-                foreach (var member in ifaceSymbol.GetMembers())
-                {
-                    if (ConfigurationCollectionGenerator.VerifyCollectionProperty(context, compilation, types, member, ifaceSymbol, in seenProps, out var property))
-                    {
-                        properties.Add((ifaceSymbol, property!));
-                    }
                 }
 
                 errorOccurred = errorOccurred || !VerifyConfigurationTargets(context, ifaceSymbol, targetAttrs);
