@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="3.8.0" PrivateAssets="Compile" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.8.0" PrivateAssets="Compile" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.8.0" PrivateAssets="Compile" />
   </ItemGroup>
   <PropertyGroup>
     <WarningsAsErrors>NU1605;8604;8061;8602;8603;8612;8613;8620</WarningsAsErrors>

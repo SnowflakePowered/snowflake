@@ -29,13 +29,11 @@ namespace Snowflake.Configuration.Generators
                 var model = compilation.GetSemanticModel(ifaceSyntax.SyntaxTree);
                 var ifaceSymbol = model.GetDeclaredSymbol(ifaceSyntax);
                 if (ifaceSymbol == null)
-                {
-                    context.ReportError(DiagnosticError.InvalidMembers, "Interface not found.",
-                     $"Template interface '{ifaceSyntax.Identifier.Text}' was not found. " +
-                     $"Template interface '{ifaceSyntax.Identifier.Text}' was not found.",
-                     ifaceSyntax.GetLocation(), ref errorOccurred);
-                    return;
-                }
+                    continue;
+
+                if (!ifaceSymbol.GetAttributes()
+                        .Any(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationCollectionAttribute)))
+                    continue;
 
                 if (!ifaceSymbol.ContainingSymbol.Equals(ifaceSymbol.ContainingNamespace, SymbolEqualityComparer.Default))
                 {
@@ -69,7 +67,9 @@ namespace Snowflake.Configuration.Generators
                             out var property))
                         {
                             properties.Add((childIface, property!));
+                            continue;
                         }
+                        errorOccurred = true;
                     }
 
                     // Add child targets to list while we're at it.

@@ -12,7 +12,7 @@ using Snowflake.Input.Device;
 
 namespace Snowflake.Configuration.Tests
 {
-    [InputTemplate("input")]
+    [InputConfiguration("input")]
     public partial interface IRetroArchInput
     {
         [ConfigurationOption("input_device_p{N}", 0)]

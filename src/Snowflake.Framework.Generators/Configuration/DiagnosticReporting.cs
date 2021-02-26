@@ -37,6 +37,10 @@ namespace Snowflake.Configuration.Generators
         DuplicateProperty = 1013,
         BothOptionTypes = 1014,
         FrameworkNotFound = 1111,
+    }
 
+    internal static class DiagnosticErrorExtensions
+    {
+        public static string GetCode(this DiagnosticError @this) => $"SFG{(int)@this}";
     }
 }

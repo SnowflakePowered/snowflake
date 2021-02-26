@@ -6,7 +6,7 @@ using Snowflake.Plugin.Emulators.RetroArch.Selections.RetroPadTemplate;
 
 namespace Snowflake.Plugin.Emulators.RetroArch.Input
 {
-    [InputTemplate("input")]
+    [InputConfiguration("input")]
     public partial interface RetroPadTemplate
     {
         [ConfigurationOption("input_device_p{N}", 0)]

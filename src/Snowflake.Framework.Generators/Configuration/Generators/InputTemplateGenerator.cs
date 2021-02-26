@@ -30,13 +30,10 @@ namespace Snowflake.Configuration.Generators
                 var model = compilation.GetSemanticModel(ifaceSyntax.SyntaxTree);
                 var ifaceSymbol = model.GetDeclaredSymbol(ifaceSyntax);
                 if (ifaceSymbol == null)
-                {
-                    context.ReportError(DiagnosticError.InvalidMembers, "Interface not found.",
-                         $"Template interface '{ifaceSyntax.Identifier.Text}' was not found. " +
-                         $"Template interface '{ifaceSyntax.Identifier.Text}' was not found.",
-                         Location.None, ref errorOccurred);
                     continue;
-                }
+                if (!ifaceSymbol.GetAttributes()
+                 .Any(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.InputConfigurationAttribute)))
+                    continue;
 
                 if (!ifaceSymbol.ContainingSymbol.Equals(ifaceSymbol.ContainingNamespace, SymbolEqualityComparer.Default))
                 {
@@ -326,7 +323,7 @@ Dictionary<string, {types.DeviceCapability.ToDisplayString()}> mapping
             //    Debugger.Launch();
             //}
 #endif 
-            context.RegisterForSyntaxNotifications(() => new ConfigurationTemplateInterfaceSyntaxReceiver("InputTemplate"));
+            context.RegisterForSyntaxNotifications(() => new ConfigurationTemplateInterfaceSyntaxReceiver("InputConfiguration"));
         }
     }
 }

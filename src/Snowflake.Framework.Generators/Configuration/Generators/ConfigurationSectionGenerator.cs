@@ -31,13 +31,10 @@ namespace Snowflake.Configuration.Generators
                 var model = compilation.GetSemanticModel(ifaceSyntax.SyntaxTree);
                 var ifaceSymbol = model.GetDeclaredSymbol(ifaceSyntax);
                 if (ifaceSymbol == null)
-                {
-                    context.ReportError(DiagnosticError.InvalidMembers, "Interface not found.",
-                         $"Template interface '{ifaceSyntax.Identifier.Text}' was not found. " +
-                         $"Template interface '{ifaceSyntax.Identifier.Text}' was not found.",
-                         Location.None, ref errorOccurred);
                     continue;
-                }
+                if (!ifaceSymbol.GetAttributes()
+                       .Any(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationSectionAttribute)))
+                    return;
 
                 if (!ifaceSymbol.ContainingSymbol.Equals(ifaceSymbol.ContainingNamespace, SymbolEqualityComparer.Default))
                 {
@@ -273,43 +270,6 @@ namespace {generatedNamespaceName}
             }
             propertyResult = property;
             return !errorOccurred;
-        }
-
-        internal static void VerifyTemplateInterface(
-            GeneratorExecutionContext context,
-            SemanticModel model, 
-            IEnumerable<MemberDeclarationSyntax> memberSyntax,
-            string ifaceName,
-            INamedTypeSymbol? ifaceSymbol,
-            ref bool errorOccurred)
-        {
-            if (ifaceSymbol == null)
-            {
-                context.ReportError(DiagnosticError.InvalidMembers, "Interface not found.",
-                 $"Template interface '{ifaceName}' was not found. " +
-                 $"Template interface '{ifaceName}' was not found.",
-                 Location.None, ref errorOccurred);
-                return;
-            }
-
-
-
-            //if (!iface.Modifiers.Any(p => p.IsKind(SyntaxKind.PartialKeyword)))
-            //{
-            //    context.ReportError(DiagnosticError.UnextendibleInterface,
-            //               "Unextendible template interface",
-            //               $"Template interface '{ifaceSymbol.Name}' must be marked partial.",
-            //               iface.GetLocation(), ref errorOccurred);
-            //}
-
-            //if (iface.BaseList != null && iface.BaseList.ChildNodes().Any())
-            //{
-            //    context.ReportError(DiagnosticError.UnextendibleInterface,
-            //               "Unextendible template interface",
-            //               $"Template interface '{ifaceSymbol.Name}' is not allowed to extend another interface.",
-            //               iface.GetLocation(), ref errorOccurred);
-            //}
-
         }
 
         public static string RandomString(int length)

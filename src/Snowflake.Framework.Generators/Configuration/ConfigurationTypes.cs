@@ -10,6 +10,9 @@ namespace Snowflake.Configuration.Generators
 #nullable disable
         public ConfigurationTypes(Compilation compilation)
         {
+            this.ConfigurationCollectionAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.ConfigurationCollectionAttribute");
+            this.InputConfigurationAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.InputConfigurationAttribute");
+
             this.ConfigurationSectionAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.ConfigurationSectionAttribute");
             this.ConfigurationOptionAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.ConfigurationOptionAttribute");
             this.InputOptionAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.Input.InputOptionAttribute");
@@ -40,6 +43,7 @@ namespace Snowflake.Configuration.Generators
             return this.ConfigurationSectionAttribute != null
                    && this.ConfigurationOptionAttribute != null
                    && this.InputOptionAttribute != null
+                   && this.InputConfigurationAttribute != null
                    && this.IConfigurationSection != null
                    && this.IConfigurationSectionGeneric != null
                    && this.ConfigurationGenerationInstanceAttribute != null
@@ -53,7 +57,8 @@ namespace Snowflake.Configuration.Generators
                    && this.IInputConfigurationTemplate != null
                    && this.IConfigurationCollectionTemplate != null
                    && this.IConfigurationSectionDescriptor != null 
-                   && this.IConfigurationValueCollection != null;
+                   && this.IConfigurationValueCollection != null
+                   && this.ConfigurationCollectionAttribute != null;
         }
 
         public bool CheckContext(GeneratorExecutionContext context, ref bool errorOccured)
@@ -68,6 +73,8 @@ namespace Snowflake.Configuration.Generators
         }
 
 #nullable enable
+        public INamedTypeSymbol ConfigurationCollectionAttribute { get; }
+        public INamedTypeSymbol InputConfigurationAttribute { get; }
         public INamedTypeSymbol ConfigurationSectionAttribute { get; }
         public INamedTypeSymbol ConfigurationOptionAttribute { get; }
         public INamedTypeSymbol InputOptionAttribute { get; }

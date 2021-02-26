@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Snowflake.Configuration.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Framework.Tests.Configuration
 {
-    interface IA
+    [ConfigurationCollection]
+    public partial interface IA
     {
         string A { get; }
     }
@@ -15,14 +17,5 @@ namespace Snowflake.Framework.Tests.Configuration
         : IA
     {
         string B { get; }
-    }
-
-    class BImpl
-        : IB
-    {
-        string IB.B { get; }
-
-        string IA.A => throw new NotImplementedException();
-        //string IB.A { get; } // Can't do this.
     }
 }
