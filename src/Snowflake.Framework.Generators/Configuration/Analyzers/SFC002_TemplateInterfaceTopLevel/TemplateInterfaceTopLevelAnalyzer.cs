@@ -15,7 +15,7 @@ using Snowflake.Generators.Analyzers;
 namespace Snowflake.Generators.Configuration.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public sealed class UnextendibleInterfaceAnalyzer
+    public sealed class TemplateInterfaceTopLevelAnalyzer
         : AbstractSyntaxNodeAnalyzer
     {
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
@@ -24,31 +24,31 @@ namespace Snowflake.Generators.Configuration.Analyzers
 
         private static readonly DiagnosticDescriptor Rule =
             new DiagnosticDescriptor(
-                id: DiagnosticCodes.SFC001__UnextendibleInterfaceAnalyzer,
-                title: "Template interface is not extendible",
-                messageFormat: "Interface '{0}' must be partial so it can implement generated proxy support members", 
+                id: DiagnosticCodes.SFC002__TemplateInterfaceTopLevelAnalyzer,
+                title: "Template interface not top level",
+                messageFormat: "Collection template interface {0} must be defined within an enclosing top-level namespace.", 
                 category: "Configuration", 
                 DiagnosticSeverity.Error, 
                 isEnabledByDefault: true, 
                 customTags: new [] { WellKnownDiagnosticTags.NotConfigurable },
-                description: "Template interface must be marked as partial.");
+                description: "Template interface must be defined within an enclosing top-level namespace.");
 
         public override IEnumerable<Diagnostic> Analyze(Compilation compilation, SemanticModel semanticModel, SyntaxNode node)
         {
-            var interfaceSyntax = (InterfaceDeclarationSyntax)node;
             var types = new ConfigurationTypes(compilation);
-            var interfaceSymbol = semanticModel.GetDeclaredSymbol(interfaceSyntax);
+            var interfaceSymbol = semanticModel.GetDeclaredSymbol(node);
             if (interfaceSymbol == null)
                 yield break;
 
             if (!interfaceSymbol.GetAttributes().Any(a =>
                 SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationCollectionAttribute)
-                || SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.InputConfigurationAttribute)))
+                || SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.InputConfigurationAttribute)
+                || SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationSectionAttribute)))
                 yield break;
 
-            if (!interfaceSyntax.Modifiers.Any(p => p.IsKind(SyntaxKind.PartialKeyword)))
+            if (!interfaceSymbol.ContainingSymbol.Equals(interfaceSymbol.ContainingNamespace, SymbolEqualityComparer.Default))
             {
-                yield return Diagnostic.Create(Rule, interfaceSyntax.GetLocation(), interfaceSymbol.Name);
+                yield return Diagnostic.Create(Rule, node.GetLocation(), interfaceSymbol.Name);
             }
         }
     }

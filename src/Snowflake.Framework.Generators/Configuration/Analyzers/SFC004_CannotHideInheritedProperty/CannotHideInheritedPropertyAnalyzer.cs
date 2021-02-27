@@ -15,7 +15,7 @@ using Snowflake.Generators.Analyzers;
 namespace Snowflake.Generators.Configuration.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public sealed class UnextendibleInterfaceAnalyzer
+    public sealed class CannotHideInheritedPropertyAnalyzer
         : AbstractSyntaxNodeAnalyzer
     {
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
@@ -24,20 +24,20 @@ namespace Snowflake.Generators.Configuration.Analyzers
 
         private static readonly DiagnosticDescriptor Rule =
             new DiagnosticDescriptor(
-                id: DiagnosticCodes.SFC001__UnextendibleInterfaceAnalyzer,
-                title: "Template interface is not extendible",
-                messageFormat: "Interface '{0}' must be partial so it can implement generated proxy support members", 
-                category: "Configuration", 
-                DiagnosticSeverity.Error, 
-                isEnabledByDefault: true, 
-                customTags: new [] { WellKnownDiagnosticTags.NotConfigurable },
-                description: "Template interface must be marked as partial.");
+                id: DiagnosticCodes.SFC004__CannotHideInheritedProperty,
+                title: "Template interface can not hide or override inherited member",
+                messageFormat: "Property '{0}' was already defined by inherited interface '{1}' and can not be hidden or overridden.",
+                category: "Configuration",
+                DiagnosticSeverity.Error,
+                isEnabledByDefault: true,
+                customTags: new[] { WellKnownDiagnosticTags.NotConfigurable },
+                description: "Property names in template interfaces must be unique across the inheritance tree.");
 
         public override IEnumerable<Diagnostic> Analyze(Compilation compilation, SemanticModel semanticModel, SyntaxNode node)
         {
             var interfaceSyntax = (InterfaceDeclarationSyntax)node;
             var types = new ConfigurationTypes(compilation);
-            var interfaceSymbol = semanticModel.GetDeclaredSymbol(interfaceSyntax);
+            var interfaceSymbol = semanticModel.GetDeclaredSymbol(interfaceSyntax) as INamedTypeSymbol;
             if (interfaceSymbol == null)
                 yield break;
 
@@ -46,9 +46,18 @@ namespace Snowflake.Generators.Configuration.Analyzers
                 || SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.InputConfigurationAttribute)))
                 yield break;
 
-            if (!interfaceSyntax.Modifiers.Any(p => p.IsKind(SyntaxKind.PartialKeyword)))
+            var dict = new Dictionary<string, INamedTypeSymbol>();
+
+            foreach (var childIface in interfaceSymbol.AllInterfaces.Reverse().Concat(new [] { interfaceSymbol }))
             {
-                yield return Diagnostic.Create(Rule, interfaceSyntax.GetLocation(), interfaceSymbol.Name);
+                foreach (var member in childIface.GetMembers().Where(s => s.Kind == SymbolKind.Property))
+                {
+                    if (dict.TryGetValue(member.Name, out var originatingIface))
+                    {
+                        yield return Diagnostic.Create(Rule, member.Locations.First(), member.Name, originatingIface.Name);
+                    }
+                    dict.Add(member.Name, childIface);
+                }
             }
         }
     }

@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
+using Snowflake.Generators.Configuration.Analyzers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -22,12 +23,13 @@ namespace Snowflake.Configuration.Generators
             var types = new ConfigurationTypes(compilation);
             if (!types.CheckContext(context, ref errorOccurred))
                 return;
-
+            var diagnostics = new List<Diagnostic>();
             foreach (var ifaceSyntax in receiver.CandidateInterfaces)
             {
                 errorOccurred = false;
                 var model = compilation.GetSemanticModel(ifaceSyntax.SyntaxTree);
                 var ifaceSymbol = model.GetDeclaredSymbol(ifaceSyntax);
+
                 if (ifaceSymbol == null)
                     continue;
 
@@ -35,23 +37,12 @@ namespace Snowflake.Configuration.Generators
                         .Any(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationCollectionAttribute)))
                     continue;
 
-                if (!ifaceSymbol.ContainingSymbol.Equals(ifaceSymbol.ContainingNamespace, SymbolEqualityComparer.Default))
-                {
-                    bool errorOccured = false;
-                    context.ReportError(DiagnosticError.NotTopLevel,
-                               "Template interface not top level.",
-                               $"Collection template interface {ifaceSymbol.Name} must be defined within an enclosing top-level namespace.",
-                               ifaceSyntax.GetLocation(), ref errorOccured);
-                }
+                diagnostics.AddRange(new TemplateInterfaceTopLevelAnalyzer()
+                     .Analyze(compilation, model, ifaceSyntax));
 
-                if (!ifaceSyntax.Modifiers.Any(p => p.IsKind(SyntaxKind.PartialKeyword)))
-                {
-                    context.ReportError(DiagnosticError.UnextendibleInterface,
-                               "Unextendible template interface",
-                               $"Template interface '{ifaceSymbol.Name}' must be marked partial.",
-                               ifaceSyntax.GetLocation(), ref errorOccurred);
-                }
-                
+                diagnostics.AddRange(new UnextendibleInterfaceAnalyzer()
+                    .Analyze(compilation, model, ifaceSyntax));
+
                 var properties = new List<(INamedTypeSymbol, IPropertySymbol)>();
                 var seenProps = new HashSet<string>();
                 var targetAttrs = new List<AttributeData>();
@@ -146,6 +137,7 @@ namespace Snowflake.Configuration.Generators
                 return false;
             }
        
+            // SFC003
             if (member is not IPropertySymbol property)
             {
                 context.ReportError(DiagnosticError.InvalidMembers, "Invalid members in template interface.",
@@ -199,13 +191,6 @@ namespace Snowflake.Configuration.Generators
                 context.ReportError(DiagnosticError.NotAConfigurationSection,
                    "Configuration collection template members must be marked with ConfigurationSectionAttribute.",
                    $"Template type '{property.Type}' for property '{property.Name}' is not marked with ConfigurationSectionAttribute.", propertyLocation, ref errorOccurred);
-            }
-
-            if (property.Type.TypeKind != TypeKind.Interface)
-            {
-                context.ReportError(DiagnosticError.NotAConfigurationSection,
-                   "Configuration collection template members must be interfaces.",
-                   $"'{property.Name}' is not an interface.", propertyLocation, ref errorOccurred);
             }
 
             if (!errorOccurred)

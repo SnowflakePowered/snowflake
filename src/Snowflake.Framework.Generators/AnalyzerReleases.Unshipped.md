@@ -5,3 +5,6 @@
 Rule ID | Category | Severity | Notes
 --------|----------|----------|-------
 SFC001	| Configuration | Error | UnextendibleInterfaceAnalyzer
+SFC002 | Configuration | Error | TemplateInterfaceTopLevelAnalyzer
+SFC003 | Configuration | Error | InvalidTemplateMember
+SFC004 | Configuration | Error | CannotHideInheritedPropertyAnalyzer

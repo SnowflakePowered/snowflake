@@ -13,9 +13,11 @@ namespace Snowflake.Framework.Tests.Configuration
         string A { get; }
     }
 
-    interface IB
+    [ConfigurationCollection]
+    partial interface IB
         : IA
     {
         string B { get; }
+        string A { get; }
     }
 }

@@ -11,6 +11,12 @@ namespace Snowflake.Generators
         #region Configuration
 
         public const string SFC001__UnextendibleInterfaceAnalyzer = "SFC001";
+
+        public const string SFC002__TemplateInterfaceTopLevelAnalyzer = "SFC002";
+
+        public const string SFC003__InvalidTemplateMemberAnalyzer = "SFC003";
+
+        public const string SFC004__CannotHideInheritedProperty = "SFC004";
         #endregion
     }
 }

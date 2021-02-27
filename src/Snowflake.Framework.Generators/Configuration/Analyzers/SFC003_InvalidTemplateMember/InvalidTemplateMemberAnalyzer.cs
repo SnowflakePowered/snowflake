@@ -15,7 +15,7 @@ using Snowflake.Generators.Analyzers;
 namespace Snowflake.Generators.Configuration.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public sealed class UnextendibleInterfaceAnalyzer
+    public sealed class InvalidTemplateMember
         : AbstractSyntaxNodeAnalyzer
     {
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
@@ -24,31 +24,37 @@ namespace Snowflake.Generators.Configuration.Analyzers
 
         private static readonly DiagnosticDescriptor Rule =
             new DiagnosticDescriptor(
-                id: DiagnosticCodes.SFC001__UnextendibleInterfaceAnalyzer,
-                title: "Template interface is not extendible",
-                messageFormat: "Interface '{0}' must be partial so it can implement generated proxy support members", 
-                category: "Configuration", 
-                DiagnosticSeverity.Error, 
-                isEnabledByDefault: true, 
-                customTags: new [] { WellKnownDiagnosticTags.NotConfigurable },
-                description: "Template interface must be marked as partial.");
+                id: DiagnosticCodes.SFC003__InvalidTemplateMemberAnalyzer,
+                title: "Invalid members in template interface",
+                messageFormat: "{0} '{1}.{2}' is not a property.",
+                category: "Configuration",
+                DiagnosticSeverity.Error,
+                isEnabledByDefault: true,
+                customTags: new[] { WellKnownDiagnosticTags.NotConfigurable },
+                description: "Template interface must only declare property members.");
 
         public override IEnumerable<Diagnostic> Analyze(Compilation compilation, SemanticModel semanticModel, SyntaxNode node)
         {
-            var interfaceSyntax = (InterfaceDeclarationSyntax)node;
             var types = new ConfigurationTypes(compilation);
-            var interfaceSymbol = semanticModel.GetDeclaredSymbol(interfaceSyntax);
+            var interfaceSymbol = semanticModel.GetDeclaredSymbol(node) as INamedTypeSymbol;
             if (interfaceSymbol == null)
                 yield break;
 
             if (!interfaceSymbol.GetAttributes().Any(a =>
                 SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationCollectionAttribute)
-                || SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.InputConfigurationAttribute)))
+                || SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.InputConfigurationAttribute)
+                || SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationSectionAttribute)))
                 yield break;
 
-            if (!interfaceSyntax.Modifiers.Any(p => p.IsKind(SyntaxKind.PartialKeyword)))
+            foreach (var member in interfaceSymbol.GetMembers())
             {
-                yield return Diagnostic.Create(Rule, interfaceSyntax.GetLocation(), interfaceSymbol.Name);
+                // Ignore accessor implementations for this diagnostic.
+                if (member is IMethodSymbol accessor && accessor.AssociatedSymbol is IPropertySymbol)
+                    continue;
+                if (member is not IPropertySymbol)
+                {
+                    yield return Diagnostic.Create(Rule, member.Locations.First(), member.Kind, interfaceSymbol.Name, member.Name);
+                }
             }
         }
     }

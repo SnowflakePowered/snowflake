@@ -23,8 +23,8 @@ namespace Snowflake.Configuration.Generators
             var types = new ConfigurationTypes(compilation);
             if (!types.CheckContext(context, ref errorOccurred))
                 return;
-
-
+            var declDiags = compilation.GetDeclarationDiagnostics();
+            var diags = compilation.GetDiagnostics().Where(d => d.Id.StartsWith("S"));
             foreach (var ifaceSyntax in receiver.CandidateInterfaces)
             {
                 errorOccurred = false;
