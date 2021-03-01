@@ -10,20 +10,20 @@ namespace Snowflake.Configuration.Generators
 #nullable disable
         public ConfigurationTypes(Compilation compilation)
         {
-            this.ConfigurationCollectionAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.ConfigurationCollectionAttribute");
-            this.InputConfigurationAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.InputConfigurationAttribute");
+            this.ConfigurationCollectionAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.ConfigurationCollectionAttribute");
+            this.InputConfigurationAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.InputConfigurationAttribute");
 
-            this.ConfigurationSectionAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.ConfigurationSectionAttribute");
-            this.ConfigurationOptionAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.ConfigurationOptionAttribute");
+            this.ConfigurationSectionAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.ConfigurationSectionAttribute");
+            this.ConfigurationOptionAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.ConfigurationOptionAttribute");
             this.InputOptionAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.Input.InputOptionAttribute");
 
             this.IConfigurationSection = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationSection");
             this.IConfigurationSectionGeneric = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationSection`1");
-            this.ConfigurationGenerationInstanceAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.Generators.ConfigurationGenerationInstanceAttribute");
-            this.SelectionOptionAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.SelectionOptionAttribute");
+            this.ConfigurationGenerationInstanceAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.Internal.ConfigurationGenerationInstanceAttribute");
+            this.SelectionOptionAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.SelectionOptionAttribute");
 
-            this.ConfigurationTargetAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.ConfigurationTargetAttribute");
-            this.ConfigurationTargetMemberAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.Attributes.ConfigurationTargetMemberAttribute");
+            this.ConfigurationTargetAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.ConfigurationTargetAttribute");
+            this.ConfigurationTargetMemberAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.ConfigurationTargetMemberAttribute");
 
             this.IConfigurationCollection = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationCollection");
             this.IConfigurationCollectionGeneric = compilation.GetTypeByMetadataName("Snowflake.Configuration.IConfigurationCollection`1");
@@ -33,8 +33,8 @@ namespace Snowflake.Configuration.Generators
             this.DeviceCapability = compilation.GetTypeByMetadataName("Snowflake.Input.Device.DeviceCapability");
             this.System_Guid = compilation.GetTypeByMetadataName("System.Guid");
 
-            this.IInputConfigurationTemplate = compilation.GetTypeByMetadataName("Snowflake.Configuration.Generators.IInputConfigurationTemplate");
-            this.IConfigurationCollectionTemplate = compilation.GetTypeByMetadataName("Snowflake.Configuration.Generators.IConfigurationCollectionTemplate");
+            this.IInputConfigurationTemplate = compilation.GetTypeByMetadataName("Snowflake.Configuration.Internal.IInputConfigurationTemplate");
+            this.IConfigurationCollectionTemplate = compilation.GetTypeByMetadataName("Snowflake.Configuration.Internal.IConfigurationCollectionTemplate");
 
         }
 

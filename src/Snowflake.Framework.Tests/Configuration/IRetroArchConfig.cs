@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
-using Snowflake.Configuration.Attributes;
 using Snowflake.Configuration.Serialization.Serializers.Implementations;
 
 namespace Snowflake.Configuration.Tests

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Snowflake.Configuration.Attributes
+namespace Snowflake.Configuration
 {
     /// <summary>
     /// Marks an interface as a configuration section that is serializable into valid configuration.

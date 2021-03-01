@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Configuration.Attributes
+namespace Snowflake.Configuration
 {
     /// <summary>
     /// Marks an interface as a configuration collection template that is serializable into valid configuration.

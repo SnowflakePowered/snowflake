@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
-using Snowflake.Configuration.Generators;
+using Snowflake.Configuration.Internal;
 using Snowflake.Model.Database;
 using Snowflake.Model.Records.Game;
 

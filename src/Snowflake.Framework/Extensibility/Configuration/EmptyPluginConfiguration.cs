@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using Snowflake.Configuration;
-using Snowflake.Configuration.Attributes;
 
 namespace Snowflake.Extensibility
 {

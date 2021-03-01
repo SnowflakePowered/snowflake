@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Configuration.Attributes
-{
+namespace Snowflake.Configuration
+{ 
     /// <summary>
     /// Represents a selection inside an enum that represents valid values for a configuration option
     /// </summary>

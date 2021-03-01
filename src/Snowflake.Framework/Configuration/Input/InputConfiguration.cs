@@ -6,7 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using EnumsNET;
-using Snowflake.Configuration.Generators;
+using Snowflake.Configuration.Internal;
 using Snowflake.Configuration.Utility;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;

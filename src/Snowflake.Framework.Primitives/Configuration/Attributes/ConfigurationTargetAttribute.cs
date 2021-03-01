@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Snowflake.Configuration.Serialization;
 
-namespace Snowflake.Configuration.Attributes
+namespace Snowflake.Configuration
 {
     /// <summary>
     /// Defines a target context to create a read-only AST.

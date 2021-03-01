@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
-using Snowflake.Configuration.Generators;
+using Snowflake.Configuration.Internal;
 
 namespace Snowflake.Orchestration.Extensibility
 {

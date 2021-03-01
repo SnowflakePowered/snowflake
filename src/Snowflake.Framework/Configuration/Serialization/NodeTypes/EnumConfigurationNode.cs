@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using EnumsNET;
-using Snowflake.Configuration.Attributes;
 
 namespace Snowflake.Configuration.Serialization
 {

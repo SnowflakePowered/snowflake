@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Configuration;
-using Snowflake.Configuration.Generators;
+using Snowflake.Configuration.Internal;
 using Snowflake.Model.Database.Exceptions;
 using Snowflake.Model.Database.Extensions;
 using Snowflake.Model.Database.Models;

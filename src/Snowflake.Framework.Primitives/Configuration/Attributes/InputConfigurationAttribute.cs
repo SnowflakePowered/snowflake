@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Snowflake.Configuration.Attributes
+namespace Snowflake.Configuration
 {
     /// <summary>
     /// Marks a configuration section interface as an input template.

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Snowflake.Configuration;
-using Snowflake.Configuration.Generators;
+using Snowflake.Configuration.Internal;
 using Snowflake.Model.Database.Models;
 
 namespace Snowflake.Model.Database.Extensions
