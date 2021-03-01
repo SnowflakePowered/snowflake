@@ -15,7 +15,7 @@ using Snowflake.Generators.Analyzers;
 namespace Snowflake.Generators.Configuration.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public sealed class OnlyOneAttributeTypeAnalyzer
+    public sealed class OnlyOneAttributeTemplateTypeAnalyzer
         : AbstractSyntaxNodeAnalyzer
     {
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
@@ -24,7 +24,7 @@ namespace Snowflake.Generators.Configuration.Analyzers
 
         private static readonly DiagnosticDescriptor Rule =
             new DiagnosticDescriptor(
-                id: DiagnosticCodes.SFC019__OnlyOneAttributeType,
+                id: DiagnosticCodes.SFC019__OnlyOneAttributeTemplateType,
                 title: "Template interface can not be both an [InputConfiguration] and a [ConfigurationSection]",
                 messageFormat: "Template interface '{0}' is decorated with both [ConfiguratiSection] and [InputConfiguration]",
                 category: "Snowflake.Configuration",
@@ -43,8 +43,7 @@ namespace Snowflake.Generators.Configuration.Analyzers
             if (interfaceSymbol.GetAttributes().Any(a =>
                SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.InputConfigurationAttribute))
                 && interfaceSymbol.GetAttributes().Any(a =>
-               SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationSectionAttribute))
-                )
+               SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationSectionAttribute)))
                 yield return Diagnostic.Create(Rule, interfaceSymbol.Locations.First(), interfaceSymbol.Name);
         }
     }

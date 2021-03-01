@@ -6,6 +6,7 @@ using Snowflake.Generators.Analyzers;
 using Snowflake.Generators.Configuration.Analyzers;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -15,17 +16,17 @@ namespace Snowflake.Configuration.Generators
     [Generator]
     public sealed class ConfigurationCollectionGenerator : ISourceGenerator
     {
-        private static List<AbstractSyntaxNodeAnalyzer> Analyzers = new()
-        {
-            { new TemplateInterfaceTopLevelAnalyzer() },
-            { new UnextendibleInterfaceAnalyzer() },
-            { new CannotHideInheritedPropertyAnalyzer() },
-            { new InvalidTemplateAccessorAnalyzer() },
-            { new CollectionPropertyNotSectionAnalyzer() },
-            { new CollectionPropertyInvalidAccessorAnalyzer() },
-            { new CollectionPropertyMustHaveGetterAnalyzer() },
-            { new DuplicateConfigurationTargetAnalyzer() },
-        };
+        private static ImmutableArray<AbstractSyntaxNodeAnalyzer> Analyzers 
+            = ImmutableArray.Create<AbstractSyntaxNodeAnalyzer>(
+                new TemplateInterfaceTopLevelAnalyzer(),
+                new UnextendibleInterfaceAnalyzer(),
+                new CannotHideInheritedPropertyAnalyzer(),
+                new InvalidTemplateAccessorAnalyzer(),
+                new CollectionPropertyNotSectionAnalyzer(),
+                new CollectionPropertyInvalidAccessorAnalyzer(),
+                new CollectionPropertyMustHaveGetterAnalyzer(),
+                new DuplicateConfigurationTargetAnalyzer()
+            );
 
         public void Execute(GeneratorExecutionContext context)
         {

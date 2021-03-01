@@ -2,8 +2,11 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
+using Snowflake.Generators.Analyzers;
+using Snowflake.Generators.Configuration.Analyzers;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -14,6 +17,23 @@ namespace Snowflake.Configuration.Generators
     [Generator]
     public sealed class InputTemplateGenerator : ISourceGenerator
     {
+        private static ImmutableArray<AbstractSyntaxNodeAnalyzer> Analyzers
+          = ImmutableArray.Create<AbstractSyntaxNodeAnalyzer>(
+              new TemplateInterfaceTopLevelAnalyzer(),
+              new UnextendibleInterfaceAnalyzer(),
+              new CannotHideInheritedPropertyAnalyzer(),
+              new InvalidTemplateAccessorAnalyzer(),
+              new SectionPropertyMismatchedTypeAnalyzer(),
+              new SectionPropertyEnumUndecoratedAnalyzer(),
+              new SectionPropertyInvalidAccessorAnalyzer(),
+              new SectionPropertyMustHaveGetterAnalyzer(),
+              new SectionPropertyMustHaveSetterAnalyzer(),
+              new OnlyOneAttributeTemplateTypeAnalyzer(),
+              new OnlyOneAttributePropertyTypeAnalyzer(),
+              new InputPropertyUndecoratedAnalyzer(),
+              new InputPropertyTypeMismatchAnalyzer()
+          );
+
         public void Execute(GeneratorExecutionContext context)
         {
             if (context.SyntaxReceiver is not ConfigurationTemplateInterfaceSyntaxReceiver receiver)
@@ -35,28 +55,19 @@ namespace Snowflake.Configuration.Generators
                  .Any(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.InputConfigurationAttribute)))
                     continue;
 
-                if (!ifaceSymbol.ContainingSymbol.Equals(ifaceSymbol.ContainingNamespace, SymbolEqualityComparer.Default))
-                {
-                    bool errorOccured = false;
-                    context.ReportError(DiagnosticError.NotTopLevel,
-                               "Template interface not top level.",
-                               $"Collection template interface {ifaceSymbol.Name} must be defined within an enclosing top-level namespace.",
-                               ifaceSyntax.GetLocation(), ref errorOccured);
-                }
+                var diagnostics = Analyzers.AsParallel()
+                  .SelectMany(a => a.Analyze(context.Compilation, model, ifaceSyntax))
+                  .ToList();
 
-                if (!ifaceSyntax.Modifiers.Any(p => p.IsKind(SyntaxKind.PartialKeyword)))
+                foreach (var diag in diagnostics)
                 {
-                    context.ReportError(DiagnosticError.UnextendibleInterface,
-                               "Unextendible template interface",
-                               $"Template interface '{ifaceSymbol.Name}' must be marked partial.",
-                               ifaceSyntax.GetLocation(), ref errorOccurred);
+                    context.ReportDiagnostic(diag);
                 }
+                if (diagnostics.Any())
+                    return;
 
                 var configProperties = new List<(INamedTypeSymbol, IPropertySymbol)>();
                 var inputProperties = new List<(INamedTypeSymbol, IPropertySymbol)>();
-
-                var seenProps = new HashSet<string>();
-
 
                 foreach (var childIface in ifaceSymbol.AllInterfaces.Reverse().Concat(new[] { ifaceSymbol }))
                 {
@@ -65,6 +76,7 @@ namespace Snowflake.Configuration.Generators
                     {
                         if (member is IMethodSymbol accessor && accessor.AssociatedSymbol is IPropertySymbol)
                             continue;
+                        
                         bool isConfigOption = member.GetAttributes()
                             .Where(attr => attr?.AttributeClass?
                                 .Equals(types.ConfigurationOptionAttribute, SymbolEqualityComparer.Default) == true)
@@ -73,36 +85,19 @@ namespace Snowflake.Configuration.Generators
                           .Where(attr => attr?.AttributeClass?
                               .Equals(types.InputOptionAttribute, SymbolEqualityComparer.Default) == true)
                           .Any();
-                        if (!isConfigOption && !isInputOption)
-                        {
-                            context.ReportError(DiagnosticError.UndecoratedProperty, "Undecorated section property member",
-                                  $"Property {member.Name} must be decorated with either a " +
-                                  $"ConfigurationOptionAttribute or InputOptionAttribute.",
-                              member.Locations.First(), ref errorOccurred);
-                            continue;
-                        }
-                        if (isConfigOption && isInputOption)
-                        {
-                            context.ReportError(DiagnosticError.BothOptionTypes, "Duplicated property type",
-                                  $"Property {member.Name} can not be marked with both InputOptionAttribute and ConfigurationOptionAttribute.",
-                              member.Locations.First(), ref errorOccurred);
-                            continue;
-                        }
 
-                        if (isConfigOption && ConfigurationSectionGenerator.VerifyOptionProperty(context,
-                            types, member, childIface, in seenProps,
-                            out var property))
+                        // case where neither/both handled by analyzer guards above.
+                        if (isConfigOption && member is IPropertySymbol optionProperty)
                         {
-                            configProperties.Add((childIface, property!));
-                        } else if (isInputOption && InputTemplateGenerator.VerifyOptionProperty(context, types, member, childIface, 
-                            in seenProps, out property))
+                            configProperties.Add((childIface, optionProperty));
+                        } else if (isInputOption && member is IPropertySymbol inputProperty)
                         {
-                            inputProperties.Add((childIface, property!));
+                            inputProperties.Add((childIface, inputProperty));
                         }
                     }
                 }
 
-                string? classSource = ProcessClass(ifaceSymbol, configProperties, inputProperties, types, context);
+                string? classSource = GenerateSource(ifaceSymbol, configProperties, inputProperties, types, context);
                 if (classSource != null)
                 {
                     context.AddSource($"{ifaceSymbol.Name}_InputTemplateSection.cs", SourceText.From(classSource, Encoding.UTF8));
@@ -110,91 +105,7 @@ namespace Snowflake.Configuration.Generators
             }
         }
 
-
-        internal static bool VerifyOptionProperty(
-               GeneratorExecutionContext context,
-               ConfigurationTypes types,
-               ISymbol member,
-               INamedTypeSymbol ifaceSymbol,
-               in HashSet<string> seenProperties,
-               out IPropertySymbol? propertyResult)
-        {
-
-            bool errorOccurred = false;
-            // Ignore accessors, we only care about the property declaration.
-            if (member is IMethodSymbol accessor && accessor.AssociatedSymbol is IPropertySymbol)
-            {
-                propertyResult = null;
-                return false;
-            }
-
-            if (member is not IPropertySymbol property)
-            {
-                context.ReportError(DiagnosticError.InvalidMembers, "Invalid members in template interface.",
-                   $"Template interface '{ifaceSymbol.Name}' must only declare property members. " +
-                   $"{member.Kind} '{ifaceSymbol.Name}.{member.Name}' is not a property.",
-                   member.Locations.First(), ref errorOccurred);
-                propertyResult = null;
-                return !errorOccurred;
-            }
-
-            var propertySyntax = (PropertyDeclarationSyntax)property.DeclaringSyntaxReferences.First().GetSyntax();
-            var propertyLocation = propertySyntax.GetLocation();
-
-            if (seenProperties.Contains(property.Name))
-            {
-                context.ReportError(DiagnosticError.DuplicateProperty,
-                   "Duplicate template property key.",
-                   $"A template property named '{property.Name}' already exists. Template interfaces are not allowed to hide or override inherited properties.",
-                   propertyLocation, ref errorOccurred);
-            }
-
-            var propAttr = property.GetAttributes()
-                       .Where(attr => attr?.AttributeClass?.Equals(types.InputOptionAttribute, SymbolEqualityComparer.Default) == true);
-
-            if (!propAttr.Any())
-            {
-                context.ReportError(DiagnosticError.UndecoratedProperty, "Undecorated section property member",
-                           $"Property {property.Name} must be decorated with a InputOptionAttribute.",
-                       propertySyntax.GetLocation(), ref errorOccurred);
-            }
-
-            if (propertySyntax.AccessorList == null || propertySyntax.AccessorList.Accessors.Any(a => a.IsKind(SyntaxKind.SetAccessorDeclaration)))
-            {
-                context.ReportError(DiagnosticError.UnexpectedSetter, "Unexpected set accessor",
-                          $"Property '{property.Name}' must not declare a setter.",
-                      propertySyntax.GetLocation(), ref errorOccurred);
-            }
-
-            if (propertySyntax.AccessorList == null || !propertySyntax.AccessorList.Accessors.Any(a => a.IsKind(SyntaxKind.GetAccessorDeclaration)))
-            {
-                context.ReportError(DiagnosticError.MissingSetter, "Missing get accessor",
-                        $"Property '{property.Name}' must declare a getter.",
-                    propertySyntax.GetLocation(), ref errorOccurred);
-            }
-
-            if (propertySyntax.AccessorList != null && propertySyntax.AccessorList.Accessors.Any(a => a.Body != null || a.ExpressionBody != null))
-            {
-                context.ReportError(DiagnosticError.UnexpectedBody, "Unexpected property body",
-                          $"Property '{property.Name}' can not declare a body.",
-                      propertySyntax.GetLocation(), ref errorOccurred);
-            }
-
-            if (!propAttr.Any())
-            {
-                propertyResult = null;
-                return false;
-            }
-
-            if (!errorOccurred)
-            {
-                seenProperties.Add(property.Name);
-            }
-            propertyResult = property;
-            return !errorOccurred;
-        }
-
-        private string? ProcessClass(INamedTypeSymbol rootInterface,
+        private string? GenerateSource(INamedTypeSymbol rootInterface,
             List<(INamedTypeSymbol, IPropertySymbol)> configOptionProps,
             List<(INamedTypeSymbol, IPropertySymbol)> inputOptionProps,
             ConfigurationTypes types,
