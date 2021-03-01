@@ -1,5 +1,0 @@
-<Project Sdk="Kittitas.SDK/0.0.5-alpha">
-  <ItemGroup>
-    <LaunchProject Include="../Snowflake.Framework.Tests.Configuration/Snowflake.Framework.Tests.Configuration.csproj" />
-  </ItemGroup>
-</Project>

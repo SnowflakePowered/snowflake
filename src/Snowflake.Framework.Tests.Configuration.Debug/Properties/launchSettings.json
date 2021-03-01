@@ -1,9 +1,0 @@
-{
-    "profiles": {
-        "DebugRolsynComponent": {
-            "commandName": "Executable",
-            "executablePath": "dotnet-kittitas",
-            "commandLineArgs": "D:\\coding\\snowflake\\src\\Snowflake.Framework.Tests.Configuration\\Snowflake.Framework.Tests.Configuration.csproj"
-        }
-    }
-}
