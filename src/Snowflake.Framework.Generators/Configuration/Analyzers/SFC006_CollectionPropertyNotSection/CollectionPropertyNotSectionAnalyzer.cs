@@ -15,7 +15,7 @@ using Snowflake.Generators.Analyzers;
 namespace Snowflake.Generators.Configuration.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public sealed class CollectionPropertiesNotInterfaceAnalyzer
+    public sealed class CollectionPropertyNotSectionAnalyzer
         : AbstractSyntaxNodeAnalyzer
     {
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
@@ -47,6 +47,8 @@ namespace Snowflake.Generators.Configuration.Analyzers
 
             foreach (var childIface in interfaceSymbol.AllInterfaces.Reverse().Concat(new [] { interfaceSymbol }))
             {
+                if (SymbolEqualityComparer.Default.Equals(childIface, types.IConfigurationCollectionTemplate))
+                    continue;
                 foreach (var member in childIface.GetMembers().Where(s => s.Kind == SymbolKind.Property).Cast<IPropertySymbol>())
                 {
                     if (member.Type.TypeKind != TypeKind.Interface

@@ -50,6 +50,9 @@ namespace Snowflake.Generators.Configuration.Analyzers
 
             foreach (var childIface in interfaceSymbol.AllInterfaces.Reverse().Concat(new [] { interfaceSymbol }))
             {
+                if (SymbolEqualityComparer.Default.Equals(childIface, types.IConfigurationCollectionTemplate)
+                 || SymbolEqualityComparer.Default.Equals(childIface, types.IInputConfigurationTemplate))
+                    continue;
                 foreach (var member in childIface.GetMembers().Where(s => s.Kind == SymbolKind.Property))
                 {
                     if (dict.TryGetValue(member.Name, out var originatingIface))
