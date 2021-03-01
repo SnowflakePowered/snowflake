@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
+using Snowflake.Generators.Configuration.Analyzers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -35,6 +36,11 @@ namespace Snowflake.Configuration.Generators
                 if (!ifaceSymbol.GetAttributes()
                        .Any(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationSectionAttribute)))
                     return;
+
+
+                new SectionPropertyMustHaveGetterAnalyzer().Analyze(context, ifaceSyntax);
+                new SectionPropertyMustHaveSetterAnalyzer().Analyze(context, ifaceSyntax);
+                //new SectionPropertyEnumUndecoratedAnalyzer().Analyze(context, ifaceSyntax);
 
                 if (!ifaceSymbol.ContainingSymbol.Equals(ifaceSymbol.ContainingNamespace, SymbolEqualityComparer.Default))
                 {
@@ -83,17 +89,6 @@ namespace Snowflake.Configuration.Generators
             ConfigurationTypes types,
             GeneratorExecutionContext context)
         {
-            if (!classSymbol.ContainingSymbol.Equals(classSymbol.ContainingNamespace, SymbolEqualityComparer.Default))
-            {
-                bool errorOccured = false;
-                context.ReportError(DiagnosticError.NotTopLevel,
-                           "Template interface not top level.",
-                           $"Collection template interface {classSymbol.Name} must be defined within an enclosing top-level namespace.",
-                           classSymbol.Locations.First(), ref errorOccured);
-
-                return null;
-            }
-
             string namespaceName = classSymbol.ContainingNamespace.ToDisplayString();
             string generatedNamespaceName = $"Snowflake.Configuration.GeneratedConfigurationProxies.Section__Section{namespaceName}";
 
@@ -201,19 +196,19 @@ namespace {generatedNamespaceName}
                        propertySyntax.GetLocation(), ref errorOccurred);
             }
 
-            if (propertySyntax.AccessorList == null || !propertySyntax.AccessorList.Accessors.Any(a => a.IsKind(SyntaxKind.SetAccessorDeclaration)))
-            {
-                context.ReportError(DiagnosticError.MissingSetter, "Missing set accessor",
-                          $"Property '{property.Name}' must declare a setter.",
-                      propertySyntax.GetLocation(), ref errorOccurred);
-            }
+            //if (propertySyntax.AccessorList == null || !propertySyntax.AccessorList.Accessors.Any(a => a.IsKind(SyntaxKind.SetAccessorDeclaration)))
+            //{
+            //    context.ReportError(DiagnosticError.MissingSetter, "Missing set accessor",
+            //              $"Property '{property.Name}' must declare a setter.",
+            //          propertySyntax.GetLocation(), ref errorOccurred);
+            //}
 
-            if (propertySyntax.AccessorList == null || !propertySyntax.AccessorList.Accessors.Any(a => a.IsKind(SyntaxKind.GetAccessorDeclaration)))
-            {
-                context.ReportError(DiagnosticError.MissingSetter, "Missing get accessor",
-                        $"Property '{property.Name}' must declare a getter.",
-                    propertySyntax.GetLocation(), ref errorOccurred);
-            }
+            //if (propertySyntax.AccessorList == null || !propertySyntax.AccessorList.Accessors.Any(a => a.IsKind(SyntaxKind.GetAccessorDeclaration)))
+            //{
+            //    context.ReportError(DiagnosticError.MissingSetter, "Missing get accessor",
+            //            $"Property '{property.Name}' must declare a getter.",
+            //        propertySyntax.GetLocation(), ref errorOccurred);
+            //}
 
             if (propertySyntax.AccessorList != null && propertySyntax.AccessorList.Accessors.Any(a => a.Body != null || a.ExpressionBody != null))
             {

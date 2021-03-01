@@ -15,7 +15,7 @@ using Snowflake.Generators.Analyzers;
 namespace Snowflake.Generators.Configuration.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public sealed class InvalidTemplateMember
+    public sealed class SectionPropertyUndecoratedAnalyzer
         : AbstractSyntaxNodeAnalyzer
     {
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
@@ -24,37 +24,35 @@ namespace Snowflake.Generators.Configuration.Analyzers
 
         private static readonly DiagnosticDescriptor Rule =
             new DiagnosticDescriptor(
-                id: DiagnosticCodes.SFC003__InvalidTemplateMemberAnalyzer,
-                title: "Invalid members in template interface",
-                messageFormat: "{0} '{1}.{2}' is not a non-indexer property",
+                id: DiagnosticCodes.SFC010__SectionPropertyUndecorated,
+                title: "ConfigurationSection template property is undecorated",
+                messageFormat: "Property '{0}' must be decorated with [ConfigurationOption]",
                 category: "Snowflake.Configuration",
                 DiagnosticSeverity.Error,
                 isEnabledByDefault: true,
                 customTags: new[] { WellKnownDiagnosticTags.NotConfigurable },
-                description: "Template interface must only declare non-indexer property members.");
+                description: "All properties in a ConfigurationSection template must be decorated with [ConfigurationOption].");
 
         public override IEnumerable<Diagnostic> Analyze(Compilation compilation, SemanticModel semanticModel, SyntaxNode node)
         {
+            var interfaceSyntax = (InterfaceDeclarationSyntax)node;
             var types = new ConfigurationTypes(compilation);
-            var interfaceSymbol = semanticModel.GetDeclaredSymbol(node) as INamedTypeSymbol;
+            var interfaceSymbol = semanticModel.GetDeclaredSymbol(interfaceSyntax);
             if (interfaceSymbol == null)
                 yield break;
 
             if (!interfaceSymbol.GetAttributes().Any(a =>
-                SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationCollectionAttribute)
-                || SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.InputConfigurationAttribute)
-                || SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationSectionAttribute)))
+               SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationSectionAttribute)))
                 yield break;
 
-            foreach (var member in interfaceSymbol.GetMembers())
+            foreach (var childIface in interfaceSymbol.AllInterfaces.Reverse().Concat(new[] { interfaceSymbol }))
             {
-                // Ignore accessor implementations for this diagnostic.
-                if (member is IMethodSymbol accessor && accessor.AssociatedSymbol is IPropertySymbol)
-                    continue;
-                if (member is not IPropertySymbol propertySymbol 
-                    || propertySymbol.IsIndexer)
+                foreach (var member in childIface.GetMembers().Where(s => s.Kind == SymbolKind.Property).Cast<IPropertySymbol>())
                 {
-                    yield return Diagnostic.Create(Rule, member.Locations.FirstOrDefault(), member.Kind, interfaceSymbol.Name, member.Name);
+                    if (!member.GetAttributes().Any(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationOptionAttribute)))
+                    {
+                        yield return Diagnostic.Create(Rule, member.Locations.First(), member.Name);
+                    }
                 }
             }
         }

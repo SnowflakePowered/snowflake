@@ -15,7 +15,7 @@ using Snowflake.Generators.Analyzers;
 namespace Snowflake.Generators.Configuration.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public sealed class CannotHideInheritedPropertyAnalyzer
+    public sealed class SectionPropertyInvalidAccessorAnalyzer
         : AbstractSyntaxNodeAnalyzer
     {
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
@@ -24,14 +24,14 @@ namespace Snowflake.Generators.Configuration.Analyzers
 
         private static readonly DiagnosticDescriptor Rule =
             new DiagnosticDescriptor(
-                id: DiagnosticCodes.SFC004__CannotHideInheritedProperty,
-                title: "Template interface can not hide or override inherited member",
-                messageFormat: "Property '{0}' was already defined by inherited interface '{1}' and can not be hidden or overridden",
+                id: DiagnosticCodes.SFC013__SectionPropertyInvalidAccessor,
+                title: "ConfigurationSection template properties can only have 'get' and 'set' accessors",
+                messageFormat: "Declared accessor '{1}' is invalid for property '{0}'",
                 category: "Snowflake.Configuration",
                 DiagnosticSeverity.Error,
                 isEnabledByDefault: true,
                 customTags: new[] { WellKnownDiagnosticTags.NotConfigurable },
-                description: "Property names in template interfaces must be unique across the inheritance tree.");
+                description: "ConfigurationSection template properties must only declare 'get' and 'set' accessors.");
 
         public override IEnumerable<Diagnostic> Analyze(Compilation compilation, SemanticModel semanticModel, SyntaxNode node)
         {
@@ -42,21 +42,28 @@ namespace Snowflake.Generators.Configuration.Analyzers
                 yield break;
 
             if (!interfaceSymbol.GetAttributes().Any(a =>
-                SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationCollectionAttribute)
+                SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationSectionAttribute)
                 || SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.InputConfigurationAttribute)))
                 yield break;
 
-            var dict = new Dictionary<string, INamedTypeSymbol>();
-
-            foreach (var childIface in interfaceSymbol.AllInterfaces.Reverse().Concat(new [] { interfaceSymbol }))
+            foreach (var childIface in interfaceSymbol.AllInterfaces.Reverse().Concat(new[] { interfaceSymbol }))
             {
-                foreach (var member in childIface.GetMembers().Where(s => s.Kind == SymbolKind.Property))
+                foreach (var member in childIface.GetMembers().Where(s => s.Kind == SymbolKind.Property).Cast<IPropertySymbol>())
                 {
-                    if (dict.TryGetValue(member.Name, out var originatingIface))
+                    if (member.DeclaringSyntaxReferences.FirstOrDefault()?.GetSyntax() 
+                        is not PropertyDeclarationSyntax propertySyntax)
+                        continue;
+                    if (!member.GetAttributes().Any(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationOptionAttribute)))
+                        continue;
+
+                    if (propertySyntax.AccessorList is AccessorListSyntax accessors)
                     {
-                        yield return Diagnostic.Create(Rule, member.Locations.FirstOrDefault(), member.Name, originatingIface.Name);
+                        foreach (var accessor in accessors.Accessors)
+                        {
+                            if (!accessor.IsKind(SyntaxKind.GetAccessorDeclaration) && !accessor.IsKind(SyntaxKind.SetAccessorDeclaration))
+                                yield return Diagnostic.Create(Rule, accessor.GetLocation(), member.Name, accessor.Keyword.Text);
+                        }
                     }
-                    dict.Add(member.Name, childIface);
                 }
             }
         }

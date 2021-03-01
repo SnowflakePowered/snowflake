@@ -200,17 +200,6 @@ namespace Snowflake.Configuration.Generators
             ConfigurationTypes types,
             GeneratorExecutionContext context)
         {
-            if (!rootInterface.ContainingSymbol.Equals(rootInterface.ContainingNamespace, SymbolEqualityComparer.Default))
-            {
-                bool errorOccured = false;
-                context.ReportError(DiagnosticError.NotTopLevel,
-                           "Template interface not top level.",
-                           $"Collection template interface {rootInterface.Name} must be defined within an enclosing top-level namespace.",
-                           rootInterface.Locations.First(), ref errorOccured);
-
-                return null;
-            }
-
             string namespaceName = rootInterface.ContainingNamespace.ToDisplayString();
             string generatedNamespaceName = $"Snowflake.Configuration.GeneratedConfigurationProxies.Section__Input{namespaceName}";
 

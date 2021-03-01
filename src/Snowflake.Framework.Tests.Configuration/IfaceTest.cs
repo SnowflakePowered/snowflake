@@ -10,14 +10,32 @@ namespace Snowflake.Framework.Tests.Configuration
     [ConfigurationCollection]
     public partial interface IA
     {
-        string A { get; }
+        AType A { get; }
+        AType B { get; }
     }
 
-    [ConfigurationCollection]
-    partial interface IB
-        : IA
+    [ConfigurationSection("(CHANGE ME!) sectionName", "(CHANGE ME!) displayName")]
+    public partial interface AType
     {
-        string B { get; }
-        string A { get; }
+        [ConfigurationOption("ashdhj", "no", DisplayName = "no")]
+        string Non { get; set; }
     }
+
+
+    [InputConfiguration("input")]
+    public partial interface InputTest
+    {
+        [ConfigurationOption("ashdhj", "no", DisplayName = "no")]
+        string Non { get; set; }
+
+        
+    }
+    //[ConfigurationCollection]
+    //partial interface IB
+    //    : IA
+    //{
+    //    string B { get; }
+    //    string A { get; }
+    //}
+
 }

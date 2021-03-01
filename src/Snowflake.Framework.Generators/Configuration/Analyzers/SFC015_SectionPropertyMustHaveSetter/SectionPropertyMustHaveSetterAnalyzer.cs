@@ -15,7 +15,7 @@ using Snowflake.Generators.Analyzers;
 namespace Snowflake.Generators.Configuration.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public sealed class CannotHideInheritedPropertyAnalyzer
+    public sealed class SectionPropertyMustHaveSetterAnalyzer
         : AbstractSyntaxNodeAnalyzer
     {
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
@@ -24,14 +24,14 @@ namespace Snowflake.Generators.Configuration.Analyzers
 
         private static readonly DiagnosticDescriptor Rule =
             new DiagnosticDescriptor(
-                id: DiagnosticCodes.SFC004__CannotHideInheritedProperty,
-                title: "Template interface can not hide or override inherited member",
-                messageFormat: "Property '{0}' was already defined by inherited interface '{1}' and can not be hidden or overridden",
+                id: DiagnosticCodes.SFC015__CollectionPropertyMustHaveSetter,
+                title: "ConfigurationSection template properties must declare a public 'set' accessor",
+                messageFormat: "Property '{0}' does not declare a 'set' accessor",
                 category: "Snowflake.Configuration",
                 DiagnosticSeverity.Error,
                 isEnabledByDefault: true,
                 customTags: new[] { WellKnownDiagnosticTags.NotConfigurable },
-                description: "Property names in template interfaces must be unique across the inheritance tree.");
+                description: "ConfigurationSection template properties must declare a public 'set' accessor.");
 
         public override IEnumerable<Diagnostic> Analyze(Compilation compilation, SemanticModel semanticModel, SyntaxNode node)
         {
@@ -42,21 +42,26 @@ namespace Snowflake.Generators.Configuration.Analyzers
                 yield break;
 
             if (!interfaceSymbol.GetAttributes().Any(a =>
-                SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationCollectionAttribute)
+                SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationSectionAttribute)
                 || SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.InputConfigurationAttribute)))
                 yield break;
 
-            var dict = new Dictionary<string, INamedTypeSymbol>();
-
-            foreach (var childIface in interfaceSymbol.AllInterfaces.Reverse().Concat(new [] { interfaceSymbol }))
+            foreach (var childIface in interfaceSymbol.AllInterfaces.Reverse().Concat(new[] { interfaceSymbol }))
             {
-                foreach (var member in childIface.GetMembers().Where(s => s.Kind == SymbolKind.Property))
+                foreach (var member in childIface.GetMembers().Where(s => s.Kind == SymbolKind.Property).Cast<IPropertySymbol>())
                 {
-                    if (dict.TryGetValue(member.Name, out var originatingIface))
+                    if (member.DeclaringSyntaxReferences.FirstOrDefault()?.GetSyntax()
+                        is not PropertyDeclarationSyntax propertySyntax)
+                        continue;
+                    if (!member.GetAttributes().Any(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationOptionAttribute)))
+                        continue;
+
+                    if (propertySyntax.AccessorList is not AccessorListSyntax accessors 
+                        || accessors.Accessors.FirstOrDefault(a => a.IsKind(SyntaxKind.SetAccessorDeclaration)) is not AccessorDeclarationSyntax setAccessor
+                        || setAccessor.Modifiers.Any())
                     {
-                        yield return Diagnostic.Create(Rule, member.Locations.FirstOrDefault(), member.Name, originatingIface.Name);
+                        yield return Diagnostic.Create(Rule, propertySyntax.GetLocation(), member.Name);
                     }
-                    dict.Add(member.Name, childIface);
                 }
             }
         }

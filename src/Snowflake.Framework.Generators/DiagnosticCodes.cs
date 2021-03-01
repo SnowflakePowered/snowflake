@@ -17,6 +17,37 @@ namespace Snowflake.Generators
         public const string SFC003__InvalidTemplateMemberAnalyzer = "SFC003";
 
         public const string SFC004__CannotHideInheritedProperty = "SFC004";
+
+        public const string SFC005__InvalidTemplateAccessor = "SFC005";
+
+        public const string SFC006__CollectionPropertyNotSection = "SFC006";
+
+        public const string SFC007__CollectionPropertyInvalidAccessor = "SFC007";
+
+        public const string SFC008__CollectionPropertyMustHaveGetter = "SFC008";
+
+        public const string SFC009__DuplicateConfigurationTarget = "SFC009";
+
+        public const string SFC010__SectionPropertyUndecorated = "SFC010";
+
+        public const string SFC011__SectionPropertyMismatchedType = "SFC011";
+
+        public const string SFC012__SectionPropertyEnumUndecorated = "SFC012";
+
+        public const string SFC013__SectionPropertyInvalidAccessor = "SFC013";
+
+        public const string SFC014__CollectionPropertyMustHaveGetter = "SFC014";
+
+        public const string SFC015__CollectionPropertyMustHaveSetter = "SFC015";
+
+        public const string SFC016__InputPropertyInvalidAccessor = "SFC016";
+
+        public const string SFC017__InputPropertyUndecorated = "SFC017";
+
+        public const string SFC018__InputPropertyTypeMismatch = "SFC018";
+
+        public const string SFC019__OnlyOneAttributeType = "SFC019";
+
         #endregion
     }
 }

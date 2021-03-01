@@ -16,20 +16,20 @@ namespace Snowflake.Framework.Tests.Configuration
         [ConfigurationOption("ss")]
         Guid MyResource { get; set; }
 
+
+
     }
 
     public partial interface MyConfiguration
     {
-      
         [ConfigurationOption("myenum", MyEnum.World)]
         MyEnum MyEnum { get; set; }
-
     }
 
 
     public enum MyEnum
     {
-        [SelectionOption("hello")]
+        [SelectionOption("world")]
         Hello,
         [SelectionOption("world")]
         World

@@ -9,6 +9,7 @@
 
   <Target Name="WarnWithoutModuleManifest" BeforeTargets="_CheckForInvalidConfigurationAndPlatform">
     <Warning
+      Code="SFM001"
       Text="This project does not have a module.json manifest, and will not be loadable by Snowflake."
       Condition="!Exists('$(ProjectDir)module.json')"/>
   </Target>
@@ -19,6 +20,7 @@
 
   <Target Name="WarnModuleDirectoryStructure" Condition="$(Configuration.EndsWith('-Module'))" AfterTargets="Publish">
     <Warning
+      Code="SFM002"
       Text="Module publish output directory does not follow the expected structure. Perhaps this package is not being built by Snowflake.Tooling.Cli!"
       Condition="!$(PublishDir.EndsWith('contents\')) And !$(PublishDir.EndsWith('contents/'))"/>
   </Target>

@@ -26,8 +26,8 @@ namespace Snowflake.Generators.Configuration.Analyzers
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFC002__TemplateInterfaceTopLevelAnalyzer,
                 title: "Template interface not top level",
-                messageFormat: "Collection template interface {0} must be defined within an enclosing top-level namespace.", 
-                category: "Configuration", 
+                messageFormat: "Collection template interface {0} must be defined within an enclosing top-level namespace", 
+                category: "Snowflake.Configuration", 
                 DiagnosticSeverity.Error, 
                 isEnabledByDefault: true, 
                 customTags: new [] { WellKnownDiagnosticTags.NotConfigurable },
