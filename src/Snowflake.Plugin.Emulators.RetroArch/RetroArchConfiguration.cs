@@ -1,5 +1,4 @@
 using Snowflake.Configuration;
-using Snowflake.Configuration.Attributes;
 using Snowflake.Plugin.Emulators.RetroArch.Configuration;
 using Snowflake.Plugin.Emulators.RetroArch.Configuration.Internal;
 

@@ -1,4 +1,4 @@
-﻿using Snowflake.Configuration.Attributes;
+﻿using Snowflake.Configuration;
 using Snowflake.Configuration.Input;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Device;

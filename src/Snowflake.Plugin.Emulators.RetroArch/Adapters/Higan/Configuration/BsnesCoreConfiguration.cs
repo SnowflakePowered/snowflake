@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
-using Snowflake.Configuration.Attributes;
 using Snowflake.Plugin.Emulators.RetroArch.Adapters.Higan.Selections;
 
 namespace Snowflake.Plugin.Emulators.RetroArch.Adapters.Higan.Configuration

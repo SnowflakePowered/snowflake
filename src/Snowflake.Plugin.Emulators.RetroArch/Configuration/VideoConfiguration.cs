@@ -1,5 +1,4 @@
 using Snowflake.Configuration;
-using Snowflake.Configuration.Attributes;
 using Snowflake.Plugin.Emulators.RetroArch.Selections.AudioConfiguration;
 using Snowflake.Plugin.Emulators.RetroArch.Selections.VideoConfiguration;
 using Snowflake.Plugin.Emulators.RetroArch.Shaders;
