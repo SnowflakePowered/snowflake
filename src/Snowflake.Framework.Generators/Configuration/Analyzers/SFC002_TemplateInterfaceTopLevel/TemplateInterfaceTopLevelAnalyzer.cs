@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using Snowflake.Generators;
 using Snowflake.Generators.Analyzers;
+using System.Threading;
 
 namespace Snowflake.Generators.Configuration.Analyzers
 {
@@ -33,10 +34,10 @@ namespace Snowflake.Generators.Configuration.Analyzers
                 customTags: new [] { WellKnownDiagnosticTags.NotConfigurable },
                 description: "Template interface must be defined within an enclosing top-level namespace.");
 
-        public override IEnumerable<Diagnostic> Analyze(Compilation compilation, SemanticModel semanticModel, SyntaxNode node)
+        public override IEnumerable<Diagnostic> Analyze(Compilation compilation, SemanticModel semanticModel, SyntaxNode node, CancellationToken cancel)
         {
             var types = new ConfigurationTypes(compilation);
-            var interfaceSymbol = semanticModel.GetDeclaredSymbol(node);
+            var interfaceSymbol = semanticModel.GetDeclaredSymbol(node, cancel);
             if (interfaceSymbol == null)
                 yield break;
 

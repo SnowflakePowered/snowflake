@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
+using System.Threading;
 
 namespace Snowflake.Generators.Analyzers
 {
@@ -13,7 +14,7 @@ namespace Snowflake.Generators.Analyzers
         : DiagnosticAnalyzer
     {
         protected abstract IEnumerable<SyntaxKind> Kinds { get; }
-        public abstract IEnumerable<Diagnostic> Analyze(Compilation compilation, SemanticModel semanticModel, SyntaxNode node);
+        public abstract IEnumerable<Diagnostic> Analyze(Compilation compilation, SemanticModel semanticModel, SyntaxNode node, CancellationToken cancel = default);
         public sealed override void Initialize(AnalysisContext context)
         {
             context.EnableConcurrentExecution();
@@ -26,7 +27,7 @@ namespace Snowflake.Generators.Analyzers
 #pragma warning disable RS1030 // Do not invoke Compilation.GetSemanticModel() method within a diagnostic analyzer
             var semanticModel = context.Compilation.GetSemanticModel(node.SyntaxTree);
 #pragma warning restore RS1030 // Do not invoke Compilation.GetSemanticModel() method within a diagnostic analyzer
-            foreach (var diagnostic in Analyze(context.Compilation, semanticModel, node))
+            foreach (var diagnostic in Analyze(context.Compilation, semanticModel, node, context.CancellationToken))
             {
                 context.ReportDiagnostic(diagnostic);
             }
@@ -34,7 +35,7 @@ namespace Snowflake.Generators.Analyzers
 
         private void Analyze(SyntaxNodeAnalysisContext context)
         {
-            foreach (var diagnostic in Analyze(context.Compilation, context.SemanticModel, context.Node))
+            foreach (var diagnostic in Analyze(context.Compilation, context.SemanticModel, context.Node, context.CancellationToken))
             {
                 context.ReportDiagnostic(diagnostic);
             }

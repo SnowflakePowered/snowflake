@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using Snowflake.Generators;
 using Snowflake.Generators.Analyzers;
+using System.Threading;
 
 namespace Snowflake.Generators.Configuration.Analyzers
 {
@@ -33,11 +34,11 @@ namespace Snowflake.Generators.Configuration.Analyzers
                 customTags: new [] { WellKnownDiagnosticTags.NotConfigurable },
                 description: "Template interface must be marked as partial.");
 
-        public override IEnumerable<Diagnostic> Analyze(Compilation compilation, SemanticModel semanticModel, SyntaxNode node)
+        public override IEnumerable<Diagnostic> Analyze(Compilation compilation, SemanticModel semanticModel, SyntaxNode node, CancellationToken cancel)
         {
             var interfaceSyntax = (InterfaceDeclarationSyntax)node;
             var types = new ConfigurationTypes(compilation);
-            var interfaceSymbol = semanticModel.GetDeclaredSymbol(interfaceSyntax);
+            var interfaceSymbol = semanticModel.GetDeclaredSymbol(interfaceSyntax, cancel);
             if (interfaceSymbol == null)
                 yield break;
 

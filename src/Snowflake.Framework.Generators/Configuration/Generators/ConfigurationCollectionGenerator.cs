@@ -40,7 +40,7 @@ namespace Snowflake.Configuration.Generators
             foreach (var ifaceSyntax in receiver.CandidateInterfaces)
             {
                 var model = compilation.GetSemanticModel(ifaceSyntax.SyntaxTree);
-                var ifaceSymbol = model.GetDeclaredSymbol(ifaceSyntax);
+                var ifaceSymbol = model.GetDeclaredSymbol(ifaceSyntax, context.CancellationToken);
 
                 if (ifaceSymbol == null)
                     continue;
@@ -50,7 +50,7 @@ namespace Snowflake.Configuration.Generators
                     continue;
 
                 var diagnostics = Analyzers.AsParallel()
-                    .SelectMany(a => a.Analyze(context.Compilation, model, ifaceSyntax))
+                    .SelectMany(a => a.Analyze(context.Compilation, model, ifaceSyntax, context.CancellationToken))
                     .ToList();
 
                 foreach(var diag in diagnostics)

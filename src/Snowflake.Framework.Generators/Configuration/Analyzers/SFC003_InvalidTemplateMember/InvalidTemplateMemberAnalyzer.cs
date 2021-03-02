@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using Snowflake.Generators;
 using Snowflake.Generators.Analyzers;
+using System.Threading;
 
 namespace Snowflake.Generators.Configuration.Analyzers
 {
@@ -33,10 +34,10 @@ namespace Snowflake.Generators.Configuration.Analyzers
                 customTags: new[] { WellKnownDiagnosticTags.NotConfigurable },
                 description: "Template interface must only declare non-indexer property members.");
 
-        public override IEnumerable<Diagnostic> Analyze(Compilation compilation, SemanticModel semanticModel, SyntaxNode node)
+        public override IEnumerable<Diagnostic> Analyze(Compilation compilation, SemanticModel semanticModel, SyntaxNode node, CancellationToken cancel)
         {
             var types = new ConfigurationTypes(compilation);
-            var interfaceSymbol = semanticModel.GetDeclaredSymbol(node) as INamedTypeSymbol;
+            var interfaceSymbol = semanticModel.GetDeclaredSymbol(node, cancel) as INamedTypeSymbol;
             if (interfaceSymbol == null)
                 yield break;
 

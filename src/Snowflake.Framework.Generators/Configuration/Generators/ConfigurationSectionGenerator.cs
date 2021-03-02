@@ -47,7 +47,7 @@ namespace Snowflake.Configuration.Generators
             {
                 errorOccurred = false;
                 var model = compilation.GetSemanticModel(ifaceSyntax.SyntaxTree);
-                var ifaceSymbol = model.GetDeclaredSymbol(ifaceSyntax);
+                var ifaceSymbol = model.GetDeclaredSymbol(ifaceSyntax, context.CancellationToken);
                 if (ifaceSymbol == null)
                     continue;
                 if (!ifaceSymbol.GetAttributes()
@@ -55,7 +55,7 @@ namespace Snowflake.Configuration.Generators
                     return;
 
                 var diagnostics = Analyzers.AsParallel()
-                  .SelectMany(a => a.Analyze(context.Compilation, model, ifaceSyntax))
+                  .SelectMany(a => a.Analyze(context.Compilation, model, ifaceSyntax, context.CancellationToken))
                   .ToList();
 
                 foreach (var diag in diagnostics)
@@ -79,16 +79,13 @@ namespace Snowflake.Configuration.Generators
                     }
                 }
             
-                string? classSource = GenerateSource(ifaceSymbol, properties, types, context);
-                if (classSource != null)
-                {
-                    context.AddSource($"{ifaceSymbol!.Name}_ConfigurationSection.cs", SourceText.From(classSource, Encoding.UTF8));
-                }
+                string classSource = GenerateSource(ifaceSymbol, properties, types, context);
+                context.AddSource($"{ifaceSymbol!.Name}_ConfigurationSection.cs", SourceText.From(classSource, Encoding.UTF8));
             }
         }
 
         
-        private string? GenerateSource(INamedTypeSymbol classSymbol, List<(INamedTypeSymbol, IPropertySymbol)> props,
+        private string GenerateSource(INamedTypeSymbol classSymbol, List<(INamedTypeSymbol, IPropertySymbol)> props,
             ConfigurationTypes types,
             GeneratorExecutionContext context)
         {

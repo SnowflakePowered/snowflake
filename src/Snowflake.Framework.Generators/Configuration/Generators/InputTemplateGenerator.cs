@@ -48,7 +48,7 @@ namespace Snowflake.Configuration.Generators
             {
                 errorOccurred = false;
                 var model = compilation.GetSemanticModel(ifaceSyntax.SyntaxTree);
-                var ifaceSymbol = model.GetDeclaredSymbol(ifaceSyntax);
+                var ifaceSymbol = model.GetDeclaredSymbol(ifaceSyntax, context.CancellationToken);
                 if (ifaceSymbol == null)
                     continue;
                 if (!ifaceSymbol.GetAttributes()
@@ -56,7 +56,7 @@ namespace Snowflake.Configuration.Generators
                     continue;
 
                 var diagnostics = Analyzers.AsParallel()
-                  .SelectMany(a => a.Analyze(context.Compilation, model, ifaceSyntax))
+                  .SelectMany(a => a.Analyze(context.Compilation, model, ifaceSyntax, context.CancellationToken))
                   .ToList();
 
                 foreach (var diag in diagnostics)
@@ -97,15 +97,12 @@ namespace Snowflake.Configuration.Generators
                     }
                 }
 
-                string? classSource = GenerateSource(ifaceSymbol, configProperties, inputProperties, types, context);
-                if (classSource != null)
-                {
-                    context.AddSource($"{ifaceSymbol.Name}_InputTemplateSection.cs", SourceText.From(classSource, Encoding.UTF8));
-                }
+                string classSource = GenerateSource(ifaceSymbol, configProperties, inputProperties, types, context);
+                context.AddSource($"{ifaceSymbol.Name}_InputTemplateSection.cs", SourceText.From(classSource, Encoding.UTF8));
             }
         }
 
-        private string? GenerateSource(INamedTypeSymbol rootInterface,
+        private string GenerateSource(INamedTypeSymbol rootInterface,
             List<(INamedTypeSymbol, IPropertySymbol)> configOptionProps,
             List<(INamedTypeSymbol, IPropertySymbol)> inputOptionProps,
             ConfigurationTypes types,
