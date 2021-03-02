@@ -16,6 +16,7 @@ namespace Snowflake.Model.Database
 {
     internal partial class ConfigurationCollectionStore
     {
+        [GenericTypeAcceptsConfigurationCollection(0)]
         public async Task<IConfigurationCollection<T>> CreateConfigurationAsync<T>(string sourceName)
             where T : class, IConfigurationCollectionTemplate
         {
@@ -29,6 +30,7 @@ namespace Snowflake.Model.Database
             return collection;
         }
 
+        [GenericTypeAcceptsConfigurationCollection(0)]
         public async Task<IConfigurationCollection<T>> CreateConfigurationForGameAsync<T>(IGameRecord gameRecord,
             string sourceName, string profileName)
             where T : class, IConfigurationCollectionTemplate
@@ -127,6 +129,7 @@ namespace Snowflake.Model.Database
             await context.SaveChangesAsync();
         }
 
+        [GenericTypeAcceptsConfigurationCollection(0)]
         public async Task<IConfigurationCollection<T>?> GetConfigurationAsync<T>(Guid valueCollectionGuid)
             where T : class, IConfigurationCollectionTemplate
         {
@@ -137,6 +140,7 @@ namespace Snowflake.Model.Database
             return config?.AsConfiguration<T>();
         }
 
+        [GenericTypeAcceptsConfigurationCollection(0)]
         public async Task<IConfigurationCollection<T>?> GetConfigurationAsync<T>(Guid gameGuid,
             string sourceName, Guid valueCollectionGuid)
             where T : class, IConfigurationCollectionTemplate

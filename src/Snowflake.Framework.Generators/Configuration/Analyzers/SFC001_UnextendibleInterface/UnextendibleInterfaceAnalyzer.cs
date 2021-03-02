@@ -26,7 +26,7 @@ namespace Snowflake.Generators.Configuration.Analyzers
         private static readonly DiagnosticDescriptor Rule =
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFC001__UnextendibleInterfaceAnalyzer,
-                title: "Template interface is not extendible",
+                title: "Template interface is not extendible.",
                 messageFormat: "Interface '{0}' must be partial so it can implement generated proxy support members",
                 category: "Snowflake.Configuration",
                 DiagnosticSeverity.Error, 

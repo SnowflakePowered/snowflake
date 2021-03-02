@@ -26,7 +26,7 @@ namespace Snowflake.Generators.Configuration.Analyzers
         private static readonly DiagnosticDescriptor Rule =
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFC003__InvalidTemplateMemberAnalyzer,
-                title: "Invalid members in template interface",
+                title: "Invalid members in template interface.",
                 messageFormat: "{0} '{1}.{2}' is not a non-indexer property",
                 category: "Snowflake.Configuration",
                 DiagnosticSeverity.Error,

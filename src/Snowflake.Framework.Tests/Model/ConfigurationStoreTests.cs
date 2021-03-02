@@ -4,6 +4,8 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Snowflake.Configuration;
+using Snowflake.Configuration.Internal;
 using Snowflake.Configuration.Tests;
 using Snowflake.Model.Database;
 using Snowflake.Model.Database.Models;
@@ -20,6 +22,7 @@ namespace Snowflake.Model.Tests
             optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
             var configStore = new ConfigurationCollectionStore(optionsBuilder);
             var gameGuid = Guid.NewGuid();
+  
             var config = configStore
                 .CreateConfiguration<ExampleConfigurationCollection>("TestConfiguration");
             var retrieved = configStore.GetConfiguration<ExampleConfigurationCollection>
@@ -135,6 +138,7 @@ namespace Snowflake.Model.Tests
             var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
             optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
             var configStore = new ConfigurationCollectionStore(optionsBuilder);
+            var x = new ConfigurationCollection<ExampleConfigurationCollection>();
             var config = configStore
                 .CreateConfiguration<ExampleConfigurationCollection>("TestConfiguration");
             // trigger an ensure of the ExampleConfiguration

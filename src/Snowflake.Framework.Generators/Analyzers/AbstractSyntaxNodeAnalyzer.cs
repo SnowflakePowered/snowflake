@@ -18,7 +18,7 @@ namespace Snowflake.Generators.Analyzers
         public sealed override void Initialize(AnalysisContext context)
         {
             context.EnableConcurrentExecution();
-            context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.Analyze | GeneratedCodeAnalysisFlags.ReportDiagnostics);
+            context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None | GeneratedCodeAnalysisFlags.ReportDiagnostics);
             context.RegisterSyntaxNodeAction(this.Analyze, this.Kinds.ToImmutableArray());
         }
 

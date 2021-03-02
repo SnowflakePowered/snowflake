@@ -28,7 +28,7 @@ namespace Snowflake.Orchestration.Saving.Tests
             var retrievedSave = profile.GetHeadSave();
 
             await retrievedSave.ExtractSave(extract);
-            Assert.IsType(typeof(EmptySaveGame), retrievedSave);
+            Assert.IsType<EmptySaveGame>(retrievedSave);
             Assert.NotEqual(save.CreatedTimestamp, retrievedSave.CreatedTimestamp);
         }
     }

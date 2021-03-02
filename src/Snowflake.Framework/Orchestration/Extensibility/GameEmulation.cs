@@ -60,6 +60,7 @@ namespace Snowflake.Orchestration.Extensibility
         #endregion
     }
 
+    [GenericTypeAcceptsConfigurationCollection(0)]
     public abstract class GameEmulation<TConfigurationCollection> : GameEmulation
         where TConfigurationCollection : class, IConfigurationCollectionTemplate
     {

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Generators;
+using Snowflake.Configuration.Internal;
 using Snowflake.Extensibility.Configuration;
 using Snowflake.Model.Database.Exceptions;
 using Snowflake.Model.Database.Extensions;
@@ -75,6 +76,7 @@ namespace Snowflake.Model.Database
             context.SaveChanges();
         }
 
+        [GenericTypeAcceptsConfigurationSection(0)]
         public IConfigurationSection<T> Get<T>()
             where T : class
         {
@@ -92,6 +94,7 @@ namespace Snowflake.Model.Database
             return defaults;
         }
 
+        [GenericTypeAcceptsConfigurationSection(0)]
         public void Set<T>(IConfigurationSection<T> configuration)
             where T : class
         {

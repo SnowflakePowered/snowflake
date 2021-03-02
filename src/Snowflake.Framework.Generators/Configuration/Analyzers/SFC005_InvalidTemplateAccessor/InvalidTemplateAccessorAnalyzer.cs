@@ -26,7 +26,7 @@ namespace Snowflake.Generators.Configuration.Analyzers
         private static readonly DiagnosticDescriptor Rule =
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFC005__InvalidTemplateAccessor,
-                title: "Template properties can not have accessor bodies",
+                title: "Template properties can not have accessor bodies.",
                 messageFormat: "Property '{0}' has an accessor body for '{1}' but must be auto-implemented",
                 category: "Snowflake.Configuration",
                 DiagnosticSeverity.Error,

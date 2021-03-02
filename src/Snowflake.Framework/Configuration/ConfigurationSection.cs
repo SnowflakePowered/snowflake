@@ -11,6 +11,7 @@ using Snowflake.Configuration.Utility;
 
 namespace Snowflake.Configuration
 {
+    [GenericTypeAcceptsConfigurationSection(0)]
     public class ConfigurationSection<T> : IConfigurationSection<T>
         where T : class
     {

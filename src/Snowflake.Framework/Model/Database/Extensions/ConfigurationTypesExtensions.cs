@@ -11,6 +11,7 @@ namespace Snowflake.Model.Database.Extensions
 {
     internal static class ConfigurationTypesExtensions
     {
+        [GenericTypeAcceptsConfigurationCollection(0)]
         public static ConfigurationProfileModel AsModel<T>
             (this IConfigurationCollection<T> @this, string prototypeName)
             where T : class
@@ -23,6 +24,7 @@ namespace Snowflake.Model.Database.Extensions
             };
         }
 
+        [GenericTypeAcceptsConfigurationSection(0)]
         public static ConfigurationProfileModel AsModel<T>
             (this IConfigurationSection<T> @this, string prototypeName)
             where T : class
@@ -74,6 +76,7 @@ namespace Snowflake.Model.Database.Extensions
                 }).ToList();
         }
 
+        [GenericTypeAcceptsConfigurationCollection(0)]
         public static IConfigurationCollection<T> AsConfiguration<T>(this ConfigurationProfileModel model)
             where T : class, IConfigurationCollectionTemplate
         {
@@ -83,6 +86,7 @@ namespace Snowflake.Model.Database.Extensions
             return new ConfigurationCollection<T>(valueCollection);
         }
 
+        [GenericTypeAcceptsConfigurationSection(0)]
         public static IConfigurationSection<T> AsConfigurationSection<T>(this ConfigurationProfileModel model)
             where T : class
         {

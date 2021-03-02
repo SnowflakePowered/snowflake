@@ -24,3 +24,4 @@ SFC017 | Snowflake.Configuration | Error | InputPropertyUndecoratedAnalyzer
 SFC018 | Snowflake.Configuration | Error | InputPropertyTypeMismatchAnalyzer
 SFC019 | Snowflake.Configuration | Error | OnlyOneAttributeTypeAnalyzer
 SFC020 | Snowflake.Configuration | Error | OnlyOneAttributePropertyTypeAnalyzer
+SFC021 | Snowflake.Configuration | Error | GenericArgumentRequiresConfigurationCollection

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Snowflake.Configuration.Internal;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
@@ -12,6 +13,7 @@ namespace Snowflake.Configuration
     /// The enumeration is guaranteed to enumerate in the order in which the section properties were described.
     /// </summary>
     /// <typeparam name="T">The type of the configuration collection</typeparam>
+    [GenericTypeAcceptsConfigurationCollection(0)]
     public interface IConfigurationCollection<T> : IConfigurationCollection
         where T : class
     {
@@ -20,6 +22,7 @@ namespace Snowflake.Configuration
         /// </summary>
         T Configuration { get; }
 
+        [GenericTypeAcceptsConfigurationSection(0)]
         IConfigurationSection<TSection> GetSection<TSection>(Expression<Func<T, TSection>> expression)
             where TSection: class;
     }

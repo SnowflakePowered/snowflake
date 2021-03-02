@@ -36,6 +36,7 @@ namespace Snowflake.Model.Database
                 Enumerable.Empty<IGrouping<string, (string, Guid)>>();
         }
 
+        [GenericTypeAcceptsConfigurationCollection(0)]
         public IConfigurationCollection<T> CreateConfiguration<T>(string sourceName)
             where T : class, IConfigurationCollectionTemplate
         {
@@ -49,6 +50,7 @@ namespace Snowflake.Model.Database
             return collection;
         }
 
+        [GenericTypeAcceptsConfigurationCollection(0)]
         public IConfigurationCollection<T> CreateConfigurationForGame<T>(IGameRecord gameRecord,
             string sourceName, string profileName)
             where T : class, IConfigurationCollectionTemplate
@@ -156,6 +158,7 @@ namespace Snowflake.Model.Database
             context.SaveChanges();
         }
 
+        [GenericTypeAcceptsConfigurationCollection(0)]
         public IConfigurationCollection<T>? GetConfiguration<T>(Guid valueCollectionGuid)
             where T : class, IConfigurationCollectionTemplate
         {
@@ -166,6 +169,7 @@ namespace Snowflake.Model.Database
             return config?.AsConfiguration<T>();
         }
 
+        [GenericTypeAcceptsConfigurationCollection(0)]
         public IConfigurationCollection<T>? GetConfiguration<T>(Guid gameGuid,
             string sourceName, Guid valueCollectionGuid)
             where T : class, IConfigurationCollectionTemplate

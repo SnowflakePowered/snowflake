@@ -38,6 +38,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
             this.CollectionStore.UpdateValue(valueGuid, newValue);
         }
 
+        [GenericTypeAcceptsConfigurationCollection(0)]
         public IConfigurationCollection<T>? GetProfile<T>(Guid valueCollectionGuid)
             where T : class, IConfigurationCollectionTemplate
         {

@@ -14,6 +14,7 @@ using Snowflake.Input.Device;
 
 namespace Snowflake.Configuration.Input
 {
+    [GenericTypeAcceptsInputConfiguration(0)]
     public class InputConfiguration<T> : IInputConfiguration<T>
         where T : class, IInputConfigurationTemplate
     {

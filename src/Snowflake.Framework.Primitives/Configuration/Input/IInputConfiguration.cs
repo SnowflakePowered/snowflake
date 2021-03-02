@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Snowflake.Configuration.Internal;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Device;
 
@@ -9,6 +10,7 @@ namespace Snowflake.Configuration.Input
     /// can be serialized. The implementation of which is a wrapper around an interface that implements this interface.
     /// </summary>
     /// <typeparam name="T">The type of input configuration</typeparam>
+    [GenericTypeAcceptsInputConfiguration(0)]
     public interface IInputConfiguration<out T> : IInputConfiguration, IConfigurationSection<T>
         where T : class
     {

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
+using Snowflake.Configuration.Internal;
 
 namespace Snowflake.Extensibility.Configuration
 {
@@ -22,6 +23,7 @@ namespace Snowflake.Extensibility.Configuration
         /// </summary>
         /// <typeparam name="T">The type of configuration collection</typeparam>
         /// <returns>The configuration collection associated with this game record. </returns>
+        [GenericTypeAcceptsConfigurationSection(0)]
         IConfigurationSection<T> Get<T>()
             where T : class;
 
@@ -33,6 +35,7 @@ namespace Snowflake.Extensibility.Configuration
         /// </summary>
         /// <typeparam name="T">The type of configuration collection</typeparam>
         /// <returns>The configuration collection associated with this game record. </returns>
+        [GenericTypeAcceptsConfigurationSection(0)]
         Task<IConfigurationSection<T>> GetAsync<T>()
             where T : class;
 
@@ -41,6 +44,7 @@ namespace Snowflake.Extensibility.Configuration
         /// </summary>
         /// <typeparam name="T">The type of configuration collection</typeparam>
         /// <param name="configuration">The configuration to save to the store</param>
+        [GenericTypeAcceptsConfigurationSection(0)]
         void Set<T>(IConfigurationSection<T> configuration)
             where T : class;
 
@@ -49,6 +53,7 @@ namespace Snowflake.Extensibility.Configuration
         /// </summary>
         /// <typeparam name="T">The type of configuration collection</typeparam>
         /// <param name="configuration">The configuration to save to the store</param>
+        [GenericTypeAcceptsConfigurationSection(0)]
         Task SetAsync<T>(IConfigurationSection<T> configuration)
             where T : class;
 

@@ -26,7 +26,7 @@ namespace Snowflake.Generators.Configuration.Analyzers
         private static readonly DiagnosticDescriptor Rule =
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFC020__OnlyOneAttributePropertyType,
-                title: "InputConfiguration template property is can not be both a [ConfigurationOption] and [InputOption]",
+                title: "InputConfiguration template property is can not be both a [ConfigurationOption] and [InputOption].",
                 messageFormat: "Property '{0}' can only have one of [ConfigurationOption] or [InputOption]",
                 category: "Snowflake.Configuration",
                 DiagnosticSeverity.Error,

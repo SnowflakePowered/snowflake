@@ -26,7 +26,7 @@ namespace Snowflake.Generators.Configuration.Analyzers
         private static readonly DiagnosticDescriptor SectionRule =
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFC014__CollectionPropertyMustHaveGetter,
-                title: "ConfigurationSection template properties must declare a public 'get' accessor",
+                title: "ConfigurationSection template properties must declare a public 'get' accessor.",
                 messageFormat: "Property '{0}' does not declare a 'get' accessor",
                 category: "Snowflake.Configuration",
                 DiagnosticSeverity.Error,

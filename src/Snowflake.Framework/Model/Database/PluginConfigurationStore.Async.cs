@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Generators;
+using Snowflake.Configuration.Internal;
 using Snowflake.Extensibility.Configuration;
 using Snowflake.Model.Database.Extensions;
 using Snowflake.Model.Database.Models;
@@ -52,6 +53,7 @@ namespace Snowflake.Model.Database
             await context.SaveChangesAsync();
         }
 
+        [GenericTypeAcceptsConfigurationSection(0)]
         public async Task<IConfigurationSection<T>> GetAsync<T>()
             where T : class
         {

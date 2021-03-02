@@ -9,6 +9,7 @@ using Snowflake.Configuration.Utility;
 
 namespace Snowflake.Configuration
 {
+    [GenericTypeAcceptsConfigurationCollection(0)]
     public class ConfigurationCollection<T> : IConfigurationCollection<T>
         where T : class, IConfigurationCollectionTemplate
     {
@@ -55,6 +56,7 @@ namespace Snowflake.Configuration
         /// <inheritdoc/>
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+        [GenericTypeAcceptsConfigurationSection(0)]
         public IConfigurationSection<TSection> GetSection<TSection>(Expression<Func<T, TSection>> expression) where TSection : class
         {
             if (expression.Body is not MemberExpression member)

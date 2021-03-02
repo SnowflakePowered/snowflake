@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Snowflake.Configuration.Internal;
+using System.Collections.Generic;
 
 namespace Snowflake.Configuration
 {
@@ -6,6 +7,7 @@ namespace Snowflake.Configuration
     /// Represents a serializable section in a configuration
     /// </summary>
     /// <typeparam name="T">The type of configuration</typeparam>
+    [GenericTypeAcceptsConfigurationSection(0)]
     public interface IConfigurationSection<out T> : IConfigurationSection
         where T : class
     {

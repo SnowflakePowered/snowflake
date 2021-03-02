@@ -26,7 +26,7 @@ namespace Snowflake.Generators.Configuration.Analyzers
         private static readonly DiagnosticDescriptor EdgeRule =
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFC009__DuplicateConfigurationTarget,
-                title: "A ConfigurationTarget with the same edge has already been declared",
+                title: "A ConfigurationTarget with the same edge has already been declared.",
                 messageFormat: "A ConfigurationTarget going from '{0}' to '{1}' has already been declared for ConfigurationCollection template '{2}'",
                 category: "Snowflake.Configuration",
                 DiagnosticSeverity.Error,

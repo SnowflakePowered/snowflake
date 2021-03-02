@@ -47,7 +47,14 @@ namespace Snowflake.Generators
         public const string SFC018__InputPropertyTypeMismatch = "SFC018";
 
         public const string SFC019__OnlyOneAttributeTemplateType = "SFC019";
+
         public const string SFC020__OnlyOneAttributePropertyType = "SFC020";
+
+        public const string SFC021__GenericArgumentExpectsConfigurationCollection = "SFC021";
+
+        public const string SFC022__GenericArgumentExpectsConfigurationSection = "SFC022";
+
+        public const string SFC023__GenericArgumentExpectsInputConfiguration = "SFC023";
 
         #endregion
     }

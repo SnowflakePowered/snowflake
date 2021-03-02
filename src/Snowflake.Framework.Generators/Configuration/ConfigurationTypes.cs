@@ -36,6 +36,10 @@ namespace Snowflake.Configuration.Generators
             this.IInputConfigurationTemplate = compilation.GetTypeByMetadataName("Snowflake.Configuration.Internal.IInputConfigurationTemplate");
             this.IConfigurationCollectionTemplate = compilation.GetTypeByMetadataName("Snowflake.Configuration.Internal.IConfigurationCollectionTemplate");
 
+            this.GenericTypeAcceptsConfigurationCollectionAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.Internal.GenericTypeAcceptsConfigurationCollectionAttribute");
+            this.GenericTypeAcceptsConfigurationSectionAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.Internal.GenericTypeAcceptsConfigurationSectionAttribute");
+            this.GenericTypeAcceptsInputConfigurationAttribute = compilation.GetTypeByMetadataName("Snowflake.Configuration.Internal.GenericTypeAcceptsInputConfigurationAttribute");
+
         }
 
         public bool AllAvailable()
@@ -58,7 +62,11 @@ namespace Snowflake.Configuration.Generators
                    && this.IConfigurationCollectionTemplate != null
                    && this.IConfigurationSectionDescriptor != null 
                    && this.IConfigurationValueCollection != null
-                   && this.ConfigurationCollectionAttribute != null;
+                   && this.ConfigurationCollectionAttribute != null
+                   && this.ConfigurationGenerationInstanceAttribute != null
+                   && this.GenericTypeAcceptsConfigurationCollectionAttribute != null
+                   && this.GenericTypeAcceptsConfigurationSectionAttribute != null
+                   && this.GenericTypeAcceptsInputConfigurationAttribute != null;
         }
 
         public bool CheckContext(GeneratorExecutionContext context, ref bool errorOccured)
@@ -92,5 +100,8 @@ namespace Snowflake.Configuration.Generators
         public INamedTypeSymbol System_Guid { get; }
         public INamedTypeSymbol IInputConfigurationTemplate { get; }
         public INamedTypeSymbol IConfigurationCollectionTemplate { get; }
+        public INamedTypeSymbol GenericTypeAcceptsConfigurationCollectionAttribute { get; }
+        public INamedTypeSymbol GenericTypeAcceptsConfigurationSectionAttribute { get; }
+        public INamedTypeSymbol GenericTypeAcceptsInputConfigurationAttribute { get; }
     }
 }

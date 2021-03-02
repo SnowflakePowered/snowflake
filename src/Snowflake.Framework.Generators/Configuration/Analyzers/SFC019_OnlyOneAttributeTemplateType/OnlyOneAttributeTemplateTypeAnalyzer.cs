@@ -26,7 +26,7 @@ namespace Snowflake.Generators.Configuration.Analyzers
         private static readonly DiagnosticDescriptor Rule =
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFC019__OnlyOneAttributeTemplateType,
-                title: "Template interface can not be both an [InputConfiguration] and a [ConfigurationSection]",
+                title: "Template interface can not be both an [InputConfiguration] and a [ConfigurationSection].",
                 messageFormat: "Template interface '{0}' is decorated with both [ConfiguratiSection] and [InputConfiguration]",
                 category: "Snowflake.Configuration",
                 DiagnosticSeverity.Error,

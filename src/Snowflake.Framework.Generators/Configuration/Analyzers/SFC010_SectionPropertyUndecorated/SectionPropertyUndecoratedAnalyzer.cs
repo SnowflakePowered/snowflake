@@ -26,7 +26,7 @@ namespace Snowflake.Generators.Configuration.Analyzers
         private static readonly DiagnosticDescriptor Rule =
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFC010__SectionPropertyUndecorated,
-                title: "ConfigurationSection template property is undecorated",
+                title: "ConfigurationSection template property is undecorated.",
                 messageFormat: "Property '{0}' must be decorated with [ConfigurationOption]",
                 category: "Snowflake.Configuration",
                 DiagnosticSeverity.Error,
