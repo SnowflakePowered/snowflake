@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Snowflake.Configuration.Serialization
 {
-    public sealed class DecimalConfigurationNode
+    public sealed record DecimalConfigurationNode
         : AbstractConfigurationNode<double>
     {
         internal DecimalConfigurationNode(string key, double value) : base(key, value)

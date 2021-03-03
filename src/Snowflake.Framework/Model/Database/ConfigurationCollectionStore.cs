@@ -201,14 +201,14 @@ namespace Snowflake.Model.Database
                 string str => entityValue.ValueType == ConfigurationOptionType.String 
                     || entityValue.ValueType == ConfigurationOptionType.Path
                     || Guid.TryParse(str, out var _) && entityValue.ValueType == ConfigurationOptionType.Resource,
-                bool _ => entityValue.ValueType == ConfigurationOptionType.Boolean,
-                long _ => entityValue.ValueType == ConfigurationOptionType.Integer || entityValue.ValueType == ConfigurationOptionType.Selection,
-                int _ => entityValue.ValueType == ConfigurationOptionType.Integer || entityValue.ValueType == ConfigurationOptionType.Selection,
-                short _ => entityValue.ValueType == ConfigurationOptionType.Integer || entityValue.ValueType == ConfigurationOptionType.Selection,
-                double _ => entityValue.ValueType == ConfigurationOptionType.Decimal,
-                float _ => entityValue.ValueType == ConfigurationOptionType.Decimal,
-                Guid _ => entityValue.ValueType == ConfigurationOptionType.Resource,
-                Enum _ => entityValue.ValueType == ConfigurationOptionType.Selection,
+                bool => entityValue.ValueType == ConfigurationOptionType.Boolean,
+                long => entityValue.ValueType == ConfigurationOptionType.Integer || entityValue.ValueType == ConfigurationOptionType.Selection,
+                int => entityValue.ValueType == ConfigurationOptionType.Integer || entityValue.ValueType == ConfigurationOptionType.Selection,
+                short => entityValue.ValueType == ConfigurationOptionType.Integer || entityValue.ValueType == ConfigurationOptionType.Selection,
+                double => entityValue.ValueType == ConfigurationOptionType.Decimal,
+                float => entityValue.ValueType == ConfigurationOptionType.Decimal,
+                Guid => entityValue.ValueType == ConfigurationOptionType.Resource,
+                Enum => entityValue.ValueType == ConfigurationOptionType.Selection,
                 _ => false,
             };
             if (!typeMatches) return;

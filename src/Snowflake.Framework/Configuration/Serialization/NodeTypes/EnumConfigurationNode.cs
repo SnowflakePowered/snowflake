@@ -5,7 +5,7 @@ using EnumsNET;
 
 namespace Snowflake.Configuration.Serialization
 {
-    public sealed class EnumConfigurationNode
+    public sealed record EnumConfigurationNode
         : AbstractConfigurationNode<Enum>
     {
         internal EnumConfigurationNode(string key, Enum value, Type enumType) : base(key, value)

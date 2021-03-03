@@ -6,7 +6,7 @@ using Snowflake.Input.Device;
 
 namespace Snowflake.Configuration.Serialization
 {
-    public sealed class DeviceCapabilityElementConfigurationNode
+    public sealed record DeviceCapabilityElementConfigurationNode
         : AbstractConfigurationNode<DeviceCapability>
     {
         internal DeviceCapabilityElementConfigurationNode(string key, 
