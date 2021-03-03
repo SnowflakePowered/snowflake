@@ -8,8 +8,6 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using Snowflake.Language;
-using Snowflake.Language.Analyzers;
 using System.Threading;
 using Snowflake.Language.Generators.Configuration;
 

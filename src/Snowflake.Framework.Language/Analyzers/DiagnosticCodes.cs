@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Language
+namespace Snowflake.Language.Analyzers
 {
     internal static class DiagnosticCodes
     {
-    
+
         public const string SFG000__GenericDiagnosticError = "SFG000";
 
         #region Configuration
@@ -57,6 +57,13 @@ namespace Snowflake.Language
 
         public const string SFC023__GenericArgumentExpectsInputConfiguration = "SFC023";
 
+        #endregion
+
+        #region Extensibility
+        public const string SFE000__GenericDiagnosticError = "SFE000";
+        public const string SFE001__PluginMustHavePluginAttribute = "SFE001";
+        public const string SFE002__PluginMustNotBeNamedCommon = "SFE002";
+        public const string SFE003__ComposerCallsUnimportedService = "SFE003";
         #endregion
     }
 }

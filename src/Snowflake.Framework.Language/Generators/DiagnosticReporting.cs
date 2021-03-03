@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Snowflake.Language.Analyzers;
 using System;
 using System.Collections.Generic;
 using System.Text;
