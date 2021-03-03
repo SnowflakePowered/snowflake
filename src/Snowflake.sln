@@ -94,7 +94,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Framework.Tests.Configuration", "Snowflake.Framework.Tests.Configuration\Snowflake.Framework.Tests.Configuration.csproj", "{A1A3DA3D-3060-4CFA-9F8F-205BD46C2EB3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Framework.Generators", "Snowflake.Framework.Generators\Snowflake.Framework.Generators.csproj", "{966B61B4-183E-40DE-8E47-40BEBD117638}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Framework.Language", "Snowflake.Framework.Language\Snowflake.Framework.Language.csproj", "{966B61B4-183E-40DE-8E47-40BEBD117638}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

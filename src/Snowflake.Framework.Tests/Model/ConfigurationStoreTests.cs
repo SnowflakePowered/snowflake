@@ -13,6 +13,32 @@ using Xunit;
 
 namespace Snowflake.Model.Tests
 {
+    interface NotASectionTemplate
+    {
+
+    }
+
+    [ConfigurationSection("templateName", "displayName")]
+    partial interface SectionTemplate
+    {
+
+    }
+
+    //public class Test
+    //{
+    //    public void TestAnalyzer()
+    //    {
+    //        ConfigurationSection<SectionTemplate> ok = new();
+    //        ConfigurationSection<NotASectionTemplate> notOk = new();
+    //        var x = new ConfigurationSection<NotASectionTemplate>();
+
+    //        void AcceptsNoTemplate(IConfigurationSection<NotASectionTemplate> x)
+    //        {
+
+    //        }
+    //    }
+    //}
+
     public class ConfigurationStoreTests
     {
         [Fact]

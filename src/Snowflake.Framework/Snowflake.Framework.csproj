@@ -32,8 +32,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
-    <ProjectReference Include="..\Snowflake.Framework.Generators\Snowflake.Framework.Generators.csproj" OutputItemType="analyzer" 
-                      PrivateAssets="build"/>
+    <ProjectReference Include="..\Snowflake.Framework.Language\Snowflake.Framework.Language.csproj" OutputItemType="analyzer" PrivateAssets="build" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />

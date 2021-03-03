@@ -1,5 +1,4 @@
 using Snowflake.Configuration;
-using Snowflake.Configuration.Generators;
 using Snowflake.Configuration.Input;
 using Snowflake.Configuration.Tests;
 using Snowflake.Input.Controller;
@@ -8,8 +7,7 @@ using Snowflake.Input.Device;
 using Snowflake.Services;
 using System;
 using Xunit;
-using Snowflake.Generators.Configuration.Analyzers;
-using Verify = Microsoft.CodeAnalysis.CSharp.Testing.XUnit.AnalyzerVerifier<Snowflake.Generators.Configuration.Analyzers.GenericArgumentRequiresConfigurationCollectionAnalyzer>;
+using Verify = Microsoft.CodeAnalysis.CSharp.Testing.XUnit.AnalyzerVerifier<Snowflake.Language.Analyzers.Configuration.GenericArgumentRequiresConfigurationCollectionAnalyzer>;
 using Snowflake.Configuration.Internal;
 using System.Threading.Tasks;
 

@@ -9,7 +9,6 @@ using Snowflake.Configuration.Extensions;
 using System.Reflection;
 using System.ComponentModel;
 using EnumsNET;
-using Snowflake.Configuration.Generators;
 
 namespace Snowflake.Configuration
 {
