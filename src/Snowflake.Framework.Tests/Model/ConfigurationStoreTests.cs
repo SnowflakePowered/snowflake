@@ -51,6 +51,7 @@ namespace Snowflake.Model.Tests
   
             var config = configStore
                 .CreateConfiguration<ExampleConfigurationCollection>("TestConfiguration");
+     
             var retrieved = configStore.GetConfiguration<ExampleConfigurationCollection>
                 (config.ValueCollection.Guid);
         }

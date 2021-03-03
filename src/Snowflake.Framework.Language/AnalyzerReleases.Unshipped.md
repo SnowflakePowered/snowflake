@@ -25,4 +25,7 @@ SFC018 | Snowflake.Configuration | Error | InputPropertyTypeMismatchAnalyzer
 SFC019 | Snowflake.Configuration | Error | OnlyOneAttributeTypeAnalyzer
 SFC020 | Snowflake.Configuration | Error | OnlyOneAttributePropertyTypeAnalyzer
 SFC021 | Snowflake.Configuration | Error | GenericArgumentRequiresConfigurationCollection
+SFE001 | Snowflake.Extensibility | Error | PluginMustHavePluginAttributeAnalyzer
+SFE002 | Snowflake.Extensibility | Error | PluginMustNotBeNamedCommonAnalyzer
+SFE003 | Snowflake.Extensibility | Warning | ComposerCallsUnimportedServiceAnalyzer
 SFG000 | Snowflake.Language | Error | DiagnosticReporting

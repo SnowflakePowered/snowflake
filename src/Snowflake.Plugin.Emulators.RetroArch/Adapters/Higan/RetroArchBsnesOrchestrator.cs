@@ -19,6 +19,7 @@ using System.Linq;
 namespace Snowflake.Adapters.Higan
 {
     [Plugin("RetroArch-Bsnes")]
+
     public class RetroArchBsnesOrchestrator : EmulatorOrchestrator
     {
         public RetroArchBsnesOrchestrator(IEmulatorExecutable retroArchExecutable, IPluginProvision provision)
