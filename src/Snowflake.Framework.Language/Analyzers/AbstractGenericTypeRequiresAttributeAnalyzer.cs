@@ -15,7 +15,6 @@ using System.Threading;
 
 namespace Snowflake.Language.Analyzers
 {
-    [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public abstract class AbstractGenericTypeRequiresAttributeAnalyzer
         : AbstractSyntaxNodeAnalyzer
     {

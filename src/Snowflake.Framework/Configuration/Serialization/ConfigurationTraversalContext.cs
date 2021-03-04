@@ -7,6 +7,7 @@ using System.Linq;
 using Snowflake.Filesystem;
 using Snowflake.Configuration.Extensions;
 using Snowflake.Configuration.Input;
+using System.Collections.Immutable;
 
 namespace Snowflake.Configuration.Serialization
 {
@@ -99,14 +100,14 @@ namespace Snowflake.Configuration.Serialization
             {
                 targetNodes.Add(BuildConfigNode(child.Value, flatTargets));
             }
-            return new ListConfigurationNode(target.TargetName, targetNodes.AsReadOnly());
+            return new ListConfigurationNode(target.TargetName, ImmutableArray.CreateRange(targetNodes));
         }
 
-        public IReadOnlyDictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>>
+        public IReadOnlyDictionary<string, IAbstractConfigurationNode<ImmutableArray<IAbstractConfigurationNode>>>
             TraverseCollection(IConfigurationCollection collection) =>
             this.TraverseCollection(collection, Enumerable.Empty<(string, IAbstractConfigurationNode)>());
 
-        public IReadOnlyDictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>>
+        public IReadOnlyDictionary<string, IAbstractConfigurationNode<ImmutableArray<IAbstractConfigurationNode>>>
             TraverseCollection(IConfigurationCollection collection, IEnumerable<(string targetName, IAbstractConfigurationNode node)> extraNodes)
         {
             Type? collectionType =
@@ -125,7 +126,7 @@ namespace Snowflake.Configuration.Serialization
             
             // If there are no targets, then there is nothing to do.
             if (!targetAttributes.Any()) 
-                return new Dictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>>();
+                return new Dictionary<string, IAbstractConfigurationNode<ImmutableArray<IAbstractConfigurationNode>>>();
 
             // Get each target for each section.
             var targetMappings = collectionType
@@ -154,7 +155,7 @@ namespace Snowflake.Configuration.Serialization
                 if (!explode)
                 {
                     flatTargets[targetName]
-                        .nodes.Add(new ListConfigurationNode(value.Descriptor.SectionName, this.TraverseSection(value).AsReadOnly()));
+                        .nodes.Add(new ListConfigurationNode(value.Descriptor.SectionName, ImmutableArray.CreateRange(this.TraverseSection(value))));
                 }
                 else
                 {
@@ -165,8 +166,7 @@ namespace Snowflake.Configuration.Serialization
 
             var targets = ConfigurationTraversalContext.ResolveConfigurationTargets(collection);
 
-            Dictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>>
-                rootNodes = new Dictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>>();
+            var rootNodes = new Dictionary<string, IAbstractConfigurationNode<ImmutableArray<IAbstractConfigurationNode>>>();
 
             foreach (var rootTarget in targets)
             {
@@ -177,7 +177,7 @@ namespace Snowflake.Configuration.Serialization
             return rootNodes;
         }
 
-        public IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>
+        public IAbstractConfigurationNode<ImmutableArray<IAbstractConfigurationNode>>
             TraverseInputTemplate(IInputConfiguration template,
             IDeviceInputMapping mapping,
             int index,
@@ -199,7 +199,7 @@ namespace Snowflake.Configuration.Serialization
             }
             return new ListConfigurationNode(template.Descriptor.SectionName.Replace(indexer,
                 Convert.ToString(index)),
-                configNodes.AsReadOnly());
+                 ImmutableArray.CreateRange(configNodes));
         }
 
         private List<IAbstractConfigurationNode> TraverseSection(IConfigurationSection section,

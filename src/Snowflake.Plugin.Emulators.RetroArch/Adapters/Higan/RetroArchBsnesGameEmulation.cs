@@ -95,7 +95,7 @@ namespace Snowflake.Adapters.Higan
             var retroArchNode = node["#retroarch"];
             StringBuilder configContents = new StringBuilder();
 
-            configContents.Append(serializer.Transform(retroArchNode));
+            configContents.Append(serializer.Visit(retroArchNode));
 
             var configFile = this.Scratch.OpenDirectory("config")
                     .OpenFile("retroarch.cfg");
@@ -109,7 +109,7 @@ namespace Snowflake.Adapters.Higan
                 template.Configuration.InputJoypadIndex = port.PhysicalDeviceInstance.EnumerationIndex;
 
                 var inputNode = tokenizer.TraverseInputTemplate(template, mappings, port.PortIndex);
-                configContents.Append(serializer.Transform(retroArchNode));
+                configContents.Append(serializer.Visit(retroArchNode));
             }
             await configFile.WriteAllTextAsync(configContents.ToString());
         }

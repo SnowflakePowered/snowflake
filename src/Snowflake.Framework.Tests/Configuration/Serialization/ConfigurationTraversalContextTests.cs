@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Text;
 using Snowflake.Configuration.Input;
@@ -109,7 +110,7 @@ namespace Snowflake.Configuration.Serialization
 
             var list = context.TraverseCollection(configuration);
             Assert.Equal(2, list.Count);
-            Assert.Equal(2, list["#dolphin"].Value.Count);
+            Assert.Equal(2, list["#dolphin"].Value.Length);
             Assert.DoesNotContain("TestCycle1", list.Keys);
             Assert.DoesNotContain("TestCycle2", list.Keys);
 
@@ -119,7 +120,7 @@ namespace Snowflake.Configuration.Serialization
                 if (node.Key == "Display")
                 {
                     var confList = (node as ListConfigurationNode).Value;
-                    Assert.Equal(8, confList.Count);
+                    Assert.Equal(8, confList.Length);
                     Assert.Equal("FullscreenResolution", confList[0].Key);
                     Assert.IsType<EnumConfigurationNode>(confList[0]);
                     Assert.Equal("1152x648", ((EnumConfigurationNode)confList[0]).Value);
@@ -172,11 +173,12 @@ namespace Snowflake.Configuration.Serialization
             var list = context.TraverseCollection(configuration, new (string, IAbstractConfigurationNode)[] 
             {
                 ("#dolphin", new IntegralConfigurationNode("TestNestedExtra", 1036)),
-                ("#dolphin", new ListConfigurationNode("TestNestedExtraList", new IAbstractConfigurationNode[] { new StringConfigurationNode("TestNestedTwo", "StrVal")}))
+                ("#dolphin", new ListConfigurationNode("TestNestedExtraList", ImmutableArray.Create<IAbstractConfigurationNode>
+                    (new StringConfigurationNode("TestNestedTwo", "StrVal"))))
             });
 
             Assert.Equal(2, list.Count);
-            Assert.Equal(4, list["#dolphin"].Value.Count);
+            Assert.Equal(4, list["#dolphin"].Value.Length);
             Assert.DoesNotContain("TestCycle1", list.Keys);
             Assert.DoesNotContain("TestCycle2", list.Keys);
 
@@ -196,7 +198,7 @@ namespace Snowflake.Configuration.Serialization
                 if (node.Key == "Display")
                 {
                     var confList = (node as ListConfigurationNode).Value;
-                    Assert.Equal(8, confList.Count);
+                    Assert.Equal(8, confList.Length);
                     Assert.Equal("FullscreenResolution", confList[0].Key);
                     Assert.IsType<EnumConfigurationNode>(confList[0]);
                     Assert.Equal("1152x648", ((EnumConfigurationNode)confList[0]).Value);

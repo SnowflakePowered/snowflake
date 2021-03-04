@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text;
 
 namespace Snowflake.Configuration.Serialization
@@ -13,8 +14,12 @@ namespace Snowflake.Configuration.Serialization
             this.Value = value;
         }
 
-        public string Key { get; }
-        public T Value { get; }
+        public string Key { get; init; }
+
+        public T Value { get; init; }
+
+        public ImmutableArray<NodeAnnotation> Annotations { get; init; }
+
         object? IAbstractConfigurationNode.Value => this.Value;
     }
 }

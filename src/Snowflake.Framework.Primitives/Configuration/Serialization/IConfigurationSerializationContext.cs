@@ -6,7 +6,7 @@ namespace Snowflake.Configuration.Serialization
 {
     /// <summary>
     /// The context with which the serialization for a <see cref="IAbstractConfigurationNode"/> occurs.
-    /// See implementations of <see cref="IConfigurationTransformer{TOutput}"/> where TOutput is <see cref="string"/>
+    /// See implementations of <see cref="IConfigurationVisitor{TOutput}"/> where TOutput is <see cref="string"/>
     /// or <see cref="byte"/>[].
     /// </summary>
     /// <typeparam name="T">The serialized type the context handles.</typeparam>

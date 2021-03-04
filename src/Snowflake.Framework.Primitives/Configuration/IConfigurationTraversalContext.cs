@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Snowflake.Configuration.Input;
 using Snowflake.Input.Controller;
@@ -23,7 +24,7 @@ namespace Snowflake.Configuration.Serialization
         /// </param>
         /// <returns>A mapping of targets to <see cref="IAbstractConfigurationNode{T}"/> that represent the
         /// syntax tree that the target forms.</returns>
-        IReadOnlyDictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>>
+        IReadOnlyDictionary<string, IAbstractConfigurationNode<ImmutableArray<IAbstractConfigurationNode>>>
             TraverseCollection(IConfigurationCollection collection);
 
         /// <summary>
@@ -39,7 +40,7 @@ namespace Snowflake.Configuration.Serialization
         /// <param name="extraNodes">Extra nodes to attach to a specified target.</param>
         /// <returns>A mapping of targets to <see cref="IAbstractConfigurationNode{T}"/> that represent the
         /// syntax tree that the target forms.</returns>
-        IReadOnlyDictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>> 
+        IReadOnlyDictionary<string, IAbstractConfigurationNode<ImmutableArray<IAbstractConfigurationNode>>> 
             TraverseCollection(IConfigurationCollection collection,
             IEnumerable<(string targetName, IAbstractConfigurationNode node)> extraNodes);
 
@@ -62,7 +63,7 @@ namespace Snowflake.Configuration.Serialization
         /// </param>
         /// <returns>The syntax tree that the given <see cref="IInputConfiguration"/> forms, relative to the provided
         /// <see cref="IDeviceInputMapping"/>s.</returns>
-        IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>> TraverseInputTemplate(IInputConfiguration template, 
+        IAbstractConfigurationNode<ImmutableArray<IAbstractConfigurationNode>> TraverseInputTemplate(IInputConfiguration template, 
             IDeviceInputMapping mapping, int index, string indexer = "{N}");
     }
 }

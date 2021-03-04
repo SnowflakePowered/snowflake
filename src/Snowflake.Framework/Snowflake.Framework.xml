@@ -284,14 +284,23 @@
             </summary>
             <param name="pathResolutionContext">The path resolutions supplied as a dictionary.</param>
         </member>
+        <member name="T:Snowflake.Configuration.Serialization.ConfigurationTreeVisitor">
+            <summary>
+            Implements stateless immutable <see cref="T:Snowflake.Configuration.Serialization.IConfigurationVisitor`1"/> with visitor semantics
+            to reshape a <see cref="T:Snowflake.Configuration.Serialization.IAbstractConfigurationNode"/> returned by <see cref="T:Snowflake.Configuration.Serialization.IConfigurationTraversalContext"/>
+            or another <see cref = "T:Snowflake.Configuration.Serialization.ConfigurationTreeVisitor"/>.
+            
+            
+            </summary>
+        </member>
         <member name="T:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1">
             <summary>
-            Implements <see cref="T:Snowflake.Configuration.Serialization.IConfigurationTransformer`1"/> by serializing the 
-            syntax tree into some string or binary format.
+            Implements stateful <see cref="T:Snowflake.Configuration.Serialization.IConfigurationVisitor`1"/> with serialization semantics into some
+            string or binary format.
             </summary>
             <typeparam name="T">The type of the serialized data after traversing the tree.</typeparam>
         </member>
-        <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.Transform(Snowflake.Configuration.Serialization.IAbstractConfigurationNode)">
+        <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.Visit(Snowflake.Configuration.Serialization.IAbstractConfigurationNode)">
             <inheritdoc />
         </member>
         <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.SerializeHeader(Snowflake.Configuration.Serialization.IConfigurationSerializationContext{`0})">
