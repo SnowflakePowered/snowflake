@@ -38,8 +38,6 @@ namespace Snowflake.Language.Generators.Configuration
             var types = new ConfigurationTypes(compilation);
             if (!types.CheckContext(context))
                 return;
-            var declDiags = compilation.GetDeclarationDiagnostics();
-            var diags = compilation.GetDiagnostics().Where(d => d.Id.StartsWith("S"));
             foreach (var ifaceSyntax in receiver.CandidateInterfaces)
             {
                 var model = compilation.GetSemanticModel(ifaceSyntax.SyntaxTree);
