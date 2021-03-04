@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 namespace Snowflake.Configuration.Serialization
 {
     /// <summary>
-    /// Implements stateless immutable <see cref="IConfigurationVisitor{TOutput}"/> with visitor semantics
+    /// Implements a stateless immutable <see cref="IConfigurationVisitor{TOutput}"/> with visitor semantics
     /// to reshape a <see cref="IAbstractConfigurationNode"/> returned by <see cref="IConfigurationTraversalContext"/>
-    /// or another <see cref = "ConfigurationTreeVisitor"/>.
+    /// or another <see cref = "ConfigurationTreeVisitor"/>. Implementations of Visit should never return <see langword="null"/>.
     /// 
     /// <para>
     /// By convention, returning a <see cref="NilConfigurationNode"/> should remove the node from the tree. <strong>This should especially be checked if implementing
-    /// <see cref="Visit(ListConfigurationNode)"/>.</strong>
+    /// <see cref="Visit(ListConfigurationNode)"/>.</strong> 
     /// </para>
     /// </summary>
     public abstract class ConfigurationTreeVisitor : IConfigurationVisitor<IAbstractConfigurationNode>

@@ -5,6 +5,9 @@ using EnumsNET;
 
 namespace Snowflake.Configuration.Serialization
 {
+    /// <summary>
+    /// A configuration node that represents a terminal <see cref="Enum"/> value.
+    /// </summary>
     public sealed record EnumConfigurationNode
         : AbstractConfigurationNode<Enum>
     {
