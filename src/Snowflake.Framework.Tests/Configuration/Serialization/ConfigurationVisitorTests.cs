@@ -60,6 +60,7 @@ namespace Snowflake.Configuration.Serialization
 
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
+            var test = Path.GetRandomFileName();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
             dir.OpenDirectory("program")
