@@ -286,11 +286,61 @@
         </member>
         <member name="T:Snowflake.Configuration.Serialization.ConfigurationTreeVisitor">
             <summary>
-            Implements stateless immutable <see cref="T:Snowflake.Configuration.Serialization.IConfigurationVisitor`1"/> with visitor semantics
+            Implements a stateless immutable <see cref="T:Snowflake.Configuration.Serialization.IConfigurationVisitor`1"/> with visitor semantics
             to reshape a <see cref="T:Snowflake.Configuration.Serialization.IAbstractConfigurationNode"/> returned by <see cref="T:Snowflake.Configuration.Serialization.IConfigurationTraversalContext"/>
-            or another <see cref = "T:Snowflake.Configuration.Serialization.ConfigurationTreeVisitor"/>.
+            or another <see cref = "T:Snowflake.Configuration.Serialization.ConfigurationTreeVisitor"/>. Implementations of Visit should never return <see langword="null"/>.
             
-            
+            <para>
+            By convention, returning a <see cref="T:Snowflake.Configuration.Serialization.NilConfigurationNode"/> should remove the node from the tree. <strong>This should especially be checked if implementing
+            <see cref="M:Snowflake.Configuration.Serialization.ConfigurationTreeVisitor.Visit(Snowflake.Configuration.Serialization.ListConfigurationNode)"/>.</strong> 
+            </para>
+            </summary>
+        </member>
+        <member name="T:Snowflake.Configuration.Serialization.BooleanConfigurationNode">
+            <summary>
+            A configuration node that represents a terminal <see cref="T:System.Boolean"/> value.
+            </summary>
+        </member>
+        <member name="T:Snowflake.Configuration.Serialization.DecimalConfigurationNode">
+            <summary>
+            A configuration node that represents a terminal <see cref="T:System.Decimal"/> value.
+            </summary>
+        </member>
+        <member name="T:Snowflake.Configuration.Serialization.DeviceCapabilityElementConfigurationNode">
+            <summary>
+            A configuration node that represents a terminal <see cref="T:Snowflake.Input.Device.DeviceCapability"/> value.
+            </summary>
+        </member>
+        <member name="T:Snowflake.Configuration.Serialization.EnumConfigurationNode">
+            <summary>
+            A configuration node that represents a terminal <see cref="T:System.Enum"/> value.
+            </summary>
+        </member>
+        <member name="T:Snowflake.Configuration.Serialization.IntegralConfigurationNode">
+            <summary>
+            A configuration node that represents a terminal <see cref="T:System.Int64"/> integral value.
+            </summary>
+        </member>
+        <member name="T:Snowflake.Configuration.Serialization.ListConfigurationNode">
+            <summary>
+            A configuration node that represents a n-ary list of nested child nodes.
+            </summary>
+        </member>
+        <member name="T:Snowflake.Configuration.Serialization.NilConfigurationNode">
+            <summary>
+            Represents the lack of a configuration node. A fully parsed and visited tree should never contain any 
+            <see cref="T:Snowflake.Configuration.Serialization.NilConfigurationNode"/>.
+            </summary>
+        </member>
+        <member name="T:Snowflake.Configuration.Serialization.StringConfigurationNode">
+            <summary>
+            A configuration node that represents a terminal <see cref="T:System.String"/> node.
+            </summary>
+        </member>
+        <member name="T:Snowflake.Configuration.Serialization.UnknownConfigurationNode">
+            <summary>
+            A configuration node that represents a terminal node of unknown type.
+            Most serializers will ignore this, and it is here for developer convenience.
             </summary>
         </member>
         <member name="T:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1">

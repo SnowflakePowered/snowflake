@@ -7,9 +7,15 @@ using Snowflake.Input.Device;
 using Snowflake.Services;
 using System;
 using Xunit;
-using Verify = Microsoft.CodeAnalysis.CSharp.Testing.XUnit.AnalyzerVerifier<Snowflake.Language.Analyzers.Configuration.GenericArgumentRequiresConfigurationCollectionAnalyzer>;
+using Verify = Microsoft.CodeAnalysis.CSharp.Testing.XUnit
+    .AnalyzerVerifier<Snowflake.Language.Analyzers.Configuration.GenericArgumentRequiresConfigurationSectionAnalyzer>;
 using Snowflake.Configuration.Internal;
 using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.CSharp.Testing;
+using Microsoft.CodeAnalysis.Testing.Verifiers;
+using Snowflake.Language.Analyzers.Configuration;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Testing;
 
 namespace Snowflake.Framework.Tests.Configuration
 {
@@ -22,19 +28,19 @@ namespace Snowflake.Framework.Tests.Configuration
             string testCode = @"
 namespace Snowflake.Framework.Tests.Configuration
 {        
+        using Snowflake.Configuration.Internal;
+
         public interface SomeInterface
         {
         }
 
         public class TestFixture
         {
-            [GenericTypeAcceptsConfigurationCollection(0)]
+            [GenericTypeAcceptsConfigurationSection(0)]
             public void Use<T>()
-                where T: class, IConfigurationCollectionTemplate
+                where T: class
             {
-
             }
-
             public void Else()
             {
                 this.Use<SomeInterface>();
@@ -42,8 +48,24 @@ namespace Snowflake.Framework.Tests.Configuration
         }
 }
 ";
-            var expected = Verify.Diagnostic().WithLocation(1, 7);
-            await Verify.VerifyAnalyzerAsync(testCode, expected);
+            var verifier = new CSharpAnalyzerTest<GenericArgumentRequiresConfigurationSectionAnalyzer, XUnitVerifier>()
+            {
+                TestCode = testCode,
+                ReferenceAssemblies = ReferenceAssemblies.Net.Net50,
+                SolutionTransforms =
+                {
+                    DiagonosticVerifier.AddSnowflakeReferences,
+                },
+                TestState =
+                {
+                    ExpectedDiagnostics = { Verify.Diagnostic()
+                        .WithArguments("SomeInterface")
+                        .WithLocation(19, 17)
+                    },
+                },
+            };
+
+            await verifier.RunAsync();
         }
 
 

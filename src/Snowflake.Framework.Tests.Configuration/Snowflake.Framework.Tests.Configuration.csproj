@@ -11,8 +11,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AnalyzerTest.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="AnalyzerTest.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing.XUnit" Version="1.0.1-beta1.21126.1" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.8.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="3.8.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
