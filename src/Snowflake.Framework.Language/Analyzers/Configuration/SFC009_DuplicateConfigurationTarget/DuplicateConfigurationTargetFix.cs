@@ -11,10 +11,10 @@ using Snowflake.Language.CodeActions.Fixes;
 namespace Snowflake.Language.Analyzers.Configuration
 {
     [ExportCodeFixProvider(LanguageNames.CSharp), Shared]
-    public sealed class InvalidTemplateMemberFix
+    public sealed class DuplicateConfigurationTargetFix
         : AbstractDeleteNodeFix
     {
-        public override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(DiagnosticCodes.SFC003__InvalidTemplateMemberAnalyzer);
-
+        public override ImmutableArray<string> FixableDiagnosticIds 
+            => ImmutableArray.Create(DiagnosticCodes.SFC009__DuplicateConfigurationTarget);
     }
 }

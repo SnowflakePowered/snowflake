@@ -5,37 +5,41 @@ using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.CodeActions;
 using System.Threading;
 using Microsoft.CodeAnalysis.Editing;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Snowflake.Language.CodeActions
 {
-    public sealed class AddConfigurationSectionAttribute
+    public abstract class AddAttributeAction
         : CodeAction
     {
-        public AddConfigurationSectionAttribute(Document document, SyntaxNode declaration)
+        public AddAttributeAction(Document document, SyntaxNode declaration, string attributeName)
         {
             this.Document = document;
             this.Declaration = declaration;
+            this.AttributeName = attributeName;
         }
 
-        public override string Title => "Add [ConfigurationSection]";
+        public override string Title => $"Add [{AttributeName}]";
 
         public Document Document { get; }
         public SyntaxNode Declaration { get; }
+        public string AttributeName { get; }
 
         public override string? EquivalenceKey => $"Snowflake.Framework:{this.Title}";
 
-        protected override async Task<Document> GetChangedDocumentAsync(CancellationToken cancellationToken)
+        protected abstract IEnumerable<ExpressionSyntax> GetArgumentList();
+
+        protected sealed override async Task<Document> GetChangedDocumentAsync(CancellationToken cancellationToken)
         {
             var editor = await DocumentEditor.CreateAsync(this.Document, cancellationToken).ConfigureAwait(false);
-        
+
+            var attributeArguments = this.GetArgumentList().Select(arg => SyntaxFactory.AttributeArgument(arg));
             editor.AddAttribute(this.Declaration, SyntaxFactory.Attribute(
-                SyntaxFactory.IdentifierName("ConfigurationSection"),
+                SyntaxFactory.IdentifierName(this.AttributeName),
                 SyntaxFactory.AttributeArgumentList(
-                    SyntaxFactory.SeparatedList(new[] {
-                        SyntaxFactory.AttributeArgument(SyntaxFactory.LiteralExpression(SyntaxKind.StringLiteralExpression, SyntaxFactory.Literal("(CHANGE ME!) sectionName"))),
-                        SyntaxFactory.AttributeArgument(SyntaxFactory.LiteralExpression(SyntaxKind.StringLiteralExpression, SyntaxFactory.Literal("(CHANGE ME!) displayName")))
-                        }
-                    ))));
+                    SyntaxFactory.SeparatedList(attributeArguments))));
             return editor.GetChangedDocument();
         }
     }

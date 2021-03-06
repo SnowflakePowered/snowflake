@@ -7,14 +7,20 @@ using System.Threading.Tasks;
 using System.Composition;
 using Snowflake.Language.CodeActions;
 using Snowflake.Language.CodeActions.Fixes;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace Snowflake.Language.Analyzers.Configuration
 {
     [ExportCodeFixProvider(LanguageNames.CSharp), Shared]
-    public sealed class InvalidTemplateMemberFix
-        : AbstractDeleteNodeFix
+    public sealed class SectionPropertyMustHaveGetterFix
+        : AbstractAddAccessorFix
     {
-        public override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(DiagnosticCodes.SFC003__InvalidTemplateMemberAnalyzer);
+        public SectionPropertyMustHaveGetterFix() 
+            : base(SyntaxKind.GetAccessorDeclaration)
+        {
+        }
 
+        public override ImmutableArray<string> FixableDiagnosticIds 
+            => ImmutableArray.Create(DiagnosticCodes.SFC014__CollectionPropertyMustHaveGetter);
     }
 }

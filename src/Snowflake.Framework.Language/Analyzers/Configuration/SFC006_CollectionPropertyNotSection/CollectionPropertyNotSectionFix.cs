@@ -29,7 +29,7 @@ namespace Snowflake.Language.Analyzers.Configuration
                 return;
             var typeReference = property.Type.DeclaringSyntaxReferences.FirstOrDefault();
             if (typeReference is not null && await typeReference.GetSyntaxAsync() is InterfaceDeclarationSyntax typeSyntax)
-                context.RegisterCodeFix(new AddConfigurationSectionAttribute(context.Document, typeSyntax), context.Diagnostics);
+                context.RegisterCodeFix(new AddConfigurationSectionAttributeAction(context.Document, typeSyntax), context.Diagnostics);
         }
     }
 }
