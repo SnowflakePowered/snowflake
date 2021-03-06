@@ -1,9 +1,11 @@
 ﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Testing;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Testing;
 using Microsoft.CodeAnalysis.Testing.Verifiers;
+using Microsoft.CodeAnalysis.Text;
 using Snowflake.Configuration;
 using System;
 using System.Collections.Generic;
@@ -48,6 +50,31 @@ namespace Snowflake.Language.Tests
                 TestState =
                 {
                     ExpectedDiagnostics = { 
+                        Microsoft.CodeAnalysis.CSharp.Testing.XUnit.AnalyzerVerifier<TAnalyzer>.Diagnostic()
+                        .WithArguments(arguments)
+                        .WithLocation(location.line, location.col)
+                    },
+                },
+            };
+        }
+
+        public static CSharpCodeFixTest<TAnalyzer,TCodeFix, XUnitVerifier>
+            MakeCodeFixTest<TAnalyzer, TCodeFix>(string testSource, string expectedSource, (int line, int col) location, params object[] arguments)
+            where TAnalyzer : DiagnosticAnalyzer, new()
+            where TCodeFix: CodeFixProvider, new()
+        {
+            return new CSharpCodeFixTest<TAnalyzer, TCodeFix, XUnitVerifier>()
+            {
+                TestCode = testSource,
+                FixedCode = expectedSource,
+                ReferenceAssemblies = ReferenceAssemblies.Net.Net50,
+                SolutionTransforms =
+                {
+                    LanguageTestUtilities.AddSnowflakeReferences,
+                },
+                TestState =
+                {
+                    ExpectedDiagnostics = {
                         Microsoft.CodeAnalysis.CSharp.Testing.XUnit.AnalyzerVerifier<TAnalyzer>.Diagnostic()
                         .WithArguments(arguments)
                         .WithLocation(location.line, location.col)
