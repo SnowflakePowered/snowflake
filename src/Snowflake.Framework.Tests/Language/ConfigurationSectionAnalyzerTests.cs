@@ -39,7 +39,7 @@ namespace Snowflake.Framework.Tests.Configuration
 ";
             var harness = LanguageTestUtilities.MakeAnalyzerTest
                 <GenericArgumentRequiresConfigurationSectionAnalyzer>
-                (testCode, (19, 17), "TestInterface");
+                (testCode, (19, 13), "TestInterface");
             
             await harness.RunAsync();
         }
