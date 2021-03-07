@@ -19,7 +19,7 @@ coverage:
       default:
         if_no_uploads: error
         target: 50%
-        threshold: 20%
+        threshold: 10%
 
 comment:
   layout: "header, diff, changes, suggestions, sunburst"
@@ -27,6 +27,3 @@ comment:
 
 codecov:
   token: 82f2a4f6-6167-45f5-bc8b-8b10f601dab4
-
-ignore:
-  - 'src/Snowflake.Framework/Model/Database/Migrations'
