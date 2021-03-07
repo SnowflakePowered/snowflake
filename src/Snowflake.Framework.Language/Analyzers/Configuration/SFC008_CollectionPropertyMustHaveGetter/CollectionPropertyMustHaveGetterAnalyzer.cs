@@ -58,7 +58,7 @@ namespace Snowflake.Language.Analyzers.Configuration
                         || (accessors.Accessors.FirstOrDefault(a => a.IsKind(SyntaxKind.GetAccessorDeclaration)) is not AccessorDeclarationSyntax getAccessor 
                         || getAccessor.Modifiers.Any()))
                     {
-                        Diagnostic.Create(Rule, propertySyntax.GetLocation(), member.Name);
+                        yield return Diagnostic.Create(Rule, propertySyntax.GetLocation(), member.Name);
                     }
                 }
             }

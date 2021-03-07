@@ -62,7 +62,7 @@ namespace Snowflake.Language.Analyzers.Configuration
                                 member.Name, member.Type, defaultType);
                         }
                     }
-                    else if(attribute.ConstructorArguments.Length == 1 && !SymbolEqualityComparer.Default.Equals(member.Type, types.System_Guid))
+                    else if (attribute.ConstructorArguments.Length == 1 && !SymbolEqualityComparer.Default.Equals(member.Type, types.System_Guid))
                     {
                         yield return Diagnostic.Create(Rule,
                                 member.Locations.FirstOrDefault(),

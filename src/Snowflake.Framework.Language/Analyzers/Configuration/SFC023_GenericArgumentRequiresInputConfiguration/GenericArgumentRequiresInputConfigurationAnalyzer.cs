@@ -23,7 +23,7 @@ namespace Snowflake.Language.Analyzers.Configuration
 
         private static readonly DiagnosticDescriptor _Rule =
             new DiagnosticDescriptor(
-                id: DiagnosticCodes.SFC021__GenericArgumentExpectsConfigurationCollection,
+                id: DiagnosticCodes.SFC023__GenericArgumentExpectsInputConfiguration,
                 title: "The specified generic argument expects a InputConfiguration template interface.",
                 messageFormat: "Type '{0}' must be a InputConfiguration template interface.",
                 category: "Snowflake.Configuration",

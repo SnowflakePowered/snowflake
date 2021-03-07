@@ -25,7 +25,7 @@ namespace Snowflake.Language.Analyzers.Configuration
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFC012__SectionPropertyEnumUndecorated,
                 title: "ConfigurationSection template property undecorated selection option enum member.",
-                messageFormat: "Template property '{0}' has enum type {1} but not all enum members are decorated with [SelectionOption]",
+                messageFormat: "Template property '{0}' has enum type '{1}' but not all enum members are decorated with [SelectionOption]",
                 category: "Snowflake.Configuration",
                 DiagnosticSeverity.Error,
                 isEnabledByDefault: true,

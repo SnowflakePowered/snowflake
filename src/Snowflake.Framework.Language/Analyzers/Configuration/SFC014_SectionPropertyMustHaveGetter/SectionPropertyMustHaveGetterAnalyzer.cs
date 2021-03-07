@@ -21,7 +21,7 @@ namespace Snowflake.Language.Analyzers.Configuration
 
         protected override IEnumerable<SyntaxKind> Kinds => new[] { SyntaxKind.InterfaceDeclaration };
 
-        private static readonly DiagnosticDescriptor SectionRule =
+        internal static readonly DiagnosticDescriptor SectionRule =
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFC014__CollectionPropertyMustHaveGetter,
                 title: "ConfigurationSection template properties must declare a public 'get' accessor.",
@@ -32,7 +32,7 @@ namespace Snowflake.Language.Analyzers.Configuration
                 customTags: new[] { WellKnownDiagnosticTags.NotConfigurable },
                 description: "ConfigurationSection template properties must declare a public 'get' accessor.");
 
-        private static readonly DiagnosticDescriptor InputRule =
+        internal static readonly DiagnosticDescriptor InputRule =
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFC014__CollectionPropertyMustHaveGetter,
                 title: "InputConfiguration option template properties must declare a public 'get' accessor",
@@ -64,7 +64,9 @@ namespace Snowflake.Language.Analyzers.Configuration
                         is not PropertyDeclarationSyntax propertySyntax)
                         continue;
 
-                    if (!member.GetAttributes().Any(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationOptionAttribute)))
+                    if (!member.GetAttributes().Any(a => 
+                        SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationOptionAttribute)
+                        || SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.InputOptionAttribute)))
                         continue;
 
                     if (propertySyntax.AccessorList is not AccessorListSyntax accessors 
@@ -73,7 +75,7 @@ namespace Snowflake.Language.Analyzers.Configuration
                     {
                         if (interfaceSymbol.GetAttributes().Any(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationSectionAttribute)))
                             yield return Diagnostic.Create(SectionRule, propertySyntax.GetLocation(), member.Name);
-                        if (interfaceSymbol.GetAttributes().Any(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.InputOptionAttribute)))
+                        if (interfaceSymbol.GetAttributes().Any(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.InputConfigurationAttribute)))
                             yield return Diagnostic.Create(InputRule, propertySyntax.GetLocation(), member.Name);
                     }
                 }

@@ -7,11 +7,13 @@ using Snowflake.Configuration;
 
 namespace Snowflake.Framework.Tests.Configuration
 {
+    [ConfigurationTarget("hello")]
     [ConfigurationCollection]
     public partial interface IA
     {
+        [ConfigurationTargetMember("bob")]
         AType A { get; }
-        AType B => "Hello";
+        AType B { get; }
     }
 
     [ConfigurationSection("(CHANGE ME!) sectionName", "(CHANGE ME!) displayName")]

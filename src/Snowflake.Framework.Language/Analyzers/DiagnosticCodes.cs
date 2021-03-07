@@ -57,6 +57,8 @@ namespace Snowflake.Language.Analyzers
 
         public const string SFC023__GenericArgumentExpectsInputConfiguration = "SFC023";
 
+        public const string SFC024__ConfigurationTargetDoesNotExist = "SFC024";
+
         #endregion
 
         #region Extensibility
