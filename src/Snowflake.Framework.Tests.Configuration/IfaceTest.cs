@@ -11,7 +11,7 @@ namespace Snowflake.Framework.Tests.Configuration
     public partial interface IA
     {
         AType A { get; }
-        AType B { get; }
+        AType B => "Hello";
     }
 
     [ConfigurationSection("(CHANGE ME!) sectionName", "(CHANGE ME!) displayName")]

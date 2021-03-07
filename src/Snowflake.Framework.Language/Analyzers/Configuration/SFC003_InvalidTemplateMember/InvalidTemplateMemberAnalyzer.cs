@@ -14,7 +14,7 @@ using Snowflake.Language.Generators.Configuration;
 namespace Snowflake.Language.Analyzers.Configuration
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public sealed class InvalidTemplateMember
+    public sealed class InvalidTemplateMemberAnalyzer
         : AbstractSyntaxNodeAnalyzer
     {
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);

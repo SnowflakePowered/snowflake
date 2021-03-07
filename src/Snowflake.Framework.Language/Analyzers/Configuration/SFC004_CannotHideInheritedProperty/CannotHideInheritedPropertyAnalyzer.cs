@@ -42,6 +42,7 @@ namespace Snowflake.Language.Analyzers.Configuration
 
             if (!interfaceSymbol.GetAttributes().Any(a =>
                 SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationCollectionAttribute)
+                || SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationSectionAttribute)
                 || SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.InputConfigurationAttribute)))
                 yield break;
 
@@ -57,6 +58,7 @@ namespace Snowflake.Language.Analyzers.Configuration
                     if (dict.TryGetValue(member.Name, out var originatingIface))
                     {
                         yield return Diagnostic.Create(Rule, member.Locations.FirstOrDefault(), member.Name, originatingIface.Name);
+                        continue;
                     }
                     dict.Add(member.Name, childIface);
                 }

@@ -82,5 +82,38 @@ namespace Snowflake.Language.Tests
                 },
             };
         }
+
+        public static CSharpCodeFixTest<TAnalyzer, TCodeFix, XUnitVerifier>
+            MakeCodeFixTest<TAnalyzer, TCodeFix>(string testSource, string expectedSource, params (int line, int col, object[] args)[] diags)
+            where TAnalyzer : DiagnosticAnalyzer, new()
+            where TCodeFix : CodeFixProvider, new()
+        {
+            var test = new CSharpCodeFixTest<TAnalyzer, TCodeFix, XUnitVerifier>()
+            {
+                TestCode = testSource,
+                FixedCode = expectedSource,
+                ReferenceAssemblies = ReferenceAssemblies.Net.Net50,
+                SolutionTransforms =
+                {
+                    LanguageTestUtilities.AddSnowflakeReferences,
+                },
+                TestState =
+                {
+                    ExpectedDiagnostics = {
+                    },
+                },
+            };
+
+            foreach ((int line, int col, object[] args) in diags)
+            {
+                test.TestState.ExpectedDiagnostics.Add(
+                    Microsoft.CodeAnalysis.CSharp.Testing.XUnit.AnalyzerVerifier<TAnalyzer>.Diagnostic()
+                    .WithArguments(args)
+                    .WithLocation(line, col)
+                    );
+            }
+
+            return test;
+        }
     }
 }

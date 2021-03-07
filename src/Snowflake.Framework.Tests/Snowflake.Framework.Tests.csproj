@@ -45,6 +45,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="TestResources\Language\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="TestResources\GameCache\inputmapping-retroarch.json" />
   </ItemGroup>
 
@@ -83,6 +87,9 @@
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TestResources\Language\SFC002\" />
   </ItemGroup>
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>
