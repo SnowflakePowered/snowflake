@@ -18,7 +18,14 @@ namespace Snowflake.Language.Tests
             string testCode = TestUtilities.GetStringResource("Language.SFC022.SFC022.Test.cs");
             var harness = LanguageTestUtilities.MakeAnalyzerTest
                 <GenericArgumentRequiresConfigurationSectionAnalyzer>
-                (testCode, (18, 13), "TestInterface");
+                (testCode, 
+                    (39, 13, new[] { "TestInterface" }),
+                    (40, 13, new[] { "TestInterface" }),
+                    (40, 33, new[] { "TestInterface" }),
+                    (41, 13, new[] { "TestInterface" }),
+                    (41, 53, new[] { "TestInterface" }),
+                    (42, 13, new[] { "ImplementingClass" })
+                );
             
             await harness.RunAsync();
         }
