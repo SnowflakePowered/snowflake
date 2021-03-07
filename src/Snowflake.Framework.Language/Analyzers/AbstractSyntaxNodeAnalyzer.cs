@@ -23,17 +23,6 @@ namespace Snowflake.Language.Analyzers
             context.RegisterSyntaxNodeAction(this.Analyze, this.Kinds.ToImmutableArray());
         }
 
-        public void Analyze(GeneratorExecutionContext context, SyntaxNode node)
-        {
-#pragma warning disable RS1030 // Do not invoke Compilation.GetSemanticModel() method within a diagnostic analyzer
-            var semanticModel = context.Compilation.GetSemanticModel(node.SyntaxTree);
-#pragma warning restore RS1030 // Do not invoke Compilation.GetSemanticModel() method within a diagnostic analyzer
-            foreach (var diagnostic in Analyze(context.Compilation, semanticModel, node, context.CancellationToken))
-            {
-                context.ReportDiagnostic(diagnostic);
-            }
-        }
-
         private void Analyze(SyntaxNodeAnalysisContext context)
         {
             // Sometimes we want to ignore analyzers for tests. This is usually not the case.
