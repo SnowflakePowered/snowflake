@@ -37,44 +37,45 @@ namespace Snowflake.Language.Tests
             await harness.RunAsync();
         }
 
-        [Fact]
-        public async Task SFC009_DuplicateConfigurationTarget_Root_Test()
+        [Theory]
+        [InlineData("Root", "#target", 12)]
+        [InlineData("Null", "#null", 11)]
+        [InlineData("Cycle", "TestCycle2", 14)]
+        [InlineData("Edge", "child", 12)]
+        public async Task SFC009_ConfigurationTargetAlreadyExists_Root_Test(string file, string target, int col)
         {
-            string testCode = TestUtilities.GetStringResource("Language.SFC009.Root.SFC009.Test.cs");
-            string fixCode = TestUtilities.GetStringResource("Language.SFC009.Root.SFC009.Fix.cs");
+            string testCode = TestUtilities.GetStringResource($"Language.SFC009.{file}.SFC009.Test.cs");
+            string fixCode = TestUtilities.GetStringResource($"Language.SFC009.{file}.SFC009.Fix.cs");
 
             var harness = LanguageTestUtilities.MakeCodeFixTest
-                <DuplicateConfigurationTargetAnalyzer, DuplicateConfigurationTargetFix>
+                <ConfigurationTargetAlreadyExistsAnalyzer, ConfigurationTargetAlreadyExistsFix>
                 (testCode, fixCode, 
-                    (12, 6), DuplicateConfigurationTargetAnalyzer.RootRule, "#target", "DoubleTargetConfigurationCollection");
+                    (col, 6),  target, "DoubleTargetConfigurationCollection");
 
             await harness.RunAsync();
         }
 
         [Fact]
-        public async Task SFC009_DuplicateConfigurationTarget_Null_Test()
+        public async Task SFC025_ConfigurationTargetNotRooted_NoCycle_Test()
         {
-            string testCode = TestUtilities.GetStringResource("Language.SFC009.Null.SFC009.Test.cs");
-            string fixCode = TestUtilities.GetStringResource("Language.SFC009.Null.SFC009.Fix.cs");
-
-            var harness = LanguageTestUtilities.MakeCodeFixTest
-                <DuplicateConfigurationTargetAnalyzer, DuplicateConfigurationTargetFix>
-                (testCode, fixCode,
-                    (11, 6), DuplicateConfigurationTargetAnalyzer.RootRule, "#null", "DoubleTargetConfigurationCollection");
+            string testCode = TestUtilities.GetStringResource("Language.SFC025.NoCycle.SFC025.Test.cs");
+            var harness = LanguageTestUtilities.MakeAnalyzerTest
+                <ConfigurationTargetNotRootedAnalyzers>
+                (testCode);
 
             await harness.RunAsync();
         }
 
         [Fact]
-        public async Task SFC009_DuplicateConfigurationTarget_Edge_Test()
+        public async Task SFC025_ConfigurationTargetNotRooted_Cycle_Test()
         {
-            string testCode = TestUtilities.GetStringResource("Language.SFC009.Edge.SFC009.Test.cs");
-            string fixCode = TestUtilities.GetStringResource("Language.SFC009.Edge.SFC009.Fix.cs");
-
-            var harness = LanguageTestUtilities.MakeCodeFixTest
-                <DuplicateConfigurationTargetAnalyzer, DuplicateConfigurationTargetFix>
-                (testCode, fixCode,
-                    (12, 6), DuplicateConfigurationTargetAnalyzer.EdgeRule, "#target", "child", "DoubleTargetConfigurationCollection");
+            string testCode = TestUtilities.GetStringResource("Language.SFC025.Cycle.SFC025.Test.cs");
+            var harness = LanguageTestUtilities.MakeAnalyzerTest
+                <ConfigurationTargetNotRootedAnalyzers>
+                (testCode,
+                    (11, 6, new[] { "TestCycle1", "TestCollection" }),
+                    (12, 6, new[] { "TestCycle2", "TestCollection" })
+                );
 
             await harness.RunAsync();
         }

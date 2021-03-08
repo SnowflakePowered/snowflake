@@ -28,6 +28,7 @@ SFC021 | Snowflake.Configuration | Error | GenericArgumentRequiresConfigurationC
 SFC022 | Snowflake.Configuration | Error | GenericArgumentRequiresConfigurationSectionAnalyzer
 SFC023 | Snowflake.Configuration | Error | GenericArgumentRequiresInputConfigurationAnalyzer
 SFC024 | Snowflake.Configuration | Warning | ConfigurationTargetDoesNotExistAnalyzer
+SFC025 | Snowflake.Configuration | Warning | ConfigurationTargetNotRootedAnalyzers
 SFE001 | Snowflake.Extensibility | Error | PluginMustHavePluginAttributeAnalyzer
 SFE002 | Snowflake.Extensibility | Error | PluginMustNotBeNamedCommonAnalyzer
 SFE003 | Snowflake.Extensibility | Warning | ComposerCallsUnimportedServiceAnalyzer

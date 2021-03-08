@@ -14,28 +14,18 @@ using System.Threading;
 namespace Snowflake.Language.Analyzers.Configuration
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public sealed class DuplicateConfigurationTargetAnalyzer
+    public sealed class ConfigurationTargetAlreadyExistsAnalyzer
         : AbstractSyntaxNodeAnalyzer
     {
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(EdgeRule, RootRule);
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
         protected override IEnumerable<SyntaxKind> Kinds => new[] { SyntaxKind.InterfaceDeclaration };
 
-        internal static readonly DiagnosticDescriptor EdgeRule =
-            new DiagnosticDescriptor(
-                id: DiagnosticCodes.SFC009__DuplicateConfigurationTarget,
-                title: "A ConfigurationTarget with the same edge has already been declared.",
-                messageFormat: "A ConfigurationTarget going from '{0}' to '{1}' has already been declared for ConfigurationCollection template '{2}'",
-                category: "Snowflake.Configuration",
-                DiagnosticSeverity.Error,
-                isEnabledByDefault: true,
-                customTags: new[] { WellKnownDiagnosticTags.NotConfigurable });
-
-        internal static readonly DiagnosticDescriptor RootRule =
+        private static readonly DiagnosticDescriptor Rule =
          new DiagnosticDescriptor(
              id: DiagnosticCodes.SFC009__DuplicateConfigurationTarget,
-             title: "A root ConfigurationTarget with the same name has already been declared",
-             messageFormat: "A ConfigurationTarget root with the name '{0}' has already been declared for ConfigurationCollection template '{1}'",
+             title: "A ConfigurationTarget with the same name has already been declared",
+             messageFormat: "A ConfigurationTarget with the name '{0}' has already been declared for ConfigurationCollection template '{1}'",
              category: "Snowflake.Configuration",
              DiagnosticSeverity.Error,
              isEnabledByDefault: true,
@@ -53,7 +43,6 @@ namespace Snowflake.Language.Analyzers.Configuration
                SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationCollectionAttribute)))
                 yield break;
 
-
             var targetAttrs = new List<AttributeData>();
 
             foreach (var childIface in interfaceSymbol.AllInterfaces.Reverse().Concat(new[] { interfaceSymbol }))
@@ -62,43 +51,27 @@ namespace Snowflake.Language.Analyzers.Configuration
                     .Where(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationTargetAttribute)));
             }
 
-            var rootTargets = new HashSet<string>();
+            var declaredTargets = new HashSet<string>();
 
             // null target always exists.
-            rootTargets.Add("#null");
+            declaredTargets.Add("#null");
 
-            var childTargets = new HashSet<(string, string)>();
             foreach (var targetAttr in targetAttrs)
             {
-                if (targetAttr.ConstructorArguments.Length == 1)
+                if (targetAttr.ConstructorArguments.Length > 0)
                 {
                     string rootTarget = (string)targetAttr.ConstructorArguments[0].Value!;
-                    if (!rootTargets.Contains(rootTarget))
+                    if (!declaredTargets.Contains(rootTarget))
                     {
-                        rootTargets.Add(rootTarget);
+                        declaredTargets.Add(rootTarget);
                     }
                     else
                     {
-                        yield return Diagnostic.Create(RootRule,
+                        yield return Diagnostic.Create(Rule,
                             targetAttr.ApplicationSyntaxReference?.GetSyntax().GetLocation(),
                             rootTarget,
                             interfaceSymbol.Name
                             );
-                    }
-                }
-                else if (targetAttr.ConstructorArguments.Length == 2)
-                {
-                    (string childTarget, string parentTarget) = ((string)targetAttr.ConstructorArguments[0].Value!,
-                        (string)targetAttr.ConstructorArguments[1].Value!);
-                    if (!childTargets.Contains((parentTarget, childTarget)))
-                    {
-                        childTargets.Add((parentTarget, childTarget));
-                    }
-                    else
-                    {
-                        yield return Diagnostic.Create(EdgeRule,
-                           targetAttr.ApplicationSyntaxReference?.GetSyntax().GetLocation(),
-                           parentTarget, childTarget, interfaceSymbol.Name);
                     }
                 }
             }

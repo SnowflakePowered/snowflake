@@ -23,7 +23,7 @@ namespace Snowflake.Language.Generators.Configuration
                 new CollectionPropertyNotSectionAnalyzer(),
                 new CollectionPropertyInvalidAccessorAnalyzer(),
                 new CollectionPropertyMustHaveGetterAnalyzer(),
-                new DuplicateConfigurationTargetAnalyzer()
+                new ConfigurationTargetAlreadyExistsAnalyzer()
             );
 
         public void Execute(GeneratorExecutionContext context)

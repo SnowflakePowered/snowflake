@@ -11,7 +11,7 @@ using Snowflake.Language.CodeActions.Fixes;
 namespace Snowflake.Language.Analyzers.Configuration
 {
     [ExportCodeFixProvider(LanguageNames.CSharp), Shared]
-    public sealed class DuplicateConfigurationTargetFix
+    public sealed class ConfigurationTargetAlreadyExistsFix
         : AbstractDeleteNodeFix
     {
         public override ImmutableArray<string> FixableDiagnosticIds 

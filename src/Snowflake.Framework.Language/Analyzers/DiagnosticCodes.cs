@@ -59,6 +59,8 @@ namespace Snowflake.Language.Analyzers
 
         public const string SFC024__ConfigurationTargetDoesNotExist = "SFC024";
 
+        public const string SFC025__ConfigurationTargetNotRooted = "SFC025";
+
         #endregion
 
         #region Extensibility
