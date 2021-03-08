@@ -62,7 +62,7 @@ namespace Snowflake.Configuration.Serialization
             var temp = Path.GetTempPath();
             var test = Path.GetRandomFileName();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+            var dir = new FS.Directory(test, pfs, pfs.GetDirectoryEntry("/"));
             dir.OpenDirectory("program")
               .OpenFile("RMGE01.wbfs").OpenStream().Close();
             configuration.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
