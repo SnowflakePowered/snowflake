@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Language.Analyzers.Extensibility.SFE003_ComposerCallsUnimportedService
+namespace Snowflake.Language.Analyzers.Extensibility
 {
     [ExportCodeFixProvider(LanguageNames.CSharp), Shared]
     public sealed class ComposerCallsUnimportedServiceFix
@@ -29,7 +29,7 @@ namespace Snowflake.Language.Analyzers.Extensibility.SFE003_ComposerCallsUnimpor
                 return;
             if (nodeSyntax is not MemberAccessExpressionSyntax memberSyntax)
                 return;
-            if (memberSyntax.Ancestors().FirstOrDefault(a => a is MethodDeclarationSyntax) is not MethodDeclarationSyntax composeMethod)
+            if (memberSyntax.FirstAncestorOrSelf<MethodDeclarationSyntax>() is not MethodDeclarationSyntax composeMethod)
                 return;
             if (memberSyntax.DescendantNodes()
                 .FirstOrDefault(a => a is GenericNameSyntax) is not GenericNameSyntax syntaxGenerics)

@@ -21,7 +21,7 @@ namespace Snowflake.Language.Analyzers.Configuration
 
         protected override IEnumerable<SyntaxKind> Kinds => new[] { SyntaxKind.InterfaceDeclaration };
 
-        private static readonly DiagnosticDescriptor EdgeRule =
+        internal static readonly DiagnosticDescriptor EdgeRule =
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFC009__DuplicateConfigurationTarget,
                 title: "A ConfigurationTarget with the same edge has already been declared.",
@@ -31,7 +31,7 @@ namespace Snowflake.Language.Analyzers.Configuration
                 isEnabledByDefault: true,
                 customTags: new[] { WellKnownDiagnosticTags.NotConfigurable });
 
-        private static readonly DiagnosticDescriptor RootRule =
+        internal static readonly DiagnosticDescriptor RootRule =
          new DiagnosticDescriptor(
              id: DiagnosticCodes.SFC009__DuplicateConfigurationTarget,
              title: "A root ConfigurationTarget with the same name has already been declared",
@@ -63,6 +63,10 @@ namespace Snowflake.Language.Analyzers.Configuration
             }
 
             var rootTargets = new HashSet<string>();
+
+            // null target always exists.
+            rootTargets.Add("#null");
+
             var childTargets = new HashSet<(string, string)>();
             foreach (var targetAttr in targetAttrs)
             {

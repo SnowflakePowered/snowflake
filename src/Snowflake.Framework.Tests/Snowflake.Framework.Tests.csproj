@@ -88,9 +88,6 @@
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="TestResources\Language\SFC002\" />
-  </ItemGroup>
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>
     <LangVersion>9.0</LangVersion>

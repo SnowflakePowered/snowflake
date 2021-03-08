@@ -66,5 +66,22 @@ namespace Snowflake.Language.Tests
 
             await harness.RunAsync();
         }
+
+        [Fact]
+        public async Task SFC011_SectionPropertyMismatchedType_Test()
+        {
+            string testCode = TestUtilities.GetStringResource("Language.SFC011.SFC011.Test.cs");
+            var harness = LanguageTestUtilities.MakeAnalyzerTest
+                <SectionPropertyMismatchedTypeAnalyzer>
+                (testCode,
+                    (9, 16, new[] { "TestString", "string", "int"}),
+                    (12, 16, new[] { "TestDouble", "double", "string" }),
+                    (15, 13, new[] { "TestInt", "int", "string" }),
+                    (18, 14, new[] { "TestBool", "bool", "string" }),
+                    (21, 21, new[] { "TestGuid", "System.Guid", "string" })
+                );
+
+            await harness.RunAsync();
+        }
     }
 }

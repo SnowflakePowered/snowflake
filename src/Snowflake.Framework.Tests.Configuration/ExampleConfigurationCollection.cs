@@ -14,7 +14,9 @@ namespace Snowflake.Configuration.Tests
     [ConfigurationTarget("TestNestedNestedSection", "TestNestedSection")]
 
     [ConfigurationTarget("TestCycle1", "TestCycle2")]
-    [ConfigurationTarget("TestCycle2", "TestCycle1")]
+    [ConfigurationTarget("TestCycle2", "TestCycle3")]
+    [ConfigurationTarget("TestCycle3", "TestCycle1")]
+
     [ConfigurationCollection]
     public partial interface ExampleConfigurationCollection
     {
