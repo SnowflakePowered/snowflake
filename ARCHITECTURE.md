@@ -52,7 +52,7 @@ Implements an input enumerator for Windows using DirectInput and XInput.
 
 ### Snowflake.Support.StoneProvider
 
-Provides access to [Stone](https://stone.snowflakepowe.red/#/) platform and controller definitions.
+Provides access to [Stone](https://stone.snowflakepowe.red/#/) platform and controller definitions. Also provides access to a variety of ROM file signatures that can help determine if a file can be assessed as a ROM with a valid Stone platform mimetype.
 
 ### Snowflake.Support.StoreProviders
 
@@ -99,7 +99,7 @@ CLI used to package and install Snowflake modules.
 
 Assembly module project template. 
 
-## API
+## Framework API
 
 ### Snowflake.Configuration
 
@@ -113,3 +113,73 @@ On serialization, a `ConfigurationCollection` is first traversed into a `Abstrac
 
 Once an AST has been produced, it can be further visited by a `ConfigurationTreeVisitor` to modify the AST. AST nodes can have `NodeAnnotations` attached to them to assist later tree visitor passes. Finally they are serialized to disk by an implementation of `ConfigurationSerializer`.
 
+### Snowflake.Extensibility
+
+Base classes and interfaces for `IPlugin` implementations. A `ProvisionedPlugin` has access to a directory scratch space where it can store configuration files and other auxillary files. The provision can either be determined via a `plugin.json` file, or opted out of via `StandalonePluginProvision` that does not require a `plugin.json` resource.
+
+Plugin classes must be exported via the `Plugin` attribute, then manually registered with the `IPluginManager` during composition. Generally one module will register multiple plugins.
+
+Plugin configuration is based off Snowflake.Configuration as a single `ConfigurationSection` template interface, although it is never serialized.
+
+### Snowflake.Filesystem
+
+Implements a virtual filesystem with an object-oriented filesystem API. This virtual filesystem is used extensively throughout Snowflake and is used to ensure consistent conventions and isolation throughout game and plugin folders. 
+
+Directory capability permissions are encoded into the type system. Directories must be 'reopened' in order to be modified or deleted in specific ways. Symbolic links are transparent and treated as first-class citizens.
+
+Files are transparently assigned unique GUID identifiers when opened within the context of a directory. This identifier is written as an extended attribute or alternate stream via [tsuku](https://github.com/SnowflakePowered/tsuku), and can be used to attach metadata within the context of a game by registering it as a `FileRecord`.
+
+### Snowflake.Input
+
+Abstractions for input configuration and devices. A distinction is made between a "virtual" configured gamepad that represents the controller-in-emulation ("Controller") and the physical input device used by the player to send inputs to the operating system ("Device").
+
+*Snowflake.Input.Controller* implements the [Stone Controllers specification](https://stone.snowflakepowe.red/#/spec/controllers), and is mainly concerned about the mapping between real device inputs and the defined Controller layout input. A `ControllerElement` here refers to a virtual controller element defined by the Stone specification, and not any real device input.
+
+*Snowflake.Input.Device* implements enumerators and definitions for the real input device. A device can have multiple instances when exposed to an operating system depending on the input APIs used, and each instance may have different properties, such as enumeration order. A `DeviceCapability` here refers to **the real capability** of a real input device, according to the input driver that enumerates the device. These capabilities are grouped together in `DeviceCapabilityClass` for ease of use.
+
+An important difference here: a `ControllerMapping` is an "input profile" that specifies the **realized** mappings between the `DeviceCapability` of a real device, and the emulated `ControllerElement`, and is **user configurable**. A `DeviceLayoutMapping` is the **idealized inverse**, and is **not user configurable**: given a `ControllerElement`, what is the default or canonical mapping from the `ControllerElement` to the device I have in my hand? For example, the A button on a **real Xbox One controller**, which is `DeviceCapability.Button0` when enumerated via XInput, would map to `ControllerElement.ButtonA` for the `NES_CONTROLLER` layout.
+
+### Snowflake.Installation
+Implements the declarative game installation API. Given a platform and a list of directories and files, `IGameInstaller` will return what it knows is processable, and then later process the installation if the user wishes. Installtion is presented by yielding an asynchronous series of predefined tasks. 
+
+Third parties may also implement additional atomic asynchronous tasks. Each task represents a step in the installation process, which can be paused, resumed, and cancelled at a later time. Tasks **are not allowed to throw**, and return a monadic `TaskResult` wrapper over the result of the IO task that can be `await`-ed on to bind and 'unwrap' the inner result. Awaiting the same `TaskResult` multiple times will return the same cached result. Tasks also take as input `TaskResult` wrappers to ensure that IO operations are lazy and efficient. 
+
+### Snowflake.Loader
+
+Implements the module loader and enumerator. Mostly JSON parsing routines for parsing and validating `module.json`. This namespace also includes interfaces for implementing custom `IModuleLoader` instances, and the `ServiceProvider` which handles importing of services during composition.
+
+#### Snowflake.Services.AssemblyLoader
+
+The loading of assembly modules is implemented in the namespace Snowflake.Services.AssemblyLoader.
+
+Loading modules into Snowflake is a three-step process.
+
+1. An `AssemblyLoadContext` attempts to load the `entryPoint` DLL assembly specified in a `module.json`, including dependent assemblies from the currently loaded context (i.e. Snowflake framework assemblies and the BCL), dependent assemblies in the local directory where the module is located, and the GAC as well, trying its best to resolve different versions following semver. It also handles caching of unsigned assemblies, which is necessary, otherwise they will be reloaded into the context multiple times. 
+2. Once the assemblies are loaded into a context, `AssemblyModuleLoader` discovers classes that implement `IComposable` with a nilladic default constructor.
+3. From the discovered composables, a simple dependency resolution load now takes place. Composables that rely on a service (which are most non-trivial composables) must specify their service dependencies via the `[ImportService]` attribute. The `AssemblyComposer` takes the list of discovered composables and composes all that have their dependencies fulfilled, which may register more services during composition. This repeats until no more composables can be composed. This means that composables that are missing dependencies will never be composed.
+
+### Snowflake.Model
+
+Contains the implementation for all SQLite databases used to store data, including games, file records, and emulator configuration settings. 
+
+While in the backend the database is implemented via code-first EntityFramework Core, the EF interface (`DbContext`) is never exposed to API consumers. Instead, the repository pattern is implemented as an interface over the EF backend.
+
+For games and files in particular, metadata may be attached. Such items that can have metadata attached are referred to as 'Records'. The `IGameLibrary` API is also extensible to retrieve data from sources other than the main database (which is not extensible by third parties) via crossreference of the game's `RecordID`. This is how the file record API is implemented. 
+
+Because of its extensibility, the `IGameRecord` interface is infinitely flexible and not well suited for EntityFramework rewriting in order to perform performant queries. A restricted subset, `IGameRecordQuery` is accepted for use with the `IGameLibrary.QueryGames` APIs, which are directly executed on the database and are much more performant. For complex use cases, `IGameLibrary.GetGames` is still available and performs client-side filtering.
+
+File records are simply files that have their unique IDs registered as 'belonging' to a game, with **a mimetype** and some metadata attached. Not all files need to be records, only those that are significant to the execution of the game itself. For most games, the ROM or ISO file containing the game data would be a record, as well as some boxarts and images. In particular, the **entry point** of a game must be a record in order for the game to be executable. For some this would be the ROM, for others, an EBOOT or an ELF.
+
+### Snowflake.Orchestration
+
+todo
+
+### Snowflake.Romfile
+
+Provides APIs having to do with ROM file analysis, such as file signature, best-effort ROM filename parsing, and [shiragame](https://shiragame.snowflakepowe.red/) data. The filename parser is currently regex-based and is due to be replaced with a port of the parser from [shiratsu](https://github.com/SnowflakePowered/shiratsu/tree/master/src).
+
+### Snowflake.Scraping
+
+Snowflake uses a tree-based, best effort scraping system that is unique across all other frontends. A `Game` is first created on the database for a known platform and perhaps a ROM registered as a file record. A `GameScrapeContext` is then created when a scrape is requested. The context contains the scrapers that will produce 'seeds', and a culler that removes seeds that seem unlikely to contribute to relevant data.
+
+todo: finish
