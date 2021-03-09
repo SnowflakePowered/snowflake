@@ -23,6 +23,26 @@ namespace Snowflake.Language.Tests
             = MetadataReference.CreateFromFile(typeof(ConfigurationCollection<>).Assembly.Location);
         private static readonly MetadataReference SnowflakeTestReference
           = MetadataReference.CreateFromFile(typeof(LanguageTestUtilities).Assembly.Location);
+
+        public static async Task<Compilation> CreateCompilation(params string[] sources)
+        {
+            var referenceAssemblies =
+                await ReferenceAssemblies.Net.Net50.ResolveAsync(LanguageNames.CSharp, default);
+
+            var assemblies = new List<MetadataReference>(referenceAssemblies);
+            assemblies.AddRange(new[] { SnowflakePrimitiveReference, SnowflakeFrameworkReference, SnowflakeTestReference });
+
+            return CSharpCompilation.Create("TestCompilation",
+                sources.Select(s => CSharpSyntaxTree.ParseText(s,
+                    new CSharpParseOptions(LanguageVersion.CSharp9)))
+                .ToArray(),
+                assemblies.ToArray(),
+                new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
+                {
+
+                });
+        }
+
         private static Solution AddSnowflakeReferences(Solution solution, ProjectId projectId)
         {
             Project project = solution.GetProject(projectId)!;

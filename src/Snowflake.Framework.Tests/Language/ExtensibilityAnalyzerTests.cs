@@ -43,8 +43,7 @@ namespace Snowflake.Language.Tests
 
             var harness = LanguageTestUtilities.MakeCodeFixTest
                 <ComposerCallsUnimportedServiceAnalyzer, ComposerCallsUnimportedServiceFix>
-                (testCode, fixCode, (21, 13), "TestService"
-                );
+                (testCode, fixCode, (21, 13), "TestService");
 
             await harness.RunAsync();
         }
