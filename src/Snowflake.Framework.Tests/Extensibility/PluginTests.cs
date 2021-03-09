@@ -32,14 +32,6 @@ namespace Snowflake.Extensibility.Tests
         }
     }
 
-    //public class NonAttributedStandalonePluginImpl : StandalonePlugin
-    //{
-    //    public NonAttributedStandalonePluginImpl()
-    //        : base(typeof(NonAttributedStandalonePluginImpl))
-    //    {
-    //    }
-    //}
-
     [Plugin("TestPluginProvisioned", Author = "TestAuthor", Description = "TestDescription")]
     public class ProvisionedPluginImpl : ProvisionedPlugin
     {
