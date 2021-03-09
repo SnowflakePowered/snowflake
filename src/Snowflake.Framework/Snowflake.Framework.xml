@@ -177,13 +177,12 @@
         <member name="T:Snowflake.Configuration.Input.DictionaryInputMapping">
             <summary>
             A JSON deseriazable input mapping backed by a simple dictionary lookup.
-            todo: make this free from newtonsoft.json
             </summary>
         </member>
         <member name="P:Snowflake.Configuration.Input.DictionaryInputMapping.Item(Snowflake.Input.Device.DeviceCapability)">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Configuration.Input.DictionaryInputMapping.#ctor(System.Collections.Generic.IDictionary{Snowflake.Input.Device.DeviceCapability,System.String})">
+        <member name="M:Snowflake.Configuration.Input.DictionaryInputMapping.#ctor(Snowflake.Input.Device.InputDriver,System.Collections.Generic.IDictionary{Snowflake.Input.Device.DeviceCapability,System.String})">
             <summary>
             Instantiate an input mapping with the given dictionary of mappings.
             </summary>
@@ -1261,47 +1260,6 @@
             </summary>
             <param name="message">The messsage to fail with.</param>
             <param name="innerException">The inner exception.</param>
-        </member>
-        <member name="M:Snowflake.JsonConverters.InputMappingConverter.Create(System.Type,Newtonsoft.Json.Linq.JObject)">
-            <inheritdoc/>
-        </member>
-        <member name="T:Snowflake.JsonConverters.JsonCreationConverter`1">
-            <summary>Base Generic JSON Converter that can help quickly define converters for specific types by automatically
-            generating the CanConvert, ReadJson, and WriteJson methods, requiring the implementer only to define a strongly typed Create method.</summary>
-        </member>
-        <member name="P:Snowflake.JsonConverters.JsonCreationConverter`1.CanWrite">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.JsonConverters.JsonCreationConverter`1.Create(System.Type,Newtonsoft.Json.Linq.JObject)">
-            <summary>Create an instance of objectType, based properties in the JSON object</summary>
-            <param name="objectType">type of object expected</param>
-            <param name="jObject">contents of JSON object that will be deserialized</param>
-        </member>
-        <member name="M:Snowflake.JsonConverters.JsonCreationConverter`1.Transform(`0)">
-            <summary>
-            Gives a chance to transform the object before being serialized
-            </summary>
-            <param name="value">The value to transform</param>
-            <returns>The transformed object graph to be serialized</returns>
-        </member>
-        <member name="M:Snowflake.JsonConverters.JsonCreationConverter`1.CanConvert(System.Type)">
-            <summary>Determines if this converted is designed to deserialization to objects of the specified type.</summary>
-            <param name="objectType">The target type for deserialization.</param>
-            <returns>True if the type is supported.</returns>
-        </member>
-        <member name="M:Snowflake.JsonConverters.JsonCreationConverter`1.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
-            <summary>Parses the json to the specified type.</summary>
-            <param name="reader">Newtonsoft.Json.JsonReader</param>
-            <param name="objectType">Target type.</param>
-            <param name="existingValue">Ignored</param>
-            <param name="serializer">Newtonsoft.Json.JsonSerializer to use.</param>
-            <returns>Deserialized Object</returns>
-        </member>
-        <member name="M:Snowflake.JsonConverters.JsonCreationConverter`1.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
-            <summary>Serializes to the specified type</summary>
-            <param name="writer">Newtonsoft.Json.JsonWriter</param>
-            <param name="value">Object to serialize.</param>
-            <param name="serializer">Newtonsoft.Json.JsonSerializer to use.</param>
         </member>
         <member name="P:Snowflake.Loader.Module.Name">
             <inheritdoc/>

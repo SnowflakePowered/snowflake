@@ -8,13 +8,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Snowflake.Orchestration.Process;
-using Newtonsoft.Json;
 using Snowflake.Filesystem;
 using Snowflake.Extensibility.Provisioning;
 using Snowflake.Model.Game.LibraryExtensions;
 using Snowflake.Plugin.Emulators.RetroArch.Adapters.Higan.Configuration;
 using Snowflake.Configuration;
 using System.Linq;
+using System.Text.Json;
 
 namespace Snowflake.Adapters.Higan
 {
@@ -26,7 +26,7 @@ namespace Snowflake.Adapters.Higan
             : base(provision)
         {
             this.RetroArchExecutable = retroArchExecutable;
-            var mapping = JsonConvert.DeserializeObject<DictionaryInputMapping>
+            var mapping = JsonSerializer.Deserialize<DictionaryInputMapping>
                 (this.Provision.CommonResourceDirectory.OpenFile("inputmappings.json").ReadAllText());
             this.Mappings = new Dictionary<InputDriver, IDeviceInputMapping>()
                 {

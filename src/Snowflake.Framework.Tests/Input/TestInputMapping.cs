@@ -13,5 +13,7 @@ namespace Snowflake.Input.Tests
         }
 
         public string this[DeviceCapability element] => element.ToString();
+
+        public InputDriver Driver => InputDriver.None;
     }
 }

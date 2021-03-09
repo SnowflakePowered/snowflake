@@ -18,6 +18,11 @@
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.8.0" PrivateAssets="Compile" />
   </ItemGroup>
 
+  <ItemGroup>
+    <AdditionalFiles Include="AnalyzerReleases.Shipped.md" />
+    <AdditionalFiles Include="AnalyzerReleases.Unshipped.md" />
+  </ItemGroup>
+  
   <Target Name="AddNuGetDlls" BeforeTargets="_GetPackageFiles">
     <!-- Merge the collection of PackageReference and Assemblies using the NuGetPackageId key.
            This produces a new list containing the DLL path and the "IncludeInPackage" metadata-->

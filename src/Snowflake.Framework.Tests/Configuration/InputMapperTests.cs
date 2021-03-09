@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Input;
 using Snowflake.Input.Controller;
@@ -57,7 +57,7 @@ namespace Snowflake.Configuration.Tests
         public void KeyboardMapping_Test()
         {
             string _mapping = TestUtilities.GetStringResource("InputMappings.inputmapping-retroarch.json");
-            IDeviceInputMapping mapping = JsonConvert.DeserializeObject<DictionaryInputMapping>(_mapping);
+            IDeviceInputMapping mapping = JsonSerializer.Deserialize<DictionaryInputMapping>(_mapping);
             Assert.Equal("a", mapping[DeviceCapability.KeyA]);
             Assert.Equal("b", mapping[DeviceCapability.KeyB]);
             Assert.Equal("c", mapping[DeviceCapability.KeyC]);
