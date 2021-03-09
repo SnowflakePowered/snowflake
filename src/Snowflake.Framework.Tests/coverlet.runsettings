@@ -6,6 +6,7 @@
         <Configuration>
           <Format>cobertura</Format>
           <Include>[Snowflake.Framework*]*,[Snowflake.Support.*]*</Include>
+          <Exclude>[Snowflake.Framework.Tests*]*</Exclude>
           <ExcludeByFile>**/*.g.cs</ExcludeByFile>
         </Configuration>
       </DataCollector>

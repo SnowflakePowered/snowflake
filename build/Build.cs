@@ -101,6 +101,7 @@ class Build : NukeBuild
                 .SetRunSetting("DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format", "cobertura")
                 .SetRunSetting("DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.ExcludeByFile", "**/*.g.cs")
                 .SetRunSetting("DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Include", "[Snowflake.Framework*]*,[Snowflake.Support.*]*")
+                .SetRunSetting("DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude", "[Snowflake.Framework.Tests*]*")
             );
         });
 
