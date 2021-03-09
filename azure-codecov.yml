@@ -1,5 +1,9 @@
 steps:
   - script: |
-      bash <(curl -s https://codecov.io/bash) -v -s "$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/TestResults"
+      dotnet tool install --global Codecov.Tool
+    displayName: Install Codecov
+    condition: not(variables['build.skiptest'])
+  - script: |
+      codecov --branch $(Build.SourceBranchName) -f "$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/TestResults/**/coverage.cobertura.xml"
     displayName: Publishing test coverage to Codecov 
     condition: not(variables['build.skiptest'])
