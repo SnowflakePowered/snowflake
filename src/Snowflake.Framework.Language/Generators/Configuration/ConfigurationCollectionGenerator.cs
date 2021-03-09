@@ -71,7 +71,7 @@ namespace Snowflake.Language.Generators.Configuration
                     }
                 }
                 string classSource = GenerateSource(ifaceSymbol, properties, types);
-                context.AddSource($"{ifaceSymbol.Name}_ConfigurationCollection.cs", SourceText.From(classSource, Encoding.UTF8));
+                context.AddSource($"{ifaceSymbol.Name}_ConfigurationCollection.g.cs", SourceText.From(classSource, Encoding.UTF8));
             }
         }
 

@@ -5,15 +5,10 @@
     <RootNamespace>Snowflake</RootNamespace>
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
     <LangVersion>9.0</LangVersion>
-    <NullableContextOptions>enable</NullableContextOptions>
     <Nullable>enable</Nullable>
     <_SnowflakeUseDevelopmentSDK>true</_SnowflakeUseDevelopmentSDK>
   </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(Configuration)' == 'Cover' ">
-    <DebugType>Full</DebugType>
-  </PropertyGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="Emet.FileSystems" Version="0.0.3" PrivateAssets="Compile" />
     <PackageReference Include="Enums.NET" Version="4.0.0" PrivateAssets="Compile" />
@@ -32,7 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
-    <ProjectReference Include="..\Snowflake.Framework.Language\Snowflake.Framework.Language.csproj" OutputItemType="analyzer" PrivateAssets="build" />
+    <ProjectReference Include="..\Snowflake.Framework.Language\Snowflake.Framework.Language.csproj" OutputItemType="analyzer" PrivateAssets="all" ReferenceOutputAssembly="false" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />

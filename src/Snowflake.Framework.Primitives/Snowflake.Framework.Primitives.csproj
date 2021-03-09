@@ -4,13 +4,8 @@
     <RootNamespace>Snowflake</RootNamespace>
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
     <LangVersion>9.0</LangVersion>
-    <NullableContextOptions>enable</NullableContextOptions>
     <Nullable>enable</Nullable>
     <_SnowflakeUseDevelopmentSDK>true</_SnowflakeUseDevelopmentSDK>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(Configuration)' == 'Cover' ">
-    <DebugType>Full</DebugType>
   </PropertyGroup>
 
   <ItemGroup>

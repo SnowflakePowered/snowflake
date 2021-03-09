@@ -27,7 +27,8 @@ namespace Snowflake.Configuration.Serialization.Tests
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+            string test = Path.GetRandomFileName();
+            var dir = new FS.Directory(test, pfs, pfs.GetDirectoryEntry("/"));
             dir.OpenDirectory("program")
               .OpenFile("RMGE01.wbfs").OpenStream().Close();
             configuration.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
@@ -52,7 +53,8 @@ namespace Snowflake.Configuration.Serialization.Tests
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+            string test = Path.GetRandomFileName();
+            var dir = new FS.Directory(test, pfs, pfs.GetDirectoryEntry("/"));
             dir.OpenDirectory("program")
               .OpenFile("RMGE01.wbfs").OpenStream().Close();
             configuration.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
@@ -76,7 +78,8 @@ namespace Snowflake.Configuration.Serialization.Tests
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+            string test = Path.GetRandomFileName();
+            var dir = new FS.Directory(test, pfs, pfs.GetDirectoryEntry("/"));
             dir.OpenDirectory("program")
               .OpenFile("RMGE01.wbfs").OpenStream().Close();
             configuration.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
@@ -100,8 +103,8 @@ namespace Snowflake.Configuration.Serialization.Tests
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
-            dir.OpenDirectory("program")
+            string test = Path.GetRandomFileName();
+            var dir = new FS.Directory(test, pfs, pfs.GetDirectoryEntry("/")); dir.OpenDirectory("program")
               .OpenFile("RMGE01.wbfs").OpenStream().Close();
             configuration.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
             var context = new ConfigurationTraversalContext(("game", dir));
@@ -125,8 +128,8 @@ namespace Snowflake.Configuration.Serialization.Tests
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
-            
+            string test = Path.GetRandomFileName();
+            var dir = new FS.Directory(test, pfs, pfs.GetDirectoryEntry("/"));
             var context = new ConfigurationTraversalContext(("game", dir));
             var list = context.TraverseCollection(configuration);
             IAbstractConfigurationNode dolphinList = list["#cemu"];

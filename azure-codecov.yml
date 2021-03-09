@@ -1,15 +1,9 @@
 steps:
-  - task: UsePythonVersion@0
-    displayName: Install Python for Codecov
-    condition: not(variables['build.skiptest'])
-    inputs:
-      versionSpec: '3.7'
-      architecture: 'x64'
   - script: |
-      pip install codecov
+      dotnet tool install --global Codecov.Tool
     displayName: Install Codecov
     condition: not(variables['build.skiptest'])
   - script: |
-      codecov --file "$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/coverage.opencover.xml" --token 82f2a4f6-6167-45f5-bc8b-8b10f601dab4
+      codecov --branch $(Build.SourceBranchName) -f "$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/TestResults/**/coverage.cobertura.xml"
     displayName: Publishing test coverage to Codecov 
     condition: not(variables['build.skiptest'])
