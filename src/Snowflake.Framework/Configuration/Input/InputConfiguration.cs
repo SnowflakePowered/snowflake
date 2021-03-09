@@ -84,7 +84,6 @@ namespace Snowflake.Configuration.Input
                 let value = overrides.ContainsKey(key) ? overrides[key] : DeviceCapability.None
                 select new KeyValuePair<string, DeviceCapability>(key, value);
            
-       
             this.ValueCollection = new ConfigurationValueCollection();
             var genInstance = typeof(T).GetCustomAttribute<ConfigurationGenerationInstanceAttribute>();
             if (genInstance == null)

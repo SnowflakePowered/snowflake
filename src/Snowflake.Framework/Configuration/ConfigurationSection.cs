@@ -71,9 +71,7 @@ namespace Snowflake.Configuration
 
         public ConfigurationSection(IConfigurationValueCollection values, string sectionKey)
             : this(values, ConfigurationDescriptorCache.GetSectionDescriptor<T>(sectionKey))
-        {
-            
-        }
+        { }
 
         /// <inheritdoc/>
         public IEnumerator<KeyValuePair<IConfigurationOptionDescriptor, IConfigurationValue>> GetEnumerator()

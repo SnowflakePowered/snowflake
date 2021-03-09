@@ -25,7 +25,6 @@ namespace Snowflake.Language.Generators.Configuration
             {
                 this.CandidateInterfaces.Add(interfaceDeclarationSyntax);
             }
-
         }
     }
 }

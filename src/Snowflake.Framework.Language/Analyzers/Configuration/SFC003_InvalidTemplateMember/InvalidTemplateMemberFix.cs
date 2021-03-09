@@ -15,6 +15,5 @@ namespace Snowflake.Language.Analyzers.Configuration
         : AbstractDeleteNodeFix
     {
         public override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(DiagnosticCodes.SFC003__InvalidTemplateMemberAnalyzer);
-
     }
 }

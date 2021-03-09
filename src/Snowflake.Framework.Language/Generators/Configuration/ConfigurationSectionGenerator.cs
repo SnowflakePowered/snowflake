@@ -78,7 +78,6 @@ namespace Snowflake.Language.Generators.Configuration
             }
         }
 
-        
         private string GenerateSource(INamedTypeSymbol classSymbol, List<(INamedTypeSymbol, IPropertySymbol)> props, ConfigurationTypes types)
         {
             string namespaceName = classSymbol.ContainingNamespace.ToDisplayString();

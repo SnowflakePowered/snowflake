@@ -43,7 +43,6 @@ namespace Snowflake.Language.Analyzers.Configuration
                SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationCollectionAttribute)))
                 yield break;
 
-
             var targetAttrs = new List<AttributeData>();
             var props = new List<ISymbol>();
 
@@ -94,7 +93,6 @@ namespace Snowflake.Language.Analyzers.Configuration
 
                     // Edges are directed from parents to children.
                     adjacency[parentTarget].Add(childTarget);
-
                 }
             }
 

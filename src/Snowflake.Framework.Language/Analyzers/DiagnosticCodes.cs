@@ -6,7 +6,6 @@ namespace Snowflake.Language.Analyzers
 {
     internal static class DiagnosticCodes
     {
-
         public const string SFG000__GenericDiagnosticError = "SFG000";
 
         #region Configuration

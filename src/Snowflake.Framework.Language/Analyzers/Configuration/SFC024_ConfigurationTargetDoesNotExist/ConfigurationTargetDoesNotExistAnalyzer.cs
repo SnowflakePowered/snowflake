@@ -43,7 +43,6 @@ namespace Snowflake.Language.Analyzers.Configuration
                SymbolEqualityComparer.Default.Equals(a.AttributeClass, types.ConfigurationCollectionAttribute)))
                 yield break;
 
-
             var targetAttrs = new List<AttributeData>();
             var props = new List<ISymbol>();
 

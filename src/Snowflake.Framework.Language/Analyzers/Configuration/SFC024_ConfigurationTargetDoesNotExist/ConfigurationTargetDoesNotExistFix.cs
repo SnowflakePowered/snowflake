@@ -49,7 +49,6 @@ namespace Snowflake.Language.Analyzers.Configuration
                 context.RegisterCodeFix(new AddRootConfigurationTargetAction(context.Document,
                    interfaceSyntax, targetText.Token.ValueText), context.Diagnostics);
             }
-           
         }
     }
 }

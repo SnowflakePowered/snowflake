@@ -42,6 +42,5 @@ namespace Snowflake.Language.Analyzers.Extensibility
         }
 
 #nullable enable
-   
     }
 }

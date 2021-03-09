@@ -13,9 +13,7 @@ namespace Snowflake.Configuration.Input
     [GenericTypeAcceptsInputConfiguration(0)]
     public interface IInputConfiguration<out T> : IInputConfiguration, IConfigurationSection<T>
         where T : class
-    {
- 
-    }
+    { }
 
     /// <summary>
     /// Represents an input configuration template from which valid input configuration
