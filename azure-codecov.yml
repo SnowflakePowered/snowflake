@@ -1,15 +1,5 @@
 steps:
-  - task: UsePythonVersion@0
-    displayName: Install Python for Codecov
-    condition: not(variables['build.skiptest'])
-    inputs:
-      versionSpec: '3.7'
-      architecture: 'x64'
   - script: |
-      pip install codecov
-    displayName: Install Codecov
-    condition: not(variables['build.skiptest'])
-  - script: |
-      codecov --file "$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/coverage.opencover.xml" --token 82f2a4f6-6167-45f5-bc8b-8b10f601dab4
+      bash <(curl -s https://codecov.io/bash) -v -s "$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/TestResults"
     displayName: Publishing test coverage to Codecov 
     condition: not(variables['build.skiptest'])

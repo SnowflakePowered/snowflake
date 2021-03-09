@@ -39,4 +39,4 @@ steps:
     displayName: Publish test coverage to Azure
     inputs:
       codeCoverageTool: 'cobertura' # Options: cobertura, jaCoCo
-      summaryFileLocation: $(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/coverage.cobertura.xml
+      summaryFileLocation: $(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/TestResults/**/coverage.cobertura.xml
