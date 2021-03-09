@@ -12,6 +12,8 @@
     <PackageReference Include="Snowflake.Framework.Primitives" Version="$(_SnowflakeSDKAssembliesVersion)" Publish="True" />
     <PackageReference Include="Snowflake.Framework" Version="$(_SnowflakeSDKAssembliesVersion)" Publish="True" />
     <PackageReference Include="Snowflake.Framework.Remoting" Version="$(_SnowflakeSDKAssembliesVersion)" Publish="True" />
-    <PackageReference Include="Snowflake.Framework.Language" Version="$(_SnowflakeSDKAssembliesVersion)" Publish="True"/>
+    <PackageReference Include="Snowflake.Framework.Language" Version="$(_SnowflakeSDKAssembliesVersion)" Publish="True">
+      <IncludeAssets>analyzers;contentFiles</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 </Project>

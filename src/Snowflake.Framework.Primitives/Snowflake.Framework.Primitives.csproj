@@ -1,4 +1,4 @@
-﻿<Project Sdk="Snowflake.Framework.Dependencies.Sdk/2.0.0">
+﻿<Project Sdk="Snowflake.Framework.Dependencies.Sdk/2.0.1">
   <PropertyGroup>
     <TargetFrameworks>net5.0</TargetFrameworks>
     <RootNamespace>Snowflake</RootNamespace>
