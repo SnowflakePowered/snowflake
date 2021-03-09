@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
+using Snowflake.Configuration.Internal;
 using Snowflake.Model.Database;
 using Snowflake.Model.Records.Game;
 
@@ -32,8 +33,9 @@ namespace Snowflake.Model.Game.LibraryExtensions
             return this.ConfigurationStore.GetProfileNames(this.GameRecord);
         }
 
+        [GenericTypeAcceptsConfigurationCollection(0)]
         public IConfigurationCollection<T> CreateNewProfile<T>(string sourceName, string profile)
-            where T : class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollectionTemplate
         {
             return this.ConfigurationStore
                 .CreateConfigurationForGame<T>(this.GameRecord, sourceName, profile);
@@ -45,21 +47,24 @@ namespace Snowflake.Model.Game.LibraryExtensions
                 .DeleteConfigurationForGameAsync(this.GameRecord.RecordID, sourceName, profile);
         }
 
+        [GenericTypeAcceptsConfigurationCollection(0)]
         public Task<IConfigurationCollection<T>> CreateNewProfileAsync<T>(string sourceName, string profile)
-            where T : class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollectionTemplate
         {
             return this.ConfigurationStore
                 .CreateConfigurationForGameAsync<T>(this.GameRecord, sourceName, profile);
         }
 
+        [GenericTypeAcceptsConfigurationCollection(0)]
         public IConfigurationCollection<T>? GetProfile<T>(string sourceName, Guid collectionGuid)
-            where T : class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollectionTemplate
         {
             return this.ConfigurationStore.GetConfiguration<T>(this.GameRecord.RecordID, sourceName, collectionGuid);
         }
 
+        [GenericTypeAcceptsConfigurationCollection(0)]
         public Task<IConfigurationCollection<T>?> GetProfileAsync<T>(string sourceName, Guid collectionGuid)
-            where T : class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollectionTemplate
         {
             return this.ConfigurationStore.GetConfigurationAsync<T>(this.GameRecord.RecordID, sourceName, collectionGuid);
         }

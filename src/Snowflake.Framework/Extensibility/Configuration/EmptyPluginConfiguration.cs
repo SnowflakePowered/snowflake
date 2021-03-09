@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using Snowflake.Configuration;
-using Snowflake.Configuration.Attributes;
 
 namespace Snowflake.Extensibility
 {
     [ConfigurationSection("EmptyPluginConfiguration", "Default Plugin Configuration")]
-    public interface IEmptyPluginConfiguration : IConfigurationSection<IEmptyPluginConfiguration>
+    public partial interface IEmptyPluginConfiguration
     {
     }
 

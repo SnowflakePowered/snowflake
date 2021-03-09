@@ -45,7 +45,7 @@ namespace Snowflake.Filesystem
         /// <summary>
         /// Whether or not this file has been created or currently exists.
         /// 
-        /// Keep in mind that <see cref="IDeletableDirectory.OpenFile(string)"/> does not actually
+        /// Keep in mind that <see cref="IFileOpeningDirectoryBase{TChildFile}.OpenFile(string)"/> does not actually
         /// create a file on the file system.
         /// </summary>
         bool Created { get; }

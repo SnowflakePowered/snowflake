@@ -32,14 +32,6 @@ namespace Snowflake.Extensibility.Tests
         }
     }
 
-    public class NonAttributedStandalonePluginImpl : StandalonePlugin
-    {
-        public NonAttributedStandalonePluginImpl()
-            : base(typeof(NonAttributedStandalonePluginImpl))
-        {
-        }
-    }
-
     [Plugin("TestPluginProvisioned", Author = "TestAuthor", Description = "TestDescription")]
     public class ProvisionedPluginImpl : ProvisionedPlugin
     {
@@ -68,11 +60,11 @@ namespace Snowflake.Extensibility.Tests
             Assert.Equal(EmptyPluginProperties.EmptyProperties, plugin.Provision.Properties);
         }
 
-        [Fact]
-        public void NonAttributedStandalonePluginImpl_Test()
-        {
-            Assert.Throws<InvalidOperationException>(() => new NonAttributedStandalonePluginImpl());
-        }
+        //[Fact]
+        //public void NonAttributedStandalonePluginImpl_Test()
+        //{
+        //    Assert.Throws<InvalidOperationException>(() => new NonAttributedStandalonePluginImpl());
+        //}
 
         [Fact]
         public void EmptyPluginProps_Test()

@@ -4,6 +4,8 @@
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>Snowflake</RootNamespace>
     <_SnowflakeUseDevelopmentSDK>true</_SnowflakeUseDevelopmentSDK>
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)Generated</CompilerGeneratedFilesOutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Cover' ">
@@ -18,6 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
+    <ProjectReference Include="..\Snowflake.Framework.Language\Snowflake.Framework.Language.csproj" OutputItemType="analyzer" PrivateAssets="build" />
   </ItemGroup>
 
   <ItemGroup>

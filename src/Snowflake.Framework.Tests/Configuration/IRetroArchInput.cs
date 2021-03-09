@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
-using Snowflake.Configuration.Attributes;
 using Snowflake.Configuration.Input;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Controller.Mapped;
@@ -12,8 +11,8 @@ using Snowflake.Input.Device;
 
 namespace Snowflake.Configuration.Tests
 {
-    [InputTemplate("input")]
-    public interface IRetroArchInput : IInputTemplate<IRetroArchInput>
+    [InputConfiguration("input")]
+    public partial interface IRetroArchInput
     {
         [ConfigurationOption("input_device_p{N}", 0)]
         int InputDevice { get; set; }
@@ -28,7 +27,7 @@ namespace Snowflake.Configuration.Tests
         DeviceCapability InputPlayerTurboBtn { get; }
 
         [InputOption("input_player{N}_turbo_axis", DeviceCapabilityClass.ControllerAxis, ControllerElement.NoElement)]
-        DeviceCapability InputPlayerTurboAxis { get; set; }
+        DeviceCapability InputPlayerTurboAxis { get; }
 
         [InputOption("input_player{N}_b", DeviceCapabilityClass.Keyboard, ControllerElement.ButtonB)]
         DeviceCapability InputPlayerB { get; }

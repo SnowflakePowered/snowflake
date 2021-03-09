@@ -137,7 +137,6 @@ namespace Snowflake.Extensibility.Queueing
         /// Queues an <see cref="IAsyncEnumerable{T}"/> into the job queue.
         /// </summary>
         /// <param name="asyncEnumerable">The <see cref="IAsyncEnumerable{T}"/> to persist in memory.</param>
-        /// and <see cref="AsEnumerable(Guid)"/>.</param>
         /// <returns>A unique job token that can be used to modify the job at a later time.</returns>
         ValueTask<Guid> QueueJob(TAsyncEnumerable asyncEnumerable);
 

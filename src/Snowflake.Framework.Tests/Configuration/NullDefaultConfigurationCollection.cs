@@ -4,19 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
-using Snowflake.Configuration.Attributes;
 using Snowflake.Configuration.Tests;
 
 namespace Snowflake.Configuration.Tests
 {
-    public interface
-        NullDefaultConfigurationCollection : IConfigurationCollection<NullDefaultConfigurationCollection>
+    [ConfigurationCollection]
+    public partial interface
+        NullDefaultConfigurationCollection
     {
-        NullDefaultConfigurationSection NullConfiguration { get; set; }
+        NullDefaultConfigurationSection NullConfiguration { get; }
     }
 
     [ConfigurationSection("Null", "Null")]
-    public interface NullDefaultConfigurationSection : IConfigurationSection<NullDefaultConfigurationSection>
+    public partial interface NullDefaultConfigurationSection
     {
         [ConfigurationOption("NullDefault", null, "UNSET")]
         string NullDefault { get; set; }

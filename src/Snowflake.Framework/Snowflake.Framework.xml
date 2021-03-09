@@ -16,13 +16,7 @@
         <member name="M:Snowflake.Configuration.ConfigurationCollection`1.System#Collections#IEnumerable#GetEnumerator">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Configuration.ConfigurationCollection`1.Item(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.CollectionCircularInterceptor`1.Intercept(Castle.DynamicProxy.IInvocation)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.CollectionInterceptor`1.Intercept(Castle.DynamicProxy.IInvocation)">
+        <member name="M:Snowflake.Configuration.ConfigurationCollection`1.GetSection(System.String)">
             <inheritdoc/>
         </member>
         <member name="T:Snowflake.Configuration.ConfigurationCollectionDescriptor`1">
@@ -40,11 +34,6 @@
             Since descriptors use heavy attribute access, the descriptor cache caches
             the attributes for types that will not change throughout the
             lifetime of the application.
-            </summary>
-        </member>
-        <member name="M:Snowflake.Configuration.ConfigurationDescriptorCache.GetProxyGenerator">
-            <summary>
-            Gets a reused proxy generator that survives for the lifetime of the application.
             </summary>
         </member>
         <member name="M:Snowflake.Configuration.ConfigurationDescriptorCache.GetSectionDescriptor``1(System.String)">
@@ -200,22 +189,34 @@
             </summary>
             <param name="elementMappings">The dictionary of mappings from <see cref="T:Snowflake.Input.Device.DeviceCapability"/> to input configuration string.</param>
         </member>
-        <member name="P:Snowflake.Configuration.Input.InputConfigurationSection`1.Configuration">
+        <member name="P:Snowflake.Configuration.Input.InputConfiguration`1.PlayerIndex">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Configuration.Input.InputConfigurationSection`1.Descriptor">
+        <member name="P:Snowflake.Configuration.Input.InputConfiguration`1.Configuration">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Configuration.Input.InputConfigurationSection`1.Values">
+        <member name="P:Snowflake.Configuration.Input.InputConfiguration`1.Values">
             <inheritdoc/>
         </member>
-        <member name="P:Snowflake.Configuration.Input.InputConfigurationSection`1.Item(System.String)">
+        <member name="P:Snowflake.Configuration.Input.InputConfiguration`1.Snowflake#Configuration#Input#IInputConfiguration#Options">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Configuration.Input.InputConfigurationSection`1.GetEnumerator">
+        <member name="P:Snowflake.Configuration.Input.InputConfiguration`1.Item(Snowflake.Input.Controller.ControllerElement)">
             <inheritdoc/>
         </member>
-        <member name="M:Snowflake.Configuration.Input.InputConfigurationSection`1.System#Collections#IEnumerable#GetEnumerator">
+        <member name="P:Snowflake.Configuration.Input.InputConfiguration`1.Snowflake#Configuration#IConfigurationSection#Values">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputConfiguration`1.Snowflake#Configuration#IConfigurationSection#Descriptor">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputConfiguration`1.Snowflake#Configuration#IConfigurationSection#Item(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Snowflake.Configuration.Input.InputConfiguration`1.ValueCollection">
+            <inheritdoc/>
+        </member>
+        <member name="M:Snowflake.Configuration.Input.InputConfiguration`1.GetEnumerator">
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Configuration.Input.InputOption.OptionType">
@@ -228,54 +229,6 @@
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Configuration.Input.InputOption.KeyName">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.PlayerIndex">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Template">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Values">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Snowflake#Configuration#Input#IInputTemplate#Options">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Item(Snowflake.Input.Controller.ControllerElement)">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Snowflake#Configuration#IConfigurationSection#Values">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Snowflake#Configuration#IConfigurationSection#Descriptor">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Snowflake#Configuration#IConfigurationSection#Item(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Configuration.Input.InputTemplate`1.Snowflake#Configuration#IConfigurationSection{T}#Configuration">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.Input.InputTemplate`1.GetEnumerator">
-            <inheritdoc/>
-        </member>
-        <member name="T:Snowflake.Configuration.Interceptors.ConfigurationCircularInterceptor`1">
-            <summary>
-            Interceptor to allow circular reference within <see cref="T:Snowflake.Configuration.ConfigurationSection`1"/>
-            </summary>
-            <typeparam name="T"></typeparam>
-        </member>
-        <member name="M:Snowflake.Configuration.Interceptors.ConfigurationCircularInterceptor`1.Intercept(Castle.DynamicProxy.IInvocation)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.Interceptors.ConfigurationInterceptor.Intercept(Castle.DynamicProxy.IInvocation)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.Interceptors.InputTemplateCircularInterceptor`1.Intercept(Castle.DynamicProxy.IInvocation)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Configuration.Interceptors.InputTemplateInterceptor`1.Intercept(Castle.DynamicProxy.IInvocation)">
             <inheritdoc/>
         </member>
         <member name="P:Snowflake.Configuration.SelectionOptionDescriptor.DisplayName">
@@ -331,14 +284,73 @@
             </summary>
             <param name="pathResolutionContext">The path resolutions supplied as a dictionary.</param>
         </member>
+        <member name="T:Snowflake.Configuration.Serialization.ConfigurationTreeVisitor">
+            <summary>
+            Implements a stateless immutable <see cref="T:Snowflake.Configuration.Serialization.IConfigurationVisitor`1"/> with visitor semantics
+            to reshape a <see cref="T:Snowflake.Configuration.Serialization.IAbstractConfigurationNode"/> returned by <see cref="T:Snowflake.Configuration.Serialization.IConfigurationTraversalContext"/>
+            or another <see cref = "T:Snowflake.Configuration.Serialization.ConfigurationTreeVisitor"/>. Implementations of Visit should never return <see langword="null"/>.
+            
+            <para>
+            By convention, returning a <see cref="T:Snowflake.Configuration.Serialization.NilConfigurationNode"/> should remove the node from the tree. <strong>This should especially be checked if implementing
+            <see cref="M:Snowflake.Configuration.Serialization.ConfigurationTreeVisitor.Visit(Snowflake.Configuration.Serialization.ListConfigurationNode)"/>.</strong> 
+            </para>
+            </summary>
+        </member>
+        <member name="T:Snowflake.Configuration.Serialization.BooleanConfigurationNode">
+            <summary>
+            A configuration node that represents a terminal <see cref="T:System.Boolean"/> value.
+            </summary>
+        </member>
+        <member name="T:Snowflake.Configuration.Serialization.DecimalConfigurationNode">
+            <summary>
+            A configuration node that represents a terminal <see cref="T:System.Decimal"/> value.
+            </summary>
+        </member>
+        <member name="T:Snowflake.Configuration.Serialization.DeviceCapabilityElementConfigurationNode">
+            <summary>
+            A configuration node that represents a terminal <see cref="T:Snowflake.Input.Device.DeviceCapability"/> value.
+            </summary>
+        </member>
+        <member name="T:Snowflake.Configuration.Serialization.EnumConfigurationNode">
+            <summary>
+            A configuration node that represents a terminal <see cref="T:System.Enum"/> value.
+            </summary>
+        </member>
+        <member name="T:Snowflake.Configuration.Serialization.IntegralConfigurationNode">
+            <summary>
+            A configuration node that represents a terminal <see cref="T:System.Int64"/> integral value.
+            </summary>
+        </member>
+        <member name="T:Snowflake.Configuration.Serialization.ListConfigurationNode">
+            <summary>
+            A configuration node that represents a n-ary list of nested child nodes.
+            </summary>
+        </member>
+        <member name="T:Snowflake.Configuration.Serialization.NilConfigurationNode">
+            <summary>
+            Represents the lack of a configuration node. A fully parsed and visited tree should never contain any 
+            <see cref="T:Snowflake.Configuration.Serialization.NilConfigurationNode"/>.
+            </summary>
+        </member>
+        <member name="T:Snowflake.Configuration.Serialization.StringConfigurationNode">
+            <summary>
+            A configuration node that represents a terminal <see cref="T:System.String"/> node.
+            </summary>
+        </member>
+        <member name="T:Snowflake.Configuration.Serialization.UnknownConfigurationNode">
+            <summary>
+            A configuration node that represents a terminal node of unknown type.
+            Most serializers will ignore this, and it is here for developer convenience.
+            </summary>
+        </member>
         <member name="T:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1">
             <summary>
-            Implements <see cref="T:Snowflake.Configuration.Serialization.IConfigurationTransformer`1"/> by serializing the 
-            syntax tree into some string or binary format.
+            Implements stateful <see cref="T:Snowflake.Configuration.Serialization.IConfigurationVisitor`1"/> with serialization semantics into some
+            string or binary format.
             </summary>
             <typeparam name="T">The type of the serialized data after traversing the tree.</typeparam>
         </member>
-        <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.Transform(Snowflake.Configuration.Serialization.IAbstractConfigurationNode)">
+        <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.Visit(Snowflake.Configuration.Serialization.IAbstractConfigurationNode)">
             <inheritdoc />
         </member>
         <member name="M:Snowflake.Configuration.Serialization.Serializers.ConfigurationSerializer`1.SerializeHeader(Snowflake.Configuration.Serialization.IConfigurationSerializationContext{`0})">
@@ -434,7 +446,7 @@
             <summary>
             Serializes a configuration node that encapsulates a <see cref="T:Snowflake.Input.Controller.ControllerElement"/>.
             
-            This is only used when serializing syntax trees that came from <see cref="T:Snowflake.Configuration.Input.IInputTemplate"/>.
+            This is only used when serializing syntax trees that came from <see cref="T:Snowflake.Configuration.Input.IInputConfiguration"/>.
             </summary>
             <param name="node">The node to serialize.</param>
             <param name="context">The serialization context.</param>
@@ -732,9 +744,6 @@
             <summary>
             Tries to get a GUID for the file.
             </summary>
-            <param name="canonicalPath">
-            The canonical, normalized <see cref="T:Zio.UPath"/> for the directory, relative to the directory root.
-            </param>
             <param name="rawInfo">The raw <see cref="T:System.IO.FileInfo"/> referring to the file on disk that <paramref name="canonicalPath"/> points to.</param>
             <param name="guid">The result GUID if it exists, or <see cref="F:System.Guid.Empty"/> if it does not.</param>
             <returns><see langword="true"/> if a GUID exists and is returned, <see langword="false"/> otherwise.</returns>
@@ -743,9 +752,6 @@
             <summary>
             Sets a GUID for a file. 
             </summary>
-            <param name="canonicalPath">
-            The canonical, normalized <see cref="T:Zio.UPath"/> for the directory, relative to the directory root.
-            </param>
             <param name="rawInfo">The raw <see cref="T:System.IO.FileInfo"/> referring to the file on disk that <paramref name="canonicalPath"/> points to.</param>
             <param name="guid">The result GUID if it exists, or <see cref="F:System.Guid.Empty"/> if it does not.</param>
         </member>

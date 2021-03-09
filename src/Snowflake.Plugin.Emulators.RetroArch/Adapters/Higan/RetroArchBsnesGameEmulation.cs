@@ -28,7 +28,7 @@ namespace Snowflake.Adapters.Higan
     public class RetroArchBsnesGameEmulation : GameEmulation<HiganRetroArchConfiguration>
     {
         public RetroArchBsnesGameEmulation(IGame game,
-            HiganRetroArchConfiguration configurationProfile,
+            IConfigurationCollection<HiganRetroArchConfiguration> configurationProfile,
             IEnumerable<IEmulatedController> controllerPorts,
             ISaveProfile saveProfile,
             IDictionary<InputDriver, IDeviceInputMapping> inputMappings,
@@ -95,7 +95,7 @@ namespace Snowflake.Adapters.Higan
             var retroArchNode = node["#retroarch"];
             StringBuilder configContents = new StringBuilder();
 
-            configContents.Append(serializer.Transform(retroArchNode));
+            configContents.Append(serializer.Visit(retroArchNode));
 
             var configFile = this.Scratch.OpenDirectory("config")
                     .OpenFile("retroarch.cfg");
@@ -104,12 +104,12 @@ namespace Snowflake.Adapters.Higan
             {
                 var mappings = this.InputMappings[port.PhysicalDeviceInstance.Driver];
              
-                var template = new InputTemplate<RetroPadTemplate>(port.LayoutMapping, port.PortIndex);
+                var template = new InputConfiguration<RetroPadTemplate>(port.LayoutMapping, port.PortIndex);
 
-                template.Template.Configuration.InputJoypadIndex = port.PhysicalDeviceInstance.EnumerationIndex;
+                template.Configuration.InputJoypadIndex = port.PhysicalDeviceInstance.EnumerationIndex;
 
                 var inputNode = tokenizer.TraverseInputTemplate(template, mappings, port.PortIndex);
-                configContents.Append(serializer.Transform(retroArchNode));
+                configContents.Append(serializer.Visit(retroArchNode));
             }
             await configFile.WriteAllTextAsync(configContents.ToString());
         }

@@ -4,11 +4,10 @@ using System.IO;
 using System.Text;
 using System.Reflection;
 using System.Linq;
-using Snowflake.Configuration.Attributes;
 using Snowflake.Filesystem;
 using Snowflake.Configuration.Extensions;
-using Castle.Core.Internal;
 using Snowflake.Configuration.Input;
+using System.Collections.Immutable;
 
 namespace Snowflake.Configuration.Serialization
 {
@@ -51,7 +50,19 @@ namespace Snowflake.Configuration.Serialization
 
         private static IEnumerable<IConfigurationTarget> ResolveConfigurationTargets(IConfigurationCollection collection)
         {
-            var targets = collection.GetType().GetPublicAttributes<ConfigurationTargetAttribute>();
+            Type? collectionType =
+                collection.GetType()
+                .GetInterfaces()
+                .Where(i => i.IsGenericType)
+                .SelectMany(i => i.GetGenericArguments())
+                .FirstOrDefault(i => i.GetCustomAttribute<ConfigurationCollectionAttribute>() != null);
+
+            if (collectionType == null)
+            {
+                throw new InvalidOperationException("Input configuration collection does not wrap a template type!");
+            }
+
+            var targets = collectionType.GetPublicAttributes<ConfigurationTargetAttribute>();
             var rootTargets = targets.Where(t => t.IsRoot);
             List<ConfigurationTarget> configurationTargets = new List<ConfigurationTarget>();
            
@@ -89,39 +100,46 @@ namespace Snowflake.Configuration.Serialization
             {
                 targetNodes.Add(BuildConfigNode(child.Value, flatTargets));
             }
-            return new ListConfigurationNode(target.TargetName, targetNodes.AsReadOnly());
+            return new ListConfigurationNode(target.TargetName, ImmutableArray.CreateRange(targetNodes));
         }
 
-        public IReadOnlyDictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>>
+        public IReadOnlyDictionary<string, IAbstractConfigurationNode<ImmutableArray<IAbstractConfigurationNode>>>
             TraverseCollection(IConfigurationCollection collection) =>
             this.TraverseCollection(collection, Enumerable.Empty<(string, IAbstractConfigurationNode)>());
 
-        public IReadOnlyDictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>>
+        public IReadOnlyDictionary<string, IAbstractConfigurationNode<ImmutableArray<IAbstractConfigurationNode>>>
             TraverseCollection(IConfigurationCollection collection, IEnumerable<(string targetName, IAbstractConfigurationNode node)> extraNodes)
         {
-            if (collection.GetType().IsGenericType
-                && collection.GetType().GetGenericTypeDefinition() == typeof(ConfigurationCollection<>))
-                throw new InvalidOperationException("Can not traverse on the wrapping type of ConfigurationCollection<T>, you must traverse on the Configuration property.");
+            Type? collectionType =
+                collection.GetType()
+                .GetInterfaces()
+                .Where(i => i.IsGenericType)
+                .SelectMany(i => i.GetGenericArguments())
+                .FirstOrDefault(i => i.GetCustomAttribute<ConfigurationCollectionAttribute>() != null);
+
+            if (collectionType == null)
+            {
+                throw new InvalidOperationException("Input configuration collection does not wrap a template type!");
+            }
+
+            var targetAttributes = collectionType.GetCustomAttributes<ConfigurationTargetAttribute>();
+            
+            // If there are no targets, then there is nothing to do.
+            if (!targetAttributes.Any()) 
+                return new Dictionary<string, IAbstractConfigurationNode<ImmutableArray<IAbstractConfigurationNode>>>();
 
             // Get each target for each section.
-            var targetMappings = collection
-                .GetType()
-                .GetInterfaces()
-                // This is a hack to get the declaring interface.
-                .FirstOrDefault(i => i.GetCustomAttributes<ConfigurationTargetAttribute>().Count() != 0)?
+            var targetMappings = collectionType
                 .GetPublicProperties()
                 .Where(props => props.GetIndexParameters().Length == 0
-                        && props.PropertyType.GetInterfaces().Contains(typeof(IConfigurationSection)))
+                        && props.PropertyType.IsInterface)
                 .ToDictionary(p => p.Name, p =>
-                    {
-                        var attribute = p.GetAttribute<ConfigurationTargetMemberAttribute>();
-                        return (attribute?.TargetName ?? NullTarget, attribute?.Explode ?? false);
-                    });
+                {
+                    var attribute = p.GetCustomAttribute<ConfigurationTargetMemberAttribute>();
+                    return (attribute?.TargetName ?? NullTarget, attribute?.Explode ?? false);
+                });
 
-            // If there are no targets, then there is nothing to do.
-            if (targetMappings == null) return new Dictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>>();
-
-            var flatTargets = collection.GetType().GetPublicAttributes<ConfigurationTargetAttribute>()
+            var flatTargets = targetAttributes
                 .ToDictionary(t => t.TargetName, t => (target: t, nodes: new List<IAbstractConfigurationNode>()));
 
             foreach (var (targetName, node) in extraNodes)
@@ -137,7 +155,7 @@ namespace Snowflake.Configuration.Serialization
                 if (!explode)
                 {
                     flatTargets[targetName]
-                        .nodes.Add(new ListConfigurationNode(value.Descriptor.SectionName, this.TraverseSection(value).AsReadOnly()));
+                        .nodes.Add(new ListConfigurationNode(value.Descriptor.SectionName, ImmutableArray.CreateRange(this.TraverseSection(value))));
                 }
                 else
                 {
@@ -148,8 +166,7 @@ namespace Snowflake.Configuration.Serialization
 
             var targets = ConfigurationTraversalContext.ResolveConfigurationTargets(collection);
 
-            Dictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>>
-                rootNodes = new Dictionary<string, IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>>();
+            var rootNodes = new Dictionary<string, IAbstractConfigurationNode<ImmutableArray<IAbstractConfigurationNode>>>();
 
             foreach (var rootTarget in targets)
             {
@@ -160,8 +177,8 @@ namespace Snowflake.Configuration.Serialization
             return rootNodes;
         }
 
-        public IAbstractConfigurationNode<IReadOnlyList<IAbstractConfigurationNode>>
-            TraverseInputTemplate(IInputTemplate template,
+        public IAbstractConfigurationNode<ImmutableArray<IAbstractConfigurationNode>>
+            TraverseInputTemplate(IInputConfiguration template,
             IDeviceInputMapping mapping,
             int index,
             string indexer = "{N}")
@@ -182,7 +199,7 @@ namespace Snowflake.Configuration.Serialization
             }
             return new ListConfigurationNode(template.Descriptor.SectionName.Replace(indexer,
                 Convert.ToString(index)),
-                configNodes.AsReadOnly());
+                 ImmutableArray.CreateRange(configNodes));
         }
 
         private List<IAbstractConfigurationNode> TraverseSection(IConfigurationSection section,

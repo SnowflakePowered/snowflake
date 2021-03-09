@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snowflake.Configuration.Attributes;
 
 namespace Snowflake.Configuration
 {
@@ -24,7 +23,7 @@ namespace Snowflake.Configuration
     */
 
     [ConfigurationSection("Display", "Display")]
-    public interface ExampleConfigurationSection : IConfigurationSection<ExampleConfigurationSection>
+    public partial interface ExampleConfigurationSection
     {
         [ConfigurationOption("FullscreenResolution", FullscreenResolution.Auto)]
         FullscreenResolution FullscreenResolution { get; set; }

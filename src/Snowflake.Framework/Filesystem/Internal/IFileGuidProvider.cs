@@ -16,9 +16,6 @@ namespace Snowflake.Filesystem
         /// <summary>
         /// Tries to get a GUID for the file.
         /// </summary>
-        /// <param name="canonicalPath">
-        /// The canonical, normalized <see cref="UPath"/> for the directory, relative to the directory root.
-        /// </param>
         /// <param name="rawInfo">The raw <see cref="FileInfo"/> referring to the file on disk that <paramref name="canonicalPath"/> points to.</param>
         /// <param name="guid">The result GUID if it exists, or <see cref="Guid.Empty"/> if it does not.</param>
         /// <returns><see langword="true"/> if a GUID exists and is returned, <see langword="false"/> otherwise.</returns>
@@ -27,9 +24,6 @@ namespace Snowflake.Filesystem
         /// <summary>
         /// Sets a GUID for a file. 
         /// </summary>
-        /// <param name="canonicalPath">
-        /// The canonical, normalized <see cref="UPath"/> for the directory, relative to the directory root.
-        /// </param>
         /// <param name="rawInfo">The raw <see cref="FileInfo"/> referring to the file on disk that <paramref name="canonicalPath"/> points to.</param>
         /// <param name="guid">The result GUID if it exists, or <see cref="Guid.Empty"/> if it does not.</param>
         public void SetGuid(FileInfo rawInfo, Guid guid);

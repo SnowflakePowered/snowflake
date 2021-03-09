@@ -65,7 +65,7 @@ namespace Snowflake.Configuration.Tests
             store.UpdateConfiguration(configCollection);
             configCollection.Configuration.ExampleConfiguration.FullscreenResolution =
                 FullscreenResolution.Resolution1280X768;
-            store.UpdateValue(configCollection.Configuration.ExampleConfiguration.Values["FullscreenResolution"]);
+            store.UpdateValue(configCollection.GetSection(e => e.ExampleConfiguration).Values["FullscreenResolution"]);
 
             var retrievedConfig =
                 store.GetConfiguration<ExampleConfigurationCollection>(configCollection.ValueCollection.Guid);
@@ -197,7 +197,7 @@ namespace Snowflake.Configuration.Tests
             await store.UpdateConfigurationAsync(configCollection);
             configCollection.Configuration.ExampleConfiguration.FullscreenResolution =
                 FullscreenResolution.Resolution1280X768;
-            await store.UpdateValueAsync(configCollection.Configuration.ExampleConfiguration.Values["FullscreenResolution"]);
+            await store.UpdateValueAsync(configCollection.GetSection(e => e.ExampleConfiguration).Values["FullscreenResolution"]);
 
             var retrievedConfig =
                 await store.GetConfigurationAsync<ExampleConfigurationCollection>(configCollection.ValueCollection.Guid);

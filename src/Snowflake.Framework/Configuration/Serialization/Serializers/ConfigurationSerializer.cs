@@ -8,14 +8,14 @@ using Snowflake.Input.Device;
 namespace Snowflake.Configuration.Serialization.Serializers
 {
     /// <summary>
-    /// Implements <see cref="IConfigurationTransformer{TOutput}"/> by serializing the 
-    /// syntax tree into some string or binary format.
+    /// Implements stateful <see cref="IConfigurationVisitor{TOutput}"/> with serialization semantics into some
+    /// string or binary format.
     /// </summary>
     /// <typeparam name="T">The type of the serialized data after traversing the tree.</typeparam>
-    public abstract class ConfigurationSerializer<T> : IConfigurationTransformer<T>
+    public abstract class ConfigurationSerializer<T> : IConfigurationVisitor<T>
     {
         /// <inheritdoc />
-        public abstract T Transform(IAbstractConfigurationNode node);
+        public abstract T Visit(IAbstractConfigurationNode node);
 
         /// <summary>
         /// Write the header to the serialized stream.
@@ -180,7 +180,7 @@ namespace Snowflake.Configuration.Serialization.Serializers
         /// <summary>
         /// Serializes a configuration node that encapsulates a <see cref="ControllerElement"/>.
         /// 
-        /// This is only used when serializing syntax trees that came from <see cref="IInputTemplate"/>.
+        /// This is only used when serializing syntax trees that came from <see cref="IInputConfiguration"/>.
         /// </summary>
         /// <param name="node">The node to serialize.</param>
         /// <param name="context">The serialization context.</param>

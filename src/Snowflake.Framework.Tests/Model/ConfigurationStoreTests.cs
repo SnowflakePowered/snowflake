@@ -4,6 +4,8 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Snowflake.Configuration;
+using Snowflake.Configuration.Internal;
 using Snowflake.Configuration.Tests;
 using Snowflake.Model.Database;
 using Snowflake.Model.Database.Models;
@@ -11,6 +13,32 @@ using Xunit;
 
 namespace Snowflake.Model.Tests
 {
+    interface NotASectionTemplate
+    {
+
+    }
+
+    [ConfigurationSection("templateName", "displayName")]
+    partial interface SectionTemplate
+    {
+
+    }
+
+    //public class Test
+    //{
+    //    public void TestAnalyzer()
+    //    {
+    //        ConfigurationSection<SectionTemplate> ok = new();
+    //        ConfigurationSection<NotASectionTemplate> notOk = new();
+    //        var x = new ConfigurationSection<NotASectionTemplate>();
+
+    //        void AcceptsNoTemplate(IConfigurationSection<NotASectionTemplate> x)
+    //        {
+
+    //        }
+    //    }
+    //}
+
     public class ConfigurationStoreTests
     {
         [Fact]
@@ -20,8 +48,10 @@ namespace Snowflake.Model.Tests
             optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
             var configStore = new ConfigurationCollectionStore(optionsBuilder);
             var gameGuid = Guid.NewGuid();
+  
             var config = configStore
                 .CreateConfiguration<ExampleConfigurationCollection>("TestConfiguration");
+     
             var retrieved = configStore.GetConfiguration<ExampleConfigurationCollection>
                 (config.ValueCollection.Guid);
         }
@@ -69,7 +99,8 @@ namespace Snowflake.Model.Tests
             var configStore = new ConfigurationCollectionStore(optionsBuilder);
             var config = configStore
                 .CreateConfiguration<ExampleConfigurationCollection>("TestConfiguration");
-            var setValue = config.ValueCollection[config.Configuration.ExampleConfiguration.Descriptor,
+            
+            var setValue = config.ValueCollection[config.GetSection(e => e.ExampleConfiguration).Descriptor,
                 nameof(config.Configuration.ExampleConfiguration.FullscreenResolution)];
             config.Configuration.ExampleConfiguration.FullscreenResolution
                 = Configuration.FullscreenResolution.Resolution3840X2160;
@@ -87,7 +118,7 @@ namespace Snowflake.Model.Tests
             var configStore = new ConfigurationCollectionStore(optionsBuilder);
             var config = configStore
                 .CreateConfiguration<ExampleConfigurationCollection>("TestConfiguration");
-            var setValue = config.ValueCollection[config.Configuration.ExampleConfiguration.Descriptor,
+            var setValue = config.ValueCollection[config.GetSection(e => e.ExampleConfiguration).Descriptor,
                 nameof(config.Configuration.ExampleConfiguration.FullscreenResolution)];
             config.Configuration.ExampleConfiguration.FullscreenResolution
                 = Configuration.FullscreenResolution.Resolution3840X2160;
@@ -104,7 +135,7 @@ namespace Snowflake.Model.Tests
             var configStore = new ConfigurationCollectionStore(optionsBuilder);
             var config = configStore
                 .CreateConfiguration<ExampleConfigurationCollection>("TestConfiguration");
-            var setValue = config.ValueCollection[config.Configuration.ExampleConfiguration.Descriptor,
+            var setValue = config.ValueCollection[config.GetSection(e => e.ExampleConfiguration).Descriptor,
                 nameof(config.Configuration.ExampleConfiguration.FullscreenResolution)];
             config.Configuration.ExampleConfiguration.FullscreenResolution
                 = Configuration.FullscreenResolution.Resolution3840X2160;
@@ -134,6 +165,7 @@ namespace Snowflake.Model.Tests
             var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
             optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
             var configStore = new ConfigurationCollectionStore(optionsBuilder);
+            var x = new ConfigurationCollection<ExampleConfigurationCollection>();
             var config = configStore
                 .CreateConfiguration<ExampleConfigurationCollection>("TestConfiguration");
             // trigger an ensure of the ExampleConfiguration

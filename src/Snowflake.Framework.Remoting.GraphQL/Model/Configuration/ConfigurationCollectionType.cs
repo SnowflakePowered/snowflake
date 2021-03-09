@@ -41,7 +41,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Configuration
                     }
                     if (sectionKey != null)
                     {
-                        return collection[sectionKey]?
+                        return collection.GetSection(sectionKey)?
                          .Values.Select(kvp => (sectionKey, kvp.Key, kvp.Value))
                          ?? Enumerable.Empty<(string, string, IConfigurationValue)>();
                     }

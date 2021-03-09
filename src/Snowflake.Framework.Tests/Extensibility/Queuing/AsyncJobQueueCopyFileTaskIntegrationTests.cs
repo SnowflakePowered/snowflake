@@ -99,8 +99,9 @@ namespace Snowflake.Extensibility.Queueing.Tests
         {
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
+            string test = Path.GetRandomFileName();
             var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
+            var dir = new FS.Directory(test, pfs, pfs.GetDirectoryEntry("/"));
 
             var dirToCopy = new DirectoryInfo(temp).CreateSubdirectory(Path.GetRandomFileName());
             var subDirToCopy = dirToCopy.CreateSubdirectory(Path.GetRandomFileName());

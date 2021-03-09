@@ -1,4 +1,4 @@
-﻿using Snowflake.Configuration.Attributes;
+﻿using Snowflake.Configuration;
 using Snowflake.Configuration.Input;
 using Snowflake.Input.Controller;
 using Snowflake.Input.Device;
@@ -6,8 +6,8 @@ using Snowflake.Plugin.Emulators.RetroArch.Selections.RetroPadTemplate;
 
 namespace Snowflake.Plugin.Emulators.RetroArch.Input
 {
-    [InputTemplate("input")]
-    public interface RetroPadTemplate : IInputTemplate<RetroPadTemplate>
+    [InputConfiguration("input")]
+    public partial interface RetroPadTemplate
     {
         [ConfigurationOption("input_device_p{N}", 0)]
         int InputDevice { get; set; }
@@ -28,7 +28,7 @@ namespace Snowflake.Plugin.Emulators.RetroArch.Input
         DeviceCapability InputPlayerTurboBtn { get; }
 
         [InputOption("input_player{N}_turbo_axis", DeviceCapabilityClass.ControllerAxis, ControllerElement.NoElement)]
-        DeviceCapability InputPlayerTurboAxis { get; set; }
+        DeviceCapability InputPlayerTurboAxis { get; }
 
         [InputOption("input_player{N}_b", DeviceCapabilityClass.Keyboard, ControllerElement.ButtonB)]
         DeviceCapability InputPlayerB { get; }

@@ -4,7 +4,6 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Castle.DynamicProxy;
 
 namespace Snowflake.Configuration
 {
@@ -16,21 +15,11 @@ namespace Snowflake.Configuration
     /// </summary>
     internal static class ConfigurationDescriptorCache
     {
-        private static IImmutableDictionary<Type, IConfigurationSectionDescriptor> sectionDescriptors =
-            ImmutableDictionary<Type, IConfigurationSectionDescriptor>.Empty;
+        private static IImmutableDictionary<(string sectionKey, Type), IConfigurationSectionDescriptor> sectionDescriptors =
+            ImmutableDictionary<(string sectionKey, Type), IConfigurationSectionDescriptor>.Empty;
 
         private static IImmutableDictionary<Type, IConfigurationCollectionDescriptor> collectionDescriptors =
             ImmutableDictionary<Type, IConfigurationCollectionDescriptor>.Empty;
-
-        private static readonly ProxyGenerator proxyGenerator = new ProxyGenerator();
-
-        /// <summary>
-        /// Gets a reused proxy generator that survives for the lifetime of the application.
-        /// </summary>
-        internal static IProxyGenerator GetProxyGenerator()
-        {
-            return ConfigurationDescriptorCache.proxyGenerator;
-        }
 
         /// <summary>
         /// Gets a new or existing section descriptor
@@ -38,15 +27,15 @@ namespace Snowflake.Configuration
         /// <typeparam name="T">The type of the configuration section</typeparam>
         /// <returns>The section descriptor for <see cref="T:self"/></returns>
         internal static IConfigurationSectionDescriptor GetSectionDescriptor<T>(string sectionKey)
-            where T : class, IConfigurationSection<T>
+            where T : class
         {
-            if (sectionDescriptors.ContainsKey(typeof(T)))
+            if (sectionDescriptors.ContainsKey((sectionKey, typeof(T))))
             {
-                return sectionDescriptors[typeof(T)];
+                return sectionDescriptors[(sectionKey, typeof(T))];
             }
 
-            sectionDescriptors = sectionDescriptors.Add(typeof(T), new ConfigurationSectionDescriptor<T>(sectionKey));
-            return sectionDescriptors[typeof(T)];
+            sectionDescriptors = sectionDescriptors.Add((sectionKey, typeof(T)), new ConfigurationSectionDescriptor<T>(sectionKey));
+            return sectionDescriptors[(sectionKey, typeof(T))];
         }
 
         /// <summary>
@@ -55,7 +44,7 @@ namespace Snowflake.Configuration
         /// <typeparam name="T">The type of the configuration collection</typeparam>
         /// <returns>The collection descriptor for <see cref="T:self"/></returns>
         internal static IConfigurationCollectionDescriptor GetCollectionDescriptor<T>()
-            where T : class, IConfigurationCollection<T>
+            where T : class
         {
             if (collectionDescriptors.ContainsKey(typeof(T)))
             {

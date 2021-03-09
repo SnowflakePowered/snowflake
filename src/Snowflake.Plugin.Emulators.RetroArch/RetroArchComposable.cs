@@ -16,14 +16,17 @@ namespace Snowflake.Plugin.Emulators.RetroArch
         [ImportService(typeof(IPluginManager))]
         [ImportService(typeof(IContentDirectoryProvider))]
         [ImportService(typeof(IStoneProvider))]
-        [ImportService(typeof(ILogProvider))]
-        [ImportService(typeof(IEmulatorExecutableProvider))]
+      
+        //[ImportService(typeof(IEmulatorExecutableProvider))]
+        //[ImportService(typeof(ILogProvider))]
+        //[ImportService(typeof(IEmulatorExecutableProvider))]
         public void Compose(IModule composableModule, IServiceRepository serviceContainer)
         {
             var stone = serviceContainer.Get<IStoneProvider>();
             var exp = serviceContainer.Get<IEmulatorExecutableProvider>();
             var pm = serviceContainer.Get<IPluginManager>();
-            var log = serviceContainer.Get<ILogProvider>().GetLogger("RetroArch");
+            var log = serviceContainer.Get<ILogProvider>()
+                .GetLogger("RetroArch");
             var retroArchExecutable = exp.GetEmulator("retroarch");
 
             var provision = pm.GetProvision<RetroArchBsnesOrchestrator>(composableModule);

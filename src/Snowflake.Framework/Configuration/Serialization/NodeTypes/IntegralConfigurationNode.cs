@@ -4,7 +4,10 @@ using System.Text;
 
 namespace Snowflake.Configuration.Serialization
 {
-    public sealed class IntegralConfigurationNode
+    /// <summary>
+    /// A configuration node that represents a terminal <see cref="long"/> integral value.
+    /// </summary>
+    public sealed record IntegralConfigurationNode
         : AbstractConfigurationNode<long>
     {
         internal IntegralConfigurationNode(string key, long value) : base(key, value)

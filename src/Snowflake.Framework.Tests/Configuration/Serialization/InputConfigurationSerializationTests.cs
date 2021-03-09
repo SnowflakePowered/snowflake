@@ -35,7 +35,7 @@ namespace Snowflake.Configuration.Serialization
                             new XInputDeviceInstance(0).DefaultLayout);
             IDeviceInputMapping mapping = new TestInputMapping();
             var input =
-             new InputTemplate<IRetroArchInput>(mapcol).Template;
+             new InputConfiguration<IRetroArchInput>(mapcol);
 
 
             var fs = new PhysicalFileSystem();
@@ -48,7 +48,7 @@ namespace Snowflake.Configuration.Serialization
             var list = context.TraverseInputTemplate(input, mapping, 0);
 
             var iniSerializer = new SimpleIniConfigurationSerializer();
-            string outputIni = iniSerializer.Transform(list);
+            string outputIni = iniSerializer.Visit(list);
             var parser = new IniDataParser();
             var data = parser.Parse(outputIni);
             Assert.NotEmpty(data.Sections);
@@ -64,7 +64,7 @@ namespace Snowflake.Configuration.Serialization
                            new XInputDeviceInstance(0).DefaultLayout);
             IDeviceInputMapping mapping = new TestInputMapping();
             var input =
-             new InputTemplate<IRetroArchInput>(mapcol).Template;
+             new InputConfiguration<IRetroArchInput>(mapcol);
 
 
             var fs = new PhysicalFileSystem();
@@ -78,7 +78,7 @@ namespace Snowflake.Configuration.Serialization
 
 
             var cfgSerializer = new SimpleCfgConfigurationSerializer();
-            string outputCfg = cfgSerializer.Transform(list);
+            string outputCfg = cfgSerializer.Visit(list);
             Assert.NotEqual(string.Empty, outputCfg);
             // todo: test cfg parse
         }
@@ -93,7 +93,7 @@ namespace Snowflake.Configuration.Serialization
                            new XInputDeviceInstance(0).DefaultLayout);
             IDeviceInputMapping mapping = new TestInputMapping();
             var input =
-             new InputTemplate<IRetroArchInput>(mapcol).Template;
+             new InputConfiguration<IRetroArchInput>(mapcol);
 
 
             var fs = new PhysicalFileSystem();
@@ -107,7 +107,7 @@ namespace Snowflake.Configuration.Serialization
 
             var xmlSerializer = new SimpleXmlConfigurationSerializer("Config");
            
-            string outputXml = xmlSerializer.Transform(list);
+            string outputXml = xmlSerializer.Visit(list);
             XDocument doc = XDocument.Parse(outputXml);
             Assert.NotEmpty(doc.Nodes());
         }
@@ -122,7 +122,7 @@ namespace Snowflake.Configuration.Serialization
                           new XInputDeviceInstance(0).DefaultLayout);
             IDeviceInputMapping mapping = new TestInputMapping();
             var input =
-             new InputTemplate<IRetroArchInput>(mapcol).Template;
+             new InputConfiguration<IRetroArchInput>(mapcol);
 
 
             var fs = new PhysicalFileSystem();
@@ -136,7 +136,7 @@ namespace Snowflake.Configuration.Serialization
 
 
             var jsonSerializer = new SimpleJsonConfigurationSerializer();
-            string outputJson = jsonSerializer.Transform(list);
+            string outputJson = jsonSerializer.Visit(list);
             var jtoken = JToken.Parse(outputJson);
             Assert.True(jtoken.HasValues);
         }

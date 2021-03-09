@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Configuration.Attributes
+namespace Snowflake.Configuration
 {
     /// <summary>
     /// Represents one option in an emulator configuration inside a configuration section.

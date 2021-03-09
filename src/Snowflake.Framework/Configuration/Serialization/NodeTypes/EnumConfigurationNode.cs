@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using EnumsNET;
-using Snowflake.Configuration.Attributes;
 
 namespace Snowflake.Configuration.Serialization
 {
-    public sealed class EnumConfigurationNode
+    /// <summary>
+    /// A configuration node that represents a terminal <see cref="Enum"/> value.
+    /// </summary>
+    public sealed record EnumConfigurationNode
         : AbstractConfigurationNode<Enum>
     {
         internal EnumConfigurationNode(string key, Enum value, Type enumType) : base(key, value)

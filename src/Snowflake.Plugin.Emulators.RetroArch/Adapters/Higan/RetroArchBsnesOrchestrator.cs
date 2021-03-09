@@ -19,6 +19,7 @@ using System.Linq;
 namespace Snowflake.Adapters.Higan
 {
     [Plugin("RetroArch-Bsnes")]
+
     public class RetroArchBsnesOrchestrator : EmulatorOrchestrator
     {
         public RetroArchBsnesOrchestrator(IEmulatorExecutable retroArchExecutable, IPluginProvision provision)
@@ -71,7 +72,7 @@ namespace Snowflake.Adapters.Higan
                 .GetProfile<HiganRetroArchConfiguration>(nameof(RetroArchBsnesOrchestrator), 
                 configurationProfileGuid);
             var gameEmulation = new RetroArchBsnesGameEmulation(game,
-                configuration.Configuration,
+                configuration,
                 controllerPorts,
                 saveProfile,
                 this.Mappings,

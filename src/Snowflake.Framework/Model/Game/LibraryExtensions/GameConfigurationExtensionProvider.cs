@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Configuration;
+using Snowflake.Configuration.Internal;
 using Snowflake.Model.Database;
 using Snowflake.Model.Records.Game;
 
@@ -37,8 +38,9 @@ namespace Snowflake.Model.Game.LibraryExtensions
             this.CollectionStore.UpdateValue(valueGuid, newValue);
         }
 
+        [GenericTypeAcceptsConfigurationCollection(0)]
         public IConfigurationCollection<T>? GetProfile<T>(Guid valueCollectionGuid)
-            where T : class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollectionTemplate
         {
             return this.CollectionStore.GetConfiguration<T>(valueCollectionGuid);
         }

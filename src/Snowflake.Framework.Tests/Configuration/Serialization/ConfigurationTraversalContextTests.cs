@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Text;
 using Snowflake.Configuration.Input;
@@ -33,8 +34,7 @@ namespace Snowflake.Configuration.Serialization
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
 
             var context = new ConfigurationTraversalContext();
-
-            Assert.Throws<KeyNotFoundException>(() => context.TraverseCollection(configuration.Configuration));
+            Assert.Throws<KeyNotFoundException>(() => context.TraverseCollection(configuration));
         }
 
         [Fact]
@@ -49,39 +49,7 @@ namespace Snowflake.Configuration.Serialization
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
 
             var context = new ConfigurationTraversalContext();
-            Assert.Throws<ArgumentException>(() => context.TraverseCollection(configuration.Configuration));
-        }
-
-        [Fact]
-        public void DuplicateTarget_Test()
-        {
-            var configuration =
-             new ConfigurationCollection<DoubleTargetConfigurationCollection>(new ConfigurationValueCollection());
-
-            var fs = new PhysicalFileSystem();
-            var temp = Path.GetTempPath();
-            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new FS.Directory(Path.GetRandomFileName(), pfs, pfs.GetDirectoryEntry("/"));
-            dir.OpenDirectory("program")
-              .OpenFile("RMGE01.wbfs").OpenStream(FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite).Close();
-            var context = new ConfigurationTraversalContext(("game", dir));
-
-            context.TraverseCollection(configuration.Configuration);
-        }
-
-        [Fact]
-        public void TopTraversalNotAllowedTarget_Test()
-        {
-            var configuration =
-             new ConfigurationCollection<DoubleTargetConfigurationCollection>(new ConfigurationValueCollection());
-
-            var fs = new PhysicalFileSystem();
-            var temp = Path.GetTempPath();
-            var pfs = fs.GetOrCreateSubFileSystem(fs.ConvertPathFromInternal(temp));
-            var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
-
-            var context = new ConfigurationTraversalContext(("game", dir));
-            Assert.Throws<InvalidOperationException>(() => context.TraverseCollection(configuration));
+            Assert.Throws<ArgumentException>(() => context.TraverseCollection(configuration));
         }
 
         [Fact]
@@ -93,8 +61,9 @@ namespace Snowflake.Configuration.Serialization
                             IDeviceEnumerator.VirtualVendorID,
                             new XInputDeviceInstance(0).DefaultLayout);
             IDeviceInputMapping mapping = new TestInputMapping();
+
             var input =
-             new InputTemplate<IRetroArchInput>(mapcol).Template;
+             new InputConfiguration<IRetroArchInput>(mapcol);
 
             var fs = new PhysicalFileSystem();
             var temp = Path.GetTempPath();
@@ -121,9 +90,9 @@ namespace Snowflake.Configuration.Serialization
             configuration.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
             var context = new ConfigurationTraversalContext(("game", dir));
 
-            var list = context.TraverseCollection(configuration.Configuration);
+            var list = context.TraverseCollection(configuration);
             Assert.Equal(2, list.Count);
-            Assert.Equal(2, list["#dolphin"].Value.Count);
+            Assert.Equal(2, list["#dolphin"].Value.Length);
             Assert.DoesNotContain("TestCycle1", list.Keys);
             Assert.DoesNotContain("TestCycle2", list.Keys);
 
@@ -133,7 +102,7 @@ namespace Snowflake.Configuration.Serialization
                 if (node.Key == "Display")
                 {
                     var confList = (node as ListConfigurationNode).Value;
-                    Assert.Equal(8, confList.Count);
+                    Assert.Equal(8, confList.Length);
                     Assert.Equal("FullscreenResolution", confList[0].Key);
                     Assert.IsType<EnumConfigurationNode>(confList[0]);
                     Assert.Equal("1152x648", ((EnumConfigurationNode)confList[0]).Value);
@@ -183,14 +152,15 @@ namespace Snowflake.Configuration.Serialization
             configuration.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
             var context = new ConfigurationTraversalContext(("game", dir));
 
-            var list = context.TraverseCollection(configuration.Configuration, new (string, IAbstractConfigurationNode)[] 
+            var list = context.TraverseCollection(configuration, new (string, IAbstractConfigurationNode)[] 
             {
                 ("#dolphin", new IntegralConfigurationNode("TestNestedExtra", 1036)),
-                ("#dolphin", new ListConfigurationNode("TestNestedExtraList", new IAbstractConfigurationNode[] { new StringConfigurationNode("TestNestedTwo", "StrVal")}))
+                ("#dolphin", new ListConfigurationNode("TestNestedExtraList", ImmutableArray.Create<IAbstractConfigurationNode>
+                    (new StringConfigurationNode("TestNestedTwo", "StrVal"))))
             });
 
             Assert.Equal(2, list.Count);
-            Assert.Equal(4, list["#dolphin"].Value.Count);
+            Assert.Equal(4, list["#dolphin"].Value.Length);
             Assert.DoesNotContain("TestCycle1", list.Keys);
             Assert.DoesNotContain("TestCycle2", list.Keys);
 
@@ -210,7 +180,7 @@ namespace Snowflake.Configuration.Serialization
                 if (node.Key == "Display")
                 {
                     var confList = (node as ListConfigurationNode).Value;
-                    Assert.Equal(8, confList.Count);
+                    Assert.Equal(8, confList.Length);
                     Assert.Equal("FullscreenResolution", confList[0].Key);
                     Assert.IsType<EnumConfigurationNode>(confList[0]);
                     Assert.Equal("1152x648", ((EnumConfigurationNode)confList[0]).Value);

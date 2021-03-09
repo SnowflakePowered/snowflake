@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Snowflake.Extensibility.Provisioning.Standalone
 {
-    public class StandalonePlugin : ProvisionedPlugin
+    public abstract class StandalonePlugin : ProvisionedPlugin
     {
         protected StandalonePlugin(Type pluginType)
             : base(new StandalonePluginProvision(pluginType))

@@ -6,7 +6,10 @@ using Snowflake.Input.Device;
 
 namespace Snowflake.Configuration.Serialization
 {
-    public sealed class DeviceCapabilityElementConfigurationNode
+    /// <summary>
+    /// A configuration node that represents a terminal <see cref="DeviceCapability"/> value.
+    /// </summary>
+    public sealed record DeviceCapabilityElementConfigurationNode
         : AbstractConfigurationNode<DeviceCapability>
     {
         internal DeviceCapabilityElementConfigurationNode(string key, 

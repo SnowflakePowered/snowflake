@@ -1,12 +1,11 @@
 using Snowflake.Configuration;
-using Snowflake.Configuration.Attributes;
 using Snowflake.Plugin.Emulators.RetroArch.Configuration;
 using Snowflake.Plugin.Emulators.RetroArch.Configuration.Internal;
 
 namespace Snowflake.Plugin.Emulators.RetroArch
 {
     [ConfigurationTarget("#retroarch")]
-    public interface RetroArchConfiguration : IConfigurationCollection<RetroArchConfiguration>
+    public interface RetroArchConfiguration
     {
         [ConfigurationTargetMember("#retroarch")] BuiltinConfiguration BuiltinConfiguration { get; }
 

@@ -6,8 +6,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Castle.Core.Internal;
-using Snowflake.Configuration.Attributes;
 using Snowflake.Configuration.Extensions;
 
 namespace Snowflake.Configuration
@@ -17,7 +15,7 @@ namespace Snowflake.Configuration
     /// </summary>
     /// <typeparam name="T">The type of the configuration collection</typeparam>
     public class ConfigurationCollectionDescriptor<T> : IConfigurationCollectionDescriptor
-        where T : class, IConfigurationCollection
+        where T : class
     {
         /// <inheritdoc/>
         public IEnumerable<string> SectionKeys { get; }
@@ -27,7 +25,7 @@ namespace Snowflake.Configuration
             var sections =
                 (from props in typeof(T).GetPublicProperties()
                     where props.GetIndexParameters().Length == 0 
-                        && props.PropertyType.GetInterfaces().Contains(typeof(IConfigurationSection))
+                        && props.PropertyType.IsInterface
                     select props).ToImmutableList();
             this.SectionKeys = ImmutableList.CreateRange(from props in sections select props.Name);
         }

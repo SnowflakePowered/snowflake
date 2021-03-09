@@ -3,14 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Castle.DynamicProxy;
-using Snowflake.Configuration.Extensions;
+using System.Reflection;
+using Snowflake.Configuration.Internal;
 using Snowflake.Configuration.Utility;
 
 namespace Snowflake.Configuration
 {
+    [GenericTypeAcceptsConfigurationCollection(0)]
     public class ConfigurationCollection<T> : IConfigurationCollection<T>
-        where T : class, IConfigurationCollection<T>
+        where T : class, IConfigurationCollectionTemplate
     {
         /// <inheritdoc/>
         public T Configuration { get; }
@@ -19,8 +20,6 @@ namespace Snowflake.Configuration
         public IConfigurationCollectionDescriptor Descriptor { get; }
 
         public IConfigurationValueCollection ValueCollection { get; }
-
-        private readonly CollectionInterceptor<T> collectionInterceptor;
 
         public ConfigurationCollection()
             : this(new ConfigurationValueCollection())
@@ -31,114 +30,56 @@ namespace Snowflake.Configuration
         {
             this.Descriptor =
                 ConfigurationDescriptorCache.GetCollectionDescriptor<T>();
-            this.collectionInterceptor = new CollectionInterceptor<T>(defaults);
 
-            this.Configuration = ConfigurationDescriptorCache
-                .GetProxyGenerator().CreateInterfaceProxyWithoutTarget<T>
-                    (new CollectionCircularInterceptor<T>(this), this.collectionInterceptor);
-
+            var genInstance = typeof(T).GetCustomAttribute<ConfigurationGenerationInstanceAttribute>();
+            if (genInstance == null)
+                throw new InvalidOperationException("Not generated!"); // todo: mark with interface to fail at compile time.
             this.ValueCollection = defaults;
+
+            this.Configuration = (T)Instantiate.CreateInstance(genInstance.InstanceType,
+                    new[] { typeof(IConfigurationValueCollection) }, Expression.Constant(this.ValueCollection));
         }
 
         /// <inheritdoc/>
         public IEnumerator<KeyValuePair<string, IConfigurationSection>> GetEnumerator()
         {
-            return this.Descriptor.SectionKeys.Select(k => new KeyValuePair<string, IConfigurationSection?>(
-                    k, this.collectionInterceptor.Values[k] as IConfigurationSection))?
-                .GetEnumerator() ?? Enumerable.Empty<KeyValuePair<string, IConfigurationSection>>().GetEnumerator(); // ensure order
+            var values = this.Configuration.GetValueDictionary();
+
+            return this.Descriptor
+                .SectionKeys.Select(k => new KeyValuePair<string, IConfigurationSection?>(
+                    k, values[k]))
+                .GetEnumerator() ?? 
+                Enumerable.Empty<KeyValuePair<string, IConfigurationSection>>().GetEnumerator(); 
+            // re-iterate to ensure order
         }
 
         /// <inheritdoc/>
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        /// <inheritdoc/>
-        public IConfigurationSection? this[string sectionName] => 
-            this.collectionInterceptor.Values.TryGetValue(sectionName, out var section) 
-            ? section
-            : null;
-    }
-
-    class CollectionCircularInterceptor<T> : IInterceptor
-        where T : class, IConfigurationCollection<T>
-    {
-        private readonly IConfigurationCollection<T> @this;
-
-        public CollectionCircularInterceptor(IConfigurationCollection<T> @this)
+        [GenericTypeAcceptsConfigurationSection(0)]
+        public IConfigurationSection<TSection> GetSection<TSection>(Expression<Func<T, TSection>> expression) where TSection : class
         {
-            this.@this = @this;
+            if (expression.Body is not MemberExpression member)
+                throw new ArgumentException(string.Format(
+                    "Expression '{0}' refers to a method, not a property.",
+                     expression.ToString()));
+
+            if (this.GetSection(member.Member.Name) as IConfigurationSection<TSection> is IConfigurationSection<TSection> section)
+            {
+                return section;
+            }
+            throw new InvalidOperationException($"Unable to find section {member.Member.Name}. Something went horribly wrong.");
         }
 
         /// <inheritdoc/>
-        public void Intercept(IInvocation invocation)
+        public IConfigurationSection? GetSection(string sectionName)
         {
-            if (invocation.Method.Name == nameof(@this.GetEnumerator))
+            var values = this.Configuration.GetValueDictionary();
+            if (values != null && values.TryGetValue(sectionName, out var section))
             {
-                invocation.ReturnValue = @this.GetEnumerator(); // inherit enumerator.
+                return section;
             }
-            else
-            {
-                switch (invocation.Method.Name.Substring(4))
-                {
-                    case nameof(@this.Configuration):
-                        invocation.ReturnValue = @this.Configuration;
-                        break;
-                    case nameof(@this.Descriptor):
-                        invocation.ReturnValue = @this.Descriptor;
-                        break;
-                    case nameof(@this.ValueCollection):
-                        invocation.ReturnValue = @this.ValueCollection;
-                        break;
-                    case "Item": // circular indexer
-                        invocation.ReturnValue = @this[(string) invocation.Arguments[0]];
-                        break;
-                    default:
-                        invocation.Proceed();
-                        break;
-                }
-            }
-        }
-    }
-
-    class CollectionInterceptor<T> : IInterceptor
-    {
-        // IDictionary<string, IConfigurationSection<T>>
-        internal IDictionary<string, dynamic> Values;
-
-        internal CollectionInterceptor(IConfigurationValueCollection defaults)
-        {
-            this.Values = new Dictionary<string, dynamic>();
-
-            foreach (var (type, name) in from props in typeof(T).GetPublicProperties()
-                     where props.GetIndexParameters().Length == 0 
-                        && props.PropertyType.GetInterfaces().Contains(typeof(IConfigurationSection))
-                     select (type: props.PropertyType, name: props.Name))
-            {
-                var sectionType = typeof(ConfigurationSection<>).MakeGenericType(type);
-
-                if (name != null)
-                {
-                    this.Values.Add(name,
-                        Instantiate.CreateInstance(sectionType,
-                            new Type[] {typeof(IConfigurationValueCollection), typeof(string)},
-                                Expression.Constant(defaults), 
-                                Expression.Constant(name)));
-                }
-            }
-        }
-
-        /// <inheritdoc/>
-        public void Intercept(IInvocation invocation)
-        {
-            var propertyName = invocation.Method.Name.Substring(4); // remove get_ or set_
-            if (!this.Values.ContainsKey(propertyName))
-            {
-                return;
-            }
-
-            if (invocation.Method.Name.StartsWith("get_"))
-            {
-                invocation.ReturnValue = Values[propertyName].Configuration; // type is IConfigurationSection<T>
-            }
+            return null;
         }
     }
 }

@@ -5,8 +5,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Castle.Core.Internal;
-using Snowflake.Configuration.Attributes;
 
 namespace Snowflake.Configuration
 {
@@ -15,9 +13,9 @@ namespace Snowflake.Configuration
     /// </summary>
     /// <typeparam name="T">The type of the configuration.</typeparam>
     public class ConfigurationSectionDescriptor<T> : ConfigurationSectionDescriptor, IConfigurationSectionDescriptor
-       where T : class, IConfigurationSection<T>
+       where T : class
     {
-        internal ConfigurationSectionDescriptor(string sectionKey) : base(sectionKey, typeof(T)) { }
+        public ConfigurationSectionDescriptor(string sectionKey) : base(sectionKey, typeof(T)) { }
     }
 
     public class ConfigurationSectionDescriptor: IConfigurationSectionDescriptor
@@ -52,7 +50,7 @@ namespace Snowflake.Configuration
                     let metadata = prop.GetCustomAttributes<CustomMetadataAttribute>()
                     select new ConfigurationOptionDescriptor(attr, metadata, name))
                 .ToImmutableList();
-            var sectionMetadata = configType.GetAttribute<ConfigurationSectionAttribute>() ??
+            var sectionMetadata = configType.GetCustomAttribute<ConfigurationSectionAttribute>() ??
                                   new ConfigurationSectionAttribute(string.Empty, string.Empty);
             this.SectionName = sectionMetadata.SectionName;
             this.DisplayName = sectionMetadata.DisplayName;

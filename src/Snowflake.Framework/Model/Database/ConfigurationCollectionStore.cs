@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Configuration;
+using Snowflake.Configuration.Internal;
 using Snowflake.Model.Database.Exceptions;
 using Snowflake.Model.Database.Extensions;
 using Snowflake.Model.Database.Models;
@@ -35,8 +36,9 @@ namespace Snowflake.Model.Database
                 Enumerable.Empty<IGrouping<string, (string, Guid)>>();
         }
 
+        [GenericTypeAcceptsConfigurationCollection(0)]
         public IConfigurationCollection<T> CreateConfiguration<T>(string sourceName)
-            where T : class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollectionTemplate
         {
             var collection = new ConfigurationCollection<T>();
 
@@ -48,9 +50,10 @@ namespace Snowflake.Model.Database
             return collection;
         }
 
+        [GenericTypeAcceptsConfigurationCollection(0)]
         public IConfigurationCollection<T> CreateConfigurationForGame<T>(IGameRecord gameRecord,
             string sourceName, string profileName)
-            where T : class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollectionTemplate
         {
             var collection = new ConfigurationCollection<T>();
 
@@ -122,7 +125,7 @@ namespace Snowflake.Model.Database
             (var value in
                 context.ConfigurationValues.Where(v => v.ValueCollectionGuid == guid))
             {
-                var realValue = configurationCollection[value.SectionKey]?[value.OptionKey]
+                var realValue = configurationCollection.GetSection(value.SectionKey)?[value.OptionKey]
                     ?.AsConfigurationStringValue();
                 if (realValue == value.Value || realValue == null) continue;
                 value.Value = realValue;
@@ -155,8 +158,9 @@ namespace Snowflake.Model.Database
             context.SaveChanges();
         }
 
+        [GenericTypeAcceptsConfigurationCollection(0)]
         public IConfigurationCollection<T>? GetConfiguration<T>(Guid valueCollectionGuid)
-            where T : class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollectionTemplate
         {
             using var context = new DatabaseContext(this.Options.Options);
             var config = context.ConfigurationProfiles
@@ -165,9 +169,10 @@ namespace Snowflake.Model.Database
             return config?.AsConfiguration<T>();
         }
 
+        [GenericTypeAcceptsConfigurationCollection(0)]
         public IConfigurationCollection<T>? GetConfiguration<T>(Guid gameGuid,
             string sourceName, Guid valueCollectionGuid)
-            where T : class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollectionTemplate
         {
             using var context = new DatabaseContext(this.Options.Options);
             var profileJunction = context.GameRecordsConfigurationProfiles
@@ -196,14 +201,14 @@ namespace Snowflake.Model.Database
                 string str => entityValue.ValueType == ConfigurationOptionType.String 
                     || entityValue.ValueType == ConfigurationOptionType.Path
                     || Guid.TryParse(str, out var _) && entityValue.ValueType == ConfigurationOptionType.Resource,
-                bool _ => entityValue.ValueType == ConfigurationOptionType.Boolean,
-                long _ => entityValue.ValueType == ConfigurationOptionType.Integer || entityValue.ValueType == ConfigurationOptionType.Selection,
-                int _ => entityValue.ValueType == ConfigurationOptionType.Integer || entityValue.ValueType == ConfigurationOptionType.Selection,
-                short _ => entityValue.ValueType == ConfigurationOptionType.Integer || entityValue.ValueType == ConfigurationOptionType.Selection,
-                double _ => entityValue.ValueType == ConfigurationOptionType.Decimal,
-                float _ => entityValue.ValueType == ConfigurationOptionType.Decimal,
-                Guid _ => entityValue.ValueType == ConfigurationOptionType.Resource,
-                Enum _ => entityValue.ValueType == ConfigurationOptionType.Selection,
+                bool => entityValue.ValueType == ConfigurationOptionType.Boolean,
+                long => entityValue.ValueType == ConfigurationOptionType.Integer || entityValue.ValueType == ConfigurationOptionType.Selection,
+                int => entityValue.ValueType == ConfigurationOptionType.Integer || entityValue.ValueType == ConfigurationOptionType.Selection,
+                short => entityValue.ValueType == ConfigurationOptionType.Integer || entityValue.ValueType == ConfigurationOptionType.Selection,
+                double => entityValue.ValueType == ConfigurationOptionType.Decimal,
+                float => entityValue.ValueType == ConfigurationOptionType.Decimal,
+                Guid => entityValue.ValueType == ConfigurationOptionType.Resource,
+                Enum => entityValue.ValueType == ConfigurationOptionType.Selection,
                 _ => false,
             };
             if (!typeMatches) return;

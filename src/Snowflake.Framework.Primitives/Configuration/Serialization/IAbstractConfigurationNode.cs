@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text;
 using Snowflake.Input.Controller;
 namespace Snowflake.Configuration.Serialization
@@ -25,6 +26,11 @@ namespace Snowflake.Configuration.Serialization
         /// The value this node encapsulates.
         /// </summary>
         object? Value { get; }
+
+        /// <summary>
+        /// A list of annotations associated with this node.
+        /// </summary>
+        ImmutableArray<NodeAnnotation> Annotations { get; }
     }
 
     /// <summary>

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using EnumsNET;
-using Snowflake.Configuration.Attributes;
 
 namespace Snowflake.Configuration
 {
@@ -106,7 +105,7 @@ namespace Snowflake.Configuration
             this.Filter = configOption.Filter;
             this.ResourceType = configOption.ResourceType;
         }
-
+ 
         private static ConfigurationOptionType GetOptionType(Type t, bool isPath)
         {
             if (t.IsEnum)

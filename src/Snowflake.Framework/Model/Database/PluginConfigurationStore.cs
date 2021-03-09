@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Configuration;
+using Snowflake.Configuration.Internal;
 using Snowflake.Extensibility.Configuration;
-using Snowflake.Model.Database.Exceptions;
 using Snowflake.Model.Database.Extensions;
 using Snowflake.Model.Database.Models;
 
@@ -31,14 +31,14 @@ namespace Snowflake.Model.Database
             if (entity == null) return;
             bool typeMatches = value switch
             {
-                string _ => entity.ValueType == ConfigurationOptionType.String || entity.ValueType == ConfigurationOptionType.Path,
-                bool _ => entity.ValueType == ConfigurationOptionType.Boolean,
-                long _ => entity.ValueType == ConfigurationOptionType.Integer || entity.ValueType == ConfigurationOptionType.Selection,
-                int _ => entity.ValueType == ConfigurationOptionType.Integer || entity.ValueType == ConfigurationOptionType.Selection,
-                short _ => entity.ValueType == ConfigurationOptionType.Integer || entity.ValueType == ConfigurationOptionType.Selection,
-                double _ => entity.ValueType == ConfigurationOptionType.Decimal,
-                float _ => entity.ValueType == ConfigurationOptionType.Decimal,
-                Enum _ => entity.ValueType == ConfigurationOptionType.Selection,
+                string => entity.ValueType == ConfigurationOptionType.String || entity.ValueType == ConfigurationOptionType.Path,
+                bool => entity.ValueType == ConfigurationOptionType.Boolean,
+                long => entity.ValueType == ConfigurationOptionType.Integer || entity.ValueType == ConfigurationOptionType.Selection,
+                int => entity.ValueType == ConfigurationOptionType.Integer || entity.ValueType == ConfigurationOptionType.Selection,
+                short => entity.ValueType == ConfigurationOptionType.Integer || entity.ValueType == ConfigurationOptionType.Selection,
+                double => entity.ValueType == ConfigurationOptionType.Decimal,
+                float => entity.ValueType == ConfigurationOptionType.Decimal,
+                Enum => entity.ValueType == ConfigurationOptionType.Selection,
                 _ => false,
             };
             if (!typeMatches) return;
@@ -56,14 +56,14 @@ namespace Snowflake.Model.Database
                 if (entity == null) continue;
                 bool typeMatches = value switch
                 {
-                    string _ => entity.ValueType == ConfigurationOptionType.String || entity.ValueType == ConfigurationOptionType.Path,
-                    bool _ => entity.ValueType == ConfigurationOptionType.Boolean,
-                    long _ => entity.ValueType == ConfigurationOptionType.Integer || entity.ValueType == ConfigurationOptionType.Selection,
-                    int _ => entity.ValueType == ConfigurationOptionType.Integer || entity.ValueType == ConfigurationOptionType.Selection,
-                    short _ => entity.ValueType == ConfigurationOptionType.Integer || entity.ValueType == ConfigurationOptionType.Selection,
-                    double _ => entity.ValueType == ConfigurationOptionType.Decimal,
-                    float _ => entity.ValueType == ConfigurationOptionType.Decimal,
-                    Enum _ => entity.ValueType == ConfigurationOptionType.Selection,
+                    string => entity.ValueType == ConfigurationOptionType.String || entity.ValueType == ConfigurationOptionType.Path,
+                    bool => entity.ValueType == ConfigurationOptionType.Boolean,
+                    long => entity.ValueType == ConfigurationOptionType.Integer || entity.ValueType == ConfigurationOptionType.Selection,
+                    int => entity.ValueType == ConfigurationOptionType.Integer || entity.ValueType == ConfigurationOptionType.Selection,
+                    short => entity.ValueType == ConfigurationOptionType.Integer || entity.ValueType == ConfigurationOptionType.Selection,
+                    double => entity.ValueType == ConfigurationOptionType.Decimal,
+                    float => entity.ValueType == ConfigurationOptionType.Decimal,
+                    Enum => entity.ValueType == ConfigurationOptionType.Selection,
                     _ => false,
                 };
                 if (!typeMatches) return;
@@ -74,8 +74,9 @@ namespace Snowflake.Model.Database
             context.SaveChanges();
         }
 
+        [GenericTypeAcceptsConfigurationSection(0)]
         public IConfigurationSection<T> Get<T>()
-            where T : class, IConfigurationSection<T>
+            where T : class
         {
             using var context = new DatabaseContext(Options.Options);
             var entity = context.ConfigurationProfiles
@@ -91,8 +92,9 @@ namespace Snowflake.Model.Database
             return defaults;
         }
 
+        [GenericTypeAcceptsConfigurationSection(0)]
         public void Set<T>(IConfigurationSection<T> configuration)
-            where T : class, IConfigurationSection<T>
+            where T : class
         {
             using var context = new DatabaseContext(Options.Options);
             var entity = context.ConfigurationProfiles

@@ -4,15 +4,17 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Snowflake.Configuration;
+using Snowflake.Configuration.Internal;
 using Snowflake.Model.Database.Models;
 
 namespace Snowflake.Model.Database.Extensions
 {
     internal static class ConfigurationTypesExtensions
     {
+        [GenericTypeAcceptsConfigurationCollection(0)]
         public static ConfigurationProfileModel AsModel<T>
             (this IConfigurationCollection<T> @this, string prototypeName)
-            where T : class, IConfigurationCollection<T>
+            where T : class
         {
             return new ConfigurationProfileModel
             {
@@ -22,9 +24,10 @@ namespace Snowflake.Model.Database.Extensions
             };
         }
 
+        [GenericTypeAcceptsConfigurationSection(0)]
         public static ConfigurationProfileModel AsModel<T>
             (this IConfigurationSection<T> @this, string prototypeName)
-            where T : class, IConfigurationSection<T>
+            where T : class
         {
             return new ConfigurationProfileModel
             {
@@ -73,8 +76,9 @@ namespace Snowflake.Model.Database.Extensions
                 }).ToList();
         }
 
+        [GenericTypeAcceptsConfigurationCollection(0)]
         public static IConfigurationCollection<T> AsConfiguration<T>(this ConfigurationProfileModel model)
-            where T : class, IConfigurationCollection<T>
+            where T : class, IConfigurationCollectionTemplate
         {
             var values = model.Values.Select(v => (v.SectionKey, v.OptionKey, (v.Value, v.Guid, v.ValueType)));
             var valueCollection = ConfigurationValueCollection.MakeExistingValueCollection<T>
@@ -82,8 +86,9 @@ namespace Snowflake.Model.Database.Extensions
             return new ConfigurationCollection<T>(valueCollection);
         }
 
+        [GenericTypeAcceptsConfigurationSection(0)]
         public static IConfigurationSection<T> AsConfigurationSection<T>(this ConfigurationProfileModel model)
-            where T : class, IConfigurationSection<T>
+            where T : class
         {
             var sectionKey = model.Values.First().SectionKey;
             var values = model.Values.Select(v => (v.OptionKey, (v.Value, v.Guid, v.ValueType)));

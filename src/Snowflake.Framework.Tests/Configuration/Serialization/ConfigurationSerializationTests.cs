@@ -33,11 +33,11 @@ namespace Snowflake.Configuration.Serialization.Tests
             configuration.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
             var context = new ConfigurationTraversalContext(("game", dir));
 
-            var list = context.TraverseCollection(configuration.Configuration);
+            var list = context.TraverseCollection(configuration);
             IAbstractConfigurationNode dolphinList = list["#dolphin"];
 
             var iniSerializer = new SimpleIniConfigurationSerializer();
-            string outputIni = iniSerializer.Transform(dolphinList);
+            string outputIni = iniSerializer.Visit(dolphinList);
             var parser = new IniDataParser();
             var data = parser.Parse(outputIni);
             Assert.NotEmpty(data.Sections);
@@ -58,11 +58,11 @@ namespace Snowflake.Configuration.Serialization.Tests
             configuration.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
             var context = new ConfigurationTraversalContext(("game", dir));
 
-            var list = context.TraverseCollection(configuration.Configuration);
+            var list = context.TraverseCollection(configuration);
             IAbstractConfigurationNode dolphinList = list["#dolphin"];
 
             var cfgSerializer = new SimpleCfgConfigurationSerializer();
-            string outputCfg = cfgSerializer.Transform(dolphinList);
+            string outputCfg = cfgSerializer.Visit(dolphinList);
             Assert.NotEqual(string.Empty, outputCfg);
             // todo: test cfg parse
         }
@@ -81,12 +81,12 @@ namespace Snowflake.Configuration.Serialization.Tests
               .OpenFile("RMGE01.wbfs").OpenStream().Close();
             configuration.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
             var context = new ConfigurationTraversalContext(("game", dir));
-            var list = context.TraverseCollection(configuration.Configuration);
+            var list = context.TraverseCollection(configuration);
             IAbstractConfigurationNode dolphinList = list["#dolphin"];
 
             var xmlSerializer = new SimpleXmlConfigurationSerializer("Config");
            
-            string outputXml = xmlSerializer.Transform(dolphinList);
+            string outputXml = xmlSerializer.Visit(dolphinList);
             XDocument doc = XDocument.Parse(outputXml);
             Assert.NotEmpty(doc.Nodes());
         }
@@ -106,11 +106,11 @@ namespace Snowflake.Configuration.Serialization.Tests
             configuration.Configuration.ExampleConfiguration.FullscreenResolution = FullscreenResolution.Resolution1152X648;
             var context = new ConfigurationTraversalContext(("game", dir));
 
-            var list = context.TraverseCollection(configuration.Configuration);
+            var list = context.TraverseCollection(configuration);
             IAbstractConfigurationNode dolphinList = list["#dolphin"];
 
             var jsonSerializer = new SimpleJsonConfigurationSerializer();
-            string outputJson = jsonSerializer.Transform(dolphinList);
+            string outputJson = jsonSerializer.Visit(dolphinList);
             var jtoken = JToken.Parse(outputJson);
             Assert.True(jtoken.HasValues);
         }
@@ -128,12 +128,12 @@ namespace Snowflake.Configuration.Serialization.Tests
             var dir = new FS.Directory("test", pfs, pfs.GetDirectoryEntry("/"));
             
             var context = new ConfigurationTraversalContext(("game", dir));
-            var list = context.TraverseCollection(configuration.Configuration);
+            var list = context.TraverseCollection(configuration);
             IAbstractConfigurationNode dolphinList = list["#cemu"];
 
             var xmlSerializer = new SimpleXmlConfigurationSerializer("content");
 
-            string outputXml = xmlSerializer.Transform(dolphinList);
+            string outputXml = xmlSerializer.Visit(dolphinList);
             XDocument doc = XDocument.Parse(outputXml);
             Assert.NotEmpty(doc.Nodes());
         }
