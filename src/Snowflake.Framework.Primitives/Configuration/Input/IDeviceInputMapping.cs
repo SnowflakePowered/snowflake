@@ -22,5 +22,10 @@ namespace Snowflake.Configuration.Input
         /// <param name="element">The mapping for this device capability</param>
         /// <returns>The string representation of the given capability defined by this mapping.</returns>
         string this[DeviceCapability element] { get; }
+
+        /// <summary>
+        /// The input driver this mapping is intended for.
+        /// </summary>
+        InputDriver Driver { get; }
     }
 }
