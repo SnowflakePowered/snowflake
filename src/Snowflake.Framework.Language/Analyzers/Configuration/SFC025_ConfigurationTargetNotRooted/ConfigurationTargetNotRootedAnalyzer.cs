@@ -31,6 +31,36 @@ namespace Snowflake.Language.Analyzers.Configuration
                 isEnabledByDefault: true,
                 description: "The specified ConfigurationTarget does not have a root and will not be traversed.");
 
+        private Dictionary<string, HashSet<string>> BuildAdjacencyList(HashSet<string> rootTargets, List<AttributeData> targetAttrs)
+        {
+            var adjacency = new Dictionary<string, HashSet<string>>();
+
+            // add root targets first
+            foreach (var rootTarget in rootTargets)
+            {
+                adjacency[rootTarget] = new HashSet<string>();
+            }
+
+            // Add child targets
+            foreach (var targetAttr in targetAttrs)
+            {
+                if (targetAttr.ConstructorArguments.Length == 2)
+                {
+                    (string childTarget, string parentTarget) = ((string)targetAttr.ConstructorArguments[0].Value!,
+                     (string)targetAttr.ConstructorArguments[1].Value!);
+
+                    if (!adjacency.ContainsKey(childTarget))
+                        adjacency[childTarget] = new HashSet<string>();
+                    if (!adjacency.ContainsKey(parentTarget))
+                        adjacency[parentTarget] = new HashSet<string>();
+
+                    // Edges are directed from parents to children.
+                    adjacency[parentTarget].Add(childTarget);
+                }
+            }
+            return adjacency;
+        }
+
         public override IEnumerable<Diagnostic> Analyze(Compilation compilation, SemanticModel semanticModel, SyntaxNode node, CancellationToken cancel)
         {
             var interfaceSyntax = (InterfaceDeclarationSyntax)node;
@@ -54,7 +84,6 @@ namespace Snowflake.Language.Analyzers.Configuration
 
             // Collect declared root targets
             var rootTargets = new HashSet<string>();
-            var adjacency = new Dictionary<string, HashSet<string>>();
             var sortedTargets = new List<string>();
             var leaves = new Queue<string>();
             // null target always exists.
@@ -73,28 +102,7 @@ namespace Snowflake.Language.Analyzers.Configuration
                 }
             }
 
-            // build adjacency list
-            foreach (var rootTarget in rootTargets)
-            {
-                adjacency[rootTarget] = new HashSet<string>();
-            }
-
-            foreach (var targetAttr in targetAttrs)
-            {
-                if (targetAttr.ConstructorArguments.Length == 2)
-                {
-                    (string childTarget, string parentTarget) = ((string)targetAttr.ConstructorArguments[0].Value!,
-                     (string)targetAttr.ConstructorArguments[1].Value!);
-
-                    if (!adjacency.ContainsKey(childTarget))
-                        adjacency[childTarget] = new HashSet<string>();
-                    if (!adjacency.ContainsKey(parentTarget))
-                        adjacency[parentTarget] = new HashSet<string>();
-
-                    // Edges are directed from parents to children.
-                    adjacency[parentTarget].Add(childTarget);
-                }
-            }
+            var adjacency = this.BuildAdjacencyList(rootTargets, targetAttrs);
 
             // finding reachable nodes from rootTargets
 
