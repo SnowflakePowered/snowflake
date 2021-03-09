@@ -98,7 +98,7 @@ class Build : NukeBuild
                 .SetProjectFile(Tests)
                 .SetLogger("trx")
                 .SetDataCollector("XPlat Code Coverage")
-                .SetRunSetting("DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format", "cobutura")
+                .SetRunSetting("DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format", "cobertura")
                 .SetRunSetting("DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.ExcludeByFile", "**/*.g.cs")
                 .SetRunSetting("DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Include", "[Snowflake.Framework*]*,[Snowflake.Support.*]*")
             );
