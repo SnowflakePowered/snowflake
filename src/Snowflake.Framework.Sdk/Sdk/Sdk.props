@@ -21,6 +21,8 @@
     <ProjectReference Include="..\Snowflake.Framework.Remoting\Snowflake.Framework.Remoting.csproj" />
     <ProjectReference Include="..\Snowflake.Framework\Snowflake.Framework.csproj" />
     <ProjectReference Include="..\Snowflake.Framework.Services\Snowflake.Framework.Services.csproj" />
+    <ProjectReference Include="..\Snowflake.Framework.Language\Snowflake.Framework.Language.csproj" 
+                      OutputItemType="analyzer" PrivateAssets="all" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
   <ItemGroup>

@@ -5,6 +5,7 @@
     <LangVersion>9.0</LangVersion>
     <RoslynVersion>3.8.0</RoslynVersion>
     <Nullable>enable</Nullable>
+    <developmentDependency>true</developmentDependency>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,10 +13,30 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="3.9.0" PrivateAssets="Compile" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.9.0" PrivateAssets="Compile" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.9.0" PrivateAssets="Compile" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="3.8.0" PrivateAssets="Compile" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.8.0" PrivateAssets="Compile" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.8.0" PrivateAssets="Compile" />
   </ItemGroup>
+
+  <Target Name="AddNuGetDlls" BeforeTargets="_GetPackageFiles">
+    <!-- Merge the collection of PackageReference and Assemblies using the NuGetPackageId key.
+           This produces a new list containing the DLL path and the "IncludeInPackage" metadata-->
+    <JoinItems Left="@(ReferencePathWithRefAssemblies)" LeftKey="NuGetPackageId" LeftMetadata="*"
+               Right="@(PackageReference)" RightKey="" RightMetadata="*"
+               ItemSpecToUse="Left">
+      <Output TaskParameter="JoinResult" ItemName="_PackagesToPack" />
+    </JoinItems>
+
+    <ItemGroup>
+      <!-- Update the collection of items to pack with the DLLs from the NuGet packages -->
+      <None Include="@(_PackagesToPack)" Condition="%(_PackagesToPack.IncludeInPackage) == 'true'"
+            Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+
+      <!-- Add the DLL produced by the current project to the NuGet package -->
+      <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    </ItemGroup>
+  </Target>
+  
   <PropertyGroup>
     <WarningsAsErrors>NU1605;8604;8061;8602;8603;8612;8613;8620</WarningsAsErrors>
     <RootNamespace>Snowflake.Language</RootNamespace>
