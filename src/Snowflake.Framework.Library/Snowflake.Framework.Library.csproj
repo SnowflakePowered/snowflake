@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>9.0</LangVersion>
-    <_SnowflakeSDKDependenciesVersion>1.0.1</_SnowflakeSDKDependenciesVersion>
+    <_SnowflakeSDKDependenciesVersion>1.0.3</_SnowflakeSDKDependenciesVersion>
     <_SnowflakeSDKAssembliesVersion>1.0.0-alpha.*</_SnowflakeSDKAssembliesVersion>
   </PropertyGroup>
 
@@ -12,9 +12,6 @@
     <PackageReference Include="Snowflake.Framework.Primitives" Version="$(_SnowflakeSDKAssembliesVersion)" Publish="True" />
     <PackageReference Include="Snowflake.Framework" Version="$(_SnowflakeSDKAssembliesVersion)" Publish="True" />
     <PackageReference Include="Snowflake.Framework.Remoting" Version="$(_SnowflakeSDKAssembliesVersion)" Publish="True" />
-    <PackageReference Include="Snowflake.Framework.Language" Version="$(_SnowflakeSDKAssembliesVersion)" Publish="True">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="Snowflake.Framework.Language" Version="$(_SnowflakeSDKAssembliesVersion)" Publish="True"/>
   </ItemGroup>
 </Project>
