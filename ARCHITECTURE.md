@@ -98,3 +98,18 @@ CLI used to package and install Snowflake modules.
 ### Snowflake.Templates.AssemblyModule
 
 Assembly module project template. 
+
+## API
+
+### Snowflake.Configuration
+
+Implements emulator configuration representation and serialization. Configuration is organized in top-level `ConfigurationCollection` **template interfaces**, which consist of `ConfigurationSection` properties, which define `ConfigurationOption` properties. Source generators then generate required proxies from these template interfaces.
+
+A `ConfigurationCollection` may represent one or more configuration files on disk, this can be specified via any number of `ConfigurationTarget` attributes. Values set in a `ConfigurationSection` are uniquely identified and saved to the store. A collection is rehydrated by its unique collection of values. 
+
+Input configuration works similarly to a singlular `ConfigurationSection` template interface, but also allows `InputOption` properties that define a `DeviceCapability` value.
+
+On serialization, a `ConfigurationCollection` is first traversed into a `AbstractConfigurationNode` AST by a `ConfigurationTraversalContext`, grouped by top-level root targets. `ConfigurationTarget` attributes form a DAG that is used to induce a nested structure over flatter structure of a `ConfigurationCollection`, since `ConfigurationSection` templates can not be nested. The structure of the AST will reflect the structure of the targets defined.
+
+Once an AST has been produced, it can be further visited by a `ConfigurationTreeVisitor` to modify the AST. AST nodes can have `NodeAnnotations` attached to them to assist later tree visitor passes. Finally they are serialized to disk by an implementation of `ConfigurationSerializer`.
+
