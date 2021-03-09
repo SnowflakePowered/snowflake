@@ -172,14 +172,24 @@ File records are simply files that have their unique IDs registered as 'belongin
 
 ### Snowflake.Orchestration
 
-todo
+Provides support for managing an external emulated instance. Base class implementations for `EmulatorOrchestrator` plugins, save management, process management, and directory projections for a running instance of an emulator.
+
+An `EmulatorOrchestrator` is essentially a factory for a `GameEmulation` instance that manages the lifecycle of a running emulator instance. The `GameEmulation` is responsible for setting up the environment by restoring save games from the managed save directory, setting up symbolic links via directory projections to mirror the expected structure, and copying necessary BIOS files, as well as teardown once the emulation stops: persisting savegame data, cleaning up symbolic links, making sure things are where they are supposed to be. 
 
 ### Snowflake.Romfile
 
-Provides APIs having to do with ROM file analysis, such as file signature, best-effort ROM filename parsing, and [shiragame](https://shiragame.snowflakepowe.red/) data. The filename parser is currently regex-based and is due to be replaced with a port of the parser from [shiratsu](https://github.com/SnowflakePowered/shiratsu/tree/master/src).
+Provides APIs having to do with ROM file analysis, such as file signatures, and best-effort ROM filename parsing. The filename parser is currently regex-based and is due to be replaced with a port of the parser from [shiratsu](https://github.com/SnowflakePowered/shiratsu/tree/master/src).
 
 ### Snowflake.Scraping
 
-Snowflake uses a tree-based, best effort scraping system that is unique across all other frontends. A `Game` is first created on the database for a known platform and perhaps a ROM registered as a file record. A `GameScrapeContext` is then created when a scrape is requested. The context contains the scrapers that will produce 'seeds', and a culler that removes seeds that seem unlikely to contribute to relevant data.
+Snowflake uses an iterative tree-based, best effort scraping system that is unique across all other frontends. A `Game` is first created on the database for a known platform and perhaps a ROM registered as a file record. A `GameScrapeContext` is then created when a scrape is requested. The context contains the scrapers that will produce 'seeds', and a culler that removes seeds that seem unlikely to contribute to relevant data.
 
-todo: finish
+Seeds are tuples of the form `(type, string)`, and are contained in a tree of the form `(Seed, Seed[])`, which are yielded by scrapers or seeded by the scrape context with information from the game at the time of context creation. A `Scraper` looks at a parent seed, as well as any seeds at the sibling, child, or root level relative to the parent seed in order to make decisions about scraping. It then yields whatever results in tree form, which are then attached as a child or sibling of the parent seed, or as a child of the root seed. 
+
+Scrapers can specify dependencies using directives, which allow them to execute only when a seed of a specific type is attached at a specific position, either as part of the root, as a sibling, or as parent, although a parent dependency is already implied. Scrapers can also refuse to run if a certain directive is fulfilled, ensuring that irrelevant scrapers will not be unnecessarily ran.
+
+The scraping process is iterative and keeps going until no new seeds are added. After no more seeds can be added, cullers are run to pick the best result compared to a ground truth. The default culler does this by comparing the result `title` seed with the search query title via their Jaccard coefficient.
+
+This is what is meant by iterative tree-based scraping. This approach is extremely powerful. For example, a game scrape context starts out with some hashes, which a shiragame scraper would emit a `search_title` seed. Then, another scraper that for example calls GiantBomb would emit a `result` seed with a bunch of information using the `search_title` as a basis. 
+
+Once the scrape and cull cycle is done, there should remain a single seed of each type, usually under `result`. Traversers then walk this seed tree and cause side effects, such as writing metadata to the game or downloading boxart URLs.
