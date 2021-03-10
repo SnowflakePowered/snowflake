@@ -1,5 +1,5 @@
 ﻿using HotChocolate.Types;
-using Snowflake.Input.Controller.Mapped;
+using Snowflake.Input.Controller;
 using Snowflake.Input.Device;
 using Snowflake.Orchestration.Extensibility;
 using Snowflake.Orchestration.Extensibility.Extensions;

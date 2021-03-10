@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using HotChocolate.Types;
-using Snowflake.Input.Controller.Mapped;
+using Snowflake.Input.Controller;
 using Snowflake.Input.Device;
 
 namespace Snowflake.Remoting.GraphQL.Model.Device

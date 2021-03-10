@@ -6,20 +6,20 @@ using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Input.Device;
 
-namespace Snowflake.Input.Controller.Mapped
+namespace Snowflake.Input.Controller
 {
     public class ControllerElementMappingProfile : IControllerElementMappingProfile
     {
         /// <inheritdoc/>
         public IEnumerator<ControllerElementMapping> GetEnumerator()
         {
-            return this.controllerElements.Values.GetEnumerator();
+            return controllerElements.Values.GetEnumerator();
         }
 
         /// <inheritdoc/>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetEnumerator();
+            return GetEnumerator();
         }
 
         /// <inheritdoc/>
@@ -41,12 +41,12 @@ namespace Snowflake.Input.Controller.Mapped
         {
             get
             {
-                this.controllerElements.TryGetValue(layoutElement, out ControllerElementMapping map);
+                controllerElements.TryGetValue(layoutElement, out ControllerElementMapping map);
                 return map.DeviceCapability;
             }
             set
             {
-                this.controllerElements[layoutElement] = new ControllerElementMapping(layoutElement, value);
+                controllerElements[layoutElement] = new ControllerElementMapping(layoutElement, value);
             }
         }
 
@@ -86,7 +86,7 @@ namespace Snowflake.Input.Controller.Mapped
         {
             foreach (var controllerElement in mapping)
             {
-                this.Add(controllerElement);
+                Add(controllerElement);
             }
         }
 
@@ -124,24 +124,24 @@ namespace Snowflake.Input.Controller.Mapped
             foreach (var (controllerElement, _) in controller.Layout)
             {
                 if (mapping[controllerElement] == DeviceCapability.None) continue;
-                this.Add(new ControllerElementMapping(controllerElement, mapping[controllerElement]));
+                Add(new ControllerElementMapping(controllerElement, mapping[controllerElement]));
             }
         }
 
         public ControllerElementMappingProfile(string deviceName,
             ControllerId controllerId, InputDriver driver, int vendor, Guid profileGuid)
         {
-            this.DeviceName = deviceName;
-            this.ControllerID = controllerId;
-            this.DriverType = driver;
-            this.VendorID = vendor;
-            this.controllerElements = new Dictionary<ControllerElement, ControllerElementMapping>();
-            this.ProfileGuid = profileGuid;
+            DeviceName = deviceName;
+            ControllerID = controllerId;
+            DriverType = driver;
+            VendorID = vendor;
+            controllerElements = new Dictionary<ControllerElement, ControllerElementMapping>();
+            ProfileGuid = profileGuid;
         }
 
         public void Add(ControllerElementMapping controllerElement)
         {
-            this.controllerElements[controllerElement.LayoutElement] = controllerElement;
+            controllerElements[controllerElement.LayoutElement] = controllerElement;
         }
     }
 }

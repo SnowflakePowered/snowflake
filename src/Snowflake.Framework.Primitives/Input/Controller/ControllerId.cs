@@ -29,7 +29,7 @@ namespace Snowflake.Input.Controller
         }
 
         /// <inheritdoc />
-        public bool Equals(string other)
+        public bool Equals(string? other)
         {
             return other != null && other.Equals(this.ControllerIdString, StringComparison.InvariantCultureIgnoreCase);
         }

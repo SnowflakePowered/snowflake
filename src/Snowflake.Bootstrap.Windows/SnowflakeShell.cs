@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using Snowflake.Bootstrap.Windows.Utility;
-using Snowflake.Input.Controller.Mapped;
+using Snowflake.Input.Controller;
 using Snowflake.Input.Device;
 using Snowflake.Loader;
 using Snowflake.Orchestration.Extensibility;

@@ -11,7 +11,7 @@ using System.Text;
 using HotChocolate;
 using Snowflake.Remoting.GraphQL;
 using System.Linq;
-using Snowflake.Input.Controller.Mapped;
+using Snowflake.Input.Controller;
 using Snowflake.Services;
 using System.Threading.Tasks;
 using Snowflake.Orchestration.Extensibility.Extensions;

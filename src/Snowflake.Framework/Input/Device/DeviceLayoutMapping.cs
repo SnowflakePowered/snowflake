@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Snowflake.Input.Controller;
-using Snowflake.Input.Controller.Mapped;
 
 namespace Snowflake.Input.Device
 {

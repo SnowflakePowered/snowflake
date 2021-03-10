@@ -1,6 +1,6 @@
 ﻿using HotChocolate;
 using HotChocolate.Types;
-using Snowflake.Input.Controller.Mapped;
+using Snowflake.Input.Controller;
 using Snowflake.Input.Device;
 using Snowflake.Remoting.GraphQL;
 using Snowflake.Remoting.GraphQL.FrameworkQueries.Mutations.Relay;

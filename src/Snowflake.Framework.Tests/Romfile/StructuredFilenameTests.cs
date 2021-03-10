@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Snowflake.Romfile.Naming;
 using Snowflake.Romfile.Tokenizer;
 using Xunit;
 

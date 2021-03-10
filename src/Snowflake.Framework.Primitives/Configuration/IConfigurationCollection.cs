@@ -22,6 +22,11 @@ namespace Snowflake.Configuration
         /// </summary>
         T Configuration { get; }
 
+        /// <summary>
+        /// Gets a configuration section by its expression.
+        /// </summary>
+        /// <param name="expression">The expression that locates the property.</param>
+        /// <returns>The typed configuration section with the given property name.</returns>
         [GenericTypeAcceptsConfigurationSection(0)]
         IConfigurationSection<TSection> GetSection<TSection>(Expression<Func<T, TSection>> expression)
             where TSection: class;
