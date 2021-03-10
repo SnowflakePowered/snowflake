@@ -9,7 +9,6 @@ using EnumsNET;
 using Snowflake.Configuration.Internal;
 using Snowflake.Configuration.Utility;
 using Snowflake.Input.Controller;
-using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 
 namespace Snowflake.Configuration.Input

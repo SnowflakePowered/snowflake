@@ -1,9 +1,9 @@
 ﻿using HotChocolate.Types;
 using Snowflake.Remoting.GraphQL.Model.Stone.ControllerLayout;
-using Snowflake.Input.Controller.Mapped;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Snowflake.Input.Controller;
 
 namespace Snowflake.Remoting.GraphQL.Model.Device.Mapped
 {

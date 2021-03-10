@@ -1,5 +1,4 @@
 ﻿using Snowflake.Input.Controller;
-using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 
 namespace Snowflake.Orchestration.Extensibility

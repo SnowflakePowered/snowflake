@@ -1,5 +1,5 @@
 ﻿using HotChocolate.Types;
-using Snowflake.Input.Controller.Mapped;
+using Snowflake.Input.Controller;
 using Snowflake.Remoting.GraphQL.FrameworkQueries.Mutations.Relay;
 using Snowflake.Remoting.GraphQL.Model.Device.Mapped;
 using System;

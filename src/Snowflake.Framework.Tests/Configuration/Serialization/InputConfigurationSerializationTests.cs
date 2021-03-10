@@ -14,7 +14,6 @@ using System.Xml.Linq;
 using System.Linq;
 using IniParser.Parser;
 using Snowflake.Tests;
-using Snowflake.Input.Controller.Mapped;
 using Snowflake.Configuration.Input;
 using Snowflake.Services;
 using Snowflake.Input.Controller;

@@ -2,7 +2,6 @@
 using Snowflake.Remoting.GraphQL.Model.Device.Mapped;
 using Snowflake.Remoting.GraphQL.Model.Stone.ControllerLayout;
 using Snowflake.Input.Controller;
-using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 using System;
 using System.Collections.Generic;

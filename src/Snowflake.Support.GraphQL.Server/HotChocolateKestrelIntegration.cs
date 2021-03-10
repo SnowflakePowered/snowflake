@@ -1,26 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HotChocolate;
-using HotChocolate.AspNetCore;
-using HotChocolate.AspNetCore.Subscriptions;
-using HotChocolate.Configuration;
-using HotChocolate.Execution;
-using HotChocolate.Execution.Configuration;
-using HotChocolate.Subscriptions;
-using HotChocolate.Types;
-using HotChocolate.Utilities;
+﻿using HotChocolate;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Snowflake.Remoting.Kestrel;
-using Snowflake.Input.Controller;
-using Snowflake.Input.Controller.Mapped;
-using Snowflake.Model.Game;
-using HotChocolate.Language;
-using Snowflake.Remoting.GraphQL;
-using Snowflake.Remoting.GraphQL.Model.Queueing;
 
 using Snowflake.Support.GraphQL.Server;
 

@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 
-namespace Snowflake.Input.Controller.Mapped
-{
+namespace Snowflake.Input.Controller
+{ 
     /// <summary>
     /// Provides a store for <see cref="IControllerElementMappingProfile"/>.
     /// </summary>

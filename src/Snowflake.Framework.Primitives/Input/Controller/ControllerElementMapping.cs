@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snowflake.Input.Controller.Mapped
+namespace Snowflake.Input.Controller
 {
     /// <summary>
     /// Represents a real device controller element mapped onto a virtual device element
@@ -28,20 +28,14 @@ namespace Snowflake.Input.Controller.Mapped
         /// <param name="virtualElement">The virtual controller element to map to.</param>
         /// <param name="deviceElement">The real device capability.</param>
         public ControllerElementMapping(ControllerElement virtualElement, DeviceCapability deviceElement)
-        {
-            this.LayoutElement = virtualElement;
-            this.DeviceCapability = deviceElement;
-        }
+            => (LayoutElement, DeviceCapability) = (virtualElement, deviceElement);
 
         /// <summary>
         /// Create a new mapping between a virtual controller element and device capability from a key value pair
         /// </summary>
         /// <param name="kvp">The key value pair to convert</param>
         public ControllerElementMapping(KeyValuePair<ControllerElement, DeviceCapability> kvp)
-        {
-            this.LayoutElement = kvp.Key;
-            this.DeviceCapability = kvp.Value;
-        }
+            => (LayoutElement, DeviceCapability) = (kvp.Key, kvp.Value);
 
         /// <summary>
         /// Converts between a <see cref="ControllerElementMapping"/> and a <see cref="KeyValuePair{TKey, TValue}"/>

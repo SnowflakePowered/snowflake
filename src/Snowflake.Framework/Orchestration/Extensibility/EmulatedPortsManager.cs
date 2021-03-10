@@ -1,4 +1,4 @@
-﻿using Snowflake.Input.Controller.Mapped;
+﻿using Snowflake.Input.Controller;
 using Snowflake.Model.Game;
 using Snowflake.Orchestration.Extensibility.Extensions;
 using Snowflake.Services;

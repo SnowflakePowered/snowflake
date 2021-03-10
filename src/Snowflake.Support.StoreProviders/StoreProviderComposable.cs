@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Extensibility.Configuration;
-using Snowflake.Input.Controller.Mapped;
+using Snowflake.Input.Controller;
 using Snowflake.Loader;
 using Snowflake.Model.Database;
 using Snowflake.Model.Database.Models;

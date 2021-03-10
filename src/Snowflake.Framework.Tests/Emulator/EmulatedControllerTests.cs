@@ -4,7 +4,6 @@ using System.Text;
 using Moq;
 using Snowflake.Orchestration.Extensibility;
 using Snowflake.Input.Controller;
-using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 using Xunit;
 

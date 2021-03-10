@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Snowflake.Configuration;
 using Snowflake.Configuration.Input;
 using Snowflake.Input.Controller;
-using Snowflake.Input.Controller.Mapped;
 using Snowflake.Input.Device;
 
 namespace Snowflake.Configuration.Tests

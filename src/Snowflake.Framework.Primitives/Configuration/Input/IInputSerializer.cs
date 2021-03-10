@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snowflake.Input.Controller;
-using Snowflake.Input.Controller.Mapped;
 
 namespace Snowflake.Configuration.Input
 {

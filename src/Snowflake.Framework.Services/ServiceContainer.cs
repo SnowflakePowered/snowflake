@@ -10,7 +10,7 @@ using Snowflake.Extensibility;
 using Snowflake.Remoting.GraphQL;
 using Snowflake.Remoting.Kestrel;
 using Snowflake.Input;
-using Snowflake.Input.Controller.Mapped;
+using Snowflake.Input.Controller;
 using Snowflake.Loader;
 using Snowflake.Services.Logging;
 using Zio;

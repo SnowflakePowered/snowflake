@@ -7,7 +7,7 @@ using Snowflake.Orchestration.SystemFiles;
 using Snowflake.Loader;
 using Snowflake.Services;
 using Snowflake.Orchestration.Extensibility;
-using Snowflake.Input.Controller.Mapped;
+using Snowflake.Input.Controller;
 
 namespace Snowflake.Support.Execution
 {

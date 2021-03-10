@@ -1,6 +1,6 @@
 ﻿using HotChocolate.Types;
 using Snowflake.Remoting.GraphQL.Model.Stone.ControllerLayout;
-using Snowflake.Input.Controller.Mapped;
+using Snowflake.Input.Controller;
 using System;
 using System.Collections.Generic;
 using System.Text;
