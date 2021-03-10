@@ -202,7 +202,7 @@ namespace Snowflake.Scraping.Tests
             var seeds = context.Context.GetUnculled().Select(s => s.Content).ToList();
 
             Assert.Contains(("platform", "TEST_PLATFORM"), seeds);
-            Assert.Contains(("search_title", "TestFile"), seeds);
+            Assert.Contains(("search_filename", "TestFile.test"), seeds);
             Assert.Contains(("search_crc", "HASHCRC32"), seeds);
         }
     }

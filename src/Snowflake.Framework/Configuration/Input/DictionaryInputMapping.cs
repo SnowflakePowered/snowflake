@@ -44,6 +44,7 @@ namespace Snowflake.Configuration.Input
         /// <summary>
         /// Instantiate an input mapping with the given dictionary of mappings.
         /// </summary>
+        /// <param name="driver">The input driver used with this mapping.</param>
         /// <param name="elementMappings">The dictionary of mappings from <see cref="DeviceCapability"/> to input configuration string.</param>
         public DictionaryInputMapping(InputDriver driver, IDictionary<DeviceCapability, string> elementMappings)
         {
