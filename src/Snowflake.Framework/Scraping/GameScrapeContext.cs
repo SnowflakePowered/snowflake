@@ -8,7 +8,6 @@ using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
 using Snowflake.Model.Game;
 using Snowflake.Model.Game.LibraryExtensions;
-using Snowflake.Romfile;
 
 namespace Snowflake.Scraping
 {
@@ -35,7 +34,6 @@ namespace Snowflake.Scraping
             IEnumerable<ICuller> cullers)
             : this(GameScrapeContext.MakeGameSeeds(game), scrapers, cullers)
         {
-
         }
 
         private static IEnumerable<SeedContent> MakeGameSeeds(IGame game)
@@ -56,8 +54,7 @@ namespace Snowflake.Scraping
 
                 if (file.MimeType.StartsWith("application/vnd.stone-romfile"))
                 {
-                    var structuredFileName = new StructuredFilename(file.File.Name);
-                    yield return ("search_title", structuredFileName.Title);
+                    yield return ("search_filename", file.File.Name);
                 }
             }
         }

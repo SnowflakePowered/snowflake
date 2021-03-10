@@ -37,7 +37,6 @@ namespace Snowflake.Model.Database
                          && p.DeviceName == deviceName
                          && p.VendorID == vendorId);
 
-
             foreach (var retrievedMapping in retrievedMappings)
             {
                 context.Entry(retrievedMapping).State = EntityState.Deleted;

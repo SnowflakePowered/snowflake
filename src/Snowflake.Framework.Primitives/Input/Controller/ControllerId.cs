@@ -74,7 +74,6 @@ namespace Snowflake.Input.Controller
         public static bool operator !=(ControllerId x, ControllerId y) => x.ControllerIdString != y.ControllerIdString;
 #pragma warning restore 1591
 
-        
         /// <summary>
         /// Implicitly converts from a <see cref="string"/> to a <see cref="ControllerId"/>
         /// </summary>

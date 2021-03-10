@@ -53,7 +53,6 @@ namespace Snowflake.Installation
         internal TaskResult(string name, ValueTask<T> result, Exception? error)
             : this(name, new ValueTask<string>($"Executed {name}"), result, error)
         {
-
         }
 
         /// <summary>
@@ -217,7 +216,7 @@ namespace Snowflake.Installation
         /// <typeparam name="TResult">The type of the result</typeparam>
         /// <param name="name">A string identifier for the <see cref="TaskResult{TResult}"/></param>
         /// <param name="result">The task that yields the result.</param>
-        /// <param name="description">A description of the task failed./param>
+        /// <param name="description">A description of the task failed.</param>
         /// <param name="ex">The exception to be returned when this <see cref="TaskResult{TResult}"/> is checked for errors.</param>
         /// <returns>A <see cref="TaskResult{TResult}"/> that represents the yielded result, with the provided exception.</returns>
         public static TaskResult<TResult> Failure<TResult>(string name, ValueTask<string> description, ValueTask<TResult> result, Exception? ex)

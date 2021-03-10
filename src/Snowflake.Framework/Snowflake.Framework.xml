@@ -186,6 +186,7 @@
             <summary>
             Instantiate an input mapping with the given dictionary of mappings.
             </summary>
+            <param name="driver">The input driver used with this mapping.</param>
             <param name="elementMappings">The dictionary of mappings from <see cref="T:Snowflake.Input.Device.DeviceCapability"/> to input configuration string.</param>
         </member>
         <member name="P:Snowflake.Configuration.Input.InputConfiguration`1.PlayerIndex">
@@ -743,7 +744,7 @@
             <summary>
             Tries to get a GUID for the file.
             </summary>
-            <param name="rawInfo">The raw <see cref="T:System.IO.FileInfo"/> referring to the file on disk that <paramref name="canonicalPath"/> points to.</param>
+            <param name="rawInfo">The raw <see cref="T:System.IO.FileInfo"/> referring to the file on disk.</param>
             <param name="guid">The result GUID if it exists, or <see cref="F:System.Guid.Empty"/> if it does not.</param>
             <returns><see langword="true"/> if a GUID exists and is returned, <see langword="false"/> otherwise.</returns>
         </member>
@@ -751,7 +752,7 @@
             <summary>
             Sets a GUID for a file. 
             </summary>
-            <param name="rawInfo">The raw <see cref="T:System.IO.FileInfo"/> referring to the file on disk that <paramref name="canonicalPath"/> points to.</param>
+            <param name="rawInfo">The raw <see cref="T:System.IO.FileInfo"/> referring to the file on disk.</param>
             <param name="guid">The result GUID if it exists, or <see cref="F:System.Guid.Empty"/> if it does not.</param>
         </member>
         <member name="P:Snowflake.Input.Controller.ControllerElementCollection.ButtonA">
@@ -1451,48 +1452,6 @@
             </summary>
             <param name="this"></param>
             <returns></returns>
-        </member>
-        <member name="P:Snowflake.Romfile.StructuredFilename.NamingConvention">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Romfile.StructuredFilename.RegionCode">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Romfile.StructuredFilename.Title">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Romfile.StructuredFilename.Year">
-            <inheritdoc/>
-        </member>
-        <member name="P:Snowflake.Romfile.StructuredFilename.OriginalFilename">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Romfile.Tokenizer.GoodToolsTokenClassifier.ClassifyBracketsTokens(System.Collections.Generic.IEnumerable{System.ValueTuple{System.String,System.Int32}})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Romfile.Tokenizer.GoodToolsTokenClassifier.ClassifyParensTokens(System.Collections.Generic.IEnumerable{System.ValueTuple{System.String,System.Int32}})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Romfile.Tokenizer.GoodToolsTokenClassifier.ExtractTitleTokens(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Romfile.Tokenizer.NoIntroTokenClassifier.ClassifyBracketsTokens(System.Collections.Generic.IEnumerable{System.ValueTuple{System.String,System.Int32}})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Romfile.Tokenizer.NoIntroTokenClassifier.ClassifyParensTokens(System.Collections.Generic.IEnumerable{System.ValueTuple{System.String,System.Int32}})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Romfile.Tokenizer.NoIntroTokenClassifier.ExtractTitleTokens(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Romfile.Tokenizer.TosecTokenClassifier.ClassifyParensTokens(System.Collections.Generic.IEnumerable{System.ValueTuple{System.String,System.Int32}})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Romfile.Tokenizer.TosecTokenClassifier.ClassifyBracketsTokens(System.Collections.Generic.IEnumerable{System.ValueTuple{System.String,System.Int32}})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Snowflake.Romfile.Tokenizer.TosecTokenClassifier.ExtractTitleTokens(System.String)">
-            <inheritdoc/>
         </member>
         <member name="P:Snowflake.Scraping.Extensibility.Culler.TargetType">
             <inheritdoc />

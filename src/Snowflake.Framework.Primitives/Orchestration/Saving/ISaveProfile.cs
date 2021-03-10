@@ -58,7 +58,7 @@ namespace Snowflake.Orchestration.Saving
         /// should not add a save. The new savegame becomes the "head" save.
         /// </summary>
         /// <param name="saveGame">The savegame to create a new save from. The save must be of the same type, 
-        /// as this method works by calling <see cref="ISaveGame.ExtractSave(IDirectory)"./></param>
+        /// as this method works by calling <see cref="ISaveGame.ExtractSave(IDirectory)"/></param>
         Task<ISaveGame> CreateSave(ISaveGame saveGame);
 
         /// <summary>
