@@ -32,7 +32,7 @@ The badge logo is a figure of 6 three fingered dendrites equally spaced around a
 * **DO** Use the *gradient* variant whenever possible.
 * **DO** Use the *white* variant if a colour-neutral design is required.
 * **DO** Recolor the logo in a **solid** colour if absolutely necessary.
-* **DO NOT** Use the *black* varieat except against stark white (`#fff`). The *gradient* variant is preferred against stark white as well.
+* **DO NOT** Use the *black* variant except against stark white (`#fff`). The *gradient* variant is preferred against stark white as well.
 * **DO NOT** Apply any gradient besides the provided *gradient* variant.
 * **DO NOT** Display the logo in a resolution less than 65px in any variant except the *gradient* variant.
 * **DO NOT** Add drop shadows or special effects to the logo.
@@ -77,7 +77,7 @@ The following colours are used in the hydrogen branding materials. We also assig
 The badge logo is provided in three variants: *color*, *white*, and *black* in a variety of different sizes. The variant preferred and displayed above is the *color* variant.
 
 #### Description
-The badge logo is a figure of a classical depiction of a hydrogen atom superimposed on a sheet of material. The nucleus of the atom is at the center with an electron at a 45 degree angle from the first quadrant to the nucleus at a distance 1.5 the radius of the nucleus, with a 4pt ring intersecting with the electron surrounding the nucleus. On the *color* variant, the nucleus, ring, and electron are coloured with a 75 degree even linear gradient from *Aster* to *Cyan* such that the electron is wholly coloured cyan. The sheet on which the atom is superimposed is coloured with a 90 degree even linear gradient such that the top of the sheet is *Off-white*, while the bottom of the sheet is *Light Gray*. The sheet has a bottom 1px shaded edge beginning from 2/3rds down the circle, smoothly darkening reaching a maximum of about 30% darkness.
+The badge logo is a figure of a classical depiction of a hydrogen atom superimposed on a circular sheet of material. The nucleus of the atom is at the center with an electron at a 45 degree angle from the first quadrant to the nucleus at a distance 1.5 the radius of the nucleus, with a 4pt ring intersecting with the electron surrounding the nucleus. On the *color* variant, the nucleus, ring, and electron are coloured with a 75 degree even linear gradient from *Aster* to *Cyan* such that the electron is wholly coloured cyan. The sheet on which the atom is superimposed is coloured with a 90 degree even linear gradient such that the top of the sheet is *Off-white*, while the bottom of the sheet is *Light Gray*. The sheet has a bottom 1px shaded edge beginning from 2/3rds down the circle, smoothly darkening reaching a maximum of about 30% darkness.
 
 #### Guidelines
 
