@@ -144,10 +144,7 @@ namespace Snowflake.Support.GraphQL.Server
                     StrictValidation = true,
                     RemoveUnreachableTypes = false,
                 })
-                .ModifyRequestOptions(opts =>
-                {
-                    opts.TracingPreference = HotChocolate.Execution.Options.TracingPreference.OnDemand;
-                });
+                .AddApolloTracing(HotChocolate.Execution.Options.TracingPreference.OnDemand);
 
             schemaBuilder.ConfigureSchema(schemaBuilder =>
             {

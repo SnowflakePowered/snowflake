@@ -25,9 +25,9 @@ namespace Snowflake.Plugin.Debug.GraphQLVisualizers
     {
         public void Configure(IApplicationBuilder app)
         {
-            app.UseGraphiQLServer(new GraphiQLOptions() { Path = "/debug/gql/graphiql" });
-            app.UseGraphQLVoyager(new GraphQLVoyagerOptions() { Path = "/debug/gql/voyager" });
-            app.UseGraphQLAltair(new GraphQLAltairOptions() { Path = "/debug/gql/altair" });
+            app.UseGraphQLGraphiQL(path: "/debug/gql/graphiql");
+            app.UseGraphQLVoyager(path: "/debug/gql/voyager");
+            app.UseGraphQLAltair(path: "/debug/gql/altair");
         }
 
         public void ConfigureServices(IServiceCollection services)

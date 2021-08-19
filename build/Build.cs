@@ -96,7 +96,7 @@ class Build : NukeBuild
         {
             DotNetTest(s => s
                 .SetProjectFile(Tests)
-                .SetLogger("trx")
+                .SetLoggers("trx")
                 .SetDataCollector("XPlat Code Coverage")
                 .SetRunSetting("DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format", "cobertura")
                 .SetRunSetting("DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.ExcludeByFile", "**/*.g.cs")

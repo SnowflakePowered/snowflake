@@ -1,0 +1,9 @@
+{
+  "sdk": {
+    "version": "5.0"
+  },
+  "msbuild-sdks": {
+    "Snowflake.Framework.Dependencies.Sdk": "2.0.0",
+    "Snowflake.Framework.Sdk": "5.0.0"
+  }
+}

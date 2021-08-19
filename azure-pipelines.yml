@@ -18,7 +18,7 @@ jobs:
   displayName: Test and run code coverage on Linux
   condition: and(succeeded(), eq(variables.os, 'Linux'), not(variables['build.skiptest']))
   pool:
-    vmImage: 'ubuntu-16.04'
+    vmImage: 'ubuntu-latest'
   steps:
   - template: azure-test.yml  # Template reference
     parameters:

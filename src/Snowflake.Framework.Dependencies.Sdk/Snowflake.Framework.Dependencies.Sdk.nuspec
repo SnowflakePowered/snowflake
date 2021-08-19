@@ -16,7 +16,7 @@
   </metadata>
 
   <files>
-    <file src="Sdk\*" target="Sdk" />
-    <file src="$outputpath$\**" target="\" />
+    <file src="Sdk\Sdk.props" target="Sdk\Sdk.props" />
+    <file src="Sdk\Sdk.targets" target="Sdk\Sdk.targets" />
   </files>
 </package>
