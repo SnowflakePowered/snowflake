@@ -24,7 +24,7 @@ namespace Snowflake.Language.Analyzers.Configuration
         private static readonly DiagnosticDescriptor Rule =
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFC004__CannotHideInheritedProperty,
-                title: "Template interface can not hide or override inherited member.",
+                title: "Template interface can not hide or override inherited member",
                 messageFormat: "Property '{0}' was already defined by inherited interface '{1}' and can not be hidden or overridden",
                 category: "Snowflake.Configuration",
                 DiagnosticSeverity.Error,

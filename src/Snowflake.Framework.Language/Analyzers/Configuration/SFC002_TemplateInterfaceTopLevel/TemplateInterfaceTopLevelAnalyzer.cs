@@ -21,7 +21,7 @@ namespace Snowflake.Language.Analyzers.Configuration
         private static readonly DiagnosticDescriptor Rule =
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFC002__TemplateInterfaceTopLevelAnalyzer,
-                title: "Template interface not top level.",
+                title: "Template interface not top level",
                 messageFormat: "Collection template interface {0} must be defined within an enclosing top-level namespace", 
                 category: "Snowflake.Configuration", 
                 DiagnosticSeverity.Error, 

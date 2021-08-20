@@ -61,7 +61,6 @@ namespace Snowflake.Input.Controller
         /// <param name="driver">The <see cref="InputDriver"/> of the device instance for this set of mappings.</param>
         /// <param name="vendor">The vendor ID of the physical device for this set of mappings.</param>
         /// <param name="mapping">The device layout mapping provided by the device enumerator.</param>
-        /// <param name="profileGuid">The <see cref="Guid"/> of this mapping profile.</param>
         public ControllerElementMappingProfile(string deviceName,
             ControllerId controllerId, InputDriver driver, int vendor,
             IDeviceLayoutMapping mapping)

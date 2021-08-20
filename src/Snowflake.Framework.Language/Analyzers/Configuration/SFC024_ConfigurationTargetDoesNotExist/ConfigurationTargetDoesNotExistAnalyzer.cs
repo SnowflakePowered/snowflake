@@ -24,8 +24,8 @@ namespace Snowflake.Language.Analyzers.Configuration
         private static readonly DiagnosticDescriptor Rule =
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFC024__ConfigurationTargetDoesNotExist,
-                title: "A ConfigurationTarget with the specified name does not exist.",
-                messageFormat: "A configuration target named '{0}' was not found.",
+                title: "A ConfigurationTarget with the specified name does not exist",
+                messageFormat: "A configuration target named '{0}' was not found",
                 category: "Snowflake.Configuration",
                 DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,

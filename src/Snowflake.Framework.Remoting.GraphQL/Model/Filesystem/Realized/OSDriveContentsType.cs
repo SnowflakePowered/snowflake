@@ -15,8 +15,8 @@ namespace Snowflake.Remoting.GraphQL.Model.Filesystem.Contextual
         {
             descriptor.Name("_OSDirectoryContents__DriveInfo")
                 .Description("Describes the contents of a directory in the realized, OS-dependent file system.")
-                .Interface<OSDirectoryContentsInterface>()
-                .Interface<DirectoryContentsInterface>();
+                .Implements<OSDirectoryContentsInterface>()
+                .Implements<DirectoryContentsInterface>();
             descriptor.Field("root")
                 .Description("The root directory.")
                 .Type<OSDirectoryInfoType>()

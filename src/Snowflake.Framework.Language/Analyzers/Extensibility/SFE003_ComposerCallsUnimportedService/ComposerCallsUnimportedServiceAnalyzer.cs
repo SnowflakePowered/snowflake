@@ -21,8 +21,8 @@ namespace Snowflake.Language.Analyzers.Extensibility
         private static readonly DiagnosticDescriptor Rule =
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFE003__ComposerCallsUnimportedService,
-                title: "'Compose' requests unimported service.",
-                messageFormat: "Tried to get service '{0}' but an '[ImportService(typeof({0}))]' attribute was not found. ",
+                title: "'Compose' requests unimported service",
+                messageFormat: "Tried to get service '{0}' but an '[ImportService(typeof({0}))]' attribute was not found",
                 category: "Snowflake.Extensibility",
                 DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,

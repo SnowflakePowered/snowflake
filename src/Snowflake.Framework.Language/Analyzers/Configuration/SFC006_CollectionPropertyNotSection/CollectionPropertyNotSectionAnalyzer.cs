@@ -24,7 +24,7 @@ namespace Snowflake.Language.Analyzers.Configuration
         private static readonly DiagnosticDescriptor Rule =
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFC006__CollectionPropertyNotSection,
-                title: "ConfigurationCollection template property must be a ConfigurationSection interface.",
+                title: "ConfigurationCollection template property must be a ConfigurationSection interface",
                 messageFormat: "Property '{0}' is not of a type that is an interface decorated with [ConfigurationSection]",
                 category: "Snowflake.Configuration",
                 DiagnosticSeverity.Error,

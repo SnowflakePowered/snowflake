@@ -11,7 +11,7 @@ namespace Snowflake.Language.Generators.Configuration
         static DiagnosticDescriptor FrameworkMissing = new DiagnosticDescriptor(
             DiagnosticCodes.SFG000__GenericDiagnosticError,
             title: "Snowflake Framework APIs missing",
-            messageFormat: "Required APIs from Snowflake.Framework could not be found.",
+            messageFormat: "Required APIs from Snowflake.Framework could not be found",
             category: "Snowflake.Language",
             DiagnosticSeverity.Error,
             true,

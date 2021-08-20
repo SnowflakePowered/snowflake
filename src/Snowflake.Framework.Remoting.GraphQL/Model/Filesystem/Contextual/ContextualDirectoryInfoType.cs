@@ -16,7 +16,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Filesystem.Contextual
         {
             descriptor.Name("ContextualDirectoryInfo")
                .Description("Describes a directory in a contextual virtualized filesystem.")
-               .Interface<DirectoryInfoInterface>();
+               .Implements<DirectoryInfoInterface>();
             descriptor.Field("lastModifiedTime")
                 .Description("The last modified time of the directory, in UTC.")
                 .Type<NonNullType<DateTimeType>>()

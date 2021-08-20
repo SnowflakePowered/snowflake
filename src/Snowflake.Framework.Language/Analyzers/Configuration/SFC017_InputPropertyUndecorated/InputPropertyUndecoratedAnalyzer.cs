@@ -24,7 +24,7 @@ namespace Snowflake.Language.Analyzers.Configuration
         private static readonly DiagnosticDescriptor Rule =
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFC017__InputPropertyUndecorated,
-                title: "InputConfiguration template property is undecorated.",
+                title: "InputConfiguration template property is undecorated",
                 messageFormat: "Property '{0}' must be decorated with [ConfigurationOption] or [InputOption]",
                 category: "Snowflake.Configuration",
                 DiagnosticSeverity.Error,

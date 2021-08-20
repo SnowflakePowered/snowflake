@@ -64,7 +64,7 @@ namespace Snowflake.Remoting.GraphQL
             where T : class, IAsyncJobQueue
         {
             descriptor
-                .Interface<JobQueueInterface>();
+                .Implements<JobQueueInterface>();
 
             descriptor.Field(s => s.GetActiveJobs())
                 .Name("activeJobIds")

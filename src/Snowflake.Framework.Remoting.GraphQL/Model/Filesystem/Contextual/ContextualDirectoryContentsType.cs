@@ -14,7 +14,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Filesystem.Contextual
         {
             descriptor.Name("ContextualDirectoryContents")
                 .Description("Describes the contents of a directory on a contextual virtual filesystem.")
-                .Interface<DirectoryContentsInterface>();
+                .Implements<DirectoryContentsInterface>();
             descriptor.Field("root")
                 .Description("The root directory.")
                 .Type<ContextualDirectoryInfoType>()

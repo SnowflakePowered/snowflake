@@ -24,7 +24,7 @@ namespace Snowflake.Language.Analyzers.Configuration
         private static readonly DiagnosticDescriptor Rule =
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFC015__CollectionPropertyMustHaveSetter,
-                title: "ConfigurationSection template properties must declare a public 'set' accessor.",
+                title: "ConfigurationSection template properties must declare a public 'set' accessor",
                 messageFormat: "Property '{0}' does not declare a 'set' accessor",
                 category: "Snowflake.Configuration",
                 DiagnosticSeverity.Error,

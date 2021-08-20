@@ -24,7 +24,7 @@ namespace Snowflake.Language.Analyzers.Configuration
         private static readonly DiagnosticDescriptor Rule =
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFC011__SectionPropertyMismatchedType,
-                title: "ConfigurationSection template property type mismatch.",
+                title: "ConfigurationSection template property type mismatch",
                 messageFormat: "Property '{0}' has type '{1}' but is assigned a default value of type '{2}'",
                 category: "Snowflake.Configuration",
                 DiagnosticSeverity.Error,

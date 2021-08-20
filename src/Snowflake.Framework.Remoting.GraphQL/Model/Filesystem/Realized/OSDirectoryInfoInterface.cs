@@ -16,7 +16,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Filesystem.Contextual
         {
             descriptor.Name("OSDirectoryInfo")
                .Description("Describes a directory in the realized, OS-dependent file system.")
-               .Interface<DirectoryInfoInterface>();
+               .Implements<DirectoryInfoInterface>();
             descriptor.Field("lastModifiedTime")
                 .Description("The last modified time of the directory, in UTC.")
                 .Type<NonNullType<DateTimeType>>();
