@@ -46,6 +46,8 @@ You will need the [.NET 5 SDK](https://www.microsoft.com/net/download/) to get s
 $ git clone --recursive https://github.com/SnowflakePowered/snowflake/
 $ cd snowflake
 $ dotnet run --project build -- Bootstrap
+$ cd out
+$ dotnet snowflake install-all
 ```
 
 This command will build and install all support modules required for Snowflake to be functional to your application data directory (`%appdata%\snowflake\modules` or `~/.snowflake/snowflake/modules` on Linux). Note that you may have to delete the installed module `assembly.Snowflake.Framework.Test.InvalidComposable`, which is designed deliberately to error on load, however this is not necessary.
