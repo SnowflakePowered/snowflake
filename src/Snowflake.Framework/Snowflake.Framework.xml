@@ -1049,7 +1049,6 @@
             <param name="driver">The <see cref="T:Snowflake.Input.Device.InputDriver"/> of the device instance for this set of mappings.</param>
             <param name="vendor">The vendor ID of the physical device for this set of mappings.</param>
             <param name="mapping">The device layout mapping provided by the device enumerator.</param>
-            <param name="profileGuid">The <see cref="T:System.Guid"/> of this mapping profile.</param>
         </member>
         <member name="M:Snowflake.Input.Controller.ControllerElementMappingProfile.#ctor(System.String,Snowflake.Input.Controller.ControllerId,Snowflake.Input.Device.InputDriver,System.Int32,Snowflake.Input.Device.IDeviceLayoutMapping,System.Guid)">
             <summary>

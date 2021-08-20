@@ -24,8 +24,8 @@ namespace Snowflake.Language.Analyzers.Configuration
         private static readonly DiagnosticDescriptor Rule =
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFC025__ConfigurationTargetNotRooted,
-                title: "The specified ConfigurationTarget is not rooted.",
-                messageFormat: "The configuration target named '{0}' is not attached to a root target.",
+                title: "The specified ConfigurationTarget is not rooted",
+                messageFormat: "The configuration target named '{0}' is not attached to a root target",
                 category: "Snowflake.Configuration",
                 DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,

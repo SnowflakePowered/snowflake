@@ -16,7 +16,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Filesystem.Contextual
         {
             descriptor.Name("OSFileInfo")
                 .Description("Describes a file in a realized filesystem.")
-                .Interface<FileInfoInterface>();
+                .Implements<FileInfoInterface>();
             descriptor.Field("extension")
                 .Description("The extension of the file.")
                 .Type<NonNullType<StringType>>()

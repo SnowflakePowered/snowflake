@@ -24,7 +24,7 @@ namespace Snowflake.Language.Analyzers.Configuration
         private static readonly DiagnosticDescriptor Rule =
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFC018__InputPropertyTypeMismatch,
-                title: "InputConfiguration input template properties must be of type DeviceCapability.",
+                title: "InputConfiguration input template properties must be of type DeviceCapability",
                 messageFormat: "Property '{0}' is of type '{1}' but must be of type DeviceCapability",
                 category: "Snowflake.Configuration",
                 DiagnosticSeverity.Error,

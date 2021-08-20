@@ -15,7 +15,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Installation.Tasks
         protected override void Configure(IObjectTypeDescriptor<TaskResult<T>> descriptor)
         {
             descriptor
-                .Interface<TaskResultTypeInterface>()
+                .Implements<TaskResultTypeInterface>()
                 .Extend()
                 .OnBeforeNaming((completionContext, definition) =>
                 {

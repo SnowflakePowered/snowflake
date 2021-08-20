@@ -24,7 +24,7 @@ namespace Snowflake.Language.Analyzers.Configuration
         private static readonly DiagnosticDescriptor Rule =
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFC013__SectionPropertyInvalidAccessor,
-                title: "ConfigurationSection template properties can only have 'get' and 'set' accessors.",
+                title: "ConfigurationSection template properties can only have 'get' and 'set' accessors",
                 messageFormat: "Declared accessor '{1}' is invalid for property '{0}'",
                 category: "Snowflake.Configuration",
                 DiagnosticSeverity.Error,

@@ -24,7 +24,7 @@ namespace Snowflake.Language.Analyzers.Configuration
         private static readonly DiagnosticDescriptor Rule =
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFC016__InputPropertyInvalidAccessor,
-                title: "InputConfiguration input template properties can only have a 'get' accessor.",
+                title: "InputConfiguration input template properties can only have a 'get' accessor",
                 messageFormat: "Declared accessor '{1}' is invalid for property '{0}'",
                 category: "Snowflake.Configuration",
                 DiagnosticSeverity.Error,

@@ -24,8 +24,8 @@ namespace Snowflake.Language.Analyzers.Configuration
         private static readonly DiagnosticDescriptor _Rule =
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFC021__GenericArgumentExpectsConfigurationCollection,
-                title: "The specified generic argument expects a ConfigurationCollection template interface.",
-                messageFormat: "Type '{0}' must be a ConfigurationCollection template interface.",
+                title: "The specified generic argument expects a ConfigurationCollection template interface",
+                messageFormat: "Type '{0}' must be a ConfigurationCollection template interface",
                 category: "Snowflake.Configuration",
                 DiagnosticSeverity.Error,
                 isEnabledByDefault: true,

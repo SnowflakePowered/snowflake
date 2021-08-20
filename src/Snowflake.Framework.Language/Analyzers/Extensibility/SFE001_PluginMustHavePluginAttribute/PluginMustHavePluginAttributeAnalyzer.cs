@@ -21,8 +21,8 @@ namespace Snowflake.Language.Analyzers.Extensibility
         private static readonly DiagnosticDescriptor Rule =
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFE001__PluginMustHavePluginAttribute,
-                title: "Plugin must be marked with [Plugin].",
-                messageFormat: "Concrete class '{0}' implements 'IPlugin' but does not have [Plugin] attribute.",
+                title: "Plugin must be marked with [Plugin]",
+                messageFormat: "Concrete class '{0}' implements 'IPlugin' but does not have [Plugin] attribute",
                 category: "Snowflake.Extensibility",
                 DiagnosticSeverity.Error,
                 isEnabledByDefault: true,

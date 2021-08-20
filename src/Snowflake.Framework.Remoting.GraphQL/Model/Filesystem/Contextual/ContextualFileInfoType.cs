@@ -17,7 +17,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Filesystem.Contextual
 #pragma warning disable CS0618 // Type or member is obsolete
             descriptor.Name("ContextualFileInfo")
                 .Description("Describes a file in a contextual filesystem.")
-                .Interface<FileInfoInterface>();
+                .Implements<FileInfoInterface>();
             descriptor.Field("extension")
                 .Description("The extension of the file.")
                 .Type<NonNullType<StringType>>()

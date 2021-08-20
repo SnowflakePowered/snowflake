@@ -22,7 +22,7 @@ namespace Snowflake.Language.Analyzers.Extensibility
             new DiagnosticDescriptor(
                 id: DiagnosticCodes.SFE002__PluginMustNotBeNamedCommon,
                 title: "Plugin can not be named 'common'",
-                messageFormat: "The class '{0}' exports a plugin with the reserved name 'common' ",
+                messageFormat: "The class '{0}' exports a plugin with the reserved name 'common'",
                 category: "Snowflake.Extensibility",
                 DiagnosticSeverity.Error,
                 isEnabledByDefault: true,
