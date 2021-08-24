@@ -28,7 +28,8 @@ namespace Snowflake.Support.StoreProviders
             string sqlitePath = Path.Combine(contentDirectory.ApplicationData.FullName, "library.db");
             var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
             optionsBuilder
-                .UseSqlite($"Data Source={sqlitePath}");
+                .UseSqlite($"Data Source={sqlitePath}")
+                .EnableSensitiveDataLogging(true);
 
             using (var context = new DatabaseContext(optionsBuilder.Options))
             {

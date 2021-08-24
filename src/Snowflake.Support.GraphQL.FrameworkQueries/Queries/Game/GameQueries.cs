@@ -1,8 +1,5 @@
 ﻿using HotChocolate.Language;
 using HotChocolate.Types;
-using HotChocolate.Types.Filters;
-using HotChocolate.Types.Relay;
-using HotChocolate.Utilities;
 using Snowflake.Remoting.GraphQL.Model.Records;
 using Snowflake.Model.Game;
 using Snowflake.Model.Records.Game;
@@ -12,6 +9,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using Snowflake.Remoting.GraphQL;
+using HotChocolate.Data.Filters.Expressions;
+using HotChocolate.Data.Filters;
+using Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
 {
@@ -29,10 +29,10 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
                     .Description("Exclude games that have been marked as deleted. " +
                     "Setting this to true is shorthand for retrieving games with the game_deleted metadata not set to \"true\".")
                     .DefaultValue(true))
-                .AddFilterArguments<GameRecordQueryFilterInputType>()
+                .UseFiltering<GameRecordQueryFilterInputType>()
                 .Use(next => context =>
                 {
-                    IValueNode valueNode = context.ArgumentValue<IValueNode>("where");
+                    IValueNode valueNode = context.ArgumentLiteral<IValueNode>("where");
                     bool excludeDeleted = context.ArgumentValue<bool>("excludeDeleted");
                     Expression<Func<IGameRecordQuery, bool>> excludeDeletedQuery = r =>
                                 !r.Metadata.Any(r => r.MetadataKey == GameMetadataKeys.Deleted && r.MetadataValue == "true");
@@ -54,13 +54,24 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
                         return next.Invoke(context);
                     }
 
-                    if (context.Field.Arguments["where"].Type is InputObjectType iot && iot is IFilterInputType)
+                    if (context.Field.Arguments["where"].Type is InputObjectType iot && iot is IFilterInputType ift)
                     {
-                        var filter = new QueryableFilterVisitorContext(iot, typeof(IGameRecordQuery), context.GetTypeConverter(), true);
-                        QueryableFilterVisitor.Default.Visit(valueNode, filter);
+                        //var filter = new QueryableFilterVisitorContext(iot, typeof(IGameRecordQuery), context.GetTypeConverter(), true);
+                        //QueryableFilterVisitor.Default.Visit(valueNode, filter);
 
-                        var expr = filter.CreateFilter<IGameRecordQuery>();
-                        
+                        //var expr = filter.CreateFilter<IGameRecordQuery>();
+
+                        var filterContext = new QueryableFilterContext(ift, false);
+
+                        var filter = new FilterVisitor<QueryableFilterContext, Expression>(new QueryableCombinator());
+                        filter.Visit(valueNode, filterContext);
+                        bool res = filterContext.TryCreateLambda(out Expression<Func<IGameRecordQuery, bool>> tempExpr);
+                        if (!res)
+                        {
+                            throw new InvalidOperationException();
+                        }
+                        var exprVisitor = new ReifyingMethodCallExpressionVisitor();
+                        var expr = exprVisitor.VisitAndConvert(tempExpr, null);
                         if (!excludeDeleted)
                         {
                             context.Result = queryBuilder.QueryGames(expr).ToList();

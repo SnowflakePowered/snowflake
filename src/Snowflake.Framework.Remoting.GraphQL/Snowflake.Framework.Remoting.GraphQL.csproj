@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="HotChocolate" Version="11.3.5" />
-    <PackageReference Include="HotChocolate.Types.Filters" Version="11.3.5" />
+    <PackageReference Include="HotChocolate.Data" Version="11.3.5" />
   </ItemGroup>
 
   <ItemGroup>

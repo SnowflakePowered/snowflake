@@ -1,5 +1,5 @@
-﻿using HotChocolate.Types;
-using HotChocolate.Types.Filters;
+﻿using HotChocolate.Data.Filters;
+using HotChocolate.Types;
 using Snowflake.Model.Records;
 using System;
 using System.Collections.Generic;
@@ -15,17 +15,12 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
             descriptor
                 .Name("RecordMetadataFilter");
             descriptor
-                .Filter(f => f.MetadataKey)
-                .AllowEquals().And()
-                .AllowNotEquals().And()
-                .AllowContains().And()
-                .AllowNotContains();
+                .Field(f => f.MetadataKey)
+                .Name("key");
             descriptor
-                .Filter(f => f.MetadataValue)
-                .AllowEquals().And()
-                .AllowNotEquals().And()
-                .AllowContains().And()
-                .AllowNotContains();
+                .Field(f => f.MetadataValue)
+                .Name("value");
+  
         }
     }
 }

@@ -1,11 +1,12 @@
 ﻿using HotChocolate.Types;
-using HotChocolate.Types.Filters;
 using Snowflake.Remoting.GraphQL.Model.Stone;
 using Snowflake.Model.Records.Game;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using HotChocolate.Data.Filters;
+using Snowflake.Remoting.GraphQL.Model.Stone.PlatformInfo;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
 {
@@ -18,28 +19,35 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
                 .Name("GameFilter")
                 .BindFieldsExplicitly();
             descriptor
-                .Filter(g => g.PlatformID)
-                .AllowEquals()
-                    .Name("platformId")
-                    .Description("Get the platform with the specific PlatformID.").And()
-                .AllowIn()
-                    .Name("platformId_in")
-                    .Description("Get platforms with the given PlatformIDs.").And()
-                .AllowStartsWith()
-                    .Name("platformId_startsWith")
-                    .Description("Get platforms whose PlatformIDs start with the given string");
-            descriptor
-               .Filter(g => g.RecordID)
-               .AllowEquals()
-                    .Name("gameId")
-                    .Description("Gets the Game with the given ID.");
-            // todo for 11
-            descriptor
-                .List(g => g.Metadata)
-                .AllowAll<MetadataFilterInputType>().And()
-                .AllowSome<MetadataFilterInputType>().And()
-                .AllowNone<MetadataFilterInputType>().And()
-                .AllowAny();
+                .Field(g => g.PlatformID)
+                .Name("platformId");
+            descriptor.Field(g => g.RecordID)
+                .Name("recordId");
+            descriptor.Field(g => g.Metadata)
+                .Name("metadata")
+                .Type<ListFilterInputType<MetadataFilterInputType>>();
+            //    .Filter(g => g.PlatformID)
+            //    .AllowEquals()
+            //        .Name("platformId")
+            //        .Description("Get the platform with the specific PlatformID.").And()
+            //    .AllowIn()
+            //        .Name("platformId_in")
+            //        .Description("Get platforms with the given PlatformIDs.").And()
+            //    .AllowStartsWith()
+            //        .Name("platformId_startsWith")
+            //        .Description("Get platforms whose PlatformIDs start with the given string");
+            //descriptor
+            //   .Filter(g => g.RecordID)
+            //   .AllowEquals()
+            //        .Name("gameId")
+            //        .Description("Gets the Game with the given ID.");
+            //// todo for 11
+            //descriptor
+            //    .List(g => g.Metadata)
+            //    .AllowAll<MetadataFilterInputType>().And()
+            //    .AllowSome<MetadataFilterInputType>().And()
+            //    .AllowNone<MetadataFilterInputType>().And()
+            //    .AllowAny();
         }
     }
     //public class GameRecordQueryFilterInputType

@@ -1,9 +1,12 @@
 ﻿using HotChocolate;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Snowflake.Model.Game;
 using Snowflake.Remoting.Kestrel;
-
+using HotChocolate.Data.Filters;
 using Snowflake.Support.GraphQL.Server;
+using Snowflake.Input.Controller;
+using HotChocolate.Data;
 
 namespace Snowflake.Services
 {
@@ -20,6 +23,7 @@ namespace Snowflake.Services
         {
             app.UseDeveloperExceptionPage();
             app
+                .UseWebSockets()
                 .UseRouting()
                 .UseEndpoints(endpoints =>
                 {

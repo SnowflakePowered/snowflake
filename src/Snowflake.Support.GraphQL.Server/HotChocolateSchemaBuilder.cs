@@ -1,8 +1,6 @@
 ﻿using HotChocolate;
 using Snowflake.Services;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 using Snowflake.Remoting.GraphQL.Model.Configuration;
 using Snowflake.Remoting.GraphQL.Model.Device;
@@ -26,6 +24,8 @@ using System.Threading.Tasks;
 using Snowflake.Model.Game;
 using Snowflake.Input.Controller;
 using HotChocolate.Execution.Configuration;
+using HotChocolate.Data;
+using HotChocolate.Data.Filters;
 
 namespace Snowflake.Support.GraphQL.Server
 {
@@ -198,6 +198,13 @@ namespace Snowflake.Support.GraphQL.Server
             {
                 config(schemaBuilder);
             }
+            schemaBuilder.AddFiltering(configure =>
+            {
+                configure.AddDefaults();
+                configure.BindRuntimeType<PlatformId, ComparableOperationFilterInputType<string>>();
+                configure.BindRuntimeType<ControllerId, ComparableOperationFilterInputType<string>>();
+
+            });
             return schemaBuilder;
         }
         
