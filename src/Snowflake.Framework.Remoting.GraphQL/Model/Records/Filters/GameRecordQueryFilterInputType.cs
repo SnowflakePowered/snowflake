@@ -6,9 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using HotChocolate.Data.Filters;
-using Snowflake.Remoting.GraphQL.Model.Stone.PlatformInfo;
 
-namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
+namespace Snowflake.Framework.Remoting.GraphQL.Records.Filters
 {
     public class GameRecordQueryFilterInputType
         : FilterInputType<IGameRecordQuery>

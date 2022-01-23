@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
+namespace Snowflake.Framework.Remoting.GraphQL.Records.Filters
 {
     internal class MetadataFilterInputType
         : FilterInputType<IRecordMetadataQuery>

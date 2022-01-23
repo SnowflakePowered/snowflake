@@ -19,7 +19,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Records
 
             descriptor.Field(g => g.Record)
                 .Name("record")
-                .Type<GameRecordType>()
+                .Type<NonNullType<GameRecordType>>()
                 .Description("Record metadata relating to this game.");
         }
     }

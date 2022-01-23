@@ -2,10 +2,9 @@
 using Snowflake.Remoting.GraphQL.Model.Records;
 using Snowflake.Remoting.GraphQL.Model.Stone.PlatformInfo;
 using Snowflake.Model.Records.Game;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Snowflake.Framework.Remoting.GraphQL.Records.Filters;
+using HotChocolate.Data.Filters;
 
 namespace Snowflake.Remoting.GraphQL.Model.Game
 {
@@ -23,7 +22,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Game
 
             descriptor.Field(g => g.PlatformID)
                 .Name("platformId")
-                .Type<PlatformIdType>()
+                .Type<NonNullType<PlatformIdType>>()
                 .Description("The original platform or game console of the game this object represents.");
 
             descriptor.Field(g => g.RecordID)
@@ -33,8 +32,8 @@ namespace Snowflake.Remoting.GraphQL.Model.Game
             descriptor.Field("metadata")
                 .Description("The metadata associated with this game.")
                 .Resolve(ctx => ctx.Parent<IGameRecord>().Metadata.Select(m => m.Value))
-                .Type<ListType<RecordMetadataType>>()
-                .UseFiltering();
+                .Type<NonNullType<ListType<NonNullType<RecordMetadataType>>>>()
+                .UseFiltering<ListFilterInputType<MetadataFilterInputType>>();
         }
     }
 }

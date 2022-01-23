@@ -7,11 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using Snowflake.Remoting.GraphQL;
 using HotChocolate.Data.Filters.Expressions;
 using HotChocolate.Data.Filters;
 using Snowflake.Support.GraphQL.FrameworkQueries.Queries.Game;
+using Snowflake.Framework.Remoting.GraphQL.Records.Filters;
 
 namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
 {
@@ -65,13 +65,12 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
 
                         var filter = new FilterVisitor<QueryableFilterContext, Expression>(new QueryableCombinator());
                         filter.Visit(valueNode, filterContext);
-                        bool res = filterContext.TryCreateLambda(out Expression<Func<IGameRecordQuery, bool>> tempExpr);
+                        bool res = filterContext.TryCreateLambda(out Expression<Func<IGameRecordQuery, bool>> expr);
                         if (!res)
                         {
                             throw new InvalidOperationException();
                         }
-                        var exprVisitor = new ReifyingMethodCallExpressionVisitor();
-                        var expr = exprVisitor.VisitAndConvert(tempExpr, null);
+                      
                         if (!excludeDeleted)
                         {
                             context.Result = queryBuilder.QueryGames(expr).ToList();
@@ -91,7 +90,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
                     }
                     return next.Invoke(context);
                 })
-                .UsePaging<GameType>();
+                .UsePaging<NonNullType<GameType>>();
         }
     }
 }
