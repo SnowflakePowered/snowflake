@@ -193,9 +193,28 @@ namespace Snowflake.Support.GraphQL.Server
                 configure.AddDefaults();
                 configure.BindRuntimeType<PlatformId, ComparableOperationFilterInputType<string>>();
                 configure.BindRuntimeType<ControllerId, ComparableOperationFilterInputType<string>>();
-                
             });
-            schemaBuilder.ModifyOptions(c => c.DefaultBindingBehavior = BindingBehavior.Explicit);
+            schemaBuilder.ModifyOptions(opts =>
+            {
+                opts.DefaultBindingBehavior = BindingBehavior.Explicit;
+                opts.UseXmlDocumentation = true;
+                opts.StrictValidation = true;
+                opts.StrictRuntimeTypeValidation = false;
+                opts.RemoveUnreachableTypes = false;
+                opts.DefaultIsOfTypeCheck = (objectType, context, value) =>
+                {
+                    // hack to ensure that DummyNodeType is never matched
+                    // didn't need to do this because type was narrowed down before but since
+                    // HC12 DummyNodeType has runtimetype Object.
+                    // 
+                    // In general, a runtime type of Object is poorly defined anyways.
+                    if (objectType.RuntimeType == typeof(object))
+                    {
+                        return false;
+                    }
+                    return objectType.RuntimeType.IsInstanceOfType(value);
+                };
+            });
             return schemaBuilder;
         }
         
