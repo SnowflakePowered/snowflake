@@ -22,7 +22,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Saving
                 .Description("Create a new save profile.")
                 .UseClientMutationId()
                 .UseAutoSubscription()
-                .Argument("input", arg => arg.Type<CreateSaveProfileInputType>())
+                .Argument("input", arg => arg.Type<NonNullType<CreateSaveProfileInputType>>())
                 .Resolve(async ctx =>
                 {
                     var gameLibrary = ctx.SnowflakeService<IGameLibrary>();

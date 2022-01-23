@@ -29,7 +29,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                 .Description("Create an emulation instance.")
                 .UseClientMutationId()
                 .UseAutoSubscription()
-                .Argument("input", a => a.Type<CreateEmulationInstanceInputType>())
+                .Argument("input", a => a.Type<NonNullType<CreateEmulationInstanceInputType>>())
                 .Resolve(async ctx =>
                 {
                     var input = ctx.ArgumentValue<CreateEmulationInstanceInput>("input");
@@ -104,7 +104,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                 "save game depending on the emulator, but there may be data loss if the game is not saved properly.")
                 .UseClientMutationId()
                 .UseAutoSubscription()
-                .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
+                .Argument("input", arg => arg.Type<NonNullType<EmulationInstanceInputType>>())
                 .Resolve(async ctx =>
                 {
                     var input = ctx.ArgumentValue<EmulationInstanceInput>("input");
@@ -150,7 +150,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                 .Description("Prepares the emulation environment for this game emulation.")
                 .UseClientMutationId()
                 .UseAutoSubscription()
-                .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
+                .Argument("input", arg => arg.Type<NonNullType<EmulationInstanceInputType>>())
                 .Resolve(async ctx =>
                 {
                     var input = ctx.ArgumentValue<EmulationInstanceInput>("input");
@@ -192,7 +192,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                .Description("Compiles the configuation file for this emulator.")
                .UseClientMutationId()
                .UseAutoSubscription()
-               .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
+               .Argument("input", arg => arg.Type<NonNullType<EmulationInstanceInputType>>())
                .Resolve(async ctx =>
                {
                    var input = ctx.ArgumentValue<EmulationInstanceInput>("input");
@@ -234,7 +234,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                 .Description("Restores the save game from the save profile of the game emulation into the emulation working folder.")
                 .UseClientMutationId()
                 .UseAutoSubscription()
-                .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
+                .Argument("input", arg => arg.Type<NonNullType<EmulationInstanceInputType>>())
                 .Resolve(async ctx =>
                 {
                     var input = ctx.ArgumentValue<EmulationInstanceInput>("input");
@@ -276,7 +276,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                 .Description("Starts the specified emulation.")
                 .UseClientMutationId()
                 .UseAutoSubscription()
-                .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
+                .Argument("input", arg => arg.Type<NonNullType<EmulationInstanceInputType>>())
                 .Resolve(async ctx =>
                 {
                     var input = ctx.ArgumentValue<EmulationInstanceInput>("input");
@@ -325,7 +325,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                 .Description("Stops the specified emulation.")
                 .UseClientMutationId()
                 .UseAutoSubscription()
-                .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
+                .Argument("input", arg => arg.Type<NonNullType<EmulationInstanceInputType>>())
                 .Resolve(async ctx =>
                 {
                     var input = ctx.ArgumentValue<EmulationInstanceInput>("input");
@@ -364,7 +364,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                 .Description("Persists the current state of the emulation save file to the save profile.")
                 .UseClientMutationId()
                 .UseAutoSubscription()
-                .Argument("input", arg => arg.Type<EmulationInstanceInputType>())
+                .Argument("input", arg => arg.Type<NonNullType<EmulationInstanceInputType>>())
                 .Resolve(async ctx =>
                 {
                     var input = ctx.ArgumentValue<EmulationInstanceInput>("input");

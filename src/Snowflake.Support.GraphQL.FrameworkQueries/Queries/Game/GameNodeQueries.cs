@@ -15,7 +15,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
         protected override void Configure(IObjectTypeDescriptor<IGame> descriptor)
         {
             descriptor.ExtendGame();
-            descriptor.Interface<NodeType>();
+            descriptor.Implements<NodeType>();
             descriptor.Field("id")
                 .Type<IdType>()
                 .Resolve(ctx => ctx.Parent<IGame>().Record.RecordID);

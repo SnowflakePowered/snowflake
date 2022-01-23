@@ -32,7 +32,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                 .Description("Creates a validation intallation with the specified game and orchestrator.")
                 .UseClientMutationId()
                 .UseAutoSubscription()
-                .Argument("input", a => a.Type<CreateValidationInputType>())
+                .Argument("input", a => a.Type<NonNullType<CreateValidationInputType>>())
                 .Resolve(async ctx =>
                 {
                     var arg = ctx.ArgumentValue<CreateValidationInput>("input");
@@ -75,7 +75,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                 .Description("Creates a new installation with the specified artifacts and game.")
                 .UseClientMutationId()
                 .UseAutoSubscription()
-                .Argument("input", a => a.Type<CreateInstallationInputType>())
+                .Argument("input", a => a.Type<NonNullType<CreateInstallationInputType>>())
                 .Resolve(async ctx =>
                 {
                     var arg = ctx.ArgumentValue<CreateInstallationInput>("input");
@@ -110,7 +110,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                 .Description("Proceeds with the next step in the installation. If an exception occurs, cancellation will automatically be requested.")
                 .UseClientMutationId()
                 .UseAutoSubscription()
-                .Argument("input", a => a.Type<NextInstallationStepInputType>())
+                .Argument("input", a => a.Type<NonNullType<NextInstallationStepInputType>>())
                 .Resolve(async ctx =>
                 {
                     var arg = ctx.ArgumentValue<NextInstallationStepInput>("input");
@@ -173,7 +173,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                 "installation must run to completion.")
                 .UseClientMutationId()
                 .UseAutoSubscription()
-                .Argument("input", a => a.Type<NextInstallationStepInputType>())
+                .Argument("input", a => a.Type<NonNullType<NextInstallationStepInputType>>())
                 .Resolve(async ctx =>
                 {
                     var arg = ctx.ArgumentValue<NextInstallationStepInput>("input");
@@ -231,7 +231,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
                 " must be continued to ensure proper cleanup.")
                 .UseClientMutationId()
                 .UseAutoSubscription()
-                .Argument("input", a => a.Type<NextInstallationStepInputType>())
+                .Argument("input", a => a.Type<NonNullType<NextInstallationStepInputType>>())
                 .Resolve(async ctx =>
                 {
                     var arg = ctx.ArgumentValue<NextInstallationStepInput>("input");

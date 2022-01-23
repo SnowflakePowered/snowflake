@@ -21,7 +21,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Description("Creates a new game in the database.")
-                .Argument("input", arg => arg.Type<CreateGameInputType>())
+                .Argument("input", arg => arg.Type<NonNullType<CreateGameInputType>>())
                 .Resolve(async ctx =>
                 {
                     var gameLibrary = ctx.SnowflakeService<IGameLibrary>();
@@ -41,7 +41,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
                 .Description("Marks a game as deleted. This does not actually purge the game from the database. " +
                 "Instead, a metadata value `game_deleted` is set to true. " +
                 "Permanently deleting a game once created from the database is not permitted.")
-                .Argument("input", arg => arg.Type<DeleteGameInputType>())
+                .Argument("input", arg => arg.Type<NonNullType<DeleteGameInputType>>())
                 .Resolve(async ctx =>
                 {
                     var gameLibrary = ctx.SnowflakeService<IGameLibrary>();

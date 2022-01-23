@@ -22,7 +22,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Description("Update or creates the given metadata value for a game.")
-                .Argument("input", arg => arg.Type<UpdateGameMetadataInputType>())
+                .Argument("input", arg => arg.Type<NonNullType<UpdateGameMetadataInputType>>())
                 .Resolve(async ctx =>
                 {
                     var gameLibrary = ctx.SnowflakeService<IGameLibrary>();
@@ -43,7 +43,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
                 .UseClientMutationId()
                 .UseAutoSubscription()
                 .Description("Removes a metadata entry for a game.")
-                .Argument("input", arg => arg.Type<DeleteGameMetadataInputType>())
+                .Argument("input", arg => arg.Type<NonNullType<DeleteGameMetadataInputType>>())
                 .Resolve(async ctx =>
                 {
                     var gameLibrary = ctx.SnowflakeService<IGameLibrary>();

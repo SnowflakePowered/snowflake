@@ -23,14 +23,14 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Queueing
                     return ctx.SnowflakeService<IAsyncJobQueueFactory>()
                         .GetJobQueue<IScrapeContext, IEnumerable<ISeed>>(false);
                 })
-                .Type<ScrapingJobQueueType>();
+                .Type<NonNullType<ScrapingJobQueueType>>();
             descriptor.Field("installation")
                 .Resolve(ctx =>
                 {
                     return ctx.SnowflakeService<IAsyncJobQueueFactory>()
                         .GetJobQueue<TaskResult<IFile>>();
                 })
-                .Type<InstallationJobQueueType>();
+                .Type<NonNullType<InstallationJobQueueType>>();
         }
     }
 }

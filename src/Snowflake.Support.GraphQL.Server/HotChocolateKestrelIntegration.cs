@@ -1,9 +1,14 @@
 ﻿using HotChocolate;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Snowflake.Model.Game;
 using Snowflake.Remoting.Kestrel;
-
+using HotChocolate.Data.Filters;
 using Snowflake.Support.GraphQL.Server;
+using Snowflake.Input.Controller;
+using HotChocolate.Data;
+using HotChocolate.Types.Pagination;
+using HotChocolate.Types;
 
 namespace Snowflake.Services
 {
@@ -20,6 +25,7 @@ namespace Snowflake.Services
         {
             app.UseDeveloperExceptionPage();
             app
+                .UseWebSockets()
                 .UseRouting()
                 .UseEndpoints(endpoints =>
                 {
@@ -36,11 +42,13 @@ namespace Snowflake.Services
 
             var graphQL = services
                 .AddGraphQLServer()
-                .AddApolloTracing()
+                
+                .AddGlobalObjectIdentification()
                 .AddInMemorySubscriptions()
                 .UseAutomaticPersistedQueryPipeline()
-                .AddInMemoryQueryStorage();
-
+                .AddInMemoryQueryStorage()
+                .AddApolloTracing(HotChocolate.Execution.Options.TracingPreference.OnDemand);
+            
             this.Schema.AddSnowflakeGraphQl(graphQL);
             this.Schema.AddStoneIdTypeConverters(graphQL);
             this.Schema.AddSnowflakeQueryRequestInterceptor(graphQL);

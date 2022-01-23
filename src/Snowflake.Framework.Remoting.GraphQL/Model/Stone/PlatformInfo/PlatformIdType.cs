@@ -1,4 +1,5 @@
-﻿using HotChocolate.Language;
+﻿using HotChocolate.Data.Filters;
+using HotChocolate.Language;
 using HotChocolate.Types;
 using Snowflake.Model.Game;
 using System;

@@ -39,7 +39,7 @@ namespace Snowflake.Language.Analyzers.Extensibility
             if (!methodSymbol.ContainingType.AllInterfaces.Any(i => SymbolEqualityComparer.Default.Equals(i, types.IComposable)))
                 yield break;
 
-            var importedServices = new HashSet<INamedTypeSymbol>();
+            var importedServices = new HashSet<INamedTypeSymbol>(SymbolEqualityComparer.IncludeNullability);
            
             foreach (var attr in methodSymbol.GetAttributes())
             {
@@ -59,7 +59,7 @@ namespace Snowflake.Language.Analyzers.Extensibility
                 if (getMethod.Name != "Get" || !getMethod.IsGenericMethod || !SymbolEqualityComparer.Default.Equals(getMethod.ContainingType, types.IServiceRepository))
                     continue;
                 var requestedType = getMethod.TypeArguments.FirstOrDefault();
-                if (!importedServices.Contains(requestedType))
+                if (!importedServices.Contains(requestedType, SymbolEqualityComparer.IncludeNullability))
                     yield return Diagnostic.Create(Rule, expr.GetLocation(), requestedType?.Name);
             }
         }
