@@ -28,7 +28,7 @@ jobs:
   displayName: Build and package artifacts on Linux
   condition: and(succeeded(), eq(variables.os, 'Linux'), not(variables['build.skippack']))
   pool:
-    vmImage: 'ubuntu-16.04'
+    vmImage: 'ubuntu-latest'
   steps:
   - template: azure-pack.yml  # Template reference
     parameters:
@@ -37,7 +37,7 @@ jobs:
 - job: Windows
   displayName: Test and run code coverage on Windows
   pool:
-    vmImage: 'windows-2019'
+    vmImage: 'windows-2022'
   condition: and(succeeded(), eq(variables.os, 'Windows_NT'), not(variables['build.skiptest']))
   steps:
   - template: azure-test.yml  # Template reference
@@ -48,7 +48,7 @@ jobs:
 - job: WindowsPackage
   displayName: Build and package artifacts on Windows
   pool:
-    vmImage: 'windows-2019'
+    vmImage: 'windows-2022'
   condition: and(succeeded(), eq(variables.os, 'Windows_NT'), not(variables['build.skippack']))
   steps:
   - template: azure-pack.yml  # Template reference

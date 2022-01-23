@@ -68,7 +68,6 @@ namespace Snowflake.Services
                 .AddInMemoryQueryStorage()
                 .AddApolloTracing(HotChocolate.Execution.Options.TracingPreference.OnDemand);
             
-
             this.Schema.AddSnowflakeGraphQl(graphQL);
             this.Schema.AddStoneIdTypeConverters(graphQL);
             this.Schema.AddSnowflakeQueryRequestInterceptor(graphQL);

@@ -20,7 +20,6 @@ namespace Snowflake.Framework.Remoting.GraphQL.Records.Filters
             descriptor
                 .Field(f => f.MetadataValue)
                 .Name("value");
-  
         }
     }
 }
