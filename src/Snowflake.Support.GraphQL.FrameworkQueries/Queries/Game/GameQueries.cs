@@ -29,6 +29,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
                     .Description("Exclude games that have been marked as deleted. " +
                     "Setting this to true is shorthand for retrieving games with the game_deleted metadata not set to \"true\".")
                     .DefaultValue(true))
+                .UsePaging<NonNullType<GameType>>()
                 .UseFiltering<GameRecordQueryFilterInputType>()
                 .Use(next => context =>
                 {
@@ -70,7 +71,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
                         {
                             throw new InvalidOperationException();
                         }
-                      
+
                         if (!excludeDeleted)
                         {
                             context.Result = queryBuilder.QueryGames(expr).ToList();
@@ -89,8 +90,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Game
                         }
                     }
                     return next.Invoke(context);
-                })
-                .UsePaging<NonNullType<GameType>>();
+                });
         }
     }
 }

@@ -136,15 +136,17 @@ namespace Snowflake.Support.GraphQL.Server
                 .AddObjectType<EmulatedPortDeviceEntryType>()
                 .AddObjectType<GameEmulationType>();
 
-            schemaBuilder.AddGlobalObjectIdentification()
-                .AddQueryFieldToMutationPayloads()
-                .SetOptions(new SchemaOptions()
+            schemaBuilder
+                .ModifyOptions(opts => 
                 {
-                    DefaultBindingBehavior = BindingBehavior.Explicit,
-                    UseXmlDocumentation = true,
-                    StrictValidation = true,
-                    RemoveUnreachableTypes = false,
+                    opts.DefaultBindingBehavior = BindingBehavior.Explicit;
+                    opts.UseXmlDocumentation = true;
+                    opts.StrictValidation = true;
+                    opts.StrictRuntimeTypeValidation = false;
+                    opts.RemoveUnreachableTypes = false;
+                   
                 })
+                .AddGlobalObjectIdentification()
                 .AddApolloTracing(HotChocolate.Execution.Options.TracingPreference.OnDemand);
 
             schemaBuilder.ConfigureSchema(schemaBuilder =>
@@ -204,8 +206,9 @@ namespace Snowflake.Support.GraphQL.Server
                 configure.AddDefaults();
                 configure.BindRuntimeType<PlatformId, ComparableOperationFilterInputType<string>>();
                 configure.BindRuntimeType<ControllerId, ComparableOperationFilterInputType<string>>();
-
+                
             });
+            schemaBuilder.ModifyOptions(c => c.DefaultBindingBehavior = BindingBehavior.Explicit);
             return schemaBuilder;
         }
         

@@ -7,6 +7,8 @@ using HotChocolate.Data.Filters;
 using Snowflake.Support.GraphQL.Server;
 using Snowflake.Input.Controller;
 using HotChocolate.Data;
+using HotChocolate.Types.Pagination;
+using HotChocolate.Types;
 
 namespace Snowflake.Services
 {
@@ -40,7 +42,7 @@ namespace Snowflake.Services
 
             var graphQL = services
                 .AddGraphQLServer()
-                .AddApolloTracing()
+                .AddGlobalObjectIdentification()
                 .AddInMemorySubscriptions()
                 .UseAutomaticPersistedQueryPipeline()
                 .AddInMemoryQueryStorage();
