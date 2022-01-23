@@ -56,10 +56,10 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions
 
 Snowflake provides two types of definition in its framework queries:
   * `onVerbObject`
-  * `onObjectVerb(Uuid!)`
+  * `onObjectVerb(UUID!)`
 
 `onVerbObject` subscriptions are global, and are broadcast whenever the corresponding mutation occurs. These can be used to subscribe to mutations that are triggered by the client.
-`onObjectVerb(Uuid!)` subscriptions are primarily used by scraping, installation, and orchestration mutations. These are used to subscribe to events happening on a specific long-existing object that may or may not be the result of a client request.
+`onObjectVerb(UUID!)` subscriptions are primarily used by scraping, installation, and orchestration mutations. These are used to subscribe to events happening on a specific long-existing object that may or may not be the result of a client request.
 
 There is some subtlely in the different types of subscriptions that one should be aware about.
 
@@ -77,5 +77,14 @@ In most cases, it is more useful to subscribe to the `onObjectVerb` subscription
         public void OnTypesCompletedName(IReadOnlyCollection<ITypeCompletionContext> completionContexts) { }
 
         public void OnTypesInitialized(IReadOnlyCollection<ITypeDiscoveryContext> discoveryContexts) { }
+
+        public void OnValidateType(ITypeSystemObjectContext validationContext, DefinitionBase definition, IDictionary<string, object> contextData)
+        {
+        }
+
+        public IEnumerable<ITypeReference> RegisterMoreTypes(IReadOnlyCollection<ITypeDiscoveryContext> discoveryContexts)
+        {
+            yield break;
+        }
     }
 }

@@ -18,7 +18,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices
         protected override void Configure(IObjectTypeDescriptor<IInputDevice> descriptor)
         {
             descriptor.Name("InputDevice");
-            descriptor.Interface<NodeType>();
+            descriptor.Implements<NodeType>();
           
             descriptor
                 .ImplementsNode()

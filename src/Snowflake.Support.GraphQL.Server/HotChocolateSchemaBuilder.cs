@@ -136,7 +136,8 @@ namespace Snowflake.Support.GraphQL.Server
                 .AddObjectType<EmulatedPortDeviceEntryType>()
                 .AddObjectType<GameEmulationType>();
 
-            schemaBuilder.EnableRelaySupport()
+            schemaBuilder.AddGlobalObjectIdentification()
+                .AddQueryFieldToMutationPayloads()
                 .SetOptions(new SchemaOptions()
                 {
                     DefaultBindingBehavior = BindingBehavior.Explicit,

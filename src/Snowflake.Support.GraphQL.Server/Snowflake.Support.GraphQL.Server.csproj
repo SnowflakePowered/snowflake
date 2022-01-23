@@ -11,9 +11,9 @@
   </ItemGroup>
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="HotChocolate.AspNetCore" Version="11.3.5" />
-    <PackageReference Include="HotChocolate.PersistedQueries.InMemory" Version="11.3.5" />
-    <PackageReference Include="HotChocolate.Subscriptions.InMemory" Version="11.3.5" />
+    <PackageReference Include="HotChocolate.AspNetCore" Version="12.5.0" />
+    <PackageReference Include="HotChocolate.PersistedQueries.InMemory" Version="12.5.0" />
+    <PackageReference Include="HotChocolate.Subscriptions.InMemory" Version="12.5.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Condition="$(_SnowflakeUseDevelopmentSDK)" Include="..\Snowflake.Framework.Remoting.GraphQL\Snowflake.Framework.Remoting.GraphQL.csproj" />

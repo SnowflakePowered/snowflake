@@ -34,7 +34,8 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Devices.Mapped
                     if (device == null)
                     {
                         throw new GraphQLException(ErrorBuilder.New()
-                                .AddLocation(context.Field.SyntaxNode)
+                                // todo: check if this is correct, otherwise context.Selection.SyntaxNode.
+                                .AddLocation(context.Selection.Field.SyntaxNode)
                                 .SetMessage("InputDevice was not pushed down.")
                                 .SetPath(context.Path)
                                 .Build());
