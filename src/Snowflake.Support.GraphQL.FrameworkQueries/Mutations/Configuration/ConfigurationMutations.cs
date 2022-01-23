@@ -25,7 +25,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Configuration
                 .UseAutoSubscription()
                 .UseClientMutationId()
                 .Description("Updates the provided configuration values.")
-                .Argument("input", a => a.Type<UpdateGameConfigurationValueInputType>())
+                .Argument("input", a => a.Type<NonNullType<UpdateGameConfigurationValueInputType>>())
                 .Resolve(async ctx =>
                 {
                     var configStore = ctx.SnowflakeService<IGameLibrary>().GetExtension<IGameConfigurationExtensionProvider>();
@@ -51,7 +51,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Configuration
                 .UseAutoSubscription()
                 .UseClientMutationId()
                 .Description("Delete the specified game configuration profile.")
-                .Argument("input", a => a.Type<DeleteGameConfigurationInputType>())
+                .Argument("input", a => a.Type<NonNullType<DeleteGameConfigurationInputType>>())
                 .Resolve(async ctx =>
                 {
                     var games = ctx.SnowflakeService<IGameLibrary>();
@@ -94,7 +94,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Configuration
                 .UseAutoSubscription()
                 .UseClientMutationId()
                 .Description("Updates configuration values for a plugin.")
-                .Argument("input", a => a.Type<UpdatePluginConfigurationValueInputType>())
+                .Argument("input", a => a.Type<NonNullType<UpdatePluginConfigurationValueInputType>>())
                 .Resolve(async ctx =>
                 {
                     var input = ctx.ArgumentValue<UpdatePluginConfigurationValueInput>("input");

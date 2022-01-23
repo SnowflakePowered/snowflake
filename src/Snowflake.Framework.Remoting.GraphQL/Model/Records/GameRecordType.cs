@@ -26,7 +26,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Game
                 .Description("The original platform or game console of the game this object represents.");
 
             descriptor.Field(g => g.RecordID)
-                .Name("gameId")
+                .Name("recordId")
                 .Description("The unique ID of the game.");
 
             descriptor.Field("metadata")

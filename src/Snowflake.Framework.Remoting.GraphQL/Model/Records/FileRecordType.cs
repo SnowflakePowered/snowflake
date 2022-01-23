@@ -18,7 +18,7 @@ namespace Snowflake.Remoting.GraphQL.Model.Records
                 .Description("The known mimetype of the file.");
             
             descriptor.Field(f => f.RecordID)
-                .Name("fileId")
+                .Name("recordId")
                 .Description("The unique ID of the file record. This is the same as the `fileId` from a ContextualFile");
             descriptor.Field("metadata")
                .Description("The metadata associated with this game.")

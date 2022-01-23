@@ -136,19 +136,6 @@ namespace Snowflake.Support.GraphQL.Server
                 .AddObjectType<EmulatedPortDeviceEntryType>()
                 .AddObjectType<GameEmulationType>();
 
-            schemaBuilder
-                .ModifyOptions(opts => 
-                {
-                    opts.DefaultBindingBehavior = BindingBehavior.Explicit;
-                    opts.UseXmlDocumentation = true;
-                    opts.StrictValidation = true;
-                    opts.StrictRuntimeTypeValidation = false;
-                    opts.RemoveUnreachableTypes = false;
-                   
-                })
-                .AddGlobalObjectIdentification()
-                .AddApolloTracing(HotChocolate.Execution.Options.TracingPreference.OnDemand);
-
             schemaBuilder.ConfigureSchema(schemaBuilder =>
             {
                 schemaBuilder.AddQueryType(descriptor =>

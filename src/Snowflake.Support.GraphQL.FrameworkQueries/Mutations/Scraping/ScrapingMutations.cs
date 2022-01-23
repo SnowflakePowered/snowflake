@@ -27,7 +27,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
             descriptor.Field("createScrapeContext")
                 .UseClientMutationId()
                 .UseAutoSubscription()
-                .Argument("input", arg => arg.Type<CreateScrapeContextInputType>())
+                .Argument("input", arg => arg.Type<NonNullType<CreateScrapeContextInputType>>())
                 .Resolve(async ctx =>
                 {
                     var input = ctx.ArgumentValue<CreateScrapeContextInput>("input");
@@ -63,7 +63,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                 "the cancellation succeeded until the scrape context is moved to the next step. Only then will it be eligible for deletion.")
                 .UseClientMutationId()
                 .UseAutoSubscription()
-                .Argument("input", arg => arg.Type<CancelScrapeContextInputType>())
+                .Argument("input", arg => arg.Type<NonNullType<CancelScrapeContextInputType>>())
                 .Resolve(async ctx =>
                 {
                     var input = ctx.ArgumentValue<CancelScrapeContextInput>("input");
@@ -96,7 +96,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                 .Description("Deletes a scrape context, halting its execution.")
                 .UseClientMutationId()
                 .UseAutoSubscription()
-                .Argument("input", arg => arg.Type<DeleteScrapeContextInputType>())
+                .Argument("input", arg => arg.Type<NonNullType<DeleteScrapeContextInputType>>())
                 .Resolve(async ctx =>
                 {
                     var input = ctx.ArgumentValue<DeleteScrapeContextInput>("input");
@@ -138,7 +138,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                 "If the specified scrape context does not exist, `context` and `current` will be null, and `hasNext` will be false. ")
                 .UseClientMutationId()
                 .UseAutoSubscription()
-                .Argument("input", arg => arg.Type<NextScrapeContextStepInputType>())
+                .Argument("input", arg => arg.Type<NonNullType<NextScrapeContextStepInputType>>())
                 .Resolve(async ctx =>
                 {
                     var input = ctx.ArgumentValue<NextScrapeContextStepInput>("input");
@@ -194,7 +194,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                 "Returns the output of the last step of the scrape context, when there are no more remaining left to continue with.")
                 .UseClientMutationId()
                 .UseAutoSubscription()
-                .Argument("input", arg => arg.Type<NextScrapeContextStepInputType>())
+                .Argument("input", arg => arg.Type<NonNullType<NextScrapeContextStepInputType>>())
                 .Resolve(async ctx =>
                 {
                     var input = ctx.ArgumentValue<NextScrapeContextStepInput>("input");
@@ -246,7 +246,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Scraping
                 .Description("Applies the specified scrape results to the specified game as-is. Be sure to delete the scrape context afterwards.")
                 .UseClientMutationId()
                 .UseAutoSubscription()
-                .Argument("input", arg => arg.Type<ApplyScrapeContextInputType>())
+                .Argument("input", arg => arg.Type<NonNullType<ApplyScrapeContextInputType>>())
                 .Resolve(async ctx =>
                 {
                     var input = ctx.ArgumentValue<ApplyScrapeContextInput>("input");
