@@ -1,9 +1,15 @@
 steps:
+  - bash: |
+      curl -Os https://uploader.codecov.io/latest/linux/codecov
+      chmod +x codecov
+    displayName: Install Codecov for Linux
+    condition: and(not(variables['build.skiptest']), eq(variables['Agent.OS'],'Linux'))
+  - powershell: |
+      $ProgressPreference = 'SilentlyContinue'
+      Invoke-WebRequest -Uri https://uploader.codecov.io/latest/windows/codecov.exe -Outfile codecov.exe
+    displayName: Install Codecov for Windows
+    condition: and(not(variables['build.skiptest']), eq(variables['Agent.OS'],'Windows_NT'))
   - script: |
-      dotnet tool install --global Codecov.Tool
-    displayName: Install Codecov
-    condition: not(variables['build.skiptest'])
-  - script: |
-      codecov --branch $(Build.SourceBranchName) -f "$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/TestResults/**/coverage.cobertura.xml"
+      ./codecov -B $(Build.SourceBranchName) -f "$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/TestResults/**/coverage.cobertura.xml"
     displayName: Publishing test coverage to Codecov 
     condition: not(variables['build.skiptest'])
