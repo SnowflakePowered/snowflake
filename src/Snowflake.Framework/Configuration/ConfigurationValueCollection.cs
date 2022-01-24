@@ -32,13 +32,13 @@ namespace Snowflake.Configuration
         {
         }
 
-        internal static object FromString(string? strValue, Type? optionType)
+        internal static object? FromString(string? strValue, Type optionType)
         {
             return optionType == typeof(string)
                 ? strValue ?? string.Empty // return string value if string
                 : (Guid.TryParse(strValue, out Guid guid) 
                 ? guid
-                : TypeDescriptor.GetConverter(optionType).ConvertFromInvariantString(strValue));
+                : TypeDescriptor.GetConverter(optionType).ConvertFromInvariantString(strValue!));
 
             //return optionType == typeof(string)
             //    ? strValue ?? string.Empty // return string value if string

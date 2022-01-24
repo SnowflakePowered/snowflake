@@ -5,7 +5,7 @@ namespace Snowflake.Configuration
     internal class ConfigurationValue : IConfigurationValue
     {
         /// <inheritdoc/>
-        public object Value { get; set; }
+        public object? Value { get; set; }
 
         /// <inheritdoc/>
         public Guid Guid { get; }
@@ -17,7 +17,7 @@ namespace Snowflake.Configuration
         {
         }
 
-        internal ConfigurationValue(object value, Guid guid, ConfigurationOptionType type)
+        internal ConfigurationValue(object? value, Guid guid, ConfigurationOptionType type)
         {
             this.Guid = guid;
             this.Value = value;
