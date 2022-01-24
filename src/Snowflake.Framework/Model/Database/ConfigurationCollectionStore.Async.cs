@@ -164,7 +164,7 @@ namespace Snowflake.Model.Database
         {
             await using var context = new DatabaseContext(this.Options.Options);
             var entityValue = await context.ConfigurationValues.FindAsync(valueGuid);
-            return entityValue.AsConfigurationValue();
+            return entityValue!.AsConfigurationValue();
         }
 
         public Task UpdateValueAsync(IConfigurationValue value) => this.UpdateValueAsync(value.Guid, value.Value);

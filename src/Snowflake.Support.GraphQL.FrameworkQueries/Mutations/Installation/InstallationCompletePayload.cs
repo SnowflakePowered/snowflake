@@ -30,7 +30,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Installation
         {
             descriptor.Name(nameof(InstallationCompletePayload))
                 .WithClientMutationId()
-                .Interface<InstallationPayloadInterface>();
+                .Implements<InstallationPayloadInterface>();
 
             descriptor.Field(i => i.JobID)
                 .Name("jobId")

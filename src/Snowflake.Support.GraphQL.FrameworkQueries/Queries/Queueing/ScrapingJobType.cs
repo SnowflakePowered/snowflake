@@ -18,7 +18,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Queries.Queueing
         {
             descriptor.Name("ScrapingJob")
                 .Description("Describes a single scraping job.")
-                .Interface<QueuableJobInterface>();
+                .Implements<QueuableJobInterface>();
             descriptor.Field("jobId")
               .Type<NonNullType<UuidType>>()
               .Resolve(ctx =>

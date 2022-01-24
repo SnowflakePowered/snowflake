@@ -84,7 +84,7 @@ namespace Snowflake.Model.Database
         {
             using var context = new DatabaseContext(this.Options.Options);
             var entityValue = context.ConfigurationValues.Find(valueGuid);
-            return entityValue.AsConfigurationValue();
+            return entityValue!.AsConfigurationValue();
         }
 
         public void DeleteConfiguration(Guid configurationValueCollectionGuid)

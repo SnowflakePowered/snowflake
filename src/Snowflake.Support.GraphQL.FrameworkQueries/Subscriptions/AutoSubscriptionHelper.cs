@@ -75,7 +75,7 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Subscriptions
 
         internal static ValueTask<T> SendSimpleSubscription<T>(this IResolverContext context, T payload)
         {
-            string subscriptionName = $"on{context.Field.Name.Value.ToPascalCase()}";
+            string subscriptionName = $"on{context.Selection.Field.Name.Value.ToPascalCase()}";
             return context.SendSimpleSubscription(subscriptionName, payload);
         }
 
