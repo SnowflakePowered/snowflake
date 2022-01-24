@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Snowflake.Framework.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <_SnowflakeUseDevelopmentSDK>true</_SnowflakeUseDevelopmentSDK>
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
@@ -18,6 +18,6 @@
 
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>10.0</LangVersion>
   </PropertyGroup>
 </Project>

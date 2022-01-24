@@ -3,11 +3,11 @@ parameters:
 
 steps:
   - task: DotNetCoreInstaller@1
-    displayName: Installing .NET 5 SDK
+    displayName: Installing .NET 6 SDK
     inputs:
       includePreviewVersions: true
       packageType: 'sdk' # Options: runtime, sdk
-      version: '5.0.400'
+      version: '6.0.101'
 
   - task: NuGetToolInstaller@0
     displayName: Installing NuGet CLI
