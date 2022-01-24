@@ -50,7 +50,7 @@ namespace Snowflake.Model.Database
             await using var context = new DatabaseContext(this.Options.Options);
             var retrievedMappings = await context.ControllerElementMappings
                 .Include(p => p.MappedElements)
-                .SingleOrDefaultAsync(p => p.ProfileID == mappings.ProfileGuid);
+                .SingleAsync(p => p.ProfileID == mappings.ProfileGuid);
 
             var mappingSet = mappings.Select(k => k.LayoutElement).ToHashSet();
             foreach (var mapping in retrievedMappings.MappedElements)

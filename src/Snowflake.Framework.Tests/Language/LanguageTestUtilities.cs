@@ -17,6 +17,9 @@ namespace Snowflake.Language.Tests
 {
     public static class LanguageTestUtilities
     {
+        private static LanguageVersion BaseLanguageVersion = LanguageVersion.CSharp10;
+        private static ReferenceAssemblies AssemblyBase = ReferenceAssemblies.Net.Net60;
+
         private static readonly MetadataReference SnowflakePrimitiveReference 
             = MetadataReference.CreateFromFile(typeof(ConfigurationCollectionAttribute).Assembly.Location);
         private static readonly MetadataReference SnowflakeFrameworkReference 
@@ -27,14 +30,14 @@ namespace Snowflake.Language.Tests
         public static async Task<Compilation> CreateCompilation(params string[] sources)
         {
             var referenceAssemblies =
-                await ReferenceAssemblies.Net.Net50.ResolveAsync(LanguageNames.CSharp, default);
+                await AssemblyBase.ResolveAsync(LanguageNames.CSharp, default);
 
             var assemblies = new List<MetadataReference>(referenceAssemblies);
             assemblies.AddRange(new[] { SnowflakePrimitiveReference, SnowflakeFrameworkReference, SnowflakeTestReference });
 
             return CSharpCompilation.Create("TestCompilation",
                 sources.Select(s => CSharpSyntaxTree.ParseText(s,
-                    new CSharpParseOptions(LanguageVersion.CSharp9)))
+                    new CSharpParseOptions(BaseLanguageVersion)))
                 .ToArray(),
                 assemblies.ToArray(),
                 new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
@@ -47,7 +50,7 @@ namespace Snowflake.Language.Tests
         {
             Project project = solution.GetProject(projectId)!;
             var parseOptions = (CSharpParseOptions)project.ParseOptions!;
-            project = project.WithParseOptions(parseOptions.WithLanguageVersion(LanguageVersion.CSharp9));
+            project = project.WithParseOptions(parseOptions.WithLanguageVersion(BaseLanguageVersion));
             project = project
                 .AddMetadataReference(SnowflakePrimitiveReference)
                 .AddMetadataReference(SnowflakeFrameworkReference)
@@ -62,7 +65,7 @@ namespace Snowflake.Language.Tests
             return new CSharpAnalyzerTest<TAnalyzer, XUnitVerifier>()
             {
                 TestCode = testSource,
-                ReferenceAssemblies = ReferenceAssemblies.Net.Net50,
+                ReferenceAssemblies = AssemblyBase,
                 SolutionTransforms =
                 {
                     LanguageTestUtilities.AddSnowflakeReferences,
@@ -85,7 +88,7 @@ namespace Snowflake.Language.Tests
             var test = new CSharpAnalyzerTest<TAnalyzer, XUnitVerifier>()
             {
                 TestCode = testSource,
-                ReferenceAssemblies = ReferenceAssemblies.Net.Net50,
+                ReferenceAssemblies = AssemblyBase,
                 SolutionTransforms =
                 {
                     LanguageTestUtilities.AddSnowflakeReferences,
@@ -112,7 +115,7 @@ namespace Snowflake.Language.Tests
             {
                 TestCode = testSource,
                 FixedCode = expectedSource,
-                ReferenceAssemblies = ReferenceAssemblies.Net.Net50,
+                ReferenceAssemblies = AssemblyBase,
                 SolutionTransforms =
                 {
                     LanguageTestUtilities.AddSnowflakeReferences,
@@ -137,7 +140,7 @@ namespace Snowflake.Language.Tests
             {
                 TestCode = testSource,
                 FixedCode = expectedSource,
-                ReferenceAssemblies = ReferenceAssemblies.Net.Net50,
+                ReferenceAssemblies = AssemblyBase,
                 SolutionTransforms =
                 {
                     LanguageTestUtilities.AddSnowflakeReferences,
@@ -162,7 +165,7 @@ namespace Snowflake.Language.Tests
             {
                 TestCode = testSource,
                 FixedCode = expectedSource,
-                ReferenceAssemblies = ReferenceAssemblies.Net.Net50,
+                ReferenceAssemblies = AssemblyBase,
                 SolutionTransforms =
                 {
                     LanguageTestUtilities.AddSnowflakeReferences,

@@ -17,7 +17,7 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Stone
         protected override void Configure(IObjectTypeDescriptor<IPlatformInfo> descriptor)
         {
             descriptor.Name("PlatformInfo");
-            descriptor.Interface<NodeType>();
+            descriptor.Implements<NodeType>();
             descriptor.Field("id")
                 .Type<IdType>()
                 .Resolve(ctx => ctx.Parent<IPlatformInfo>().PlatformID);
