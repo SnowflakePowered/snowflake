@@ -51,7 +51,7 @@ class Build : NukeBuild
         {
             DotNetToolUpdate(s => s
                 .SetPackageName("Snowflake.Tooling.Cli")
-                .SetVersion("5.0.0")
+                .SetVersion("6.0.0")
             );
         });
 
