@@ -10,6 +10,11 @@ steps:
     displayName: Install Codecov for Windows
     condition: and(not(variables['build.skiptest']), eq(variables['Agent.OS'],'Windows_NT'))
   - script: |
-      ./codecov -B $(Build.SourceBranchName) -f "$(System.DefaultWorkingDirectory)/src/Snowflake.Framework.Tests/TestResults/**/coverage.cobertura.xml"
+      codecov -B $(Build.SourceBranchName)
     displayName: Publishing test coverage to Codecov 
-    condition: not(variables['build.skiptest'])
+    condition: and(not(variables['build.skiptest']), eq(variables['Agent.OS'],'Windows_NT'))
+  - script: |
+      ./codecov -B $(Build.SourceBranchName)
+    displayName: Publishing test coverage to Codecov 
+    condition: and(not(variables['build.skiptest']), eq(variables['Agent.OS'],'Linux'))
+    
