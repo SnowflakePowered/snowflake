@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Snowflake.Framework.Dependencies.Sdk/2.0.1">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework> 
+    <TargetFramework>net6.0</TargetFramework> 
     <RootNamespace>Snowflake</RootNamespace>
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>10.0</LangVersion>
     <Nullable>enable</Nullable>
     <_SnowflakeUseDevelopmentSDK>true</_SnowflakeUseDevelopmentSDK>
   </PropertyGroup>

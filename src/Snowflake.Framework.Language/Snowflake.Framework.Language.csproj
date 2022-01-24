@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>10.0</LangVersion>
     <RoslynVersion>3.8.0</RoslynVersion>
     <Nullable>enable</Nullable>
     <developmentDependency>true</developmentDependency>

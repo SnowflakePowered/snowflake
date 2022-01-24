@@ -40,7 +40,7 @@ Getting Started
 ---------------
 
 Snowflake does not currently have a well defined install process for end-users, but it is easy to set up a development environment. 
-You will need the [.NET 5 SDK](https://www.microsoft.com/net/download/) to get started. 
+You will need the [.NET 6 SDK](https://www.microsoft.com/net/download/) to get started. 
 
 ```cli
 $ git clone --recursive https://github.com/SnowflakePowered/snowflake/

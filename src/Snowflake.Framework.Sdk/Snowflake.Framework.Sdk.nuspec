@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>Snowflake.Framework.Sdk</id>
-    <version>5.0.0</version>
+    <version>6.0.0</version>
     <authors>Snowflake Developers</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MPL-2.0</license>

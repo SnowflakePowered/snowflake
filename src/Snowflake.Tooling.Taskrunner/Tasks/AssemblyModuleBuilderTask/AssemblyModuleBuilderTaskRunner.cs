@@ -71,9 +71,9 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.AssemblyModuleBuilderTask
                 where element.Name.LocalName == "TargetFramework"
                 select element.Value).FirstOrDefault();
 
-            if (targetFramework != "net5.0")
+            if (targetFramework != "net6.0")
             {
-                throw new InvalidOperationException($"Error! Assembly modules must target framework net5.0");
+                throw new InvalidOperationException($"Error! Assembly modules must target framework net6.0");
             }
 
             Console.WriteLine($"Found \"{module.Name}\" with entry {module.Entry}");

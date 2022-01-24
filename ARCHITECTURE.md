@@ -4,7 +4,7 @@ This repository hosts the components required to bootstrap and run the core Snow
 
 At a high level, Snowflake is a web server that exposes a GraphQL API. This GraphQL API can be extended, and it exposes Snowflake's core functions and API that can be used to build an emulator frontend in combination with a UI.
 
-Because of required source generators, the minimum supported .NET TFM (MSNV) is `net5.0`. Additionally, Visual Basic .NET is not supported.
+Because of required source generators, the minimum supported .NET TFM (MSNV) is `net6.0`. Additionally, Visual Basic .NET is not supported.
 
 ## Plugins vs. Modules
 
