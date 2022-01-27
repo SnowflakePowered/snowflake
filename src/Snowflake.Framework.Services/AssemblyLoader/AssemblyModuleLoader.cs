@@ -42,15 +42,10 @@ namespace Snowflake.Services.AssemblyLoader
             var loadContext = Loader.PluginLoader.CreateFromAssemblyFile(entryPath, (cfg) =>
             {
                 cfg.LoggerTag = module.Entry.Replace(".dll", "").Replace("Snowflake.Support.", "SF.S.");
-                cfg.PreferSharedTypes = false;
+                // We need to load into the default context to allow accessing services exposed by other plugins.
+                cfg.PreferSharedTypes = true;
                 cfg.LoadInMemory = true;
                 cfg.IsUnloadable = false;
- 
-                cfg.SharedAssemblies.Add(AssemblyName.GetAssemblyName("Snowflake.Framework.dll"));
-                cfg.SharedAssemblies.Add(AssemblyName.GetAssemblyName("Snowflake.Framework.Primitives.dll"));
-                cfg.SharedAssemblies.Add(AssemblyName.GetAssemblyName("Snowflake.Framework.Remoting.dll"));
-                cfg.SharedAssemblies.Add(AssemblyName.GetAssemblyName("Snowflake.Framework.Remoting.GraphQL.dll"));
-                cfg.SharedAssemblies.Add(AssemblyName.GetAssemblyName("Snowflake.Framework.Services.dll"));
             });
 
             var assembly = loadContext.LoadDefaultAssembly();
