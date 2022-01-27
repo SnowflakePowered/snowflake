@@ -30,8 +30,6 @@ namespace Snowflake.Services.AssemblyLoader
                 throw new DirectoryNotFoundException($"Unable to find module contents for {module.Entry}", ex);
             }
 
-            var loadContext = new AssemblyModuleLoadContext(module);
-
             // todo: check for semver!!
             var entryPath = Path.Combine(module.ModuleDirectory.FullName, "contents", module.Entry);
 
@@ -40,7 +38,14 @@ namespace Snowflake.Services.AssemblyLoader
                 throw new FileNotFoundException($"Unable to find specified entry point {module.Entry}");
             }
 
-            var assembly = loadContext.LoadFromAssemblyPath(entryPath);
+            var loadContext = Loader.PluginLoader.CreateFromAssemblyFile(entryPath, (cfg) =>
+            {
+                cfg.LoggerTag = module.Entry.Replace(".dll", "").Replace("Snowflake.Support.", "SF.S.");
+                cfg.PreferSharedTypes = true;
+                cfg.LoadInMemory = true;
+            });
+
+            var assembly = loadContext.LoadDefaultAssembly();
             IEnumerable<Type> types;
             try
             {

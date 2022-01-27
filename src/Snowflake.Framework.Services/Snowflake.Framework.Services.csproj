@@ -24,6 +24,9 @@
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AssemblyLoader\Loader\" />
+  </ItemGroup>
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\Snowflake.ruleset</CodeAnalysisRuleSet>
     <LangVersion>10.0</LangVersion>
