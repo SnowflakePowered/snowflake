@@ -155,6 +155,13 @@ namespace Snowflake.Services.AssemblyLoader.Loader
                     {
                         var defaultName = defaultAssembly.GetName();
                         logger.Info($"Loaded {defaultName.Name} v{defaultName.Version} from host context.");
+                        if (assemblyName.Version != defaultName.Version)
+                        {
+                            logger.Warn(
+                                $"Resolving {assemblyName.Name} version {assemblyName.Version} with mismatched minor version {defaultName.Version} from default context.");
+                            logger.Warn(
+                                $"If this behaviour causes side effects, build {Path.GetFileName(this.mainAssemblyPath)} against {defaultName.Name} {defaultName.Version}.");
+                        }
                         // Older versions used to return null here such that returned assembly would be resolved from the default ALC.
                         // However, with the addition of custom default ALCs, the Default ALC may not be the user's chosen ALC when
                         // this context was built. As such, we simply return the Assembly from the user's chosen default load context.
@@ -230,7 +237,7 @@ namespace Snowflake.Services.AssemblyLoader.Loader
             {
                 var defaultAssembly = Assembly.Load(assemblyName.Name);
                 var defaultName = defaultAssembly.GetName();
-                logger.Info($"Resolved {assemblyName.Name} v{assemblyName.Version} from host context.");
+                logger.Info($"Resolving {assemblyName.Name} v{assemblyName.Version} from default context.");
 
                 if (assemblyName.Version != defaultName.Version)
                 {

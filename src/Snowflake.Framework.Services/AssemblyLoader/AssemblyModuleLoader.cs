@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Snowflake.AssemblyLoader.Utility;
 using Snowflake.Loader;
 using Snowflake.Services.Logging;
@@ -41,8 +42,15 @@ namespace Snowflake.Services.AssemblyLoader
             var loadContext = Loader.PluginLoader.CreateFromAssemblyFile(entryPath, (cfg) =>
             {
                 cfg.LoggerTag = module.Entry.Replace(".dll", "").Replace("Snowflake.Support.", "SF.S.");
-                cfg.PreferSharedTypes = true;
+                cfg.PreferSharedTypes = false;
                 cfg.LoadInMemory = true;
+                cfg.IsUnloadable = false;
+ 
+                cfg.SharedAssemblies.Add(AssemblyName.GetAssemblyName("Snowflake.Framework.dll"));
+                cfg.SharedAssemblies.Add(AssemblyName.GetAssemblyName("Snowflake.Framework.Primitives.dll"));
+                cfg.SharedAssemblies.Add(AssemblyName.GetAssemblyName("Snowflake.Framework.Remoting.dll"));
+                cfg.SharedAssemblies.Add(AssemblyName.GetAssemblyName("Snowflake.Framework.Remoting.GraphQL.dll"));
+                cfg.SharedAssemblies.Add(AssemblyName.GetAssemblyName("Snowflake.Framework.Services.dll"));
             });
 
             var assembly = loadContext.LoadDefaultAssembly();
