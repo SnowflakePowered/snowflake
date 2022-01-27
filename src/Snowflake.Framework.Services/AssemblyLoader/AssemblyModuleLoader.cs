@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Snowflake.AssemblyLoader.Utility;
 using Snowflake.Loader;
 using Snowflake.Services.Logging;
@@ -30,8 +31,6 @@ namespace Snowflake.Services.AssemblyLoader
                 throw new DirectoryNotFoundException($"Unable to find module contents for {module.Entry}", ex);
             }
 
-            var loadContext = new AssemblyModuleLoadContext(module);
-
             // todo: check for semver!!
             var entryPath = Path.Combine(module.ModuleDirectory.FullName, "contents", module.Entry);
 
@@ -40,7 +39,16 @@ namespace Snowflake.Services.AssemblyLoader
                 throw new FileNotFoundException($"Unable to find specified entry point {module.Entry}");
             }
 
-            var assembly = loadContext.LoadFromAssemblyPath(entryPath);
+            var loadContext = Loader.PluginLoader.CreateFromAssemblyFile(entryPath, (cfg) =>
+            {
+                cfg.LoggerTag = module.Entry.Replace(".dll", "").Replace("Snowflake.Support.", "SF.S.");
+                // We need to load into the default context to allow accessing services exposed by other plugins.
+                cfg.PreferSharedTypes = true;
+                cfg.LoadInMemory = true;
+                cfg.IsUnloadable = false;
+            });
+
+            var assembly = loadContext.LoadDefaultAssembly();
             IEnumerable<Type> types;
             try
             {

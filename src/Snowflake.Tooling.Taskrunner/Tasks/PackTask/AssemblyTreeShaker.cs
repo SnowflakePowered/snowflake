@@ -28,28 +28,37 @@ namespace Snowflake.Tooling.Taskrunner.Tasks.PackTask
             var dependencyContext = reader.Read(deps.OpenRead());
 
             Console.WriteLine("Counted " + dependencyContext.RuntimeGraph.Select(p => p.Runtime).Count() + " runtime dependencies");
-            var frameworkDependencies =
+            var snowflakeDependencies =
                 dependencyContext.RuntimeLibraries.Memoize().Where(l => l.Name.StartsWith("Snowflake.Framework"))
                     .SelectMany(l => l.Dependencies);
 
-            Console.WriteLine($"Counted { frameworkDependencies.Count()} Snowflake framework dependencies.");
+            Console.WriteLine($"Counted { snowflakeDependencies.Count()} Snowflake framework dependencies.");
 
-            var dependencyTree = this.ResolveDependencyTree(dependencyContext, frameworkDependencies).ToList();
-            var nativeDlls = frameworkDependencies.Concat(dependencyTree).Distinct().Memoize()
+            var dependencyTree = this.ResolveDependencyTree(dependencyContext, snowflakeDependencies).ToList();
+            var nativeDlls = snowflakeDependencies.Concat(dependencyTree).Distinct()
                 .Select(p => dependencyContext.RuntimeLibraries.FirstOrDefault(l => l.Name == p.Name))
                 .SelectMany(p => p.NativeLibraryGroups.Concat(p.RuntimeAssemblyGroups))
                 .SelectMany(p => p.AssetPaths)
                 .Select(p => Path.GetFileName(p)).Memoize();
             Console.WriteLine($"Counted { nativeDlls.Count() } native dependencies.");
+ 
+            var resourceAssemblies = snowflakeDependencies.Concat(dependencyTree).Distinct()
+              .Select(p => dependencyContext.RuntimeLibraries.FirstOrDefault(l => l.Name == p.Name))
+              .SelectMany(p => p.ResourceAssemblies)
+              .Select(p => p.Path)
+              .Select(p => Path.GetFileName(p)).Memoize();
+     
+            Console.WriteLine($"Counted { resourceAssemblies.Count() } resource dependencies.");
 
             var frameworkDlls = dependencyContext.RuntimeLibraries.Memoize().Where(l => l.Name.StartsWith("Snowflake.Framework"))
-                .Select(l => l.Name + ".dll").Memoize();
+                .SelectMany(l => new[] { l.Name + ".dll", l.Name + ".pdb", l.Name + ".xml" }).Memoize();
+
             Console.WriteLine($"Counted { frameworkDlls.Count() } managed dependencies.");
 
             var dependencyDlls = dependencyTree.Select(d => d.Name + ".dll").ToList();
 
-            var shakenDlls = nativeDlls.Concat(dependencyDlls).Concat(frameworkDlls).Distinct().ToList();
-            Console.WriteLine($"Excluding {shakenDlls.Count} dependencies after tree shaking.");
+            var shakenDlls = nativeDlls.Concat(dependencyDlls).Concat(frameworkDlls).Concat(resourceAssemblies).Distinct().ToList();
+            Console.WriteLine($"Excluding {shakenDlls.Count} files after tree shaking.");
             return shakenDlls;
         }
 

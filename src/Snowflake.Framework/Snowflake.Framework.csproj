@@ -21,7 +21,7 @@
     </PackageReference>
     <PackageReference Include="Pidgin" Version="3.0.0" PrivateAssets="Compile" />
     <PackageReference Include="VCDiff" Version="4.0.0" PrivateAssets="Compile" />
-    <PackageReference Include="Tsuku" Version="1.0.0" PrivateAssets="Compile" />
+    <PackageReference Include="Tsuku" Version="1.0.1" PrivateAssets="Compile" />
     <PackageReference Include="Zio" Version="0.13.0" />
   </ItemGroup>
 
