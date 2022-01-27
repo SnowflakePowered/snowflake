@@ -1,5 +1,5 @@
 ﻿{
-  "entry": "Snowflake.Framework.Tests.InvalidComposable.dll",
+  "entry": "Snowflake.Tests.InvalidComposable.dll",
   "loader": "assembly",
   "frameworkVersion": "1.0.0",
   "version": "1.0.0",
