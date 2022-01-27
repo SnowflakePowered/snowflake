@@ -32,7 +32,7 @@ namespace Snowflake.Loader.Tests
             var container = new ServiceContainer(appDataDirectory.FullName, "https://localhost:9797");
 
             Assert.Contains(container.Get<IModuleEnumerator>()
-                .Modules, m => m.Entry == "Snowflake.Framework.Tests.DummyComposable.dll");
+                .Modules, m => m.Entry == "Snowflake.Tests.DummyComposable.dll");
 
             var assemblyComposer = new AssemblyComposer(container, container.Get<IModuleEnumerator>());
             assemblyComposer.Compose();
@@ -55,7 +55,7 @@ namespace Snowflake.Loader.Tests
             var container = new ServiceContainer(appDataDirectory.FullName, "https://localhost:9797");
 
             Assert.Contains(container.Get<IModuleEnumerator>()
-                .Modules, m => m.Entry == "Snowflake.Framework.Tests.InvalidComposable.dll");
+                .Modules, m => m.Entry == "Snowflake.Tests.InvalidComposable.dll");
 
             var assemblyComposer = new AssemblyComposer(container, container.Get<IModuleEnumerator>());
             assemblyComposer.Compose();
@@ -77,7 +77,7 @@ namespace Snowflake.Loader.Tests
             var container = new ServiceContainer(appDataDirectory.FullName, "http://localhost:9797");
 
             var module = container.Get<IModuleEnumerator>()
-                .Modules.FirstOrDefault(m => m.Entry == "Snowflake.Framework.Tests.InvalidComposable.dll");
+                .Modules.FirstOrDefault(m => m.Entry == "Snowflake.Tests.InvalidComposable.dll");
             Assert.NotNull(module);
 
             var assemblyComposer = new AssemblyComposer(container, container.Get<IModuleEnumerator>());

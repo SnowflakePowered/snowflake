@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <_SnowflakeUseDevelopmentSDK>true</_SnowflakeUseDevelopmentSDK>
+    <AssemblyName>Snowflake.Tests.DummyComposable</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
