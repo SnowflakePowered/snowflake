@@ -1,6 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System;
 using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks;
+using System.Reflection;
 
 namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows
 {
@@ -9,17 +10,23 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows
     {
         public static int Main(nint args, int sizeBytes)
         {
-            Vanara.PInvoke.Kernel32.AllocConsole();
-            Console.WriteLine("Hello from C#! (" + RuntimeInformation.FrameworkDescription + ")");
             try
             {
-                new Direct3D9Hook().Init();
+                return Main();
             } 
-            catch
+            catch (Exception e)
             {
-
+                Console.WriteLine(e);
+                return 1;
             }
-            return 42;
+        }
+
+        private static int Main()
+        {
+            Vanara.PInvoke.Kernel32.AllocConsole();
+            Console.WriteLine("Hello from C#! (" + RuntimeInformation.FrameworkDescription + ")");
+            new Direct3D9Hook().Activate();
+            return 0;
         }
     }
 }
