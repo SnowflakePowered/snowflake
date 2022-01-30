@@ -2,6 +2,7 @@
 using CefSharp.OffScreen;
 using Snowflake.Extensibility;
 using Snowflake.Remoting.Orchestration;
+using Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Remoting;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,10 +26,14 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
             this.StartEvent = new ManualResetEventSlim();
             this.InitializedEvent = new SemaphoreSlim(0, 1);
             this.CefThread = new Thread(this.MainCefLoop);
+            this.CommandServer = new RendererCommandServer();
+            this.CommandServer.Activate();
+
             this.CefThread.Start();
 
         }
 
+        public RendererCommandServer CommandServer { get; }
         public ManualResetEventSlim StartEvent { get; }
         public SemaphoreSlim InitializedEvent { get; }
         public ManualResetEventSlim ShutdownEvent { get; }
@@ -65,13 +70,13 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
                 CachePath = this.CacheDirectory.FullName,
                 RemoteDebuggingPort = 10037,
                 // stop CEF from clogging  up the console.
-                LogSeverity = LogSeverity.Fatal
+                LogSeverity = LogSeverity.Fatal,
             };
             Cef.EnableHighDPISupport();
 
             settings.CefCommandLineArgs["autoplay-policy"] = "no-user-gesture-required";
-            settings.EnableAudio();
             settings.SetOffScreenRenderingBestPerformanceArgs();
+            settings.EnableAudio();
             Cef.Initialize(settings, true, browserProcessHandler: null);
             this.Logger.Info("CEF started.");
             this.Browser = new ChromiumWebBrowser("about:blank");
@@ -98,7 +103,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
 
             BrowserSettings browserSettings = new() 
             {
-                WindowlessFrameRate = 60 
+                WindowlessFrameRate = 60,
             };
             this.Browser.CreateBrowser(windowInfo, browserSettings);
             this.Initialized = true;
@@ -107,6 +112,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
         public void Shutdown()
         {
             this.ShutdownEvent.Set();
+            this.CommandServer.Stop();
         }
 
         protected virtual void Dispose(bool disposing)
