@@ -19,6 +19,8 @@ namespace Snowflake.Shell.Windows
 
         private IServiceContainer loadedCore;
 
+        public bool IsShutdown { get; private set; } = false;
+
         internal SnowflakeShell()
         {
         }
@@ -35,12 +37,14 @@ namespace Snowflake.Shell.Windows
         {
             this.ShutdownCore();
             this.StartCore();
+            this.IsShutdown = false;
         }
 
         public void ShutdownCore()
         {
             this.loadedCore.Dispose();
             GC.WaitForPendingFinalizers();
+            this.IsShutdown = true;
         }
     }
 }

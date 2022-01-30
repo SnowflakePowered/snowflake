@@ -44,7 +44,9 @@ namespace Snowflake.Services.AssemblyLoader
                 cfg.LoggerTag = module.Entry.Replace(".dll", "").Replace("Snowflake.Support.", "SF.S.");
                 // We need to load into the default context to allow accessing services exposed by other plugins.
                 cfg.PreferSharedTypes = true;
-                cfg.LoadInMemory = true;
+
+                // loading in memory makes some native-hosted Dlls act weird.
+                cfg.LoadInMemory = false;
                 cfg.IsUnloadable = false;
             });
 

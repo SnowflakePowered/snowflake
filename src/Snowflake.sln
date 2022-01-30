@@ -98,6 +98,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Plugin.Scraping.F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowflake.Support.Orchestration.Overlay.Runtime.Windows", "Snowflake.Support.Orchestration.Overlay.Runtime.Windows\Snowflake.Support.Orchestration.Overlay.Runtime.Windows.csproj", "{32E9E587-B66D-419E-ACE0-261D1688709E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowflake.Support.Orchestration.Overlay.Renderer.Windows", "Snowflake.Support.Orchestration.Overlay.Renderer.Windows\Snowflake.Support.Orchestration.Overlay.Renderer.Windows.csproj", "{BCE0A187-9D45-41C7-8C6F-D0AE20D97866}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -928,6 +930,30 @@ Global
 		{32E9E587-B66D-419E-ACE0-261D1688709E}.Release-Module|x64.Build.0 = Release|Any CPU
 		{32E9E587-B66D-419E-ACE0-261D1688709E}.Release-Module|x86.ActiveCfg = Release|Any CPU
 		{32E9E587-B66D-419E-ACE0-261D1688709E}.Release-Module|x86.Build.0 = Release|Any CPU
+		{BCE0A187-9D45-41C7-8C6F-D0AE20D97866}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCE0A187-9D45-41C7-8C6F-D0AE20D97866}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCE0A187-9D45-41C7-8C6F-D0AE20D97866}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BCE0A187-9D45-41C7-8C6F-D0AE20D97866}.Debug|x64.Build.0 = Debug|Any CPU
+		{BCE0A187-9D45-41C7-8C6F-D0AE20D97866}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BCE0A187-9D45-41C7-8C6F-D0AE20D97866}.Debug|x86.Build.0 = Debug|Any CPU
+		{BCE0A187-9D45-41C7-8C6F-D0AE20D97866}.Debug-Module|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCE0A187-9D45-41C7-8C6F-D0AE20D97866}.Debug-Module|Any CPU.Build.0 = Debug|Any CPU
+		{BCE0A187-9D45-41C7-8C6F-D0AE20D97866}.Debug-Module|x64.ActiveCfg = Debug|Any CPU
+		{BCE0A187-9D45-41C7-8C6F-D0AE20D97866}.Debug-Module|x64.Build.0 = Debug|Any CPU
+		{BCE0A187-9D45-41C7-8C6F-D0AE20D97866}.Debug-Module|x86.ActiveCfg = Debug|Any CPU
+		{BCE0A187-9D45-41C7-8C6F-D0AE20D97866}.Debug-Module|x86.Build.0 = Debug|Any CPU
+		{BCE0A187-9D45-41C7-8C6F-D0AE20D97866}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCE0A187-9D45-41C7-8C6F-D0AE20D97866}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCE0A187-9D45-41C7-8C6F-D0AE20D97866}.Release|x64.ActiveCfg = Release|Any CPU
+		{BCE0A187-9D45-41C7-8C6F-D0AE20D97866}.Release|x64.Build.0 = Release|Any CPU
+		{BCE0A187-9D45-41C7-8C6F-D0AE20D97866}.Release|x86.ActiveCfg = Release|Any CPU
+		{BCE0A187-9D45-41C7-8C6F-D0AE20D97866}.Release|x86.Build.0 = Release|Any CPU
+		{BCE0A187-9D45-41C7-8C6F-D0AE20D97866}.Release-Module|Any CPU.ActiveCfg = Release|Any CPU
+		{BCE0A187-9D45-41C7-8C6F-D0AE20D97866}.Release-Module|Any CPU.Build.0 = Release|Any CPU
+		{BCE0A187-9D45-41C7-8C6F-D0AE20D97866}.Release-Module|x64.ActiveCfg = Release|Any CPU
+		{BCE0A187-9D45-41C7-8C6F-D0AE20D97866}.Release-Module|x64.Build.0 = Release|Any CPU
+		{BCE0A187-9D45-41C7-8C6F-D0AE20D97866}.Release-Module|x86.ActiveCfg = Release|Any CPU
+		{BCE0A187-9D45-41C7-8C6F-D0AE20D97866}.Release-Module|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -971,6 +997,7 @@ Global
 		{966B61B4-183E-40DE-8E47-40BEBD117638} = {49B7A61F-B3BE-485E-84D0-B78C08656412}
 		{09F314C3-054A-4907-96A4-C180976FA4DD} = {86D5767F-B32D-4E1B-BBA2-B87A0DEC6C6F}
 		{32E9E587-B66D-419E-ACE0-261D1688709E} = {FBD15674-246A-4C57-B865-07214D8BB9A1}
+		{BCE0A187-9D45-41C7-8C6F-D0AE20D97866} = {FBD15674-246A-4C57-B865-07214D8BB9A1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {532F5D25-2D82-45B3-BF60-DDA40A0FB795}
