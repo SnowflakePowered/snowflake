@@ -2,6 +2,8 @@
 using Snowflake.Loader;
 using Snowflake.Remoting.Orchestration;
 using Snowflake.Services;
+using Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -21,8 +23,10 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
             var browser = new CefSharpBrowserService(logger.GetLogger("cefsharp"), cachePath);
             services.RegisterService<ICefBrowserService>(browser);
             Task.Run(async () => {
-                await browser.Initialize();
-                browser.Browse(new System.Uri("https://snowflakepowe.red"));
+                await browser.InitializeAsync();
+                // todo: this should be done by the emulator orchestrator, but for debug purposes we'll do one empty.
+                var tab = browser.GetTab(Guid.Empty);
+                await tab.InitializeAsync();
             });
         }
     }

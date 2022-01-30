@@ -10,10 +10,9 @@ namespace Snowflake.Remoting.Orchestration
     // todo move this to its own thing?
     public interface ICefBrowserService
     {
-        public Task Initialize();
+        public Task InitializeAsync();
         public void Shutdown();
-        public void Browse(Uri uri);
-        public Uri? CurrentLocation { get; }
-        public NamedPipeClientStream GetCommandPipe();
+        public IBrowserTab GetTab(Guid tabId);
+        public void FreeTab(Guid tabId);
     }
 }

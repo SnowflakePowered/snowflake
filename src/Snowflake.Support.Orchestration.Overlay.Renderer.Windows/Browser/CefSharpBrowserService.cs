@@ -4,6 +4,7 @@ using Snowflake.Extensibility;
 using Snowflake.Remoting.Orchestration;
 using Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Remoting;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Pipes;
@@ -12,7 +13,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
+namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser
 {
     internal class CefSharpBrowserService : ICefBrowserService, IDisposable
     {
@@ -26,33 +27,21 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
             this.StartEvent = new ManualResetEventSlim();
             this.InitializedEvent = new SemaphoreSlim(0, 1);
             this.CefThread = new Thread(this.MainCefLoop);
-            this.CommandServer = new RendererCommandServer();
-            this.CommandServer.Activate();
-
+            this.Tabs = new ConcurrentDictionary<Guid, CefSharpBrowserTab>();
             this.CefThread.Start();
 
         }
-
-        public RendererCommandServer CommandServer { get; }
         public ManualResetEventSlim StartEvent { get; }
         public SemaphoreSlim InitializedEvent { get; }
+
         public ManualResetEventSlim ShutdownEvent { get; }
         public Thread CefThread { get; }
         public ILogger Logger { get; }
         public DirectoryInfo CacheDirectory { get; }
-        private ChromiumWebBrowser? Browser { get; set; } = null;
-        public Uri? CurrentLocation => this.Browser?.Address != null ? new Uri(this.Browser?.Address) : null;
-        private bool Initialized { get; set; }
-        public void Browse(Uri uri)
-        {
-            if (uri.Equals(this.CurrentLocation))
-            {
-                this.Browser?.Reload();
-                return;
-            }
 
-            this.Browser?.Load(uri.AbsoluteUri);
-        }
+        public ConcurrentDictionary<Guid, CefSharpBrowserTab> Tabs;
+
+        private bool Initialized { get; set; }
 
         public NamedPipeClientStream GetCommandPipe()
         {
@@ -79,7 +68,6 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
             settings.EnableAudio();
             Cef.Initialize(settings, true, browserProcessHandler: null);
             this.Logger.Info("CEF started.");
-            this.Browser = new ChromiumWebBrowser("about:blank");
             this.InitializedEvent.Release();
             this.ShutdownEvent.Wait();
             this.Logger.Info("CEF shutting down...");
@@ -87,32 +75,22 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
             this.Logger.Info("CEF shut down.");
         }
 
-        public async Task Initialize()
+        public async Task InitializeAsync()
         {
             if (this.Initialized)
                 return;
             this.StartEvent.Set();
             await this.InitializedEvent.WaitAsync();
-            WindowInfo windowInfo = new()
-            {
-                Width = 100,
-                Height = 100,
-                WindowlessRenderingEnabled = true,
-            };
-            windowInfo.SetAsWindowless((nint)0);
-
-            BrowserSettings browserSettings = new() 
-            {
-                WindowlessFrameRate = 60,
-            };
-            this.Browser.CreateBrowser(windowInfo, browserSettings);
             this.Initialized = true;
         }
 
         public void Shutdown()
         {
             this.ShutdownEvent.Set();
-            this.CommandServer.Stop();
+            foreach (var tab in this.Tabs)
+            {
+                tab.Value.Dispose();
+            }
         }
 
         protected virtual void Dispose(bool disposing)
@@ -137,6 +115,22 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
+        }
+
+        public IBrowserTab GetTab(Guid tabId)
+        {
+            if (!this.Initialized)
+                throw new InvalidOperationException("Can not allocate a tab when service was not initialized.");
+            return this.Tabs.GetOrAdd(tabId, new CefSharpBrowserTab(tabId));
+
+        }
+
+        public void FreeTab(Guid tabId)
+        {
+            if (this.Tabs.Remove(tabId, out var browserTab))
+            {
+                browserTab.Dispose();
+            }
         }
     }
 }

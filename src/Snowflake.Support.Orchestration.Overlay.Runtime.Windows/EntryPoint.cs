@@ -29,20 +29,52 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows
             Vanara.PInvoke.Kernel32.AllocConsole();
             Console.WriteLine("Hello from C#! (" + RuntimeInformation.FrameworkDescription + ")");
             new Direct3D11Hook().Activate();
-            var npc = new NamedPipeClientStream("Snowflake.Orchestration.Renderer");
+            var npc = new NamedPipeClientStream("Snowflake.Orchestration.Renderer-" + Guid.Empty.ToString("N"));
             npc.Connect();
-            Span<byte> test = new byte[Marshal.SizeOf<RendererCommand>() + 1];
-            Console.WriteLine( npc.Read(test));
+            Memory<byte> test = new byte[Marshal.SizeOf<RendererCommand>()];
+            Console.WriteLine(npc.Read(test.Span));
 
             RendererCommand? command = RendererCommand.FromBuffer(test);
 
             if (command.HasValue)
             {
-                Console.WriteLine(Enum.GetName(command.Value.Type));
+                var value = command.Value;
+                Console.WriteLine(Enum.GetName(value.Type));
+                if (command.Value.Type == RendererCommandType.Handshake)
+                {
+                    Console.WriteLine(value.HandshakeParams.Guid.ToString("N"));
+                }
             }
             else
             {
                 Console.WriteLine("nope");
+            }
+
+            var ping = Guid.NewGuid();
+            Console.WriteLine("ping " + ping.ToString("N"));
+            npc.Write(new RendererCommand()
+            {
+                Magic = RendererCommand.RendererMagic,
+                Type = RendererCommandType.Handshake,
+                HandshakeParams = new()
+                {
+                    Guid = ping
+                }
+            }.ToBuffer().Span);
+            Console.WriteLine("read ok");
+            Console.WriteLine(npc.Read(test.Span));
+            RendererCommand? pong = RendererCommand.FromBuffer(test);
+            if (pong.HasValue)
+            {
+                var value = pong.Value;
+                Console.WriteLine(Enum.GetName(value.Type));
+                if (value.Type == RendererCommandType.Handshake)
+                {
+                    Console.WriteLine(value.HandshakeParams.Guid.ToString("N"));
+                }
+            } else
+            {
+                Console.WriteLine("what");
             }
             return 0;
         }

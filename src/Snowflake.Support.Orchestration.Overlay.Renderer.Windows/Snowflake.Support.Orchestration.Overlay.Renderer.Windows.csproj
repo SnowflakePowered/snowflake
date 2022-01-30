@@ -9,4 +9,8 @@
   <ItemGroup>
     <PackageReference Include="CefSharp.OffScreen.NETCore" Version="97.1.61" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Snowflake.Support.Orchestration.Overlay.Runtime.Windows\Snowflake.Support.Orchestration.Overlay.Runtime.Windows.csproj" />
+  </ItemGroup>
 </Project>

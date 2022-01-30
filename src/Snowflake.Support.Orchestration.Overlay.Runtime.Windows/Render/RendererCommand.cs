@@ -25,53 +25,70 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render
 
         [FieldOffset(0)] public byte Magic;
         [FieldOffset(1)] public RendererCommandType Type;
+        [FieldOffset(6)] public HandshakeParams HandshakeParams;
         [FieldOffset(6)] public SharedTextureHandleParams SharedTextureParams;
         [FieldOffset(6)] public WndProcEvent WndProcMessageEvent;
         [FieldOffset(6)] public MouseEventParams MouseEvent;
         [FieldOffset(6)] public ResizeParams ResizeEvent;
 
-        public ReadOnlySpan<byte> ToBuffer()
+        public ReadOnlyMemory<byte> ToBuffer()
         {
-            return StructUtils.ToSpan(this);
+            return StructUtils.ToMemory(this);
         }
 
-        public static RendererCommand? FromBuffer(ReadOnlySpan<byte> value)
+        public static RendererCommand? FromBuffer(ReadOnlyMemory<byte> buffer)
         {
-            return StructUtils.FromSpan<RendererCommand>(value);
+            return StructUtils.FromSpan<RendererCommand>(buffer);
         }
-        public static RendererCommand Handshake()
+
+        public static RendererCommand Handshake(Guid id)
         {
             return new()
             {
                 Magic = RendererMagic,
                 Type = RendererCommandType.Handshake,
+                HandshakeParams = new()
+                {
+                    Guid = id,
+                }
             };
         }
 
         private static class StructUtils
         {
-            public static unsafe ReadOnlySpan<byte> ToSpan<T>(T value) where T : unmanaged
+            public static unsafe ReadOnlyMemory<byte> ToMemory<T>(T value) where T : unmanaged
             {
                 byte* pointer = (byte*)&value;
 
-                Span<byte> bytes = new byte[Marshal.SizeOf<RendererCommand>() + 1];
+                Memory<byte> _bytes = new byte[Marshal.SizeOf<RendererCommand>()];
+                Span<byte> bytes = _bytes.Span;
+
                 for (int i = 0; i < sizeof(T); i++)
                 {
                     bytes[i] = pointer[i];
                 }
 
-                bytes[bytes.Length - 1] = 0;
-                return bytes;
+                return _bytes;
             }
 
-            public static unsafe T? FromSpan<T>(ReadOnlySpan<byte> value) where T : unmanaged
+            public static unsafe T? FromSpan<T>(ReadOnlyMemory<byte> value) where T : unmanaged
             {
-                if (value.Length != Marshal.SizeOf<T>() + 1)
+                if (value.Length != Marshal.SizeOf<T>())
+                {
+                    Console.WriteLine("Expected size " + Marshal.SizeOf<T>() + " but got " + value.Length);
                     return null;
+                }
 
-                return MemoryMarshal.Cast<byte, T>(value)[0];
+                return MemoryMarshal.Cast<byte, T>(value.Span)[0];
             }
         }
+    }
+
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct HandshakeParams
+    {
+        public Guid Guid;
     }
 
     [StructLayout(LayoutKind.Sequential)]

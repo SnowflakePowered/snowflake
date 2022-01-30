@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render;
+using System;
 using System.Collections.Generic;
 using System.IO.Pipes;
 using System.Linq;
@@ -14,14 +15,16 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Remoting
         CancellationTokenSource TokenSource { get; }
 
         Thread Thread { get; set; }
-        public RendererCommandServer()
+        public Guid TabGuid { get; }
+        public RendererCommandServer(Guid tabGuid)
         {
             this.TokenSource = new CancellationTokenSource();
+            this.TabGuid = tabGuid;
         }
 
         public void Activate()
         {
-            this.Thread = new Thread(ServerThread);
+            this.Thread = new Thread(async (data) => await ServerThread((CancellationToken)data));
             this.Thread.Start(this.TokenSource.Token);
         }
 
@@ -32,53 +35,36 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Remoting
 
         public NamedPipeClientStream OpenNew()
         {
-            return new NamedPipeClientStream("Snowflake.Orchestration.Renderer");
+            return new NamedPipeClientStream("Snowflake.Orchestration.Renderer-"+this.TabGuid.ToString("N"));
         }
 
-        public void ServerThread(object? data)
+        public async Task ServerWorkThread(NamedPipeServerStream pipeServer, CancellationToken shutdownEvent)
         {
-            Console.WriteLine("Started IPC server");
-            var shutdownEvent = (CancellationToken)data;
-            var pipeServer = new NamedPipeServerStream("Snowflake.Orchestration.Renderer", 
-                PipeDirection.InOut, 1);
+            // todo: handle broken pipe
 
-            pipeServer.WaitForConnection();
-            Console.WriteLine("Connection Established");
-
-            pipeServer.Write(RendererCommand.Handshake().ToBuffer());
-
-            Console.WriteLine("Handshake established.");
-
-            Span<byte> readBuffer = stackalloc byte[Marshal.SizeOf<RendererCommand>()];
-
+            Memory<byte> readBuffer = new byte[Marshal.SizeOf<RendererCommand>()];
             while (true)
             {
                 if (shutdownEvent.IsCancellationRequested)
                     break;
-                int next;
-                if ((next = pipeServer.ReadByte()) == -1)
+                int bytesRead = await pipeServer.ReadAsync(readBuffer, shutdownEvent);
+                if (shutdownEvent.IsCancellationRequested)
                     break;
-                byte magic = (byte)next;
-                if (magic != RendererCommand.RendererMagic)
+                if (readBuffer.Span[0] != RendererCommand.RendererMagic || bytesRead != readBuffer.Length)
                     continue;
-                if ((next = pipeServer.ReadByte()) == -1)
-                    break;
+                
 
-                RendererCommandType type = (RendererCommandType)next;
-
-                RendererCommand command;
-                unsafe
-                {
-                    readBuffer[0] = magic;
-                    readBuffer[1] = (byte)type;
-                    if (pipeServer.Read(readBuffer[2..]) != Marshal.SizeOf<RendererCommand>() - 2)
-                        continue;
-                    command = MemoryMarshal.Cast<byte, RendererCommand>(readBuffer)[0];
-                }
+                RendererCommand? commandBytes = RendererCommand.FromBuffer(readBuffer);
+                if (!commandBytes.HasValue)
+                    continue;
+                var command = commandBytes.Value;
 
                 switch (command.Type)
                 {
                     case RendererCommandType.Handshake:
+                        Console.WriteLine("send pong handshake of " + command.HandshakeParams.Guid.ToString("N"));
+                        var buffer = command.ToBuffer();
+                        await pipeServer.WriteAsync(buffer, shutdownEvent);
                         break;
                     case RendererCommandType.SharedTextureHandle:
                         break;
@@ -94,8 +80,41 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Remoting
                         break;
                 }
             }
-
+            pipeServer.Dispose();
             Console.WriteLine("Connection closed.");
+        }
+
+        public async Task ServerThread(CancellationToken shutdownEvent)
+        {
+            Console.WriteLine("Started IPC server");
+            // todo proper cancellation.
+            while(!shutdownEvent.IsCancellationRequested)
+            {
+                var pipeServer = new NamedPipeServerStream(
+                    "Snowflake.Orchestration.Renderer-" + this.TabGuid.ToString("N"),
+                    PipeDirection.InOut, NamedPipeServerStream.MaxAllowedServerInstances);
+                try
+                {
+                    await pipeServer.WaitForConnectionAsync(shutdownEvent);
+                    if (shutdownEvent.IsCancellationRequested)
+                        break;
+                    Console.WriteLine("Connection Established");
+                    await pipeServer.WriteAsync(RendererCommand.Handshake(this.TabGuid).ToBuffer(), shutdownEvent);
+                    if (shutdownEvent.IsCancellationRequested)
+                        break;
+                    Console.WriteLine("Handshake established.");
+                    new Thread(async (data) =>
+                    {
+                        (NamedPipeServerStream pipeServer, CancellationToken shutdownEvent) = 
+                        ((NamedPipeServerStream, CancellationToken))data;
+                        await this.ServerWorkThread(pipeServer, shutdownEvent);
+                    }).Start((pipeServer, shutdownEvent));
+                }
+                catch
+                {
+                    continue;
+                }
+            }
         }
     }
 }
