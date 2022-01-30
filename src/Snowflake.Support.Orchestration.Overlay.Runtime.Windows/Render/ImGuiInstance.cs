@@ -23,7 +23,6 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render
         public ImGuiInstance(Action render)
         {
             this.DoRender = render;
-            Console.WriteLine($"[ImguiHook] Init with Window Handle {(long)WindowHandle:X}");
             this.Context = ImGui.CreateContext(null);
             ImGui.StyleColorsDark(null);
         }

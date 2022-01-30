@@ -2,6 +2,7 @@
 using System;
 using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks;
 using System.Reflection;
+using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D11;
 
 namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows
 {
@@ -25,7 +26,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows
         {
             Vanara.PInvoke.Kernel32.AllocConsole();
             Console.WriteLine("Hello from C#! (" + RuntimeInformation.FrameworkDescription + ")");
-            new Direct3D9Hook().Activate();
+            new Direct3D11Hook().Activate();
             return 0;
         }
     }

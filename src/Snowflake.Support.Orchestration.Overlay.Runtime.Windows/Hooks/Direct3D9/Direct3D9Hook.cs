@@ -185,7 +185,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks
             {
                 Console.WriteLine("Failed to create D3D9 Device");
                 d3d9->Release();
-                throw new PlatformNotSupportedException("Direct3D 9 not supported.");
+                throw new PlatformNotSupportedException("Direct3D9 not supported.");
             }
             Console.WriteLine("Succeeded D3D9 Init");
 
