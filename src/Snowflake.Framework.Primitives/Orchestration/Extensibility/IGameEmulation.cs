@@ -17,6 +17,11 @@ namespace Snowflake.Orchestration.Extensibility
     public interface IGameEmulation
     {
         /// <summary>
+        /// A unique ID used to identify this emulation instance.
+        /// </summary>
+        Guid Guid { get; }
+
+        /// <summary>
         /// A list of <see cref="IEmulatedController"/> that representes the input devices that will be used
         /// in this emulation instance.
         /// </summary>

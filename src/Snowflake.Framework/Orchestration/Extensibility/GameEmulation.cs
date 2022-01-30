@@ -16,6 +16,7 @@ namespace Snowflake.Orchestration.Extensibility
     public abstract class GameEmulation : IAsyncDisposable, IGameEmulation
     {
         public IGame Game { get; }
+        public Guid Guid { get; }
 
         public IEnumerable<IEmulatedController> ControllerPorts { get; }
 
@@ -27,6 +28,7 @@ namespace Snowflake.Orchestration.Extensibility
             this.Game = game;
             this.ControllerPorts = controllerPorts;
             this.SaveProfile = saveProfile;
+            this.Guid = Guid.NewGuid();
         }
 
         public abstract Task SetupEnvironment();
@@ -48,7 +50,6 @@ namespace Snowflake.Orchestration.Extensibility
         private bool IsDisposed { get; set; } = false;
 
         public GameEmulationState EmulationState { get; protected set; } = GameEmulationState.RequiresSetupEnvironment;
-
         public async ValueTask DisposeAsync()
         {
             if (this.IsDisposed) return;

@@ -27,6 +27,9 @@ namespace Snowflake.Remoting.GraphQL.Model.Orchestration
             descriptor.Field(e => e.EmulationState)
                 .Description("The current state of the emulation.")
                 .Type<NonNullType<GameEmulationStateEnum>>();
+            descriptor.Field(e => e.Guid)
+                .Description("The GUID of the game emulation instance.")
+                .Type<NonNullType<UuidType>>();
         }
     }
 }
