@@ -10,12 +10,11 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render
     public enum RendererCommandType : byte
     {
         Handshake = 1,
-        SharedTextureHandle = 2,
+        ResizeEvent = 2,
         WndProcEvent = 3,
         MouseEvent = 4,
         CursorEvent = 5,
-        ResizeEvent = 6,
-        ShutdownEvent = 7,
+        ShutdownEvent = 6,
     }
 
     [StructLayout(LayoutKind.Explicit, Pack = 0)]
@@ -25,11 +24,11 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render
 
         [FieldOffset(0)] public byte Magic;
         [FieldOffset(1)] public RendererCommandType Type;
-        [FieldOffset(6)] public HandshakeParams HandshakeParams;
-        [FieldOffset(6)] public SharedTextureHandleParams SharedTextureParams;
+        [FieldOffset(6)] public HandshakeParams HandshakeEvent;
+        [FieldOffset(6)] public ResizeParams ResizeEvent;
         [FieldOffset(6)] public WndProcEvent WndProcMessageEvent;
         [FieldOffset(6)] public MouseEventParams MouseEvent;
-        [FieldOffset(6)] public ResizeParams ResizeEvent;
+        [FieldOffset(6)] public CursorEventParams CursorEvent;
 
         public ReadOnlyMemory<byte> ToBuffer()
         {
@@ -47,7 +46,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render
             {
                 Magic = RendererMagic,
                 Type = RendererCommandType.Handshake,
-                HandshakeParams = new()
+                HandshakeEvent = new()
                 {
                     Guid = id,
                 }
@@ -92,9 +91,11 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct SharedTextureHandleParams
+    public struct ResizeParams
     {
         public nint TextureHandle;
+        public int Height;
+        public int Width;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -121,10 +122,66 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct ResizeParams
+    public struct CursorEventParams
     {
-        public int Height;
-        public int Width;
+        public Cursor Cursor;
+    }
+
+    /// <summary>
+    /// Cursor types. These are the same as CefSharp cursors
+    /// </summary>
+    public enum Cursor : byte
+    {
+        Pointer = 0,
+        Cross,
+        Hand,
+        IBeam,
+        Wait,
+        Help,
+        EastResize,
+        NorthResize,
+        NortheastResize,
+        NorthwestResize,
+        SouthResize,
+        SoutheastResize,
+        SouthwestResize,
+        WestResize,
+        NorthSouthResize,
+        EastWestResize,
+        NortheastSouthwestResize,
+        NorthwestSoutheastResize,
+        ColumnResize,
+        RowResize,
+        MiddlePanning,
+        EastPanning,
+        NorthPanning,
+        NortheastPanning,
+        NorthwestPanning,
+        SouthPanning,
+        SoutheastPanning,
+        SouthwestPanning,
+        WestPanning,
+        Move,
+        VerticalText,
+        Cell,
+        ContextMenu,
+        Alias,
+        Progress,
+        NoDrop,
+        Copy,
+        None,
+        NotAllowed,
+        ZoomIn,
+        ZoomOut,
+        Grab,
+        Grabbing,
+        MiddlePanningVertical,
+        MiddlePanningHorizontal,
+        Custom,
+        DndNone,
+        DndMove,
+        DndCopy,
+        DndLink
     }
 
     [Flags]

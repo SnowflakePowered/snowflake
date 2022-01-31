@@ -42,7 +42,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows
                 Console.WriteLine(Enum.GetName(value.Type));
                 if (command.Value.Type == RendererCommandType.Handshake)
                 {
-                    Console.WriteLine(value.HandshakeParams.Guid.ToString("N"));
+                    Console.WriteLine(value.HandshakeEvent.Guid.ToString("N"));
                 }
             }
             else
@@ -56,7 +56,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows
             {
                 Magic = RendererCommand.RendererMagic,
                 Type = RendererCommandType.Handshake,
-                HandshakeParams = new()
+                HandshakeEvent = new()
                 {
                     Guid = ping
                 }
@@ -70,12 +70,13 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows
                 Console.WriteLine(Enum.GetName(value.Type));
                 if (value.Type == RendererCommandType.Handshake)
                 {
-                    Console.WriteLine(value.HandshakeParams.Guid.ToString("N"));
+                    Console.WriteLine(value.HandshakeEvent.Guid.ToString("N"));
                 }
             } else
             {
                 Console.WriteLine("what");
             }
+
             return 0;
         }
     }
