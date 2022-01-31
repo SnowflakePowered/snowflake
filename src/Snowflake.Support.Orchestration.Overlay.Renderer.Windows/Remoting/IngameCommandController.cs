@@ -1,4 +1,5 @@
 ﻿using Snowflake.Extensibility;
+using Snowflake.Orchestration.Ingame;
 using Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser;
 using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render;
 using System;
@@ -13,19 +14,21 @@ using System.Threading.Tasks;
 
 namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Remoting
 {
-    internal class RendererCommandServer
+    internal class IngameCommandController
     {
-        public CefSharpBrowserTab Browser { get; }
-        public ILogger Logger { get; }
+        private ILogger Logger { get; }
         CancellationTokenSource TokenSource { get; }
-        
         Thread WatchdogThread { get; set; }
         ConcurrentQueue<NamedPipeServerStream> OpenPipes { get; set; }
 
-        public RendererCommandServer(CefSharpBrowserTab browserTab)
+        public delegate void IngameCommandHandler(GameWindowCommand command);
+        public event IngameCommandHandler CommandReceived;
+
+        private Guid InstanceGuid { get; }
+        public IngameCommandController(ILogger logger, Guid instanceGuid)
         {
-            this.Browser = browserTab;
-            this.Logger = this.Browser.Logger;
+            this.InstanceGuid = instanceGuid;
+            this.Logger = logger;
             this.TokenSource = new();
             this.OpenPipes = new();
         }
@@ -43,15 +46,15 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Remoting
 
         public NamedPipeClientStream OpenNew()
         {
-            return new NamedPipeClientStream("Snowflake.Orchestration.Renderer-"+this.Browser.TabGuid.ToString("N"));
+            return new NamedPipeClientStream("Snowflake.Orchestration.Renderer-"+this.InstanceGuid.ToString("N"));
         }
 
-        public void Broadcast(RendererCommand command)
+        public void Broadcast(GameWindowCommand command)
         {
             Task.Run(async () => await this.BroadcastAsync(command)).ConfigureAwait(false);
         }
 
-        public async Task BroadcastAsync(RendererCommand command)
+        public async Task BroadcastAsync(GameWindowCommand command)
         {
             List<NamedPipeServerStream> tempStreams = new();
 
@@ -74,7 +77,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Remoting
         {
             // todo: handle broken pipe
             Console.WriteLine("in thead");
-            Memory<byte> readBuffer = new byte[Marshal.SizeOf<RendererCommand>()];
+            Memory<byte> readBuffer = new byte[Marshal.SizeOf<GameWindowCommand>()];
             try
             {
                 while (!shutdownEvent.IsCancellationRequested && pipeServer.IsConnected)
@@ -92,7 +95,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Remoting
                         this.Logger.Info("Pipe closed");
                         break;
                     }
-                    if (readBuffer.Span[0] != RendererCommand.RendererMagic)
+                    if (readBuffer.Span[0] != GameWindowCommand.GameWindowMagic)
                     {
                         this.Logger.Info("Unexpected magic number: " + readBuffer.Span[0]);
                         continue;
@@ -104,7 +107,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Remoting
                         continue;
                     }
 
-                    RendererCommand? commandBytes = RendererCommand.FromBuffer(readBuffer);
+                    GameWindowCommand? commandBytes = GameWindowCommand.FromBuffer(readBuffer);
                     if (!commandBytes.HasValue)
                     {
                         this.Logger.Info($"Unexpected payload.");
@@ -114,35 +117,34 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Remoting
 
                     switch (command.Type)
                     {
-                        case RendererCommandType.Handshake:
-                            this.Logger.Info("Got handshake pong command in cmdthread " + this.Browser.TabGuid);
+                        case GameWindowCommandType.Handshake:
+                            this.Logger.Info("Got handshake pong command in cmdthread " + this.InstanceGuid);
                             this.Logger.Info("Sending pong with " + command.HandshakeEvent.Guid.ToString("N"));
                             var buffer = command.ToBuffer();
                             await pipeServer.WriteAsync(buffer, shutdownEvent);
                             break;
-                        case RendererCommandType.ResizeEvent:
-                            break;
-                        case RendererCommandType.WndProcEvent:
-                            break;
-                        case RendererCommandType.MouseEvent:
-                            break;
-                        case RendererCommandType.CursorEvent:
-                            break;
-                        case RendererCommandType.ShutdownEvent:
-                            this.Logger.Info("cmdthread shutdown request for " + this.Browser.TabGuid);
+                        case GameWindowCommandType.ShutdownEvent:
+                            this.Logger.Info("cmdthread shutdown request for " + this.InstanceGuid);
                             this.TokenSource.Cancel();
+                            break;
+                        case GameWindowCommandType.WindowResizeEvent:
+                        case GameWindowCommandType.WindowMessageEvent:
+                        case GameWindowCommandType.OverlayTextureEvent:
+                        case GameWindowCommandType.MouseEvent:
+                        case GameWindowCommandType.CursorEvent:
+                            this.CommandReceived?.Invoke(command);
                             break;
                     }
                 }
             } 
             catch
             {
-                this.Logger.Info("client pipe broken for " + this.Browser.TabGuid);
+                this.Logger.Info("client pipe broken for " + this.InstanceGuid);
             }
             finally
             {
                 pipeServer.Dispose();
-                this.Logger.Info("client connection closed " + this.Browser.TabGuid);
+                this.Logger.Info("client connection closed " + this.InstanceGuid);
             }
         }
 
@@ -153,7 +155,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Remoting
             while(!shutdownEvent.IsCancellationRequested)
             {
                 var pipeServer = new NamedPipeServerStream(
-                    "Snowflake.Orchestration.Renderer-" + this.Browser.TabGuid.ToString("N"),
+                    "Snowflake.Orchestration.Renderer-" + this.InstanceGuid.ToString("N"),
                     PipeDirection.InOut, NamedPipeServerStream.MaxAllowedServerInstances,
                     PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
                 try
@@ -162,7 +164,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Remoting
                     if (shutdownEvent.IsCancellationRequested)
                         break;
                     Console.WriteLine("Connection Established");
-                    await pipeServer.WriteAsync(RendererCommand.Handshake(this.Browser.TabGuid).ToBuffer(), shutdownEvent);
+                    await pipeServer.WriteAsync(GameWindowCommand.Handshake(this.InstanceGuid).ToBuffer(), shutdownEvent);
                     if (shutdownEvent.IsCancellationRequested)
                         break;
                     Console.WriteLine("Handshake established.");
@@ -177,7 +179,6 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Remoting
                 }
                 catch(Exception e)
                 {
-                    Console.WriteLine("uhhh shit died.");
                     Console.WriteLine(e);
                     continue;
                 }

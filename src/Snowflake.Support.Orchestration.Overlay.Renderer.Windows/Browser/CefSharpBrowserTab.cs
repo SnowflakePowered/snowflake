@@ -27,16 +27,11 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser
         private ChromiumWebBrowser Browser { get; set; }
         private bool Initialized { get; set; } = false;
         public Uri? CurrentLocation => this.Browser?.Address != null ? new Uri(this.Browser?.Address) : null;
-        public RendererCommandServer CommandServer { get; private set; }
+        public IngameCommandController CommandServer { get; private set; }
         public ILogger Logger { get; }
         public Guid TabGuid { get; }
-
-
         private D3DSharedTextureRenderHandler Renderer { get; }
-        internal void Resize(Size size, nint handle)
-        {
-            
-        }
+
 
         public NamedPipeClientStream GetCommandPipe()
         {
@@ -48,7 +43,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser
             if (this.Initialized || this.disposedValue)
                 return;
 
-            this.CommandServer = new RendererCommandServer(this);
+            this.CommandServer = new IngameCommandController(this.Logger, this.TabGuid);
             this.CommandServer.Activate();
             this.Browser = new ChromiumWebBrowser(uri.AbsoluteUri);
             

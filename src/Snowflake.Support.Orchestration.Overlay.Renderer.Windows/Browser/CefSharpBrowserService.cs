@@ -20,8 +20,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser
     internal class CefSharpBrowserService : ICefBrowserService, IDisposable
     {
         private bool disposedValue;
-        private D3D11 Direct3D;
-        private ID3D11Device Device;
+        
         public CefSharpBrowserService(ILogger logger, DirectoryInfo cachePath)
         {
             this.Logger = logger;
@@ -32,16 +31,8 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser
             this.CefThread = new Thread(this.MainCefLoop);
             this.Tabs = new ConcurrentDictionary<Guid, CefSharpBrowserTab>();
             this.CefThread.Start();
-            this.Direct3D = D3D11.GetApi();
-            var fLevel = D3DFeatureLevel.D3DFeatureLevel110;
-            //this.Direct3D.CreateDevice(null,
-            //    Silk.NET.Core.Native.D3DDriverType.D3DDriverTypeHardware,
-            //    0,
-            //    CreateDeviceFlag.CreateDeviceBgraSupport | CreateDeviceFlag.CreateDeviceDebug,
-            //    ref fLevel, 1, D3D11.SdkVersion, null, null, null
-                
-            //    ).;
         }
+
         public ManualResetEventSlim StartEvent { get; }
         public SemaphoreSlim InitializedEvent { get; }
 

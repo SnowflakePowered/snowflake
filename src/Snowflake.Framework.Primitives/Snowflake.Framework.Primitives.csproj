@@ -6,6 +6,7 @@
     <LangVersion>10.0</LangVersion>
     <Nullable>enable</Nullable>
     <_SnowflakeUseDevelopmentSDK>true</_SnowflakeUseDevelopmentSDK>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>

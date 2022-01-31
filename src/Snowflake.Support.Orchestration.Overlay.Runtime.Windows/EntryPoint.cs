@@ -5,6 +5,7 @@ using System.Reflection;
 using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D11;
 using System.IO.Pipes;
 using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render;
+using Snowflake.Orchestration.Ingame;
 
 namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows
 {
@@ -31,16 +32,16 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows
             new Direct3D11Hook().Activate();
             var npc = new NamedPipeClientStream("Snowflake.Orchestration.Renderer-" + Guid.Empty.ToString("N"));
             npc.Connect();
-            Memory<byte> test = new byte[Marshal.SizeOf<RendererCommand>()];
+            Memory<byte> test = new byte[Marshal.SizeOf<GameWindowCommand>()];
             Console.WriteLine(npc.Read(test.Span));
 
-            RendererCommand? command = RendererCommand.FromBuffer(test);
+            GameWindowCommand? command = GameWindowCommand.FromBuffer(test);
 
             if (command.HasValue)
             {
                 var value = command.Value;
                 Console.WriteLine(Enum.GetName(value.Type));
-                if (command.Value.Type == RendererCommandType.Handshake)
+                if (command.Value.Type == GameWindowCommandType.Handshake)
                 {
                     Console.WriteLine(value.HandshakeEvent.Guid.ToString("N"));
                 }
@@ -52,10 +53,10 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows
 
             var ping = Guid.NewGuid();
             Console.WriteLine("ping " + ping.ToString("N"));
-            npc.Write(new RendererCommand()
+            npc.Write(new GameWindowCommand()
             {
-                Magic = RendererCommand.RendererMagic,
-                Type = RendererCommandType.Handshake,
+                Magic = GameWindowCommand.GameWindowMagic,
+                Type = GameWindowCommandType.Handshake,
                 HandshakeEvent = new()
                 {
                     Guid = ping
@@ -63,12 +64,12 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows
             }.ToBuffer().Span);
             Console.WriteLine("read ok");
             Console.WriteLine(npc.Read(test.Span));
-            RendererCommand? pong = RendererCommand.FromBuffer(test);
+            GameWindowCommand? pong = GameWindowCommand.FromBuffer(test);
             if (pong.HasValue)
             {
                 var value = pong.Value;
                 Console.WriteLine(Enum.GetName(value.Type));
-                if (value.Type == RendererCommandType.Handshake)
+                if (value.Type == GameWindowCommandType.Handshake)
                 {
                     Console.WriteLine(value.HandshakeEvent.Guid.ToString("N"));
                 }
