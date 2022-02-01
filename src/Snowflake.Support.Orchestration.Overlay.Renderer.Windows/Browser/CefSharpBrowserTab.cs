@@ -45,7 +45,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser
                 return;
 
             this.CommandServer = new IngameCommandController(this.Logger, this.TabGuid);
-            this.CommandServer.Activate();
+            this.CommandServer.Start();
             this.Renderer = new D3DSharedTextureRenderHandler(this.Device, this.CommandServer);
             this.Renderer.Resize(new(300, 300));
             this.Browser = new ChromiumWebBrowser(uri.AbsoluteUri);

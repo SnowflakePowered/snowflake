@@ -33,7 +33,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Remoting
             this.OpenPipes = new();
         }
 
-        public void Activate()
+        public void Start()
         {
             this.WatchdogThread = new Thread(async (data) => await ServerThread((CancellationToken)data));
             this.WatchdogThread.Start(this.TokenSource.Token);

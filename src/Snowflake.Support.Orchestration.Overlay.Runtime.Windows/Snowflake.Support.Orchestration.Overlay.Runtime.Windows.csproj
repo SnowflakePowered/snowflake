@@ -32,4 +32,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Snowflake.Framework.Primitives\Snowflake.Framework.Primitives.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <NativeLibs Remove="IngameIpc.cs" />
+  </ItemGroup>
 </Project>

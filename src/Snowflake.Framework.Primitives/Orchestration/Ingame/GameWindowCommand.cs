@@ -28,6 +28,11 @@ namespace Snowflake.Orchestration.Ingame
             return StructUtils.ToMemory(this);
         }
 
+        public bool IntoBuffer(ref Span<byte> buffer)
+        {
+            return StructUtils.IntoSpan(this, ref buffer);
+        }
+
         public static GameWindowCommand? FromBuffer(ReadOnlyMemory<byte> buffer)
         {
             return StructUtils.FromSpan<GameWindowCommand>(buffer);
@@ -61,6 +66,19 @@ namespace Snowflake.Orchestration.Ingame
                 }
 
                 return _bytes;
+            }
+
+            public static unsafe bool IntoSpan<T>(T value, ref Span<byte> bytes) where T : unmanaged
+            {
+                if (bytes.Length != Marshal.SizeOf<GameWindowCommand>())
+                    return false;
+
+                byte* pointer = (byte*)&value;
+                for (int i = 0; i < sizeof(T); i++)
+                {
+                    bytes[i] = pointer[i];
+                }
+                return true;
             }
 
             public static unsafe T? FromSpan<T>(ReadOnlyMemory<byte> value) where T : unmanaged

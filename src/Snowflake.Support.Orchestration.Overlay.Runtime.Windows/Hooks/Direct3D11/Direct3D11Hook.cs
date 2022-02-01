@@ -27,8 +27,9 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
         const int D3D11_DEVICE_METHOD_COUNT = 43;
         const int D3D11_SWAPCHAIN_METHOD_COUNT = 18;
 
-        public Direct3D11Hook()
+        public Direct3D11Hook(IngameIpc ipc)
         {
+            this.IngameIpc = ipc;
             (VirtualFunctionTable deviceVtable, VirtualFunctionTable swapChainVtable) = GetDirect3D11VTable();
             unsafe
             {
@@ -77,6 +78,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
         public IHook<Present> PresentHook { get; }
         public IHook<ResizeBuffers> ResizeBuffersHook { get; }
         public ImGuiInstance ImGuiInstance { get; }
+        public IngameIpc IngameIpc { get; }
 
         private unsafe (VirtualFunctionTable deviceVtable, VirtualFunctionTable swapChainVtable) GetDirect3D11VTable()
         {

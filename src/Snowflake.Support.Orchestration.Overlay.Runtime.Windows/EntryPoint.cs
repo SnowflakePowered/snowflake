@@ -29,55 +29,20 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows
         {
             Vanara.PInvoke.Kernel32.AllocConsole();
             Console.WriteLine("Hello from C#! (" + RuntimeInformation.FrameworkDescription + ")");
-            new Direct3D11Hook().Activate();
-            var npc = new NamedPipeClientStream("Snowflake.Orchestration.Renderer-" + Guid.Empty.ToString("N"));
-            npc.Connect();
-            Memory<byte> test = new byte[Marshal.SizeOf<GameWindowCommand>()];
-            Console.WriteLine(npc.Read(test.Span));
+            var ipc = new IngameIpc(Guid.Empty);
+            ipc.CommandReceived += (c) =>
+            {
+                Console.WriteLine($"Received command {c.Type}");
+            };
+            Task.Run(async () =>
+            {
+                var result = await ipc.ConnectAsync();
+                Console.WriteLine($"IPC Connection: {result}");
+                ipc.Listen();
+                new Direct3D11Hook(ipc).Activate();
 
-            GameWindowCommand? command = GameWindowCommand.FromBuffer(test);
-
-            if (command.HasValue)
-            {
-                var value = command.Value;
-                Console.WriteLine(Enum.GetName(value.Type));
-                if (command.Value.Type == GameWindowCommandType.Handshake)
-                {
-                    Console.WriteLine(value.HandshakeEvent.Guid.ToString("N"));
-                }
-            }
-            else
-            {
-                Console.WriteLine("nope");
-            }
-
-            var ping = Guid.NewGuid();
-            Console.WriteLine("ping " + ping.ToString("N"));
-            npc.Write(new GameWindowCommand()
-            {
-                Magic = GameWindowCommand.GameWindowMagic,
-                Type = GameWindowCommandType.Handshake,
-                HandshakeEvent = new()
-                {
-                    Guid = ping
-                }
-            }.ToBuffer().Span);
-            Console.WriteLine("read ok");
-            Console.WriteLine(npc.Read(test.Span));
-            GameWindowCommand? pong = GameWindowCommand.FromBuffer(test);
-            if (pong.HasValue)
-            {
-                var value = pong.Value;
-                Console.WriteLine(Enum.GetName(value.Type));
-                if (value.Type == GameWindowCommandType.Handshake)
-                {
-                    Console.WriteLine(value.HandshakeEvent.Guid.ToString("N"));
-                }
-            } else
-            {
-                Console.WriteLine("what");
-            }
-
+            });
+            
             return 0;
         }
     }
