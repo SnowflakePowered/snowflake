@@ -18,10 +18,11 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser
     {
         private bool disposedValue;
 
-        public CefSharpBrowserTab(ILogger logger, Guid tabGuid)
+        public CefSharpBrowserTab(ILogger logger, Guid tabGuid, Direct3DDevice device)
         {
             this.Logger = logger;
             this.TabGuid = tabGuid;
+            this.Device = device;
         }
 
         private ChromiumWebBrowser Browser { get; set; }
@@ -30,8 +31,8 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser
         public IngameCommandController CommandServer { get; private set; }
         public ILogger Logger { get; }
         public Guid TabGuid { get; }
-        private D3DSharedTextureRenderHandler Renderer { get; }
-
+        public Direct3DDevice Device { get; }
+        private D3DSharedTextureRenderHandler Renderer { get; set; }
 
         public NamedPipeClientStream GetCommandPipe()
         {
@@ -45,12 +46,16 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser
 
             this.CommandServer = new IngameCommandController(this.Logger, this.TabGuid);
             this.CommandServer.Activate();
+            this.Renderer = new D3DSharedTextureRenderHandler(this.Device, this.CommandServer);
+            this.Renderer.Resize(new(300, 300));
             this.Browser = new ChromiumWebBrowser(uri.AbsoluteUri);
-            
+
+            this.Browser.RenderHandler = this.Renderer;
+
             WindowInfo windowInfo = new()
             {
-                Width = 100,
-                Height = 100,
+                Width = 300,
+                Height = 300,
                 WindowlessRenderingEnabled = true,
             };
             windowInfo.SetAsWindowless((nint)0);
@@ -60,6 +65,8 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser
                 WindowlessFrameRate = 60,
             };
             await this.Browser.CreateBrowserAsync(windowInfo, browserSettings);
+            await this.Browser.WaitForInitialLoadAsync();
+            this.Browser.Size = new(300, 300);
 
             this.Initialized = true;
         }

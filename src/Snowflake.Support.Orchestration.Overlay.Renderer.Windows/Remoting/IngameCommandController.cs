@@ -150,7 +150,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Remoting
 
         public async Task ServerThread(CancellationToken shutdownEvent)
         {
-            Console.WriteLine("Started IPC server");
+            this.Logger.Info("Started ingame overlay IPC server.");
             // todo proper cancellation.
             while(!shutdownEvent.IsCancellationRequested)
             {
@@ -163,12 +163,13 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Remoting
                     await pipeServer.WaitForConnectionAsync(shutdownEvent);
                     if (shutdownEvent.IsCancellationRequested)
                         break;
-                    Console.WriteLine("Connection Established");
+                    this.Logger.Info("Connection established to new client");
                     await pipeServer.WriteAsync(GameWindowCommand.Handshake(this.InstanceGuid).ToBuffer(), shutdownEvent);
                     if (shutdownEvent.IsCancellationRequested)
                         break;
-                    Console.WriteLine("Handshake established.");
+                    this.Logger.Info("Handshake sent to client, shunting to handler thread.");
                     this.OpenPipes.Enqueue(pipeServer);
+
                     // hand off ownership of pipe to handler thread.
                     new Thread(async (data) =>
                     {
@@ -177,6 +178,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Remoting
                         await this.ServerWorkThread(pipeServer, shutdownEvent);
                     }).Start((pipeServer, shutdownEvent));
                 }
+
                 catch(Exception e)
                 {
                     Console.WriteLine(e);

@@ -31,8 +31,10 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser
             this.CefThread = new Thread(this.MainCefLoop);
             this.Tabs = new ConcurrentDictionary<Guid, CefSharpBrowserTab>();
             this.CefThread.Start();
+            this.Device = new Direct3DDevice();
         }
 
+        public Direct3DDevice Device { get; }
         public ManualResetEventSlim StartEvent { get; }
         public SemaphoreSlim InitializedEvent { get; }
 
@@ -123,7 +125,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser
         {
             if (!this.Initialized)
                 throw new InvalidOperationException("Can not allocate a tab when service was not initialized.");
-            return this.Tabs.GetOrAdd(tabId, new CefSharpBrowserTab(this.Logger, tabId));
+            return this.Tabs.GetOrAdd(tabId, new CefSharpBrowserTab(this.Logger, tabId, this.Device));
 
         }
 
