@@ -19,6 +19,7 @@ using X86 = Reloaded.Hooks.Definitions.X86;
 using ImGui = DearImguiSharp.ImGui;
 using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render;
 using Silk.NET.DXGI;
+using Snowflake.Orchestration.Ingame;
 
 namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D11
 {
@@ -26,6 +27,8 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
     {
         const int D3D11_DEVICE_METHOD_COUNT = 43;
         const int D3D11_SWAPCHAIN_METHOD_COUNT = 18;
+
+        private bool resizeBuffersLock = false;
 
         public Direct3D11Hook(IngameIpc ipc)
         {
@@ -37,6 +40,15 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                 this.ResizeBuffersHook = swapChainVtable.CreateFunctionHook<ResizeBuffers>((int)DXGISwapChainOrdinals.ResizeBuffers, this.ResizeBuffersImpl);
             }
             this.ImGuiInstance = new ImGuiInstance(Open);
+            this.IngameIpc.CommandReceived += CommandReceivedHandler;
+        }
+
+        private void CommandReceivedHandler(GameWindowCommand command)
+        {
+            if (command.Type == GameWindowCommandType.OverlayTextureEvent)
+            {
+                Console.WriteLine($"Got texhandle {command.TextureEvent.TextureHandle.ToString("x")} from PID {command.TextureEvent.SourceProcessId}");
+            }
         }
 
         private void Open()
@@ -54,8 +66,43 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
 
         private unsafe int ResizeBuffersImpl(IDXGISwapChain* swapChain, uint bufferCount, uint width, uint height, Format newFormat, uint swapChainFlags)
         {
-            Console.WriteLine("Hook Resize");
-            return this.ResizeBuffersHook.OriginalFunction(swapChain, bufferCount, width, height, newFormat, swapChainFlags);
+            if (resizeBuffersLock)
+            {
+                Console.WriteLine("[DX11 ResizeBuffers] Entered under lock");
+                return this.ResizeBuffersHook.OriginalFunction(swapChain, bufferCount, width, height, newFormat, swapChainFlags);
+            }
+            resizeBuffersLock = true;
+            try
+            {
+                var bufferResult =  this.ResizeBuffersHook.OriginalFunction(swapChain, bufferCount, width, height, newFormat, swapChainFlags);
+
+                Guid guid = ID3D11Texture2D.Guid;
+                ID3D11Texture2D* backBuffer = null;
+                Texture2DDesc desc = new();
+                
+                int res = swapChain->GetBuffer(0, ref guid, (void**)&backBuffer);
+                backBuffer->GetDesc(ref desc);
+                backBuffer->Release();
+
+                Console.WriteLine($"Hook Resize ({desc.Width}, {desc.Height})");
+
+                this.IngameIpc.SendRequest(new()
+                {
+                    Magic = GameWindowCommand.GameWindowMagic,
+                    Type = GameWindowCommandType.WindowResizeEvent,
+                    ResizeEvent = new()
+                    {
+                        Height = (int)(desc.Height),
+                        Width = (int)(desc.Width),
+                    }
+                });
+
+                return bufferResult;
+            }
+            finally
+            {
+                this.resizeBuffersLock = false;
+            }
         }
 
         private unsafe int PresentImpl(IDXGISwapChain* swapChain, uint syncInterval, uint flags)

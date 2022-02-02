@@ -33,6 +33,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows
             try
             {
                 await this.ClientStream.ConnectAsync(cancellationToken);
+                this.SendRequest(GameWindowCommand.Handshake(this.InstanceGuid));
                 await this.ClientStream.ReadAsync(handshakePacket, cancellationToken);
             } 
             catch

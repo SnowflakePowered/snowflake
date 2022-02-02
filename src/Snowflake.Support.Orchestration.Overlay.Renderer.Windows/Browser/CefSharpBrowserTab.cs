@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Silk.NET.Direct3D11;
 using CefSharp.Structs;
+using Snowflake.Orchestration.Ingame;
 
 namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser
 {
@@ -51,6 +52,17 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser
             this.Browser = new ChromiumWebBrowser(uri.AbsoluteUri);
 
             this.Browser.RenderHandler = this.Renderer;
+            this.CommandServer.CommandReceived += (cmd) =>
+            {
+                switch (cmd.Type)
+                {
+                    case GameWindowCommandType.WindowResizeEvent:
+                        System.Drawing.Size size = new(cmd.ResizeEvent.Width, cmd.ResizeEvent.Height);
+                        this.Renderer.Resize(size);
+                        this.Browser.Size = size;
+                        break;
+                }
+            };
 
             WindowInfo windowInfo = new()
             {

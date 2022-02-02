@@ -58,10 +58,17 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Remoting
         {
             List<NamedPipeServerStream> tempStreams = new();
 
+            this.Logger.Info($"Broadcast {command.Type}, {this.OpenPipes.Count} clients connected.");
+
             while (this.OpenPipes.TryDequeue(out var pipe))
             {
                 if (!pipe.IsConnected)
+                {
+                    this.Logger.Info($"Disposing stale client.");
                     await pipe.DisposeAsync(); // goodbye pipe
+                    continue;
+                }
+                this.Logger.Info($"Broadcasting {command.Type}");
                 await pipe.WriteAsync(command.ToBuffer(), this.TokenSource.Token);
                 tempStreams.Add(pipe);
             }
@@ -76,13 +83,12 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Remoting
         public async Task ServerWorkThread(NamedPipeServerStream pipeServer, CancellationToken shutdownEvent)
         {
             // todo: handle broken pipe
-            Console.WriteLine("in thead");
             Memory<byte> readBuffer = new byte[Marshal.SizeOf<GameWindowCommand>()];
             try
             {
                 while (!shutdownEvent.IsCancellationRequested && pipeServer.IsConnected)
                 {
-                    Console.WriteLine("starting read...");
+                    this.Logger.Info("Read loop.");
                     int bytesRead = await pipeServer.ReadAsync(readBuffer, shutdownEvent);
                     if (shutdownEvent.IsCancellationRequested) 
                     {
@@ -137,7 +143,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Remoting
                     }
                 }
             } 
-            catch
+            catch(Exception e)
             {
                 this.Logger.Info("client pipe broken for " + this.InstanceGuid);
             }
@@ -163,13 +169,8 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Remoting
                     await pipeServer.WaitForConnectionAsync(shutdownEvent);
                     if (shutdownEvent.IsCancellationRequested)
                         break;
-                    this.Logger.Info("Connection established to new client");
-                    await pipeServer.WriteAsync(GameWindowCommand.Handshake(this.InstanceGuid).ToBuffer(), shutdownEvent);
-                    if (shutdownEvent.IsCancellationRequested)
-                        break;
-                    this.Logger.Info("Handshake sent to client, shunting to handler thread.");
+                    this.Logger.Info("Connection established to new client, shunting to handler thread.");
                     this.OpenPipes.Enqueue(pipeServer);
-
                     // hand off ownership of pipe to handler thread.
                     new Thread(async (data) =>
                     {

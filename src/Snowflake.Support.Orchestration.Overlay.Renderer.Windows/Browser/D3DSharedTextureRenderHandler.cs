@@ -62,6 +62,22 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
             GetScaleFactorForMonitor(hMon, out uint scale);
             this.DpiScaleFactor = scale / 100f;
             this.Device = device;
+            this.CommandServer.CommandReceived += CommandReceivedHandler;
+        }
+
+        private void CommandReceivedHandler(GameWindowCommand command)
+        {
+            if (command.Type == GameWindowCommandType.OverlayTextureEvent)
+                this.CommandServer.Broadcast(new()
+                {
+                    Magic = GameWindowCommand.GameWindowMagic,
+                    Type = GameWindowCommandType.OverlayTextureEvent,
+                    TextureEvent = new()
+                    {
+                        SourceProcessId = Environment.ProcessId,
+                        TextureHandle = this.SharedTextureHandle
+                    }
+                });
         }
 
         public ScreenInfo? GetScreenInfo()
@@ -80,7 +96,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
             return false;
         }
 
-        public void Resize(Size size)
+        public void Resize(System.Drawing.Size size)
         {
             Console.WriteLine("Resize buffer requested");
             nint texPtr = this.Device.CreateNewCefTargetTexture(size);
