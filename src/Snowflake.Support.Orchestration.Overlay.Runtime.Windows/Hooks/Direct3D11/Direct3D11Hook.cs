@@ -20,6 +20,9 @@ using ImGui = DearImguiSharp.ImGui;
 using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render;
 using Silk.NET.DXGI;
 using Snowflake.Orchestration.Ingame;
+using Vanara.PInvoke;
+
+using static Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.GuidHelpers;
 
 namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D11
 {
@@ -29,10 +32,15 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
         const int D3D11_SWAPCHAIN_METHOD_COUNT = 18;
 
         private bool resizeBuffersLock = false;
+        private unsafe ID3D11Texture2D* overlayTexture = null;
+        private IntPtr overlayTextureHandle = IntPtr.Zero;
+        private unsafe ID3D11RenderTargetView* renderTargetView = null;
 
+        D3D11 API { get; }
         public Direct3D11Hook(IngameIpc ipc)
         {
             this.IngameIpc = ipc;
+            this.API = D3D11.GetApi();
             (VirtualFunctionTable deviceVtable, VirtualFunctionTable swapChainVtable) = GetDirect3D11VTable();
             unsafe
             {
@@ -48,6 +56,36 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
             if (command.Type == GameWindowCommandType.OverlayTextureEvent)
             {
                 Console.WriteLine($"Got texhandle {command.TextureEvent.TextureHandle.ToString("x")} from PID {command.TextureEvent.SourceProcessId}");
+                var process = Kernel32.OpenProcess(new(Kernel32.ProcessAccess.PROCESS_DUP_HANDLE), false, (uint)command.TextureEvent.SourceProcessId);
+                if (process.IsNull)
+                {
+                    Console.WriteLine("unable to open source process...");
+                    return;
+                }
+
+                if (!Kernel32.DuplicateHandle(process, command.TextureEvent.TextureHandle, Kernel32.GetCurrentProcess(), out IntPtr dupedHandle,
+                    0, false, Kernel32.DUPLICATE_HANDLE_OPTIONS.DUPLICATE_SAME_ACCESS))
+                {
+                    Console.WriteLine("unable to dupe handle");
+                    return;
+                };
+
+                Console.WriteLine($"Got owned handle {dupedHandle.ToString("x")}");
+
+                // Release old texture
+                unsafe
+                {
+                    if (this.overlayTexture != null)
+                    {
+                        this.overlayTexture->Release();
+                        this.overlayTexture = null;
+                    }
+                }
+                // close the handle
+                Kernel32.CloseHandle(this.overlayTextureHandle);
+
+                // new texture will be fetched on next paint.
+                this.overlayTextureHandle = dupedHandle;
             }
         }
 
@@ -74,15 +112,20 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
             resizeBuffersLock = true;
             try
             {
+                // Destroy existing ImGui 
+                if (renderTargetView != null)
+                    renderTargetView->Release();
+                renderTargetView = null;
+                ImGui.ImGuiImplDX11InvalidateDeviceObjects();
+
                 var bufferResult =  this.ResizeBuffersHook.OriginalFunction(swapChain, bufferCount, width, height, newFormat, swapChainFlags);
 
-                Guid guid = ID3D11Texture2D.Guid;
+                // Request new overlay texture
                 ID3D11Texture2D* backBuffer = null;
                 Texture2DDesc desc = new();
                 
-                int res = swapChain->GetBuffer(0, ref guid, (void**)&backBuffer);
+                int res = swapChain->GetBuffer(0, RiidOf(ID3D11Texture2D.Guid), (void**)&backBuffer);
                 backBuffer->GetDesc(ref desc);
-                backBuffer->Release();
 
                 Console.WriteLine($"Hook Resize ({desc.Width}, {desc.Height})");
 
@@ -97,6 +140,12 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                     }
                 });
 
+                ImGui.ImGuiImplDX11CreateDeviceObjects();
+
+
+
+                backBuffer->Release();
+
                 return bufferResult;
             }
             finally
@@ -107,6 +156,35 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
 
         private unsafe int PresentImpl(IDXGISwapChain* swapChain, uint syncInterval, uint flags)
         {
+            // Haven't received texture handle yet
+            if (this.overlayTextureHandle == IntPtr.Zero)
+            {
+                return this.PresentHook.OriginalFunction(swapChain, syncInterval, flags);
+            }
+
+            ID3D11Device1* device = null;
+            ID3D11Texture2D* tex2D = null;
+            swapChain->GetDevice(RiidOf(ID3D11Device1.Guid), (void**)&device);
+
+            // need to refresh texture
+            if (this.overlayTextureHandle != IntPtr.Zero && this.overlayTexture == null)
+            {
+                // todo: error check
+                int res;
+                if ((res = device->OpenSharedResource1(this.overlayTextureHandle.ToPointer(), RiidOf(ID3D11Texture2D.Guid), (void**)&tex2D)) != 0)
+                {
+                    Console.WriteLine($"Unable to open shared texture handle {this.overlayTextureHandle}: {res.ToString("x")}.");
+                    device->Release();
+                    return this.PresentHook.OriginalFunction(swapChain, syncInterval, flags);
+                }
+
+                Console.WriteLine("Opened shared texture.");
+                this.overlayTexture = tex2D;
+            }
+
+            device->Release();
+
+            // now what
             return this.PresentHook.OriginalFunction(swapChain, syncInterval, flags);
         }
 
@@ -131,7 +209,6 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
         {
             using var window = new RenderWindow();
 
-            var d3d11Api = D3D11.GetApi();
             D3DFeatureLevel outFeatureLevel = 0;
             Span<D3DFeatureLevel> requestFeatureLevels = FEATURE_LEVELS.AsSpan();
 
@@ -168,7 +245,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
             ID3D11DeviceContext* context = null;
             int? result = 0;
             fixed (D3DFeatureLevel* featureLevels = requestFeatureLevels) {
-                result = d3d11Api?.CreateDeviceAndSwapChain(
+                result = API.CreateDeviceAndSwapChain(
                 null,
                 D3DDriverType.D3DDriverTypeHardware,
                 0,

@@ -14,6 +14,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -24,6 +25,12 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
 {
     internal class D3DSharedTextureRenderHandler : IRenderHandler
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static unsafe Guid* RiidOf(Guid @in)
+        {
+            return &@in;
+        }
+
         [DllImport("user32.dll")]
         private static extern nint MonitorFromWindow(nint hwnd, uint dwFlags);
         [DllImport("shcore.dll")]
@@ -112,8 +119,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
                     nint oldTexture = (nint)this.TargetTexture;
                     nint oldHandle = this.SharedTextureHandle;
 
-                    Guid resourceId = IDXGIResource1.Guid;
-                    texture->QueryInterface(&resourceId, (void**)&texResrc);
+                    texture->QueryInterface(RiidOf(IDXGIResource1.Guid), (void**)&texResrc);
 
                     int res;
                     void* handle = null;
@@ -209,10 +215,8 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
                     // this is going to be a pain isnt it.
                     IDXGIKeyedMutex* textureMtx = null;
 
-                    Guid resourceId = ID3D11Resource.Guid;
-                    Guid mutexId = IDXGIKeyedMutex.Guid;
-                    this.TargetTexture->QueryInterface(&resourceId, (void**)&textureResc);
-                    this.TargetTexture->QueryInterface(&mutexId, (void**)&textureMtx);
+                    this.TargetTexture->QueryInterface(RiidOf(ID3D11Resource.Guid), (void**)&textureResc);
+                    this.TargetTexture->QueryInterface(RiidOf(IDXGIKeyedMutex.Guid), (void**)&textureMtx);
 
                     this.TargetTexture->GetDevice(ref device);
                     device->GetImmediateContext(ref context);
