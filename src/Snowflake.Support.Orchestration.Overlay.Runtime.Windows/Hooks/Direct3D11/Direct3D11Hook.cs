@@ -305,11 +305,15 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
 
                 this.overlayTextureMutex->AcquireSync(0, unchecked((uint)-1));
                 var vec = new DearImguiSharp.ImVec2.__Internal() { x = this.overlayTextureDesc.Width, y = this.overlayTextureDesc.Height };
+                var uv_min = new DearImguiSharp.ImVec2.__Internal() { x = 0f, y = 0f };         // Top-left
+                var uv_max = new DearImguiSharp.ImVec2.__Internal() { x = 1f, y = 1f };
+                var tint_col = new DearImguiSharp.ImVec4.__Internal() { x = 1.0f, y = 1.0f, w = 1.0f, z = 1.0f };
+                var border_col = new DearImguiSharp.ImVec4.__Internal() { x = 0.0f, y = 0.0f, w = 0.0f, z = 0.0f };
 
                 ImGui.Begin("DirectX11 Texture Test", ref x, 0);
                 ImGui.Text($"pointer = {(nint)this.overlayShaderResourceView}");
                 ImGui.Text($"size = {vec.x} x {vec.y}");
-                ImGui.__Internal.Image((nint)this.overlayShaderResourceView, vec, new(), new(), new(), new());
+                ImGui.__Internal.Image((nint)this.overlayShaderResourceView, vec, uv_min, uv_max, tint_col, border_col);
                 ImGui.End();
 
                 // -- render function
