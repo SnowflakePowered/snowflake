@@ -1,5 +1,6 @@
 ﻿using CefSharp;
 using CefSharp.OffScreen;
+using Evergine.Bindings.RenderDoc;
 using Silk.NET.Core.Native;
 using Silk.NET.Direct3D11;
 using Snowflake.Extensibility;
@@ -21,10 +22,11 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser
     {
         private bool disposedValue;
         
-        public CefSharpBrowserService(ILogger logger, DirectoryInfo cachePath)
+        public CefSharpBrowserService(ILogger logger, DirectoryInfo cachePath, RenderDoc renderDoc)
         {
             this.Logger = logger;
             this.CacheDirectory = cachePath;
+            this.RenderDoc = renderDoc;
             this.ShutdownEvent = new ManualResetEventSlim();
             this.StartEvent = new ManualResetEventSlim();
             this.InitializedEvent = new SemaphoreSlim(0, 1);
@@ -42,6 +44,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser
         public Thread CefThread { get; }
         public ILogger Logger { get; }
         public DirectoryInfo CacheDirectory { get; }
+        public RenderDoc RenderDoc { get; }
 
         public ConcurrentDictionary<Guid, CefSharpBrowserTab> Tabs;
 
@@ -125,7 +128,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser
         {
             if (!this.Initialized)
                 throw new InvalidOperationException("Can not allocate a tab when service was not initialized.");
-            return this.Tabs.GetOrAdd(tabId, new CefSharpBrowserTab(this.Logger, tabId, this.Device));
+            return this.Tabs.GetOrAdd(tabId, new CefSharpBrowserTab(this.Logger, tabId, this.Device, this.RenderDoc));
 
         }
 

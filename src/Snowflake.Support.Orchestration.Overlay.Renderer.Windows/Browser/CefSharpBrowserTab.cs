@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Silk.NET.Direct3D11;
 using CefSharp.Structs;
 using Snowflake.Orchestration.Ingame;
+using Evergine.Bindings.RenderDoc;
 
 namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser
 {
@@ -19,11 +20,12 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser
     {
         private bool disposedValue;
 
-        public CefSharpBrowserTab(ILogger logger, Guid tabGuid, Direct3DDevice device)
+        public CefSharpBrowserTab(ILogger logger, Guid tabGuid, Direct3DDevice device, Evergine.Bindings.RenderDoc.RenderDoc renderDoc)
         {
             this.Logger = logger;
             this.TabGuid = tabGuid;
             this.Device = device;
+            RenderDoc = renderDoc;
         }
 
         private ChromiumWebBrowser Browser { get; set; }
@@ -33,6 +35,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser
         public ILogger Logger { get; }
         public Guid TabGuid { get; }
         public Direct3DDevice Device { get; }
+        public RenderDoc RenderDoc { get; }
         private D3DSharedTextureRenderHandler Renderer { get; set; }
 
         public NamedPipeClientStream GetCommandPipe()
@@ -47,7 +50,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser
 
             this.CommandServer = new IngameCommandController(this.Logger, this.TabGuid);
             this.CommandServer.Start();
-            this.Renderer = new D3DSharedTextureRenderHandler(this.Device, this.CommandServer);
+            this.Renderer = new D3DSharedTextureRenderHandler(this.Device, this.CommandServer, this.RenderDoc);
             this.Renderer.Resize(new(300, 300));
             this.Browser = new ChromiumWebBrowser(uri.AbsoluteUri);
 

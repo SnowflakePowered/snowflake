@@ -1,4 +1,5 @@
-﻿using Snowflake.Extensibility;
+﻿using Evergine.Bindings.RenderDoc;
+using Snowflake.Extensibility;
 using Snowflake.Loader;
 using Snowflake.Remoting.Orchestration;
 using Snowflake.Services;
@@ -20,7 +21,8 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
             var services = serviceContainer.Get<IServiceRegistrationProvider>();
 
             var cachePath = composableModule.ContentsDirectory.CreateSubdirectory("cache");
-            var browser = new CefSharpBrowserService(logger.GetLogger("cefsharp"), cachePath);
+            RenderDoc.Load(out var rd);
+            var browser = new CefSharpBrowserService(logger.GetLogger("cefsharp"), cachePath, rd);
             services.RegisterService<ICefBrowserService>(browser);
             Task.Run(async () => {
                 await browser.InitializeAsync();

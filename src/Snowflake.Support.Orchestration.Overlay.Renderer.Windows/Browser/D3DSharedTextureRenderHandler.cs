@@ -2,6 +2,7 @@
 using CefSharp.Enums;
 using CefSharp.OffScreen;
 using CefSharp.Structs;
+using Evergine.Bindings.RenderDoc;
 using Silk.NET.Core.Native;
 using Silk.NET.Direct3D11;
 using Silk.NET.DXGI;
@@ -59,10 +60,12 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
 
         // Command server to notify ppl
         private IngameCommandController CommandServer { get; }
+        public RenderDoc RenderDoc { get; }
 
-        public unsafe D3DSharedTextureRenderHandler(Direct3DDevice device, IngameCommandController commandServer)
+        public unsafe D3DSharedTextureRenderHandler(Direct3DDevice device, IngameCommandController commandServer, Evergine.Bindings.RenderDoc.RenderDoc renderDoc)
         {
             this.CommandServer = commandServer;
+            RenderDoc = renderDoc;
             this.ObsoleteResources = new ConcurrentQueue<(nint texturePointer, nint sharedHandle)>();
             // Todo: ask ingame for scale monitor handle.
             nint hMon = MonitorFromWindow(0, 0x1);
@@ -220,11 +223,14 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
 
                     this.TargetTexture->GetDevice(ref device);
                     device->GetImmediateContext(ref context);
+                    this.RenderDoc.API.StartFrameCapture((nint)context, (IntPtr)null);
 
                     textureMtx->AcquireSync(0, INFINITE); // infinite
                     context->UpdateSubresource(textureResc, 0, ref destRegion, (void*)sourcePtr, (uint)rowPitch, (uint)depthPitch);
                     context->Flush();
                     textureMtx->ReleaseSync(0);
+
+                    this.RenderDoc.API.EndFrameCapture((nint)context, (IntPtr)null);
 
 
                     // ensure we release all local COM pointers here.
