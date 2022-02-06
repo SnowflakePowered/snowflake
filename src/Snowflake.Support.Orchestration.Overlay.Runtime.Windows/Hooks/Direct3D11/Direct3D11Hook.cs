@@ -234,13 +234,17 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                 // Haven't received texture handle yet
                 if (this.overlayTextureHandle == IntPtr.Zero)
                 {
-                    ID3D11Texture2D* backBuffer = null;
+                    //ID3D11Texture2D* backBuffer = null;
+                    //int res = swapChain->GetBuffer(0, RiidOf(ID3D11Texture2D.Guid), (void**)&backBuffer);
+
                     Texture2DDesc desc = new();
-                    int res = swapChain->GetBuffer(0, RiidOf(ID3D11Texture2D.Guid), (void**)&backBuffer);
+                    using var backBuffer = 
+                        swapChainWrap.Cast<ID3D11Texture2D>(static (p, g, o) => p->GetBuffer(0, g, o), ID3D11Texture2D.Guid, b => b->Release());
+                    backBuffer.Ref.GetDesc(ref desc);
 
                     if (desc.Height != 0 && desc.Width != 0)
                     {
-                        Console.WriteLine("Requesting resize");
+                        Console.WriteLine("Requesting resize because no texture handle");
                         this.IngameIpc.SendRequest(new()
                         {
                             Magic = GameWindowCommand.GameWindowMagic,
@@ -253,7 +257,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                         });
                     }
 
-                    backBuffer->Release();
+                    //backBuffer->Release();
                     //deviceContext->Release();
                     //device1->Release();
                     //device->Release();
@@ -334,6 +338,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                         })
                     };
 
+                    // not worth using ComPtr here because capture and lifetime of texSRV..
                     device.Ref.CreateShaderResourceView(texRsrc, ref srvDesc, ref texSRV);
 
                     // Get text src
@@ -342,28 +347,31 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
 
                 if (!this.imguiInitialized)
                 {
-                    ID3D11Texture2D* backBuffer = null;
-                    ID3D11Resource* backBufferResource = null;
-
+                    //ID3D11Texture2D* backBuffer = null;
+                    //ID3D11Resource* backBufferResource = null;
                     ImGui.ImGuiImplWin32Init(swapChainDesc.OutputWindow);
 
                     // todo: init wndproc
 
                     ImGui.ImGuiImplDX11Init(~device, ~deviceContext);
-                    swapChain->GetBuffer(0, RiidOf(ID3D11Texture2D.Guid), (void**)&backBuffer);
+                    //swapChain->GetBuffer(0, RiidOf(ID3D11Texture2D.Guid), (void**)&backBuffer);
+
+                    using var backBuffer =
+                        swapChainWrap.Cast<ID3D11Texture2D>(static (p, g, o) => p->GetBuffer(0, g, o), ID3D11Texture2D.Guid, b => b->Release());
+                    using var backBufferResource = backBuffer.Cast<ID3D11Resource>(static (p, g, o) => p->QueryInterface(g, o), ID3D11Resource.Guid, p => p->Release());
 
                     ID3D11RenderTargetView* newRenderTargetView = null;
 
-                    backBuffer->QueryInterface(RiidOf(ID3D11Resource.Guid), (void**)&backBufferResource);
+                    //backBuffer->QueryInterface(RiidOf(ID3D11Resource.Guid), (void**)&backBufferResource);
                     device.Ref.CreateRenderTargetView(backBufferResource, null, &newRenderTargetView);
 
                     if (this.renderTargetView != null)
                         this.renderTargetView->Release();
 
                     this.renderTargetView = newRenderTargetView;
-                    backBufferResource->Release();
-                    backBuffer->Release();
 
+                    //backBufferResource->Release();
+                    //backBuffer->Release();
                     this.imguiInitialized = true;
                 }
 

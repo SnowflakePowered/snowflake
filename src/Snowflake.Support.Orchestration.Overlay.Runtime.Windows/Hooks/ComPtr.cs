@@ -17,7 +17,6 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks
         private ComPtrRelease<TPtr>? Release { get; }
         private bool _forgotten = false;
         private unsafe TPtr* _pointer;
-        public unsafe void** OutPointer => (void**)AddressOf(this._pointer);
 
         public unsafe ComPtr(TPtr* nonOwningPointer)
         {
@@ -25,13 +24,13 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks
             this.Release = null;
         }
 
-        public unsafe ComPtr(ComPtrRelease<TPtr> release)
+        public unsafe ComPtr(ComPtrRelease<TPtr>? release)
         {
             this._pointer = null;
             this.Release = release;
         }
 
-        public unsafe ComPtr(TPtr* pointer, ComPtrRelease<TPtr> release)
+        public unsafe ComPtr(TPtr* pointer, ComPtrRelease<TPtr>? release)
         {
             this._pointer = pointer;
             this.Release = release;
