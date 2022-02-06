@@ -45,6 +45,8 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
         private bool imguiInitialized = false;
         protected RenderDoc renderDoc;
 
+        public object MutexMutex = new();
+
         D3D11 API { get; }
         public Direct3D11Hook(IngameIpc ipc)
         {
@@ -97,9 +99,12 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                         this.overlayTextureMutex->Release();
                         this.overlayTexture->Release();
 
-                        this.overlayTexture = null;
-                        this.overlayTextureMutex = null;
-                        this.overlayShaderResourceView = null;
+                        lock (this.MutexMutex)
+                        {
+                            this.overlayTexture = null;
+                            this.overlayTextureMutex = null;
+                            this.overlayShaderResourceView = null;
+                        }
                     }
                 }
                 // close the handle
@@ -153,8 +158,8 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                 Texture2DDesc desc = new();
 
                 var swapChainWrap = new ComPtr<IDXGISwapChain>(swapChain);
-                using var backBuffer = swapChainWrap.Cast<ID3D11Texture2D>((p, g, o) => p->GetBuffer(0, g, o), ID3D11Texture2D.Guid, b => b->Release(), out int _);
-                using var device = swapChainWrap.Cast<ID3D11Device>((p, g, o) => p->GetDevice(g, o), ID3D11Device.Guid, d => d->Release(), out int _);
+                using var backBuffer = swapChainWrap.Cast<ID3D11Texture2D>(static (p, g, o) => p->GetBuffer(0, g, o), ID3D11Texture2D.Guid, static b => b->Release(), out int _);
+                using var device = swapChainWrap.Cast<ID3D11Device>(static (p, g, o) => p->GetDevice(g, o), ID3D11Device.Guid, static d => d->Release(), out int _);
 
                 //int res = swapChain->GetBuffer(0, RiidOf(ID3D11Texture2D.Guid), (void**)&backBuffer);
                 //swapChain->GetDevice(RiidOf(ID3D11Device.Guid), (void**)&device);
@@ -177,7 +182,9 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                 // Recreate ImGui objects
                 if (this.imguiInitialized)
                 {
-                    using var backBufferResource = backBuffer.Cast<ID3D11Resource>((p, g, o) => p->QueryInterface(g, o), ID3D11Resource.Guid, r => r->Release(), out int _);
+                    using var backBufferResource = backBuffer.Cast<ID3D11Resource>(static (p, g, o) => p->QueryInterface(g, o), 
+                        ID3D11Resource.Guid, 
+                        static r => r->Release(), out int _);
                     ID3D11RenderTargetView* newRenderTargetView = null;
                     //backBuffer.Ref.QueryInterface(RiidOf(ID3D11Resource.Guid), (void**)&backBufferResource);
                     device.Ref.CreateRenderTargetView(backBufferResource, null, &newRenderTargetView);
@@ -205,16 +212,24 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
             presentLock = true;
             try
             {
-                ID3D11Device* device = null;
-                ID3D11Device1* device1 = null;
-                ID3D11DeviceContext* deviceContext = null;
+                ComPtr<IDXGISwapChain> swapChainWrap = new(swapChain);
+
+                //ID3D11Device* device = null;
+                //ID3D11Device1* device1 = null;
+                //ID3D11DeviceContext* deviceContext = null;
                 SwapChainDesc swapChainDesc = new();
 
-                swapChain->GetDevice(RiidOf(ID3D11Device.Guid), (void**)&device);
-                swapChain->GetDevice(RiidOf(ID3D11Device1.Guid), (void**)&device1);
+                using var device = swapChainWrap.Cast<ID3D11Device>(static (p, g, o) => p->GetDevice(g, o), ID3D11Device.Guid, static d => d->Release());
+                using var device1 = swapChainWrap.Cast<ID3D11Device1>(static (p, g, o) => p->GetDevice(g, o), ID3D11Device1.Guid, static d => d->Release());
+                using var deviceContext = device.Cast<ID3D11DeviceContext>(static (p, o) => p->GetImmediateContext(o), static r => r->Release());
+
+                //device.Ref.GetImmediateContext(deviceContext.OutPointerT);
+
+                //swapChain->GetDevice(RiidOf(ID3D11Device.Guid), (void**)&device);
+                //swapChain->GetDevice(RiidOf(ID3D11Device1.Guid), (void**)&device1);
                 swapChain->GetDesc(ref swapChainDesc);
 
-                device->GetImmediateContext(ref deviceContext);
+                //device->GetImmediateContext(ref deviceContext);
 
                 // Haven't received texture handle yet
                 if (this.overlayTextureHandle == IntPtr.Zero)
@@ -239,53 +254,73 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                     }
 
                     backBuffer->Release();
-                    deviceContext->Release();
-                    device1->Release();
-                    device->Release();
+                    //deviceContext->Release();
+                    //device1->Release();
+                    //device->Release();
                     return this.PresentHook.OriginalFunction(swapChain, syncInterval, flags);
                 }
 
                 // need to refresh texture
                 if (this.overlayTextureHandle != IntPtr.Zero && this.overlayTexture == null)
                 {
-                    ID3D11Texture2D* tex2D = null; // moved to thhis.overlayTexture
-                    Texture2DDesc tex2dDesc = new(); // dropped 
+
                     ID3D11ShaderResourceView* texSRV = null; // moved to this.overlayShaderResourceView
-                    IDXGIKeyedMutex* texMtx = null; // moved to this.overlayTextureMutex
-                    ID3D11Resource* texRsrc = null; // dropped
-                    // todo: error check
-                    int res;
-                    if ((res = device1->OpenSharedResource1(this.overlayTextureHandle.ToPointer(), RiidOf(ID3D11Texture2D.Guid), (void**)&tex2D)) != 0)
+                    //IDXGIKeyedMutex* texMtx = null; // moved to this.overlayTextureMutex
+
+
+                    //ID3D11Resource* texRsrc = null; // dropped
+
+                    using ComPtr<ID3D11Texture2D> tex2D = 
+                        device1.Cast<ID3D11Texture2D>((p, g, o) => p->OpenSharedResource1(this.overlayTextureHandle.ToPointer(), g, o), ID3D11Texture2D.Guid, d => d->Release(), out int res);
+                    if (res != 0)
                     {
                         Console.WriteLine($"Unable to open shared texture handle {this.overlayTextureHandle}: {res.ToString("x")}.");
-                        device1->Release();
-                        deviceContext->Release();
-                        device->Release();
+                        //device1->Release();
+                        //deviceContext->Release();
+                        //device->Release();
 
                         return this.PresentHook.OriginalFunction(swapChain, syncInterval, flags);
                     }
 
-                    Console.WriteLine("Opened shared texture.");
-                    tex2D->QueryInterface(RiidOf(IDXGIKeyedMutex.Guid), (void**)&texMtx);
+                    // todo: error check
+                    //int res;
+                    //if ((res = device1.Ref.OpenSharedResource1(this.overlayTextureHandle.ToPointer(), RiidOf(ID3D11Texture2D.Guid), (void**)&tex2D)) != 0)
+                    //{
+                    //    Console.WriteLine($"Unable to open shared texture handle {this.overlayTextureHandle}: {res.ToString("x")}.");
+                    //    //device1->Release();
+                    //    //deviceContext->Release();
+                    //    //device->Release();
 
-                    tex2D->GetDesc(ref tex2dDesc);
-                    if (texMtx == null)
+                    //    return this.PresentHook.OriginalFunction(swapChain, syncInterval, flags);
+                    //}
+
+                    Console.WriteLine("Opened shared texture.");
+                    using var texMtx = tex2D.Cast<IDXGIKeyedMutex>(static (p, g, o) => p->QueryInterface(g, o), IDXGIKeyedMutex.Guid, d => d->Release());
+
+                    //tex2D.Ref.QueryInterface(RiidOf(IDXGIKeyedMutex.Guid), (void**)&texMtx);
+
+                    if (~texMtx == null)
                     {
                         Console.WriteLine("Mutex not yet ready, can not open shared texture.");
 
                         // not ready yet.
-                        tex2D->Release();
-                        device1->Release();
-                        deviceContext->Release();
-                        device->Release();
+                        //device1->Release();
+                        //deviceContext->Release();
+                        //device->Release();
                         return this.PresentHook.OriginalFunction(swapChain, syncInterval, flags);
 
                     }
 
-                    tex2D->QueryInterface(RiidOf(ID3D11Resource.Guid), (void**)&texRsrc);
+                    Texture2DDesc tex2dDesc = new(); // dropped 
 
-                    this.overlayTextureMutex = texMtx;
-                    this.overlayTexture = tex2D;
+                    tex2D.Ref.GetDesc(ref tex2dDesc);
+
+                    using var texRsrc = tex2D.Cast<ID3D11Resource>(static (p, g, o) => p->QueryInterface(g, o), ID3D11Resource.Guid, d => d->Release());
+
+                    //tex2D.Ref.QueryInterface(RiidOf(ID3D11Resource.Guid), (void**)&texRsrc);
+
+                    this.overlayTextureMutex = texMtx.Forget();
+                    this.overlayTexture = tex2D.Forget();
                     this.overlayTextureDesc = tex2dDesc;
 
                     ShaderResourceViewDesc srvDesc = new()
@@ -298,12 +333,11 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                             MostDetailedMip = 0,
                         })
                     };
-                    device->CreateShaderResourceView(texRsrc, ref srvDesc, ref texSRV);
+
+                    device.Ref.CreateShaderResourceView(texRsrc, ref srvDesc, ref texSRV);
 
                     // Get text src
                     this.overlayShaderResourceView = texSRV;
-                    texRsrc->Release();
-
                 }
 
                 if (!this.imguiInitialized)
@@ -315,13 +349,13 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
 
                     // todo: init wndproc
 
-                    ImGui.ImGuiImplDX11Init(device, deviceContext);
+                    ImGui.ImGuiImplDX11Init(~device, ~deviceContext);
                     swapChain->GetBuffer(0, RiidOf(ID3D11Texture2D.Guid), (void**)&backBuffer);
 
                     ID3D11RenderTargetView* newRenderTargetView = null;
 
                     backBuffer->QueryInterface(RiidOf(ID3D11Resource.Guid), (void**)&backBufferResource);
-                    device->CreateRenderTargetView(backBufferResource, null, &newRenderTargetView);
+                    device.Ref.CreateRenderTargetView(backBufferResource, null, &newRenderTargetView);
 
                     if (this.renderTargetView != null)
                         this.renderTargetView->Release();
@@ -333,65 +367,67 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                     this.imguiInitialized = true;
                 }
 
-                this.overlayTextureMutex->AcquireSync(0, unchecked((uint)-1));
-                ImGui.ImGuiImplDX11NewFrame();
-                ImGui.ImGuiImplWin32NewFrame();
-                ImGui.NewFrame();
-                // -- render function
-                bool x = true;
-                //ImGui.ShowDemoWindow(ref x);
-                // bruh i need to make a shaderesourceview???
-
-                var vec = new DearImguiSharp.ImVec2.__Internal() { x = this.overlayTextureDesc.Width, y = this.overlayTextureDesc.Height };
-                var uv_min = new DearImguiSharp.ImVec2.__Internal() { x = 0f, y = 0f };         // Top-left
-                var uv_max = new DearImguiSharp.ImVec2.__Internal() { x = 1f, y = 1f };
-                var tint_col = new DearImguiSharp.ImVec4.__Internal() { w = 1.0f, x = 1.0f, y = 1.0f, z = 1.0f, };
-                var border_col = new DearImguiSharp.ImVec4.__Internal() { x = 0.0f, y = 0.0f, w = 0.0f, z = 0.0f };
-                var wndowpad = new DearImguiSharp.ImVec2.__Internal() { x = 0.0f, y = 0.0f };
-
-                var viewPort = ImGui.GetMainViewport();
-                ImGui.SetNextWindowPos(viewPort.Pos, 1, new()
+                lock (this.MutexMutex)
                 {
-                    X = 0f,
-                    Y = 0f,
-                });
-                ImGui.SetNextWindowSize(viewPort.Size, 1);
-                ImGui.SetNextWindowFocus();
-                //ImGui.PushStyleColorU32((int)DearImguiSharp.ImGuiCol.ImGuiColWindowBg, unchecked((uint)-1));
-                ImGui.__Internal.PushStyleVarVec2((int)DearImguiSharp.ImGuiStyleVar.ImGuiStyleVarWindowPadding, wndowpad);
-                ImGui.__Internal.PushStyleVarVec2((int)DearImguiSharp.ImGuiStyleVar.ImGuiStyleVarWindowBorderSize, wndowpad);
+                    this.overlayTextureMutex->AcquireSync(0, unchecked((uint)-1));
+                    ImGui.ImGuiImplDX11NewFrame();
+                    ImGui.ImGuiImplWin32NewFrame();
+                    ImGui.NewFrame();
+                    // -- render function
+                    bool x = true;
+                    //ImGui.ShowDemoWindow(ref x);
+                    // bruh i need to make a shaderesourceview???
 
-                ImGui.Begin("DirectX11 Texture Test", ref x, 
-                    (int)(0
-                    | DearImguiSharp.ImGuiWindowFlags.ImGuiWindowFlagsNoDecoration
-                    | DearImguiSharp.ImGuiWindowFlags.ImGuiWindowFlagsNoMove
-                    | DearImguiSharp.ImGuiWindowFlags.ImGuiWindowFlagsNoResize
-                    | DearImguiSharp.ImGuiWindowFlags.ImGuiWindowFlagsNoBackground
-                    //| DearImguiSharp.ImGuiWindowFlags.ImGuiWindowFlagsNoSavedSettings
-                    ));
+                    var vec = new DearImguiSharp.ImVec2.__Internal() { x = this.overlayTextureDesc.Width, y = this.overlayTextureDesc.Height };
+                    var uv_min = new DearImguiSharp.ImVec2.__Internal() { x = 0f, y = 0f };         // Top-left
+                    var uv_max = new DearImguiSharp.ImVec2.__Internal() { x = 1f, y = 1f };
+                    var tint_col = new DearImguiSharp.ImVec4.__Internal() { w = 1.0f, x = 1.0f, y = 1.0f, z = 1.0f, };
+                    var border_col = new DearImguiSharp.ImVec4.__Internal() { x = 0.0f, y = 0.0f, w = 0.0f, z = 0.0f };
+                    var wndowpad = new DearImguiSharp.ImVec2.__Internal() { x = 0.0f, y = 0.0f };
 
-                ImGui.__Internal.Image((nint)this.overlayShaderResourceView, vec, uv_min, uv_max, tint_col, border_col);
+                    var viewPort = ImGui.GetMainViewport();
+                    ImGui.SetNextWindowPos(viewPort.Pos, 1, new()
+                    {
+                        X = 0f,
+                        Y = 0f,
+                    });
+                    ImGui.SetNextWindowSize(viewPort.Size, 1);
+                    ImGui.SetNextWindowFocus();
+                    //ImGui.PushStyleColorU32((int)DearImguiSharp.ImGuiCol.ImGuiColWindowBg, unchecked((uint)-1));
+                    ImGui.__Internal.PushStyleVarVec2((int)DearImguiSharp.ImGuiStyleVar.ImGuiStyleVarWindowPadding, wndowpad);
+                    ImGui.__Internal.PushStyleVarVec2((int)DearImguiSharp.ImGuiStyleVar.ImGuiStyleVarWindowBorderSize, wndowpad);
 
-                ImGui.PopStyleVar(1);
-                ImGui.End();
+                    ImGui.Begin("DirectX11 Texture Test", ref x,
+                        (int)(0
+                        | DearImguiSharp.ImGuiWindowFlags.ImGuiWindowFlagsNoDecoration
+                        | DearImguiSharp.ImGuiWindowFlags.ImGuiWindowFlagsNoMove
+                        | DearImguiSharp.ImGuiWindowFlags.ImGuiWindowFlagsNoResize
+                        | DearImguiSharp.ImGuiWindowFlags.ImGuiWindowFlagsNoBackground
+                        //| DearImguiSharp.ImGuiWindowFlags.ImGuiWindowFlagsNoSavedSettings
+                        ));
 
-                // -- render function
-                ImGui.EndFrame();
-                ImGui.Render();
+                    ImGui.__Internal.Image((nint)this.overlayShaderResourceView, vec, uv_min, uv_max, tint_col, border_col);
 
-                ImGui.UpdatePlatformWindows();
-                ImGui.RenderPlatformWindowsDefault(IntPtr.Zero, IntPtr.Zero);
+                    ImGui.PopStyleVar(1);
+                    ImGui.End();
 
-                // set rendertargetview
-                deviceContext->OMSetRenderTargets(1, ref renderTargetView, null);
+                    // -- render function
+                    ImGui.EndFrame();
+                    ImGui.Render();
 
-                using var drawData = ImGui.GetDrawData();
-                ImGui.ImGuiImplDX11RenderDrawData(drawData);
-                this.overlayTextureMutex->ReleaseSync(0);
+                    ImGui.UpdatePlatformWindows();
+                    ImGui.RenderPlatformWindowsDefault(IntPtr.Zero, IntPtr.Zero);
 
-                deviceContext->Release();
-                device1->Release();
-                device->Release();
+                    // set rendertargetview
+                    deviceContext.Ref.OMSetRenderTargets(1, ref renderTargetView, null);
+
+                    using var drawData = ImGui.GetDrawData();
+                    ImGui.ImGuiImplDX11RenderDrawData(drawData);
+                    this.overlayTextureMutex->ReleaseSync(0);
+                }
+                //deviceContext->Release();
+                //device1->Release();
+                //device->Release();
                 return this.PresentHook.OriginalFunction(swapChain, syncInterval, flags);
             }
             finally

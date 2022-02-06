@@ -20,7 +20,9 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows
             } 
             catch (Exception e)
             {
+                File.WriteAllText("E:\\Emulators\\error_s.log", e.ToString());
                 Console.WriteLine(e);
+                Console.ReadLine();
                 return 1;
             }
         }

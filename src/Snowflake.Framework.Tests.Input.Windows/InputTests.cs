@@ -29,7 +29,6 @@ namespace Snowflake.Input.Tests.Windows
             var injector = new Injector(retroArchProcess);
             Debugger.Break();
             injector.Inject(@"D:\coding\snowflake\src\Snowflake.Support.Orchestration.Overlay.Runtime.Windows\bin\Debug\net6.0\kaku-x64.dll");
-
         }
     }
 }

@@ -42,6 +42,10 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks
         public unsafe delegate int ComPtrCastInt<TSourcePtr>(TSourcePtr* source, Guid* riid, void** outPtr)
             where TSourcePtr : unmanaged;
 
+        public unsafe delegate void ComPtrCastT<TSourcePtr, TOutPtr>(TSourcePtr* source, TOutPtr** outPtr)
+            where TSourcePtr : unmanaged 
+            where TOutPtr : unmanaged;
+
         public unsafe ComPtr<TOut> Cast<TOut>(ComPtrCast<TPtr> cast, Guid riid, ComPtr<TOut>.ComPtrRelease<TOut>? release)
             where TOut: unmanaged
         {
@@ -58,14 +62,28 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks
             return new(outPointer, release);
         }
 
+        public unsafe ComPtr<TOut> Cast<TOut>(ComPtrCastT<TPtr, TOut> cast, ComPtr<TOut>.ComPtrRelease<TOut>? release)
+         where TOut : unmanaged
+        {
+            TOut* outPointer = null;
+            cast(this._pointer, &outPointer);
+            return new(outPointer, release);
+        }
+
         public unsafe TPtr* Forget()
         {
             this._forgotten = true;
-            return this._pointer;
+            TPtr* @this = this._pointer;
+            this._pointer = null;
+            return @this;
         }
 
-        public static unsafe implicit operator TPtr* (ComPtr<TPtr> ptr) => ptr._pointer;
+        public static unsafe TPtr* operator ~(ComPtr<TPtr> ptr) => ptr._pointer;
 
+        public static unsafe implicit operator TPtr* (ComPtr<TPtr> ptr) => ptr._pointer;
+        public static unsafe implicit operator TPtr**(ComPtr<TPtr> ptr) => AddressOf(ptr._pointer);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Dispose()
         {
             if (_forgotten)
