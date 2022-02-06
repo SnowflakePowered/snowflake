@@ -59,6 +59,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows
 
         public bool SendRequest(GameWindowCommand command)
         {
+            // todo: reconnect on failure. Will need async :(
             Span<byte> buffer = stackalloc byte[Marshal.SizeOf<GameWindowCommand>()];
             command.IntoBuffer(ref buffer);
 

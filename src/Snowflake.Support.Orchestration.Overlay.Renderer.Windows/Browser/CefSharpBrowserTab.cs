@@ -63,7 +63,12 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser
                         System.Drawing.Size size = new(cmd.ResizeEvent.Width, cmd.ResizeEvent.Height);
                         this.Renderer.Resize(size);
                         this.Browser.Size = size;
+                        this.Browser.GetBrowserHost().Invalidate(PaintElementType.View);
                         break;
+                    case GameWindowCommandType.OverlayTextureEvent:
+                        this.Browser.GetBrowserHost().Invalidate(PaintElementType.View);
+                        break;
+
                 }
             };
 

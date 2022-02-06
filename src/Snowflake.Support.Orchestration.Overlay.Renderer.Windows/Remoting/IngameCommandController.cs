@@ -145,7 +145,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Remoting
             } 
             catch(Exception e)
             {
-                this.Logger.Info("client pipe broken for " + this.InstanceGuid);
+                this.Logger.Info("client pipe broken for " + this.InstanceGuid + $" because \n {e}");
             }
             finally
             {

@@ -109,6 +109,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
         public void Resize(System.Drawing.Size size)
         {
             Console.WriteLine("Resize buffer requested");
+            
             nint texPtr = this.Device.CreateNewCefTargetTexture(size);
             unsafe
             {

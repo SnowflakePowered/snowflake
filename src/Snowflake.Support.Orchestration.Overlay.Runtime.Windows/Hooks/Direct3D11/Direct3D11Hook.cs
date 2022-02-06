@@ -130,6 +130,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                 Console.WriteLine("[DX11 ResizeBuffers] Entered under lock");
                 return this.ResizeBuffersHook.OriginalFunction(swapChain, bufferCount, width, height, newFormat, swapChainFlags);
             }
+            
             resizeBuffersLock = true;
             try
             {
@@ -203,23 +204,45 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
             presentLock = true;
             try
             {
-                // Haven't received texture handle yet
-                if (this.overlayTextureHandle == IntPtr.Zero)
-                {
-                    return this.PresentHook.OriginalFunction(swapChain, syncInterval, flags);
-                }
-
                 ID3D11Device* device = null;
                 ID3D11Device1* device1 = null;
                 ID3D11DeviceContext* deviceContext = null;
-
                 SwapChainDesc swapChainDesc = new();
 
                 swapChain->GetDevice(RiidOf(ID3D11Device.Guid), (void**)&device);
                 swapChain->GetDevice(RiidOf(ID3D11Device1.Guid), (void**)&device1);
                 swapChain->GetDesc(ref swapChainDesc);
-               
+
                 device->GetImmediateContext(ref deviceContext);
+
+                // Haven't received texture handle yet
+                if (this.overlayTextureHandle == IntPtr.Zero)
+                {
+                    ID3D11Texture2D* backBuffer = null;
+                    Texture2DDesc desc = new();
+                    int res = swapChain->GetBuffer(0, RiidOf(ID3D11Texture2D.Guid), (void**)&backBuffer);
+
+                    if (desc.Height != 0 && desc.Width != 0)
+                    {
+                        Console.WriteLine("Requesting resize");
+                        this.IngameIpc.SendRequest(new()
+                        {
+                            Magic = GameWindowCommand.GameWindowMagic,
+                            Type = GameWindowCommandType.WindowResizeEvent,
+                            ResizeEvent = new()
+                            {
+                                Height = (int)(desc.Height),
+                                Width = (int)(desc.Width),
+                            }
+                        });
+                    }
+
+                    backBuffer->Release();
+                    deviceContext->Release();
+                    device1->Release();
+                    device->Release();
+                    return this.PresentHook.OriginalFunction(swapChain, syncInterval, flags);
+                }
 
                 // need to refresh texture
                 if (this.overlayTextureHandle != IntPtr.Zero && this.overlayTexture == null)
@@ -285,35 +308,56 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                     backBuffer->QueryInterface(RiidOf(ID3D11Resource.Guid), (void**)&backBufferResource);
                     device->CreateRenderTargetView(backBufferResource, null, &newRenderTargetView);
 
-                    renderTargetView = newRenderTargetView;
+                    if (this.renderTargetView != null)
+                        this.renderTargetView->Release();
+
+                    this.renderTargetView = newRenderTargetView;
                     backBufferResource->Release();
                     backBuffer->Release();
 
                     this.imguiInitialized = true;
                 }
 
-                this.renderDoc.API.StartFrameCapture((nint)deviceContext, swapChainDesc.OutputWindow);
-
-
+                this.overlayTextureMutex->AcquireSync(0, unchecked((uint)-1));
                 ImGui.ImGuiImplDX11NewFrame();
                 ImGui.ImGuiImplWin32NewFrame();
                 ImGui.NewFrame();
                 // -- render function
                 bool x = true;
-                ImGui.ShowDemoWindow(ref x);
+                //ImGui.ShowDemoWindow(ref x);
                 // bruh i need to make a shaderesourceview???
 
-                this.overlayTextureMutex->AcquireSync(0, unchecked((uint)-1));
                 var vec = new DearImguiSharp.ImVec2.__Internal() { x = this.overlayTextureDesc.Width, y = this.overlayTextureDesc.Height };
                 var uv_min = new DearImguiSharp.ImVec2.__Internal() { x = 0f, y = 0f };         // Top-left
                 var uv_max = new DearImguiSharp.ImVec2.__Internal() { x = 1f, y = 1f };
-                var tint_col = new DearImguiSharp.ImVec4.__Internal() { x = 1.0f, y = 1.0f, w = 1.0f, z = 1.0f };
+                var tint_col = new DearImguiSharp.ImVec4.__Internal() { w = 1.0f, x = 1.0f, y = 1.0f, z = 1.0f, };
                 var border_col = new DearImguiSharp.ImVec4.__Internal() { x = 0.0f, y = 0.0f, w = 0.0f, z = 0.0f };
+                var wndowpad = new DearImguiSharp.ImVec2.__Internal() { x = 0.0f, y = 0.0f };
 
-                ImGui.Begin("DirectX11 Texture Test", ref x, 0);
-                ImGui.Text($"pointer = {(nint)this.overlayShaderResourceView}");
-                ImGui.Text($"size = {vec.x} x {vec.y}");
+                var viewPort = ImGui.GetMainViewport();
+                ImGui.SetNextWindowPos(viewPort.Pos, 1, new()
+                {
+                    X = 0f,
+                    Y = 0f,
+                });
+                ImGui.SetNextWindowSize(viewPort.Size, 1);
+                ImGui.SetNextWindowFocus();
+                //ImGui.PushStyleColorU32((int)DearImguiSharp.ImGuiCol.ImGuiColWindowBg, unchecked((uint)-1));
+                ImGui.__Internal.PushStyleVarVec2((int)DearImguiSharp.ImGuiStyleVar.ImGuiStyleVarWindowPadding, wndowpad);
+                ImGui.__Internal.PushStyleVarVec2((int)DearImguiSharp.ImGuiStyleVar.ImGuiStyleVarWindowBorderSize, wndowpad);
+
+                ImGui.Begin("DirectX11 Texture Test", ref x, 
+                    (int)(0
+                    | DearImguiSharp.ImGuiWindowFlags.ImGuiWindowFlagsNoDecoration
+                    | DearImguiSharp.ImGuiWindowFlags.ImGuiWindowFlagsNoMove
+                    | DearImguiSharp.ImGuiWindowFlags.ImGuiWindowFlagsNoResize
+                    | DearImguiSharp.ImGuiWindowFlags.ImGuiWindowFlagsNoBackground
+                    //| DearImguiSharp.ImGuiWindowFlags.ImGuiWindowFlagsNoSavedSettings
+                    ));
+
                 ImGui.__Internal.Image((nint)this.overlayShaderResourceView, vec, uv_min, uv_max, tint_col, border_col);
+
+                ImGui.PopStyleVar(1);
                 ImGui.End();
 
                 // -- render function
@@ -328,16 +372,11 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
 
                 using var drawData = ImGui.GetDrawData();
                 ImGui.ImGuiImplDX11RenderDrawData(drawData);
-
                 this.overlayTextureMutex->ReleaseSync(0);
+
+                deviceContext->Release();
                 device1->Release();
                 device->Release();
-                //var result = this.renderDoc.API.EndFrameCapture((nint)deviceContext, swapChainDesc.OutputWindow);
-                //if (result != 1)
-                //{
-                //    Console.WriteLine($"RD: {result.ToString("x")}");
-                //}
-                // now what
                 return this.PresentHook.OriginalFunction(swapChain, syncInterval, flags);
             }
             finally
