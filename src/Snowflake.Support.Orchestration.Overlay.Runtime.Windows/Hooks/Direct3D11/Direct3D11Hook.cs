@@ -134,6 +134,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
             resizeBuffersLock = true;
             try
             {
+                // todo: handle device reset
                 if (this.imguiInitialized)
                 {
                     // Destroy existing ImGui 
@@ -147,13 +148,18 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                 var bufferResult =  this.ResizeBuffersHook.OriginalFunction(swapChain, bufferCount, width, height, newFormat, swapChainFlags);
 
                 // Request new overlay texture
-                ID3D11Device* device = null;
-                ID3D11Texture2D* backBuffer = null;
+                //ID3D11Device* device = null;
+                //ID3D11Texture2D* backBuffer = null;
                 Texture2DDesc desc = new();
-                
-                int res = swapChain->GetBuffer(0, RiidOf(ID3D11Texture2D.Guid), (void**)&backBuffer);
-                swapChain->GetDevice(RiidOf(ID3D11Device.Guid), (void**)&device);
-                backBuffer->GetDesc(ref desc);
+
+                var swapChainWrap = new ComPtr<IDXGISwapChain>(swapChain);
+                using var backBuffer = swapChainWrap.Cast<ID3D11Texture2D>((p, g, o) => p->GetBuffer(0, g, o), ID3D11Texture2D.Guid, b => b->Release(), out int _);
+                using var device = swapChainWrap.Cast<ID3D11Device>((p, g, o) => p->GetDevice(g, o), ID3D11Device.Guid, d => d->Release(), out int _);
+
+                //int res = swapChain->GetBuffer(0, RiidOf(ID3D11Texture2D.Guid), (void**)&backBuffer);
+                //swapChain->GetDevice(RiidOf(ID3D11Device.Guid), (void**)&device);
+
+                backBuffer.Ref.GetDesc(ref desc);
 
                 Console.WriteLine($"Hook Resize ({desc.Width}, {desc.Height})");
 
@@ -171,19 +177,14 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                 // Recreate ImGui objects
                 if (this.imguiInitialized)
                 {
-                    ID3D11Resource* backBufferResource = null;
+                    using var backBufferResource = backBuffer.Cast<ID3D11Resource>((p, g, o) => p->QueryInterface(g, o), ID3D11Resource.Guid, r => r->Release(), out int _);
                     ID3D11RenderTargetView* newRenderTargetView = null;
-
-                    backBuffer->QueryInterface(RiidOf(ID3D11Resource.Guid), (void**)&backBufferResource);
-                    device->CreateRenderTargetView(backBufferResource, null, &newRenderTargetView);
+                    //backBuffer.Ref.QueryInterface(RiidOf(ID3D11Resource.Guid), (void**)&backBufferResource);
+                    device.Ref.CreateRenderTargetView(backBufferResource, null, &newRenderTargetView);
 
                     renderTargetView = newRenderTargetView;
-                    backBufferResource->Release();
                     ImGui.ImGuiImplDX11CreateDeviceObjects();
                 }
-
-                // release backbuffer
-                backBuffer->Release();
 
                 return bufferResult;
             }
@@ -258,20 +259,35 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                     {
                         Console.WriteLine($"Unable to open shared texture handle {this.overlayTextureHandle}: {res.ToString("x")}.");
                         device1->Release();
+                        deviceContext->Release();
+                        device->Release();
+
                         return this.PresentHook.OriginalFunction(swapChain, syncInterval, flags);
                     }
 
                     Console.WriteLine("Opened shared texture.");
                     tex2D->QueryInterface(RiidOf(IDXGIKeyedMutex.Guid), (void**)&texMtx);
-                    tex2D->QueryInterface(RiidOf(ID3D11Resource.Guid), (void**)&texRsrc);
 
                     tex2D->GetDesc(ref tex2dDesc);
+                    if (texMtx == null)
+                    {
+                        Console.WriteLine("Mutex not yet ready, can not open shared texture.");
+
+                        // not ready yet.
+                        tex2D->Release();
+                        device1->Release();
+                        deviceContext->Release();
+                        device->Release();
+                        return this.PresentHook.OriginalFunction(swapChain, syncInterval, flags);
+
+                    }
+
+                    tex2D->QueryInterface(RiidOf(ID3D11Resource.Guid), (void**)&texRsrc);
+
                     this.overlayTextureMutex = texMtx;
                     this.overlayTexture = tex2D;
                     this.overlayTextureDesc = tex2dDesc;
 
-                    // Acquire lock on mutex for SRV creation, not sure if this is needed.
-                    this.overlayTextureMutex->AcquireSync(0, unchecked((uint)-1));
                     ShaderResourceViewDesc srvDesc = new()
                     {
                         Format = tex2dDesc.Format,
@@ -283,7 +299,6 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                         })
                     };
                     device->CreateShaderResourceView(texRsrc, ref srvDesc, ref texSRV);
-                    this.overlayTextureMutex->ReleaseSync(0);
 
                     // Get text src
                     this.overlayShaderResourceView = texSRV;

@@ -224,14 +224,14 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
 
                     this.TargetTexture->GetDevice(ref device);
                     device->GetImmediateContext(ref context);
-                    this.RenderDoc.API.StartFrameCapture((nint)context, (IntPtr)null);
+                    //this.RenderDoc.API.StartFrameCapture((nint)context, (IntPtr)null);
 
                     textureMtx->AcquireSync(0, INFINITE); // infinite
                     context->UpdateSubresource(textureResc, 0, ref destRegion, (void*)sourcePtr, (uint)rowPitch, (uint)depthPitch);
                     context->Flush();
                     textureMtx->ReleaseSync(0);
 
-                    this.RenderDoc.API.EndFrameCapture((nint)context, (IntPtr)null);
+                    //this.RenderDoc.API.EndFrameCapture((nint)context, (IntPtr)null);
 
 
                     // ensure we release all local COM pointers here.
