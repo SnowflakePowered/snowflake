@@ -19,31 +19,31 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render
         [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         public static void Render(nint imageHandle, float width, float height)
         {
-            bool showClose = false;
-
             var browserDim = new ImVec2.__Internal() { x = width, y = height };
 
             var viewPort = ImGui.GetMainViewport();
             ImGui.SetNextWindowPos(viewPort.Pos, 1, Zero2H);
             ImGui.SetNextWindowSize(viewPort.Size, 1);
-            ImGui.SetNextWindowFocus();
+            //ImGui.SetNextWindowFocus();
 
             ImGui.__Internal.PushStyleVarVec2((int)ImGuiStyleVar.ImGuiStyleVarWindowPadding, Zero2);
             ImGui.__Internal.PushStyleVarVec2((int)ImGuiStyleVar.ImGuiStyleVarWindowBorderSize, Zero2);
 
-            ImGui.Begin("Browser Window", ref showClose,
-                (int)(0
-                | ImGuiWindowFlags.ImGuiWindowFlagsNoDecoration
-                | ImGuiWindowFlags.ImGuiWindowFlagsNoMove
-                | ImGuiWindowFlags.ImGuiWindowFlagsNoResize
-                | ImGuiWindowFlags.ImGuiWindowFlagsNoBackground
-                //| DearImguiSharp.ImGuiWindowFlags.ImGuiWindowFlagsNoSavedSettings
-                ));
-
+            unsafe
+            {
+                ImGui.__Internal.Begin("Browser Window", null,
+                    (int)(0
+                    | ImGuiWindowFlags.ImGuiWindowFlagsNoDecoration
+                    | ImGuiWindowFlags.ImGuiWindowFlagsNoMove
+                    | ImGuiWindowFlags.ImGuiWindowFlagsNoResize
+                    | ImGuiWindowFlags.ImGuiWindowFlagsNoBackground
+                    //| DearImguiSharp.ImGuiWindowFlags.ImGuiWindowFlagsNoSavedSettings
+                    ));
+            }
             ImGui.__Internal.Image(imageHandle, browserDim, Zero2, One2, One4, Zero4);
 
-            ImGui.PopStyleVar(1);
-            ImGui.End();
+            ImGui.__Internal.PopStyleVar(1);
+            ImGui.__Internal.End();
         }
     }
 }

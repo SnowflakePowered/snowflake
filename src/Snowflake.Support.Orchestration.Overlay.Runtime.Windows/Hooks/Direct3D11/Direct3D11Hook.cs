@@ -20,10 +20,8 @@ using ImGui = DearImguiSharp.ImGui;
 using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render;
 using Silk.NET.DXGI;
 using Snowflake.Orchestration.Ingame;
-using Vanara.PInvoke;
 
-using static Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.GuidHelpers;
-using Evergine.Bindings.RenderDoc;
+using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.WndProc;
 
 namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D11
 {
@@ -37,11 +35,12 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
 
         private unsafe ID3D11RenderTargetView* renderTargetView = null;
         private bool imguiInitialized = false;
-        protected RenderDoc renderDoc;
 
         public Direct3D11OverlayTexture Overlay { get; }
+        public Direct3D11ImGuiInstance ImGuiInst { get; }
 
         D3D11 API { get; }
+
         public Direct3D11Hook(IngameIpc ipc)
         {
             this.IngameIpc = ipc;
@@ -58,12 +57,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
             this.Context = ImGui.CreateContext(null);
             ImGui.StyleColorsDark(null);
             this.IngameIpc.CommandReceived += CommandReceivedHandler;
-            RenderDoc.Load(out this.renderDoc);
-            if (this.renderDoc == null)
-            {
-                Console.WriteLine("NODOC");
-            }
-
+            this.ImGuiInst = new Direct3D11ImGuiInstance();
         }
 
         private void CommandReceivedHandler(GameWindowCommand command)
@@ -93,23 +87,14 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
             resizeBuffersLock = true;
             try
             {
-                // todo: handle device reset
-                if (this.imguiInitialized)
-                {
-                    // Destroy existing ImGui 
-                    if (renderTargetView != null)
-                        renderTargetView->Release();
-                    renderTargetView = null;
-
-                    ImGui.ImGuiImplDX11InvalidateDeviceObjects();
-                }
-
-                var bufferResult =  this.ResizeBuffersHook.OriginalFunction(swapChain, bufferCount, width, height, newFormat, swapChainFlags);
+                this.ImGuiInst.DiscardSwapchain();
+              
+                var bufferResult = 
+                    this.ResizeBuffersHook.OriginalFunction(swapChain, bufferCount, width, height, newFormat, swapChainFlags);
 
                 // Request new overlay texture
             
                 Texture2DDesc desc = new();
-
                 var swapChainWrap = new ComPtr<IDXGISwapChain>(swapChain);
                 using var backBuffer = 
                     swapChainWrap.Cast<ID3D11Texture2D>(static (p, g, o) => p->GetBuffer(0, g, o), ID3D11Texture2D.Guid, static b => b->Release(), out int _);
@@ -132,18 +117,8 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                 });
 
                 // Recreate ImGui objects
-                if (this.imguiInitialized)
-                {
-                    using var backBufferResource = backBuffer.Cast<ID3D11Resource>(static (p, g, o) => p->QueryInterface(g, o), 
-                        ID3D11Resource.Guid, 
-                        static r => r->Release(), out int _);
-                    ID3D11RenderTargetView* newRenderTargetView = null;
-                    device.Ref.CreateRenderTargetView(backBufferResource, null, &newRenderTargetView);
 
-                    renderTargetView = newRenderTargetView;
-                    ImGui.ImGuiImplDX11CreateDeviceObjects();
-                }
-
+                this.ImGuiInst.RefreshTargetView(swapChainWrap);
                 return bufferResult;
             }
             finally
@@ -203,29 +178,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                     return this.PresentHook.OriginalFunction(swapChain, syncInterval, flags);
                 }
 
-                if (!this.imguiInitialized)
-                {
-                    ImGui.ImGuiImplWin32Init(swapChainDesc.OutputWindow);
-
-                    // todo: init wndproc
-
-                    ImGui.ImGuiImplDX11Init(~device, ~deviceContext);
-
-                    using var backBuffer =
-                        swapChainWrap.Cast<ID3D11Texture2D>(static (p, g, o) => p->GetBuffer(0, g, o), ID3D11Texture2D.Guid, static b => b->Release());
-                    using var backBufferResource = backBuffer.Cast<ID3D11Resource>(static (p, g, o) => p->QueryInterface(g, o), ID3D11Resource.Guid, static p => p->Release());
-
-                    ID3D11RenderTargetView* newRenderTargetView = null;
-
-                    device.Ref.CreateRenderTargetView(backBufferResource, null, &newRenderTargetView);
-
-                    if (this.renderTargetView != null)
-                        this.renderTargetView->Release();
-
-                    this.renderTargetView = newRenderTargetView;
-                    this.imguiInitialized = true;
-                }
-
+                this.ImGuiInst.PrepareForPaint(swapChainWrap);
 
                 lock (this.Overlay.TextureMutex)
                 {
@@ -239,15 +192,14 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                         ImGuiFullscreenOverlay.Render(srv, w, h);
                     });
 
+                    ImGui.__Internal.ShowDemoWindow(null);
                     ImGui.EndFrame();
                     ImGui.Render();
 
-                    ImGui.UpdatePlatformWindows();
-                    ImGui.RenderPlatformWindowsDefault(IntPtr.Zero, IntPtr.Zero);
+                    //ImGui.UpdatePlatformWindows();
+                    //ImGui.RenderPlatformWindowsDefault(IntPtr.Zero, IntPtr.Zero);
 
-                    // set rendertargetview
-                    deviceContext.Ref.OMSetRenderTargets(1, ref renderTargetView, null);
-
+                    ImGuiInst.SetRenderTargets(deviceContext);
                     using var drawData = ImGui.GetDrawData();
                     ImGui.ImGuiImplDX11RenderDrawData(drawData);
                     this.Overlay.ReleaseSync();

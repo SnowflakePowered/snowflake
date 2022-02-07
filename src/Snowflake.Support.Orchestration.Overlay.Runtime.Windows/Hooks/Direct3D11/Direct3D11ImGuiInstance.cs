@@ -1,0 +1,113 @@
+﻿using ImGui = DearImguiSharp;
+using Silk.NET.Direct3D11;
+using Silk.NET.DXGI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D11
+{
+    internal class Direct3D11ImGuiInstance
+    {
+        public unsafe ID3D11RenderTargetView* renderTargetView = null;
+        private nint outputWindowHandle = 0;
+
+        private bool DevicesReady { get; set; }
+        private bool SurfacesReady { get; set; }
+        private bool SwapchainReady { get; set; } = false;
+
+        public unsafe void DiscardSwapchain()
+        {
+            this.InvalidateRenderTarget();
+            ImGui.ImGui.ImGuiImplDX11InvalidateDeviceObjects();
+            this.SwapchainReady = false;
+        }
+
+        private void RefreshSwapchain()
+        {
+            ImGui.ImGui.ImGuiImplDX11CreateDeviceObjects();
+            this.SwapchainReady = true;
+        }
+        private unsafe void InvalidateRenderTarget()
+        {
+            if (this.renderTargetView == null)
+                return;
+
+            this.renderTargetView->Release();
+            this.renderTargetView = null;
+            this.SurfacesReady = false;
+        }
+
+        public unsafe void RefreshTargetView(ComPtr<IDXGISwapChain> swapChain)
+        {
+            this.InvalidateRenderTarget();
+
+            SwapChainDesc desc = new();
+            swapChain.Ref.GetDesc(ref desc);
+
+            using var device = swapChain.Cast<ID3D11Device>(static (p, g, o) => p->GetDevice(g, o), ID3D11Device.Guid, static d => d->Release());
+
+            using var backBuffer =
+                      swapChain.Cast<ID3D11Texture2D>(static (p, g, o) => p->GetBuffer(0, g, o), ID3D11Texture2D.Guid, static b => b->Release());
+
+            using var backBufferResource =
+                backBuffer.Cast<ID3D11Resource>(static (p, g, o) => p->QueryInterface(g, o), ID3D11Resource.Guid, static p => p->Release());
+
+            ID3D11RenderTargetView* newRenderTargetView = null;
+            device.Ref.CreateRenderTargetView(backBufferResource, null, &newRenderTargetView);
+            this.renderTargetView = newRenderTargetView;
+            this.SurfacesReady = true;
+
+            if (!this.SwapchainReady)
+            {
+                this.RefreshSwapchain();
+            }
+        }
+
+        private void InvalidateDevices()
+        {
+            ImGui.ImGui.ImGuiImplWin32Shutdown();
+            ImGui.ImGui.ImGuiImplDX11Shutdown();
+            this.DevicesReady = false;
+        }
+
+        public unsafe bool PrepareForPaint(ComPtr<IDXGISwapChain> swapChain)
+        {
+            SwapChainDesc desc = new();
+            swapChain.Ref.GetDesc(ref desc);
+
+            if (desc.OutputWindow != this.outputWindowHandle)
+            {
+                Console.WriteLine("Swapchain outdated and so discarded.");
+                this.DiscardSwapchain();
+                this.InvalidateDevices();
+            }
+
+            if (!this.DevicesReady)
+            {
+                using var device = swapChain.Cast<ID3D11Device>(static (p, g, o) => p->GetDevice(g, o),
+                    ID3D11Device.Guid, static d => d->Release());
+                using var deviceContext = device.Cast<ID3D11DeviceContext>(static (p, o) => p->GetImmediateContext(o), static r => r->Release());
+
+                ImGui.ImGui.ImGuiImplWin32Init(desc.OutputWindow);
+                ImGui.ImGui.ImGuiImplDX11Init(~device, ~deviceContext);
+                this.DevicesReady = true;
+            }
+
+            if (!this.SurfacesReady)
+            {
+                this.RefreshTargetView(swapChain);
+            }
+
+            this.outputWindowHandle = desc.OutputWindow;
+            return true;
+        }
+
+        public unsafe void SetRenderTargets(ComPtr<ID3D11DeviceContext> deviceContext)
+        {
+            deviceContext.Ref.OMSetRenderTargets(1, ref renderTargetView, null);
+        }
+    }
+}

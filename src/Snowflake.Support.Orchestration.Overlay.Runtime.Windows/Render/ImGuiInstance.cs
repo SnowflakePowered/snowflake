@@ -52,6 +52,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render
             ImGui.EndFrame();
             ImGui.Render();
 
+            // dont do this.
             if ((ImGui.GetIO().ConfigFlags & (int)ImGuiConfigFlags.ImGuiConfigFlagsViewportsEnable) > 0)
             {
                 ImGui.UpdatePlatformWindows();
@@ -82,37 +83,6 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render
         {
             var io = ImGui.GetIO();
             ImGui.ImplWin32_WndProcHandler((void*)hWnd, msg, wParam, lParam);
-
-
-            
-            //switch (message)
-            //{
-            //    case WindowMessage.WM_KILLFOCUS:
-            //        return IntPtr.Zero;
-
-            //    case WindowMessage.WM_ACTIVATE:
-            //    case WindowMessage.WM_ACTIVATEAPP:
-            //        if (wParam == IntPtr.Zero)
-            //            return IntPtr.Zero;
-
-            //        break;
-            //}
-            //if (Options.IgnoreWindowUnactivate)
-            //{
-            //    var message = (WindowMessage)msg;
-            //    switch (message)
-            //    {
-            //        case WindowMessage.WM_KILLFOCUS:
-            //            return IntPtr.Zero;
-
-            //        case WindowMessage.WM_ACTIVATE:
-            //        case WindowMessage.WM_ACTIVATEAPP:
-            //            if (wParam == IntPtr.Zero)
-            //                return IntPtr.Zero;
-
-            //            break;
-            //    }
-            //}
 
             return this.WndProcHook.Hook.OriginalFunction.Invoke(hWnd, msg, wParam, lParam);
         }
