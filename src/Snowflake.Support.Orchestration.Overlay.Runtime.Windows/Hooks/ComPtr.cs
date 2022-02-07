@@ -103,6 +103,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks
         /// <param name="riid">The resource GUID of the target interface.</param>
         /// <param name="release">The delegate that releases the new handle.</param>
         /// <returns>The new casted handle as a wrapped ComPtr</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         public unsafe ComPtr<TOut> Cast<TOut>(ComPtrCast<TPtr> cast, Guid riid, ComPtr<TOut>.ComPtrRelease<TOut>? release)
             where TOut: unmanaged
         {
@@ -120,6 +121,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks
         /// <param name="release">The delegate that releases the new handle.</param>
         /// <param name="result">The result of the casting operation.</param>
         /// <returns>The new casted handle as a wrapped ComPtr</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         public unsafe ComPtr<TOut> Cast<TOut>(ComPtrCastInt<TPtr> cast, Guid riid, ComPtr<TOut>.ComPtrRelease<TOut>? release, out int result)
             where TOut : unmanaged
         {
@@ -135,6 +137,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks
         /// <param name="cast">The delegate to cast this pointer with.</param>
         /// <param name="release">The delegate that releases the new handle.</param>
         /// <returns>The new casted handle as a wrapped ComPtr</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         public unsafe ComPtr<TOut> Cast<TOut>(ComPtrCastT<TPtr, TOut> cast, ComPtr<TOut>.ComPtrRelease<TOut>? release)
          where TOut : unmanaged
         {
@@ -175,7 +178,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks
         /// <param name="ptr">The ComPtr handle.</param>
         public static unsafe implicit operator TPtr**(ComPtr<TPtr> ptr) => AddressOf(ptr._pointer);
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         public void Dispose()
         {
             if (_forgotten)
