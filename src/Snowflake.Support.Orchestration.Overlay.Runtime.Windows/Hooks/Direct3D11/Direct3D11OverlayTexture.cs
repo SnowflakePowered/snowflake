@@ -21,15 +21,24 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
         private nint outputWindowHandle = 0;
 
         public readonly object TextureMutex = new();
-
         private bool ReadyToPaint { get; set; }
         public bool ReadyToInitialize => this.overlayTextureHandle != IntPtr.Zero;
 
-        public void AcquireSync()
+        public bool SizeMatchesViewport(uint width, uint height)
         {
-            unsafe {
+            return (width == overlayTextureDesc.Width) && (height == overlayTextureDesc.Height);
+        }
+
+        public bool AcquireSync()
+        {
+            unsafe 
+            {
+                if (this.overlayTextureMutex == null)
+                    return false;
+
                 this.overlayTextureMutex->AcquireSync(0, unchecked((uint)-1));
             }
+            return true;
         }
 
         public void ReleaseSync()

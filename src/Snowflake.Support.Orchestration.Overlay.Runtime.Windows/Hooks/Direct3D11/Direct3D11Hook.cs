@@ -88,38 +88,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
             try
             {
                 this.ImGuiInst.DiscardSwapchain();
-              
-                var bufferResult = 
-                    this.ResizeBuffersHook.OriginalFunction(swapChain, bufferCount, width, height, newFormat, swapChainFlags);
-
-                // Request new overlay texture
-            
-                Texture2DDesc desc = new();
-                var swapChainWrap = new ComPtr<IDXGISwapChain>(swapChain);
-                using var backBuffer = 
-                    swapChainWrap.Cast<ID3D11Texture2D>(static (p, g, o) => p->GetBuffer(0, g, o), ID3D11Texture2D.Guid, static b => b->Release(), out int _);
-                using var device = 
-                    swapChainWrap.Cast<ID3D11Device>(static (p, g, o) => p->GetDevice(g, o), ID3D11Device.Guid, static d => d->Release(), out int _);
-
-                backBuffer.Ref.GetDesc(ref desc);
-
-                Console.WriteLine($"Hook Resize ({desc.Width}, {desc.Height})");
-
-                this.IngameIpc.SendRequest(new()
-                {
-                    Magic = GameWindowCommand.GameWindowMagic,
-                    Type = GameWindowCommandType.WindowResizeEvent,
-                    ResizeEvent = new()
-                    {
-                        Height = (int)(desc.Height),
-                        Width = (int)(desc.Width),
-                    }
-                });
-
-                // Recreate ImGui objects
-
-                this.ImGuiInst.RefreshTargetView(swapChainWrap);
-                return bufferResult;
+                return this.ResizeBuffersHook.OriginalFunction(swapChain, bufferCount, width, height, newFormat, swapChainFlags);
             }
             finally
             {
@@ -146,28 +115,31 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                 using var deviceContext = device.Cast<ID3D11DeviceContext>(static (p, o) => p->GetImmediateContext(o), static r => r->Release());
 
                 swapChain->GetDesc(ref swapChainDesc);
+
+                Texture2DDesc backBufferDesc = new();
+                using var backBuffer =
+                    swapChainWrap.Cast<ID3D11Texture2D>(static (p, g, o) => p->GetBuffer(0, g, o), ID3D11Texture2D.Guid, b => b->Release());
+                backBuffer.Ref.GetDesc(ref backBufferDesc);
+
+                if (!this.Overlay.SizeMatchesViewport(backBufferDesc.Width, backBufferDesc.Height))
+                {
+                    Console.WriteLine($"Requesting resize to {backBufferDesc.Width} x {backBufferDesc.Height}");
+                    this.IngameIpc.SendRequest(new()
+                    {
+                        Magic = GameWindowCommand.GameWindowMagic,
+                        Type = GameWindowCommandType.WindowResizeEvent,
+                        ResizeEvent = new()
+                        {
+                            Height = (int)(backBufferDesc.Height),
+                            Width = (int)(backBufferDesc.Width),
+                        }
+                    });
+                }
+
                 // Haven't received texture handle yet
                 if (!this.Overlay.ReadyToInitialize)
                 {
-                    Texture2DDesc desc = new();
-                    using var backBuffer = 
-                        swapChainWrap.Cast<ID3D11Texture2D>(static (p, g, o) => p->GetBuffer(0, g, o), ID3D11Texture2D.Guid, b => b->Release());
-                    backBuffer.Ref.GetDesc(ref desc);
-
-                    if (desc.Height != 0 && desc.Width != 0)
-                    {
-                        Console.WriteLine("Requesting resize because no texture handle");
-                        this.IngameIpc.SendRequest(new()
-                        {
-                            Magic = GameWindowCommand.GameWindowMagic,
-                            Type = GameWindowCommandType.WindowResizeEvent,
-                            ResizeEvent = new()
-                            {
-                                Height = (int)(desc.Height),
-                                Width = (int)(desc.Width),
-                            }
-                        });
-                    }
+                    Console.WriteLine("Texture handle not ready.");
                     return this.PresentHook.OriginalFunction(swapChain, syncInterval, flags);
                 }
 
@@ -182,27 +154,29 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
 
                 lock (this.Overlay.TextureMutex)
                 {
-                    this.Overlay.AcquireSync();
-                    ImGui.ImGuiImplDX11NewFrame();
-                    ImGui.ImGuiImplWin32NewFrame();
-                    ImGui.NewFrame();
-
-                    this.Overlay.Paint(static (srv, w, h) =>
+                    if (this.Overlay.AcquireSync())
                     {
-                        ImGuiFullscreenOverlay.Render(srv, w, h);
-                    });
+                        ImGui.ImGuiImplDX11NewFrame();
+                        ImGui.ImGuiImplWin32NewFrame();
+                        ImGui.NewFrame();
 
-                    ImGui.__Internal.ShowDemoWindow(null);
-                    ImGui.EndFrame();
-                    ImGui.Render();
+                        this.Overlay.Paint(static (srv, w, h) =>
+                        {
+                            ImGuiFullscreenOverlay.Render(srv, w, h);
+                        });
 
-                    //ImGui.UpdatePlatformWindows();
-                    //ImGui.RenderPlatformWindowsDefault(IntPtr.Zero, IntPtr.Zero);
+                        ImGui.__Internal.ShowDemoWindow(null);
+                        ImGui.EndFrame();
+                        ImGui.Render();
 
-                    ImGuiInst.SetRenderTargets(deviceContext);
-                    using var drawData = ImGui.GetDrawData();
-                    ImGui.ImGuiImplDX11RenderDrawData(drawData);
-                    this.Overlay.ReleaseSync();
+                        //ImGui.UpdatePlatformWindows();
+                        //ImGui.RenderPlatformWindowsDefault(IntPtr.Zero, IntPtr.Zero);
+
+                        ImGuiInst.SetRenderTargets(deviceContext);
+                        using var drawData = ImGui.GetDrawData();
+                        ImGui.ImGuiImplDX11RenderDrawData(drawData);
+                        this.Overlay.ReleaseSync();
+                    }
                 }
                 return this.PresentHook.OriginalFunction(swapChain, syncInterval, flags);
             }

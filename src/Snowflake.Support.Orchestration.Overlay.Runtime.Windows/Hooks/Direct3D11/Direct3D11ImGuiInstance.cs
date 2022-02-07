@@ -30,6 +30,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
             ImGui.ImGui.ImGuiImplDX11CreateDeviceObjects();
             this.SwapchainReady = true;
         }
+
         private unsafe void InvalidateRenderTarget()
         {
             if (this.renderTargetView == null)
