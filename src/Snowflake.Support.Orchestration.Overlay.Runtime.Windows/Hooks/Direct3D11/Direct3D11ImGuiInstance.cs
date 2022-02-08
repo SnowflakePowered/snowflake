@@ -6,17 +6,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render;
 
 namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D11
 {
-    internal class Direct3D11ImGuiInstance
+    internal class Direct3D11ImGuiInstance : IDisposable
     {
         public unsafe ID3D11RenderTargetView* renderTargetView = null;
         private nint outputWindowHandle = 0;
+        private bool disposedValue;
 
         private bool DevicesReady { get; set; }
         private bool SurfacesReady { get; set; }
         private bool SwapchainReady { get; set; } = false;
+        public ImGui.ImGuiContext Context { get; }
+        private ImGuiWndProcHandler WndProc { get; }
+
+        public Direct3D11ImGuiInstance()
+        {
+            this.Context = ImGui.ImGui.CreateContext(null);
+            this.WndProc = new ImGuiWndProcHandler();
+            ImGui.ImGui.StyleColorsDark(null);
+        }
 
         public unsafe void DiscardSwapchain()
         {
@@ -69,7 +80,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
 
         private void InvalidateDevices()
         {
-            ImGui.ImGui.ImGuiImplWin32Shutdown();
+            this.WndProc.InvalidateIO();
             ImGui.ImGui.ImGuiImplDX11Shutdown();
             this.DevicesReady = false;
         }
@@ -92,7 +103,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                     ID3D11Device.Guid, static d => d->Release());
                 using var deviceContext = device.Cast<ID3D11DeviceContext>(static (p, o) => p->GetImmediateContext(o), static r => r->Release());
 
-                ImGui.ImGui.ImGuiImplWin32Init(desc.OutputWindow);
+                this.WndProc.InitializeIO(desc.OutputWindow);
                 ImGui.ImGui.ImGuiImplDX11Init(~device, ~deviceContext);
                 this.DevicesReady = true;
             }
@@ -109,6 +120,30 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
         public unsafe void SetRenderTargets(ComPtr<ID3D11DeviceContext> deviceContext)
         {
             deviceContext.Ref.OMSetRenderTargets(1, ref renderTargetView, null);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    unsafe 
+                    {
+                        if (renderTargetView != null)
+                            renderTargetView->Release();
+                    }
+                    this.Context?.Dispose();
+                }
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

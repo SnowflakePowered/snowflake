@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render
 {
     // No need to update windows because we don't support viewports.
-    internal abstract class ImGuiWndProcHandler
+    internal class ImGuiWndProcHandler
     {
         protected nint outputWindowHandle = 0;
 
@@ -23,14 +23,14 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render
             return this.WndProcHook?.Hook.OriginalFunction.Invoke(hWnd, msg, wParam, lParam) ?? -1;
         }
 
-        protected void InvalidateIO()
+        public void InvalidateIO()
         {
             ImGui.ImGuiImplWin32Shutdown();
             this.WndProcHook?.Hook.Disable();
             this.WndProcHook = null;
         }
 
-        protected bool PrepareForIO(nint outputWindowHandle)
+        public bool InitializeIO(nint outputWindowHandle)
         {
             if (this.WndProcHook != null && this.outputWindowHandle == outputWindowHandle)
                 return true;
@@ -39,6 +39,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render
             ImGui.ImGuiImplWin32Init(outputWindowHandle);
             this.WndProcHook = new WndProcHook(outputWindowHandle, this.WndProcHandler);
             this.WndProcHook.Hook.Activate();
+            this.outputWindowHandle = outputWindowHandle;
             return true;
         }
     }

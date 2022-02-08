@@ -11,7 +11,6 @@ using Reloaded.Hooks.Tools;
 using Silk.NET.Direct3D11;
 using Silk.NET.Core.Native;
 
-using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D9;
 
 using X64 = Reloaded.Hooks.Definitions.X64;
 using X86 = Reloaded.Hooks.Definitions.X86;
@@ -54,8 +53,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                 this.ResizeBuffersHook = swapChainVtable.CreateFunctionHook<ResizeBuffers>((int)DXGISwapChainOrdinals.ResizeBuffers, this.ResizeBuffersImpl);
             }
             //this.ImGuiInstance = new ImGuiInstance(Open);
-            this.Context = ImGui.CreateContext(null);
-            ImGui.StyleColorsDark(null);
+     
             this.IngameIpc.CommandReceived += CommandReceivedHandler;
             this.ImGuiInst = new Direct3D11ImGuiInstance();
         }
@@ -200,7 +198,6 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
 
         public IHook<Present> PresentHook { get; }
         public IHook<ResizeBuffers> ResizeBuffersHook { get; }
-        public ImGuiInstance ImGuiInstance { get; }
         public IngameIpc IngameIpc { get; }
         public DearImguiSharp.ImGuiContext Context { get; }
 
@@ -222,7 +219,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                         Numerator = 60,
                         Denominator = 1
                     },
-                    Format = Format.FormatR8G8B8A8Unorm,
+                    Format = Format.FormatR8G8B8A8Unorm,    
                     ScanlineOrdering = ModeScanlineOrder.ModeScanlineOrderUnspecified,
                     Scaling = ModeScaling.ModeScalingUnspecified,
                 },
