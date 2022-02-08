@@ -11,7 +11,6 @@ using Reloaded.Hooks.Tools;
 using Silk.NET.Direct3D11;
 using Silk.NET.Core.Native;
 
-
 using X64 = Reloaded.Hooks.Definitions.X64;
 using X86 = Reloaded.Hooks.Definitions.X86;
 
@@ -19,8 +18,6 @@ using ImGui = DearImguiSharp.ImGui;
 using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render;
 using Silk.NET.DXGI;
 using Snowflake.Orchestration.Ingame;
-
-using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.WndProc;
 
 namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D11
 {
@@ -31,9 +28,6 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
 
         private bool resizeBuffersLock = false;
         private bool presentLock = false;
-
-        private unsafe ID3D11RenderTargetView* renderTargetView = null;
-        private bool imguiInitialized = false;
 
         public Direct3D11OverlayTexture Overlay { get; }
         public Direct3D11ImGuiInstance ImGuiInst { get; }
@@ -52,7 +46,6 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                 this.PresentHook = swapChainVtable.CreateFunctionHook<Present>((int)DXGISwapChainOrdinals.Present, this.PresentImpl);
                 this.ResizeBuffersHook = swapChainVtable.CreateFunctionHook<ResizeBuffers>((int)DXGISwapChainOrdinals.ResizeBuffers, this.ResizeBuffersImpl);
             }
-            //this.ImGuiInstance = new ImGuiInstance(Open);
      
             this.IngameIpc.CommandReceived += CommandReceivedHandler;
             this.ImGuiInst = new Direct3D11ImGuiInstance();

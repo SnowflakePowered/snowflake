@@ -6,6 +6,7 @@ using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D11;
 using System.IO.Pipes;
 using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render;
 using Snowflake.Orchestration.Ingame;
+using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL;
 
 namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows
 {
@@ -18,10 +19,8 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows
             {
                 return Main();
             } 
-            catch (Exception e)
+            catch
             {
-                File.WriteAllText("E:\\Emulators\\error_s.log", e.ToString());
-                Console.WriteLine(e);
                 Console.ReadLine();
                 return 1;
             }
@@ -41,7 +40,8 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows
                 var result = await ipc.ConnectAsync();
                 Console.WriteLine($"IPC Connection: {result}");
                 ipc.Listen();
-                new Direct3D11Hook(ipc).Activate();
+                //new Direct3D11Hook(ipc).Activate();
+                new OpenGLHook(ipc).Activate();
 
             });
             

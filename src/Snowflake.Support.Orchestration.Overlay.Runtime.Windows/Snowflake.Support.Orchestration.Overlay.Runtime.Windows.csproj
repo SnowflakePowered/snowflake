@@ -25,9 +25,12 @@
     <PackageReference Include="DearImguiSharp" Version="1.83.1" />
     <PackageReference Include="Evergine.Bindings.RenderDoc" Version="2022.1.12.1" />
     <PackageReference Include="ImGui.NET" Version="1.86.0" />
-    <PackageReference Include="Reloaded.Hooks" Version="3.5.0" />
-    <PackageReference Include="Silk.NET.Direct3D11" Version="2.12.0" />
-    <PackageReference Include="Silk.NET.Direct3D9" Version="2.12.0" />
+    <PackageReference Include="Reloaded.Hooks" Version="3.5.1" />
+    <PackageReference Include="Silk.NET.Direct3D11" Version="2.13.0" />
+    <PackageReference Include="Silk.NET.OpenGL" Version="2.13.0" />
+    <PackageReference Include="Silk.NET.OpenGL.Extensions.KHR" Version="2.13.0" />
+    <PackageReference Include="Silk.NET.OpenGL.Legacy" Version="2.13.0" />
+    <PackageReference Include="Silk.NET.OpenGL.Legacy.Extensions.KHR" Version="2.13.0" />
     <PackageReference Include="Vanara.PInvoke.User32" Version="3.3.15" />
   </ItemGroup>
   <ItemGroup>
