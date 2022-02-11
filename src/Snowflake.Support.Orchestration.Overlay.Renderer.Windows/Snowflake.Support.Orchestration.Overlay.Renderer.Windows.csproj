@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="CefSharp.OffScreen.NETCore" Version="97.1.61" />
     <PackageReference Include="Evergine.Bindings.RenderDoc" Version="2022.1.12.1" />
-    <PackageReference Include="Silk.NET.Direct3D11" Version="2.12.0" />
+    <PackageReference Include="Silk.NET.Direct3D11" Version="2.13.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,12 +1,9 @@
 ﻿using ImGui = DearImguiSharp;
 using Silk.NET.Direct3D11;
 using Silk.NET.DXGI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render;
+using System.Runtime.CompilerServices;
+
 
 namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D11
 {
@@ -64,11 +61,12 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
             using var backBuffer =
                       swapChain.Cast<ID3D11Texture2D>(static (p, g, o) => p->GetBuffer(0, g, o), ID3D11Texture2D.Guid, static b => b->Release());
 
-            using var backBufferResource =
-                backBuffer.Cast<ID3D11Resource>(static (p, g, o) => p->QueryInterface(g, o), ID3D11Resource.Guid, static p => p->Release());
+            //using var backBufferResource =
+            //    backBuffer.Cast<ID3D11Resource>(static (p, g, o) => p->QueryInterface(g, o), ID3D11Resource.Guid, static p => p->Release());
 
+            // CRT accepts a Tex2D pointer just fine.
             ID3D11RenderTargetView* newRenderTargetView = null;
-            device.Ref.CreateRenderTargetView(backBufferResource, null, &newRenderTargetView);
+            device.Ref.CreateRenderTargetView((ID3D11Resource*)~backBuffer, null, &newRenderTargetView);
             this.renderTargetView = newRenderTargetView;
             this.SurfacesReady = true;
 
@@ -76,6 +74,18 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
             {
                 this.RefreshSwapchain();
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void InitializeDevices(ComPtr<IDXGISwapChain> swapChain, nint hWnd)
+        {
+            using var device = swapChain.Cast<ID3D11Device>(static (p, g, o) => p->GetDevice(g, o),
+                    ID3D11Device.Guid, static d => d->Release());
+            using var deviceContext = device.Cast<ID3D11DeviceContext>(static (p, o) => p->GetImmediateContext(o), static r => r->Release());
+
+            this.WndProc.InitializeIO(hWnd);
+            ImGui.ImGui.ImGuiImplDX11Init(new(~device), new(~deviceContext));
+            this.DevicesReady = true;
         }
 
         private void InvalidateDevices()
@@ -99,13 +109,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
 
             if (!this.DevicesReady)
             {
-                using var device = swapChain.Cast<ID3D11Device>(static (p, g, o) => p->GetDevice(g, o),
-                    ID3D11Device.Guid, static d => d->Release());
-                using var deviceContext = device.Cast<ID3D11DeviceContext>(static (p, o) => p->GetImmediateContext(o), static r => r->Release());
-
-                this.WndProc.InitializeIO(desc.OutputWindow);
-                ImGui.ImGui.ImGuiImplDX11Init(~device, ~deviceContext);
-                this.DevicesReady = true;
+                this.InitializeDevices(swapChain, desc.OutputWindow);
             }
 
             if (!this.SurfacesReady)

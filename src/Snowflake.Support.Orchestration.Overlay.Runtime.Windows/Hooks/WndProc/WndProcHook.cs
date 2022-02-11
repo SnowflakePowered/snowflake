@@ -28,12 +28,12 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.WndProc
 
         public WndProcHook(nint hWnd, WndProcCallback callback)
         {
-            var wndProcAddr = Native.GetWindowLong(hWnd, Native.GWL.GWL_WNDPROC);
+            var wndProcAddr = WndProcNative.GetWindowLong(hWnd, WndProcNative.GWL.GWL_WNDPROC);
             this.Callback = callback;
             this.Hook = ReloadedHooks.Instance.CreateHook(this.Callback, (long)wndProcAddr);
         }
 
-        static class Native
+        public static class WndProcNative
         {
             [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
             public static extern IntPtr GetModuleHandle(string lpModuleName);

@@ -60,7 +60,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser
                 switch (cmd.Type)
                 {
                     case GameWindowCommandType.WindowResizeEvent:
-                        System.Drawing.Size size = new(cmd.ResizeEvent.Width, cmd.ResizeEvent.Height);
+                        System.Drawing.Size size = new(Math.Max(1, cmd.ResizeEvent.Width), Math.Max(1, cmd.ResizeEvent.Height));
                         this.Renderer.Resize(size);
                         this.Browser.Size = size;
                         this.Browser.GetBrowserHost().Invalidate(PaintElementType.View);

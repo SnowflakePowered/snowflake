@@ -145,7 +145,8 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
             Texture2DDesc tex2dDesc = new(); // dropped 
 
             tex2D.Ref.GetDesc(ref tex2dDesc);
-            using var texRsrc = tex2D.Cast<ID3D11Resource>(static (p, g, o) => p->QueryInterface(g, o), ID3D11Resource.Guid, static d => d->Release());
+            using var texRsrc = tex2D.Cast<ID3D11Resource>
+                (static (p, g, o) => p->QueryInterface(g, o), ID3D11Resource.Guid, static d => d->Release());
 
             this.overlayTextureMutex = texMtx.Forget();
             this.overlayTexture = tex2D.Forget();
@@ -163,6 +164,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
             };
 
             // not worth using ComPtr for texSrc here because capture and lifetime of texSRV..
+            // CSRV requires a ID3D11Resource..?
             deviceHandle.Ref.CreateShaderResourceView(texRsrc, ref srvDesc, ref texSRV);
 
             // Get text src

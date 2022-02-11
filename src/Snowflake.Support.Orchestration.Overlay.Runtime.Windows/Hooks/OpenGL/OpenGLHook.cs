@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Vanara.PInvoke;
+using static Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.WndProc.WndProcHook;
 using X64 = Reloaded.Hooks.Definitions.X64;
 using X86 = Reloaded.Hooks.Definitions.X86;
 namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
@@ -17,6 +18,15 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
     {
         GL NativeOpenGLApi { get; }
         Kernel32.SafeHINSTANCE OpenGLHandle { get; }
+        HWND ActiveHwnd { get; set; }
+
+        [X64.Function(X64.CallingConventions.Microsoft)]
+        [X86.Function(X86.CallingConventions.Stdcall)]
+        [UnmanagedFunctionPointer(CallingConvention.StdCall, CharSet = CharSet.Unicode, SetLastError = true)]
+
+        public delegate nint WndProcCallback(nint hWnd, uint msg, nint wParam, nint lParam);
+
+
         public OpenGLHook(IngameIpc ingameIpc)
         {
             this.IngameIpc = ingameIpc;
@@ -41,10 +51,17 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
 
         public int SwapBuffersImpl(HDC deviceContext)
         {
+            HWND renderingHwnd = User32.WindowFromDC(deviceContext);
+            User32.GetClientRect(renderingHwnd, out RECT lpRect);
+            int width = lpRect.right - lpRect.left;
+            int height = lpRect.bottom - lpRect.top;
+
+            
             return this.SwapBuffersHook.OriginalFunction(deviceContext);
         }
 
         public IHook<SwapBuffers> SwapBuffersHook { get; }
+        public IHook<WndProcCallback>? WndProcHook { get; set; }
 
         private static (Kernel32.SafeHINSTANCE, GL) GetOpenGLGlobalInstance()
         {
