@@ -11,8 +11,4 @@
     <PackageReference Include="Evergine.Bindings.RenderDoc" Version="2022.1.12.1" />
     <PackageReference Include="Silk.NET.Direct3D11" Version="2.13.0" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Snowflake.Support.Orchestration.Overlay.Runtime.Windows\Snowflake.Support.Orchestration.Overlay.Runtime.Windows.csproj" />
-  </ItemGroup>
 </Project>

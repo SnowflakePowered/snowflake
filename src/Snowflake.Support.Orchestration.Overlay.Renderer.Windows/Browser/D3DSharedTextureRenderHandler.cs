@@ -9,7 +9,6 @@ using Silk.NET.DXGI;
 using Snowflake.Orchestration.Ingame;
 using Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser;
 using Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Remoting;
-using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -62,7 +61,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
         private IngameCommandController CommandServer { get; }
         public RenderDoc RenderDoc { get; }
 
-        public unsafe D3DSharedTextureRenderHandler(Direct3DDevice device, IngameCommandController commandServer, Evergine.Bindings.RenderDoc.RenderDoc renderDoc)
+        public unsafe D3DSharedTextureRenderHandler(Direct3DDevice device, IngameCommandController commandServer, RenderDoc renderDoc)
         {
             this.CommandServer = commandServer;
             RenderDoc = renderDoc;
@@ -85,7 +84,10 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
                     TextureEvent = new()
                     {
                         SourceProcessId = Environment.ProcessId,
-                        TextureHandle = this.SharedTextureHandle
+                        TextureHandle = this.SharedTextureHandle,
+                        Width = this.TargetTextureDescription.Width,
+                        Height = this.TargetTextureDescription.Height,
+                        PixelDepth = CEFBufferBPP
                     }
                 });
         }
@@ -151,7 +153,10 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
                 TextureEvent = new()
                 {
                     TextureHandle = this.SharedTextureHandle,
-                    SourceProcessId = Environment.ProcessId
+                    SourceProcessId = Environment.ProcessId,
+                    Width = this.TargetTextureDescription.Width,
+                    Height = this.TargetTextureDescription.Height,
+                    PixelDepth = CEFBufferBPP
                 }
             });
         }

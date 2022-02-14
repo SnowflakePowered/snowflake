@@ -16,6 +16,7 @@ using X64 = Reloaded.Hooks.Definitions.X64;
 using X86 = Reloaded.Hooks.Definitions.X86;
 using Snowflake.Orchestration.Ingame;
 using System.Numerics;
+using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render;
 
 namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
 {
@@ -52,6 +53,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
                 this.wglCreateContext = (delegate* unmanaged<nint, nint>)this.GlContext.Context.GetProcAddress("wglCreateContext");
             }
 
+            this.Overlay = new OpenGLOverlayTexture();
             this.IngameIpc.CommandReceived += CommandReceivedHandler;
             this.ImGuiInst = new();
         }
@@ -61,7 +63,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
             if (command.Type == GameWindowCommandType.OverlayTextureEvent)
             {
                 Console.WriteLine($"Got texhandle {command.TextureEvent.TextureHandle.ToString("x")} from PID {command.TextureEvent.SourceProcessId}");
-                this.Overlay.Refresh(command.TextureEvent.SourceProcessId, command.TextureEvent.TextureHandle);
+                this.Overlay.Refresh(command.TextureEvent.SourceProcessId, command.TextureEvent.TextureHandle, command.TextureEvent.Width, command.TextureEvent.Height);
             }
         }
 
@@ -94,25 +96,57 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
             }
 
             Vector2 screenDim = new(width, height);
-            this.Overlay.PrepareForPaint(this.GlContext, screenDim);
+
+            if (!this.Overlay.SizeMatchesViewport((uint)width, (uint)height))
+            {
+                Console.WriteLine($"Requesting resize to {width} x {height}");
+                this.IngameIpc.SendRequest(new()
+                {
+                    Magic = GameWindowCommand.GameWindowMagic,
+                    Type = GameWindowCommandType.WindowResizeEvent,
+                    ResizeEvent = new()
+                    {
+                        Height = (int)(height),
+                        Width = (int)(width),
+                    }
+                });
+            }
+
+
+            if (!this.Overlay.PrepareForPaint(this.GlContext, renderingHwnd.DangerousGetHandle()))
+            {
+                Console.WriteLine("Failed to open shared texture");
+            }
+
             this.ImGuiInst.PrepareForPaint(this.GlContext, renderingHwnd.DangerousGetHandle(), screenDim);
             //wglMakeCurrent(deviceContext.DangerousGetHandle(), this.ImGuiContext);
 
             var io = ImGui.GetIO();
-            ImGuiInst.NewFrame();
-            ImGui.NewFrame();
+            if (this.Overlay.AcquireSync())
+            {
+                ImGuiInst.NewFrame();
+                ImGui.NewFrame();
 
-            ImGui.Begin("Fps");
-            ImGui.Text($"{io.Framerate}");
-            ImGui.End();
+                ImGui.Begin("Fps");
+                ImGui.Text($"{io.Framerate}");
+                ImGui.End();
 
-            ImGui.ShowDemoWindow();
-            ImGui.Render();
+                this.Overlay.Paint(static (tex, w, h) =>
+                {
+                    ImGuiFullscreenOverlay.Render(tex, w, h);
+                });
 
-            ImGuiInst.Render(ImGui.GetDrawData());
+                ImGui.ShowDemoWindow();
+                ImGui.Render();
+                ImGuiInst.Render(ImGui.GetDrawData());
+                this.Overlay.ReleaseSync();
+            } 
+            else
+            {
+                ;
+                Console.WriteLine($"Failed to obtain KMT {this.GlContext.GetError()}");
+            }
 
-
-           
             //wglMakeCurrent(deviceContext.DangerousGetHandle(), originalContext);
             return this.SwapBuffersHook.OriginalFunction(deviceContext);
         }

@@ -10,13 +10,13 @@ using Vanara.PInvoke;
 
 namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D11
 {
-    internal class Direct3D11OverlayTexture
+    internal class Direct3D11OverlayTexture : IOverlayTexture
     {
         private unsafe IDXGIKeyedMutex* overlayTextureMutex = null;
         private unsafe ID3D11ShaderResourceView* overlayShaderResourceView = null;
         private unsafe ID3D11Texture2D* overlayTexture = null;
 
-        private Texture2DDesc overlayTextureDesc = new();
+        private (uint width, uint height) OverlayTexDim { get; set; }
         private IntPtr overlayTextureHandle = IntPtr.Zero;
         private nint outputWindowHandle = 0;
 
@@ -26,12 +26,12 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
 
         public bool SizeMatchesViewport(uint width, uint height)
         {
-            return (width == overlayTextureDesc.Width) && (height == overlayTextureDesc.Height);
+            return (width == OverlayTexDim.width) && (height == OverlayTexDim.height);
         }
 
         public bool AcquireSync()
         {
-            unsafe 
+            unsafe
             {
                 if (this.overlayTextureMutex == null)
                     return false;
@@ -49,7 +49,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
             }
         }
 
-        public bool Refresh(int owningPid, nint textureHandle)
+        public bool Refresh(int owningPid, nint textureHandle, uint width, uint height)
         {
             var process = Kernel32.OpenProcess(new(Kernel32.ProcessAccess.PROCESS_DUP_HANDLE), false, (uint)owningPid);
             if (process.IsNull)
@@ -75,7 +75,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                     this.Invalidate();
                 }
             }
-           
+
             // close old the handle
             Kernel32.CloseHandle(this.overlayTextureHandle);
 
@@ -117,10 +117,10 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
             ID3D11ShaderResourceView* texSRV = null; // moved to this.overlayShaderResourceView
 
             using ComPtr<ID3D11Texture2D> tex2D =
-                device1Handle.Cast<ID3D11Texture2D>((p, g, o) => 
+                device1Handle.Cast<ID3D11Texture2D>((p, g, o) =>
                     p->OpenSharedResource1(this.overlayTextureHandle.ToPointer(), g, o), ID3D11Texture2D.Guid, static d => d->Release(), out int res);
 
-            using ComPtr<ID3D11Device> deviceHandle = 
+            using ComPtr<ID3D11Device> deviceHandle =
                 device1Handle.Cast<ID3D11Device>(static (p, g, o) => p->QueryInterface(g, o), ID3D11Device.Guid, static d => d->Release());
 
             if (res != 0)
@@ -139,7 +139,6 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
 
                 // not ready yet.
                 return false;
-
             }
 
             Texture2DDesc tex2dDesc = new(); // dropped 
@@ -150,7 +149,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
 
             this.overlayTextureMutex = texMtx.Forget();
             this.overlayTexture = tex2D.Forget();
-            this.overlayTextureDesc = tex2dDesc;
+            this.OverlayTexDim = (tex2dDesc.Width, tex2dDesc.Height);
 
             ShaderResourceViewDesc srvDesc = new() // dropped
             {
@@ -181,7 +180,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
             {
                 unsafe
                 {
-                    renderFn((nint)this.overlayShaderResourceView, overlayTextureDesc.Width, overlayTextureDesc.Height);
+                    renderFn((nint)this.overlayShaderResourceView, OverlayTexDim.width, OverlayTexDim.height);
                 }
             }
         }

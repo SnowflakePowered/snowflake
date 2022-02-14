@@ -13,5 +13,8 @@ namespace Snowflake.Orchestration.Ingame
     {
         public nint TextureHandle;
         public int SourceProcessId;
+        public uint Width;
+        public uint Height;
+        public uint PixelDepth;
     }
 }
