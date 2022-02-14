@@ -1,5 +1,6 @@
 ﻿using Silk.NET.Core.Native;
 using Silk.NET.Direct3D11;
+using Silk.NET.Direct3D12;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,8 +12,8 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows.Browser
 {
     internal class Direct3DDevice : IDisposable
     {
-        private D3D11 Direct3D;
-        private unsafe ID3D11Device* RenderDevice;
+        private D3D12 Direct3D;
+        private unsafe ID3D12Device* RenderDevice;
         private unsafe ID3D11DeviceContext* RenderContext;
         private bool disposedValue;
         private static readonly D3DFeatureLevel[] FEATURE_LEVELS = new[] { D3DFeatureLevel.D3DFeatureLevel111 };

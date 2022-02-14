@@ -1,9 +1,10 @@
-﻿using ImGui = DearImguiSharp;
-using Silk.NET.Direct3D11;
+﻿using Silk.NET.Direct3D11;
 using Silk.NET.DXGI;
 using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render;
 using System.Runtime.CompilerServices;
-
+using ImGuiBackends.Direct3D11;
+using ImGuiNET;
+using System.Numerics;
 
 namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D11
 {
@@ -16,26 +17,46 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
         private bool DevicesReady { get; set; }
         private bool SurfacesReady { get; set; }
         private bool SwapchainReady { get; set; } = false;
-        public ImGui.ImGuiContext Context { get; }
-        private ImGuiWndProcHandler WndProc { get; }
+        //private ImGuiWndProcHandler WndProc { get; }
 
+        public ImGuiBackendDirect3D11 Backend { get; }
+
+        IntPtr context;
         public Direct3D11ImGuiInstance()
         {
-            this.Context = ImGui.ImGui.CreateContext(null);
-            this.WndProc = new ImGuiWndProcHandler();
-            ImGui.ImGui.StyleColorsDark(null);
+            context = ImGui.CreateContext();
+            ImGui.SetCurrentContext(context);
+            ImGui.StyleColorsDark();
+
+            this.Backend = new ImGuiBackendDirect3D11();
+        }
+
+        public void NewFrame()
+        {
+            this.Backend.NewFrame();
+        }
+
+        public void Render(ImDrawDataPtr drawData)
+        {
+            this.Backend.RenderDrawData(drawData);
         }
 
         public unsafe void DiscardSwapchain()
         {
             this.InvalidateRenderTarget();
-            ImGui.ImGui.ImGuiImplDX11InvalidateDeviceObjects();
+
+            //ImGui.ImGui.ImGuiImplDX11InvalidateDeviceObjects();
+            this.Backend.InvalidateDeviceObjects();
             this.SwapchainReady = false;
         }
 
         private void RefreshSwapchain()
         {
-            ImGui.ImGui.ImGuiImplDX11CreateDeviceObjects();
+            if (!this.Backend.CreateDeviceObjects())
+            {
+                Console.WriteLine("Error when creating objects");
+            }
+            //ImGui.ImGui.ImGuiImplDX11CreateDeviceObjects();
             this.SwapchainReady = true;
         }
 
@@ -61,9 +82,6 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
             using var backBuffer =
                       swapChain.Cast<ID3D11Texture2D>(static (p, g, o) => p->GetBuffer(0, g, o), ID3D11Texture2D.Guid, static b => b->Release());
 
-            //using var backBufferResource =
-            //    backBuffer.Cast<ID3D11Resource>(static (p, g, o) => p->QueryInterface(g, o), ID3D11Resource.Guid, static p => p->Release());
-
             // CRT accepts a Tex2D pointer just fine.
             ID3D11RenderTargetView* newRenderTargetView = null;
             device.Ref.CreateRenderTargetView((ID3D11Resource*)~backBuffer, null, &newRenderTargetView);
@@ -83,19 +101,19 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                     ID3D11Device.Guid, static d => d->Release());
             using var deviceContext = device.Cast<ID3D11DeviceContext>(static (p, o) => p->GetImmediateContext(o), static r => r->Release());
 
-            this.WndProc.InitializeIO(hWnd);
-            ImGui.ImGui.ImGuiImplDX11Init(new(~device), new(~deviceContext));
+            //this.WndProc.InitializeIO(hWnd);
+            this.Backend.Init((nint)~device, (nint)~deviceContext, false);
             this.DevicesReady = true;
         }
 
         private void InvalidateDevices()
         {
-            this.WndProc.InvalidateIO();
-            ImGui.ImGui.ImGuiImplDX11Shutdown();
+            //this.WndProc.InvalidateIO();
+            this.Backend.Shutdown();
             this.DevicesReady = false;
         }
 
-        public unsafe bool PrepareForPaint(ComPtr<IDXGISwapChain> swapChain)
+        public unsafe bool PrepareForPaint(ComPtr<IDXGISwapChain> swapChain, Vector2 screenDim)
         {
             SwapChainDesc desc = new();
             swapChain.Ref.GetDesc(ref desc);
@@ -117,11 +135,14 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                 this.RefreshTargetView(swapChain);
             }
 
+            ImGuiIOPtr io = ImGui.GetIO();
+            io.DisplaySize = screenDim;
+
             this.outputWindowHandle = desc.OutputWindow;
             return true;
         }
 
-        public unsafe void SetRenderTargets(ComPtr<ID3D11DeviceContext> deviceContext)
+        public unsafe void SetRenderContext(ComPtr<ID3D11DeviceContext> deviceContext)
         {
             deviceContext.Ref.OMSetRenderTargets(1, ref renderTargetView, null);
         }
@@ -137,7 +158,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                         if (renderTargetView != null)
                             renderTargetView->Release();
                     }
-                    this.Context?.Dispose();
+                    //this.Context?.Dispose();
                 }
                 disposedValue = true;
             }

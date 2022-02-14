@@ -1,7 +1,8 @@
-﻿using DearImguiSharp;
+﻿using ImGuiNET;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,40 +11,38 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render
 {
     internal static class ImGuiFullscreenOverlay
     {
-        public static readonly DearImguiSharp.ImVec2 Zero2H = new() { X = 0f, Y = 0f };
-        public static readonly DearImguiSharp.ImVec2.__Internal Zero2 = new() { x = 0f, y = 0f };
-        public static readonly DearImguiSharp.ImVec2.__Internal One2 = new() { x = 1f, y = 1f };
-        public static readonly DearImguiSharp.ImVec4.__Internal One4 = new() { w = 1.0f, x = 1.0f, y = 1.0f, z = 1.0f };
-        public static readonly DearImguiSharp.ImVec4.__Internal Zero4 = new() { x = 0.0f, y = 0.0f, w = 0.0f, z = 0.0f };
+        public static readonly Vector2 Zero2 = new(0, 0);
+        public static readonly Vector2 One2 = new(1, 1);
+        public static readonly Vector4 One4 = new(1, 1, 1, 1);
+        public static readonly Vector4 Zero4 = new(0, 0, 0, 0);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         public static void Render(nint imageHandle, float width, float height)
         {
-            var browserDim = new ImVec2.__Internal() { x = width, y = height };
+            var browserDim = new Vector2 { X = width, Y = height };
 
             var viewPort = ImGui.GetMainViewport();
-            ImGui.SetNextWindowPos(viewPort.Pos, 1, Zero2H);
-            ImGui.SetNextWindowSize(viewPort.Size, 1);
+            ImGui.SetNextWindowPos(viewPort.Pos, ImGuiCond.Always, Zero2);
+            ImGui.SetNextWindowSize(viewPort.Size, ImGuiCond.Always);
             //ImGui.SetNextWindowFocus();
 
-            ImGui.__Internal.PushStyleVarVec2((int)ImGuiStyleVar.ImGuiStyleVarWindowPadding, Zero2);
-            ImGui.__Internal.PushStyleVarVec2((int)ImGuiStyleVar.ImGuiStyleVarWindowBorderSize, Zero2);
+            ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, Zero2);
+            ImGui.PushStyleVar(ImGuiStyleVar.WindowBorderSize, Zero2);
 
             unsafe
             {
-                ImGui.__Internal.Begin("Browser Window", null,
-                    (int)(0
-                    | ImGuiWindowFlags.ImGuiWindowFlagsNoDecoration
-                    | ImGuiWindowFlags.ImGuiWindowFlagsNoMove
-                    | ImGuiWindowFlags.ImGuiWindowFlagsNoResize
-                    | ImGuiWindowFlags.ImGuiWindowFlagsNoBackground
+                ImGui.Begin("Browser Window",
+                      ImGuiWindowFlags.NoDecoration
+                    | ImGuiWindowFlags.NoMove
+                    | ImGuiWindowFlags.NoResize
+                    | ImGuiWindowFlags.NoBackground
                     //| DearImguiSharp.ImGuiWindowFlags.ImGuiWindowFlagsNoSavedSettings
-                    ));
+                    );
             }
-            ImGui.__Internal.Image(imageHandle, browserDim, Zero2, One2, One4, Zero4);
+            ImGui.Image(imageHandle, browserDim, Zero2, One2, One4, Zero4);
 
-            ImGui.__Internal.PopStyleVar(1);
-            ImGui.__Internal.End();
+            ImGui.PopStyleVar(1);
+            ImGui.End();
         }
     }
 }

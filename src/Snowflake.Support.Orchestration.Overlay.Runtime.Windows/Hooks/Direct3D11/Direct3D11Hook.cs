@@ -14,10 +14,11 @@ using Silk.NET.Core.Native;
 using X64 = Reloaded.Hooks.Definitions.X64;
 using X86 = Reloaded.Hooks.Definitions.X86;
 
-using ImGui = DearImguiSharp.ImGui;
 using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render;
 using Silk.NET.DXGI;
 using Snowflake.Orchestration.Ingame;
+using ImGuiNET;
+using System.Numerics;
 
 namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D11
 {
@@ -78,6 +79,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
             resizeBuffersLock = true;
             try
             {
+                Console.WriteLine($"rz {width}x{height}");
                 this.ImGuiInst.DiscardSwapchain();
                 return this.ResizeBuffersHook.OriginalFunction(swapChain, bufferCount, width, height, newFormat, swapChainFlags);
             }
@@ -141,14 +143,16 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                     return this.PresentHook.OriginalFunction(swapChain, syncInterval, flags);
                 }
 
-                this.ImGuiInst.PrepareForPaint(swapChainWrap);
-
+                this.ImGuiInst.PrepareForPaint(swapChainWrap, new Vector2(backBufferDesc.Width, backBufferDesc.Height));
+                ImGuiIOPtr io = ImGui.GetIO();
+            
+                //Console.WriteLine($"drawdata {drawData.DisplaySize}");
                 lock (this.Overlay.TextureMutex)
                 {
                     if (this.Overlay.AcquireSync())
                     {
-                        ImGui.ImGuiImplDX11NewFrame();
-                        ImGui.ImGuiImplWin32NewFrame();
+                        this.ImGuiInst.NewFrame();
+                        //ImGui.ImGuiImplWin32NewFrame();
                         ImGui.NewFrame();
 
                         this.Overlay.Paint(static (srv, w, h) =>
@@ -156,19 +160,22 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                             ImGuiFullscreenOverlay.Render(srv, w, h);
                         });
 
-                        ImGui.__Internal.ShowDemoWindow(null);
-                        ImGui.EndFrame();
+                        ImGui.Begin("Fps");
+                        ImGui.Text($"{io.Framerate}");
+                        ImGui.End();
+
+                        ImGui.ShowDemoWindow();
                         ImGui.Render();
 
-                        //ImGui.UpdatePlatformWindows();
-                        //ImGui.RenderPlatformWindowsDefault(IntPtr.Zero, IntPtr.Zero);
-
-                        ImGuiInst.SetRenderTargets(deviceContext);
-                        using var drawData = ImGui.GetDrawData();
-                        ImGui.ImGuiImplDX11RenderDrawData(drawData);
+                        ImGui.UpdatePlatformWindows();
+                        ImGui.RenderPlatformWindowsDefault(IntPtr.Zero, IntPtr.Zero);
+                        ImGuiInst.SetRenderContext(deviceContext);
+                        var drawData = ImGui.GetDrawData();
+                        this.ImGuiInst.Render(drawData);
                         this.Overlay.ReleaseSync();
                     }
                 }
+
                 return this.PresentHook.OriginalFunction(swapChain, syncInterval, flags);
             }
             finally
@@ -192,7 +199,6 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
         public IHook<Present> PresentHook { get; }
         public IHook<ResizeBuffers> ResizeBuffersHook { get; }
         public IngameIpc IngameIpc { get; }
-        public DearImguiSharp.ImGuiContext Context { get; }
 
         private unsafe (VirtualFunctionTable deviceVtable, VirtualFunctionTable swapChainVtable) GetDirect3D11VTable()
         {

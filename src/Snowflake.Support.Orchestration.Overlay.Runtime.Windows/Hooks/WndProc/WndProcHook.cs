@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using X64 = Reloaded.Hooks.Definitions.X64;
+﻿using X64 = Reloaded.Hooks.Definitions.X64;
 using X86 = Reloaded.Hooks.Definitions.X86;
 using System.Runtime.InteropServices;
 using Reloaded.Hooks.Definitions;
