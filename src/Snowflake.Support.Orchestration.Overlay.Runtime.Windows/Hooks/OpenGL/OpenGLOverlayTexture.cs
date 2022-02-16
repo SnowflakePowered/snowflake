@@ -113,9 +113,17 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
             this.currentContext = glContext;
             glContext.CreateTextures(GLEnum.Texture2D, 1, out uint tex);
             glContext.TextureParameter(tex, TextureParameterName.TextureTilingExt, (uint)EXT.OptimalTilingExt);
+            glContext.TextureParameter(tex, TextureParameterName.TextureMinFilter, (uint)GLEnum.Linear);
+            glContext.TextureParameter(tex, TextureParameterName.TextureMagFilter, (uint)GLEnum.Linear);
+            glContext.TextureParameter(tex, TextureParameterName.TextureWrapS, (uint)GLEnum.ClampToEdge);
+            glContext.TextureParameter(tex, TextureParameterName.TextureWrapT, (uint)GLEnum.ClampToEdge);
+
+            Span<int> swizzleMask = stackalloc[] { (int)GLEnum.Blue, (int)GLEnum.Green, (int)GLEnum.Red, (int)GLEnum.Alpha };
+            glContext.TextureParameter(tex, TextureParameterName.TextureSwizzleRgba, swizzleMask);
+
             uint memHandle = memObjExt.CreateMemoryObject();
             // CEF texture is always 4BPP
-            memObjWin32Ext.ImportMemoryWin32Handle(memHandle, this.Sz, EXT.HandleTypeD3D11ImageExt, (void*)this.overlayTextureHandle);
+            memObjWin32Ext.ImportMemoryWin32Handle(memHandle, this.Sz * 2, EXT.HandleTypeD3D11ImageExt, (void*)this.overlayTextureHandle);
 
             CheckGlError(glContext, "importwin32");
             if (kmtExt.AcquireKeyedMutexWin32(memHandle, 0, unchecked((uint)-1)))
