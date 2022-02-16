@@ -63,7 +63,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
             if (command.Type == GameWindowCommandType.OverlayTextureEvent)
             {
                 Console.WriteLine($"Got texhandle {command.TextureEvent.TextureHandle.ToString("x")} from PID {command.TextureEvent.SourceProcessId}");
-                this.Overlay.Refresh(command.TextureEvent.SourceProcessId, command.TextureEvent.TextureHandle, command.TextureEvent.Width, command.TextureEvent.Height);
+                this.Overlay.Refresh(command.TextureEvent);
             }
         }
 

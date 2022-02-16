@@ -1,5 +1,6 @@
 ﻿using Silk.NET.OpenGL;
 using Silk.NET.OpenGL.Legacy.Extensions.EXT;
+using Snowflake.Orchestration.Ingame;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,9 +24,11 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
         ExtWin32KeyedMutex kmtExt;
         ExtMemoryObject memObjExt;
         private nint outputWindowHandle;
-
-        public bool Refresh(int owningPid, nint textureHandle, uint width, uint height)
+        private ulong Sz;
+        public bool Refresh(OverlayTextureEventParams texParams)
         {
+            int owningPid = texParams.SourceProcessId;
+            nint textureHandle = texParams.TextureHandle;
             // todo: unify this with d3d11
             var process = Kernel32.OpenProcess(new(Kernel32.ProcessAccess.PROCESS_DUP_HANDLE), false, (uint)owningPid);
             if (process.IsNull)
@@ -41,7 +44,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
                 return false;
             };
 
-            Console.WriteLine($"Got owned handle {dupedHandle.ToString("x")} {width}x{height}");
+            Console.WriteLine($"Got owned handle {dupedHandle.ToString("x")} {texParams.Width}x{texParams.Height}");
 
             // Release old texture
             unsafe
@@ -57,7 +60,8 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
 
             // new texture will be fetched on next paint.
             this.overlayTextureHandle = dupedHandle;
-            this.OverlayTexDim = (width, height);
+            this.OverlayTexDim = (texParams.Width, texParams.Height);
+            this.Sz = texParams.Size;
             return true;
         }
 
@@ -108,14 +112,23 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
 
             this.currentContext = glContext;
             glContext.CreateTextures(GLEnum.Texture2D, 1, out uint tex);
+            glContext.TextureParameter(tex, TextureParameterName.TextureTilingExt, (uint)EXT.OptimalTilingExt);
             uint memHandle = memObjExt.CreateMemoryObject();
-
             // CEF texture is always 4BPP
-            memObjWin32Ext.ImportMemoryWin32Handle(memHandle, this.OverlayTexDim.width * this.OverlayTexDim.height * 4 + 1024, EXT.HandleTypeD3D11ImageKmtExt, (void*)this.overlayTextureHandle);
-            
-            //kmtExt.AcquireKeyedMutexWin32(memHandle, 0, unchecked((uint)-1));
-            memObjExt.TextureStorageMem2D(tex, 1, EXT.BgraExt, this.OverlayTexDim.width, this.OverlayTexDim.height, memHandle, 0);
-            //kmtExt.ReleaseKeyedMutexWin32(memHandle, 0);
+            memObjWin32Ext.ImportMemoryWin32Handle(memHandle, this.Sz, EXT.HandleTypeD3D11ImageExt, (void*)this.overlayTextureHandle);
+
+            CheckGlError(glContext, "importwin32");
+            if (kmtExt.AcquireKeyedMutexWin32(memHandle, 0, unchecked((uint)-1)))
+            {
+                CheckGlError(glContext, "akmtw32");
+                memObjExt.TextureStorageMem2D(tex, 1, EXT.Rgba8Ext, this.OverlayTexDim.width, this.OverlayTexDim.height, memHandle, 0);
+                CheckGlError(glContext, "texmem");
+                kmtExt.ReleaseKeyedMutexWin32(memHandle, 0);
+            } else
+            {
+                Console.WriteLine("Failed to grab mutex");
+            }
+            CheckGlError(glContext, "rkmt32");
 
             this.overlayTexture = (tex, memHandle);
             this.kmtExt = kmtExt;
@@ -148,6 +161,15 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
                 {
                     renderFn((nint)this.overlayTexture.glTex, OverlayTexDim.width, OverlayTexDim.height);
                 }
+            }
+        }
+
+        public static void CheckGlError(GL gl, string title)
+        {
+            var error = gl.GetError();
+            if (error != GLEnum.NoError)
+            {
+                Console.WriteLine($"{title}: {error}");
             }
         }
     }

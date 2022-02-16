@@ -1,6 +1,7 @@
 ﻿using Silk.NET.Core.Native;
 using Silk.NET.Direct3D11;
 using Silk.NET.DXGI;
+using Snowflake.Orchestration.Ingame;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,8 +50,11 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
             }
         }
 
-        public bool Refresh(int owningPid, nint textureHandle, uint width, uint height)
+        public bool Refresh(OverlayTextureEventParams texParams)
         {
+            int owningPid = texParams.SourceProcessId;
+            nint textureHandle = texParams.TextureHandle;
+
             var process = Kernel32.OpenProcess(new(Kernel32.ProcessAccess.PROCESS_DUP_HANDLE), false, (uint)owningPid);
             if (process.IsNull)
             {

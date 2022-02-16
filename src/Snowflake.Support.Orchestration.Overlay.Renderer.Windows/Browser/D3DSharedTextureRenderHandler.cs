@@ -87,7 +87,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
                         TextureHandle = this.SharedTextureHandle,
                         Width = this.TargetTextureDescription.Width,
                         Height = this.TargetTextureDescription.Height,
-                        PixelDepth = CEFBufferBPP
+                        Size = this.TargetTextureDescription.Width * this.TargetTextureDescription.Height * CEFBufferBPP
                     }
                 });
         }
@@ -156,7 +156,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
                     SourceProcessId = Environment.ProcessId,
                     Width = this.TargetTextureDescription.Width,
                     Height = this.TargetTextureDescription.Height,
-                    PixelDepth = CEFBufferBPP
+                    Size = this.TargetTextureDescription.Width * this.TargetTextureDescription.Height * CEFBufferBPP,
                 }
             });
         }

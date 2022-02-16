@@ -15,6 +15,8 @@ namespace Snowflake.Orchestration.Ingame
         public int SourceProcessId;
         public uint Width;
         public uint Height;
-        public uint PixelDepth;
+        public ulong Size;
+        public ulong Alignment;
+        public nint SyncHandle;
     }
 }
