@@ -2,6 +2,7 @@
 using ImGuiBackends.OpenGL3;
 using ImGuiNET;
 using Silk.NET.OpenGL;
+using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.WndProc;
 using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render;
 using System.Numerics;
 using Vanara.PInvoke;
@@ -13,6 +14,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
         private bool DevicesReady { get; set; }
         public ImGuiBackendOpenGL Backend { get; set; }
 
+        public Win32Backend? Input { get; set; }
         IntPtr context;
 
         private nint outputWindowHandle;
@@ -25,6 +27,8 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
             context = ImGui.CreateContext();
             ImGui.SetCurrentContext(context);
             ImGui.StyleColorsDark();
+
+            this.Input = new Win32Backend(hWnd);
             this.Backend = new ImGuiBackendOpenGL();
 
             this.Backend.Init(gl);
@@ -47,6 +51,8 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
 
         private void DiscardContext()
         {
+            this.Input?.Dispose();
+            this.Input = null;
             this.Backend?.Shutdown();
 
             // OpenGL backend does not support reusable contexts.
@@ -71,6 +77,8 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
 
             ImGuiIOPtr io = ImGui.GetIO();
             io.DisplaySize = screenDim;
+            this.Input?.NewFrame((int)screenDim.X, (int)screenDim.Y);
+
             this.outputWindowHandle = hWnd;
             return true;
         }

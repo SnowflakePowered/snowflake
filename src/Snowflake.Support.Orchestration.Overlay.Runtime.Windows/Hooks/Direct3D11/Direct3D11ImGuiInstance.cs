@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using ImGuiBackends.Direct3D11;
 using ImGuiNET;
 using System.Numerics;
+using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.WndProc;
 
 namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D11
 {
@@ -17,11 +18,10 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
         private bool DevicesReady { get; set; }
         private bool SurfacesReady { get; set; }
         private bool SwapchainReady { get; set; } = false;
-        //private ImGuiWndProcHandler WndProc { get; }
-
         public ImGuiBackendDirect3D11 Backend { get; }
-
+        public Win32Backend? Input { get; set; }
         IntPtr context;
+
         public Direct3D11ImGuiInstance()
         {
             context = ImGui.CreateContext();
@@ -102,6 +102,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
             using var deviceContext = device.Cast<ID3D11DeviceContext>(static (p, o) => p->GetImmediateContext(o), static r => r->Release());
 
             //this.WndProc.InitializeIO(hWnd);
+            this.Input = new Win32Backend(hWnd);
             this.Backend.Init((nint)~device, (nint)~deviceContext, false);
             this.DevicesReady = true;
         }
@@ -109,6 +110,8 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
         private void InvalidateDevices()
         {
             //this.WndProc.InvalidateIO();
+            this.Input?.Dispose();
+            this.Input = null;
             this.Backend.Shutdown();
             this.DevicesReady = false;
         }
@@ -137,6 +140,9 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
 
             ImGuiIOPtr io = ImGui.GetIO();
             io.DisplaySize = screenDim;
+
+            /* TEMP INPUT */
+            this.Input?.NewFrame((int)screenDim.X, (int)screenDim.Y);
 
             this.outputWindowHandle = desc.OutputWindow;
             return true;
