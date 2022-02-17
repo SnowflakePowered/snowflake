@@ -88,13 +88,6 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
             int width = lpRect.right - lpRect.left;
             int height = lpRect.bottom - lpRect.top;
 
-            nint originalContext = wglGetCurrentContext();
-
-            if (this.ImGuiContext == 0)
-            {
-                this.ImGuiContext = wglCreateContext(deviceContext.DangerousGetHandle());
-            }
-
             Vector2 screenDim = new(width, height);
 
             if (!this.Overlay.SizeMatchesViewport((uint)width, (uint)height))
@@ -112,42 +105,44 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
                 });
             }
 
+            if (!this.Overlay.ReadyToInitialize)
+            {
+                Console.WriteLine("Texture handle not ready.");
+                return this.SwapBuffersHook.OriginalFunction(deviceContext);
+            }
 
             if (!this.Overlay.PrepareForPaint(this.GlContext, renderingHwnd.DangerousGetHandle()))
             {
                 Console.WriteLine("Failed to open shared texture");
+                return this.SwapBuffersHook.OriginalFunction(deviceContext);
             }
 
             this.ImGuiInst.PrepareForPaint(this.GlContext, renderingHwnd.DangerousGetHandle(), screenDim);
-            //wglMakeCurrent(deviceContext.DangerousGetHandle(), this.ImGuiContext);
 
             var io = ImGui.GetIO();
-            if (this.Overlay.AcquireSync())
+            lock (this.Overlay.TextureMutex)
             {
-                ImGuiInst.NewFrame();
-                ImGui.NewFrame();
-
-                ImGui.Begin("Fps");
-                ImGui.Text($"{io.Framerate}");
-                ImGui.End();
-
-                this.Overlay.Paint(static (tex, w, h) =>
+                if (this.Overlay.AcquireSync())
                 {
-                    ImGuiFullscreenOverlay.Render(tex, w, h);
-                });
+                    ImGuiInst.NewFrame();
+                    ImGui.NewFrame();
 
-                ImGui.ShowDemoWindow();
-                ImGui.Render();
-                ImGuiInst.Render(ImGui.GetDrawData());
-                this.Overlay.ReleaseSync();
-            } 
-            else
-            {
-                ;
-                Console.WriteLine($"Failed to obtain KMT {this.GlContext.GetError()}");
+                    ImGui.Begin("Fps");
+                    ImGui.Text($"{io.Framerate}");
+                    ImGui.End();
+
+                    this.Overlay.Paint(static (tex, w, h) =>
+                    {
+                        ImGuiFullscreenOverlay.Render(tex, w, h);
+                    });
+
+                    ImGui.ShowDemoWindow();
+                    ImGui.Render();
+                    ImGuiInst.Render(ImGui.GetDrawData());
+                    this.Overlay.ReleaseSync();
+                }
             }
 
-            //wglMakeCurrent(deviceContext.DangerousGetHandle(), originalContext);
             return this.SwapBuffersHook.OriginalFunction(deviceContext);
         }
 

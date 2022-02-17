@@ -17,14 +17,16 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
         private IntPtr overlayTextureHandle;
         private (uint glTex, uint glMemHandle) overlayTexture;
         private bool ReadyToPaint { get; set; }
-        private (uint width, uint height) OverlayTexDim { get; set; }
+        private (uint width, uint height) overlayTexDim { get; set; }
         public readonly object TextureMutex = new();
 
         GL? currentContext;
         ExtWin32KeyedMutex kmtExt;
         ExtMemoryObject memObjExt;
         private nint outputWindowHandle;
-        private ulong Sz;
+        private ulong overlayTextureSize;
+        public bool ReadyToInitialize => this.overlayTextureHandle != IntPtr.Zero;
+
         public bool Refresh(OverlayTextureEventParams texParams)
         {
             int owningPid = texParams.SourceProcessId;
@@ -60,8 +62,8 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
 
             // new texture will be fetched on next paint.
             this.overlayTextureHandle = dupedHandle;
-            this.OverlayTexDim = (texParams.Width, texParams.Height);
-            this.Sz = texParams.Size;
+            this.overlayTexDim = (texParams.Width, texParams.Height);
+            this.overlayTextureSize = texParams.Size;
             return true;
         }
 
@@ -69,8 +71,13 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
         {
             lock (this.TextureMutex)
             {
-                if (this.currentContext == null)
+                if (this.currentContext == null || this.overlayTexture.glTex == 0)
+                {
+                    this.currentContext = null;
+                    this.ReadyToPaint = false;
                     return;
+                }
+
                 this.currentContext.DeleteTexture(this.overlayTexture.glTex);
                 Legacy.GL legacyContext = Legacy.GL.GetApi(this.currentContext.Context);
                 if (legacyContext.TryGetExtension(out ExtMemoryObject memObjExt))
@@ -79,7 +86,6 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
                 }
 
                 this.overlayTexture = (0, 0);
-                this.currentContext = null;
                 this.ReadyToPaint = false;
             }
         }
@@ -123,21 +129,24 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
 
             uint memHandle = memObjExt.CreateMemoryObject();
             // CEF texture is always 4BPP
-            memObjWin32Ext.ImportMemoryWin32Handle(memHandle, this.Sz * 2, EXT.HandleTypeD3D11ImageExt, (void*)this.overlayTextureHandle);
+            memObjWin32Ext.ImportMemoryWin32Handle(memHandle, this.overlayTextureSize * 2, EXT.HandleTypeD3D11ImageExt, (void*)this.overlayTextureHandle);
 
             CheckGlError(glContext, "importwin32");
             if (kmtExt.AcquireKeyedMutexWin32(memHandle, 0, unchecked((uint)-1)))
             {
                 CheckGlError(glContext, "akmtw32");
-                memObjExt.TextureStorageMem2D(tex, 1, EXT.Rgba8Ext, this.OverlayTexDim.width, this.OverlayTexDim.height, memHandle, 0);
+                memObjExt.TextureStorageMem2D(tex, 1, EXT.Rgba8Ext, this.overlayTexDim.width, this.overlayTexDim.height, memHandle, 0);
                 CheckGlError(glContext, "texmem");
                 kmtExt.ReleaseKeyedMutexWin32(memHandle, 0);
-            } else
+            } 
+            else
             {
-                Console.WriteLine("Failed to grab mutex");
+                Console.WriteLine("Mutex not yet ready.");
+                return false;
             }
             CheckGlError(glContext, "rkmt32");
 
+            Console.WriteLine($"Got new texture at {this.overlayTextureHandle} ({this.overlayTexDim.width} x {this.overlayTexDim.height}) MEM ({memHandle})");
             this.overlayTexture = (tex, memHandle);
             this.kmtExt = kmtExt;
             this.memObjExt = memObjExt;
@@ -148,17 +157,19 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
 
         public bool SizeMatchesViewport(uint width, uint height)
         {
-            return (width == OverlayTexDim.width) && (height == OverlayTexDim.height);
+            return (width == overlayTexDim.width) && (height == overlayTexDim.height);
         }
 
         public bool AcquireSync()
         {
-            return this.kmtExt.AcquireKeyedMutexWin32(this.overlayTexture.glMemHandle, 0, unchecked((uint)-1));
+            return this.kmtExt?.AcquireKeyedMutexWin32(this.overlayTexture.glMemHandle, 0, unchecked((uint)-1)) ?? false;
         }
 
         public void ReleaseSync()
         {
-            this.kmtExt.ReleaseKeyedMutexWin32(this.overlayTexture.glMemHandle, 0);
+            if (this.overlayTexture.glMemHandle == 0)
+                return;
+            this.kmtExt?.ReleaseKeyedMutexWin32(this.overlayTexture.glMemHandle, 0);
         }
 
         public void Paint(Action<nint, uint, uint> renderFn)
@@ -167,7 +178,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL
             {
                 unsafe
                 {
-                    renderFn((nint)this.overlayTexture.glTex, OverlayTexDim.width, OverlayTexDim.height);
+                    renderFn((nint)this.overlayTexture.glTex, overlayTexDim.width, overlayTexDim.height);
                 }
             }
         }
