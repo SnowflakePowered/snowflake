@@ -33,7 +33,6 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render
 
         public bool InitializeIO(nint outputWindowHandle)
         {
-            return true;
             if (this.WndProcHook != null && this.outputWindowHandle == outputWindowHandle)
                 return true;
             this.InvalidateIO();

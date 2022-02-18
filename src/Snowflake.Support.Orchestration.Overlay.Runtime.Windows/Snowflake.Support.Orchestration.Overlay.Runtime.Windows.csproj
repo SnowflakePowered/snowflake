@@ -4,6 +4,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DefineConstants>DEBUG_INPUT</DefineConstants>
   </PropertyGroup>
   
   <PropertyGroup>
@@ -29,6 +30,9 @@
     <PackageReference Include="Silk.NET.OpenGL" Version="2.13.0" />
     <PackageReference Include="Silk.NET.OpenGL.Legacy" Version="2.13.0" />
     <PackageReference Include="Silk.NET.OpenGL.Legacy.Extensions.EXT" Version="2.13.0" />
+    <PackageReference Include="Silk.NET.Vulkan" Version="2.13.0" />
+    <PackageReference Include="Silk.NET.Vulkan.Extensions.EXT" Version="2.13.0" />
+    <PackageReference Include="Silk.NET.Vulkan.Extensions.KHR" Version="2.13.0" />
     <PackageReference Include="Vanara.PInvoke.User32" Version="3.3.15" />
   </ItemGroup>
   <ItemGroup>
