@@ -1,2 +1,4 @@
 ﻿kaku_s
 Snowflake.Support.Orchestration.Overlay.Runtime.Windows::Snowflake.Support.Orchestration.Overlay.Runtime.Windows.EntryPoint!Main
+vulkan 2 CreateDevice
+env SABINOKAKU_VULKAN_BOOTED=1

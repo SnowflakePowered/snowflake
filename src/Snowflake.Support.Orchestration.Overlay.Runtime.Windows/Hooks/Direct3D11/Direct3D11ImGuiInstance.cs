@@ -11,7 +11,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
 {
     internal class Direct3D11ImGuiInstance : IDisposable
     {
-        public unsafe ID3D11RenderTargetView* renderTargetView = null;
+        //public unsafe ID3D11RenderTargetView* renderTargetView = null;
         private nint outputWindowHandle = 0;
         private bool disposedValue;
 
@@ -41,15 +41,6 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
             this.Backend.RenderDrawData(drawData);
         }
 
-        public unsafe void DiscardSwapchain()
-        {
-            this.InvalidateRenderTarget();
-
-            //ImGui.ImGui.ImGuiImplDX11InvalidateDeviceObjects();
-            this.Backend.InvalidateDeviceObjects();
-            this.SwapchainReady = false;
-        }
-
         private void RefreshSwapchain()
         {
             if (!this.Backend.CreateDeviceObjects())
@@ -60,39 +51,36 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
             this.SwapchainReady = true;
         }
 
-        private unsafe void InvalidateRenderTarget()
-        {
-            if (this.renderTargetView == null)
-                return;
+        //public unsafe void InvalidateRenderTarget()
+        //{
+        //    if (this.renderTargetView == null)
+        //        return;
 
-            this.renderTargetView->Release();
-            this.renderTargetView = null;
-            this.SurfacesReady = false;
-        }
+        //    this.renderTargetView->Release();
+        //    this.renderTargetView = null;
+        //    this.SurfacesReady = false;
+        //}
 
-        public unsafe void RefreshTargetView(ComPtr<IDXGISwapChain> swapChain)
-        {
-            this.InvalidateRenderTarget();
+        //public unsafe void RefreshTargetView(ComPtr<IDXGISwapChain> swapChain)
+        //{
+        //    this.InvalidateRenderTarget();
 
-            SwapChainDesc desc = new();
-            swapChain.Ref.GetDesc(ref desc);
+        //    using var device = swapChain.Cast<ID3D11Device>(static (p, g, o) => p->GetDevice(g, o), ID3D11Device.Guid, static d => d->Release());
 
-            using var device = swapChain.Cast<ID3D11Device>(static (p, g, o) => p->GetDevice(g, o), ID3D11Device.Guid, static d => d->Release());
+        //    using var backBuffer =
+        //              swapChain.Cast<ID3D11Texture2D>(static (p, g, o) => p->GetBuffer(0, g, o), ID3D11Texture2D.Guid, static b => b->Release());
 
-            using var backBuffer =
-                      swapChain.Cast<ID3D11Texture2D>(static (p, g, o) => p->GetBuffer(0, g, o), ID3D11Texture2D.Guid, static b => b->Release());
+        //    // CRT accepts a Tex2D pointer just fine.
+        //    ID3D11RenderTargetView* newRenderTargetView = null;
+        //    device.Ref.CreateRenderTargetView((ID3D11Resource*)~backBuffer, null, &newRenderTargetView);
+        //    this.renderTargetView = newRenderTargetView;
+        //    this.SurfacesReady = true;
 
-            // CRT accepts a Tex2D pointer just fine.
-            ID3D11RenderTargetView* newRenderTargetView = null;
-            device.Ref.CreateRenderTargetView((ID3D11Resource*)~backBuffer, null, &newRenderTargetView);
-            this.renderTargetView = newRenderTargetView;
-            this.SurfacesReady = true;
-
-            if (!this.SwapchainReady)
-            {
-                this.RefreshSwapchain();
-            }
-        }
+        //    if (!this.SwapchainReady)
+        //    {
+        //        this.RefreshSwapchain();
+        //    }
+        //}
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private unsafe void InitializeDevices(ComPtr<IDXGISwapChain> swapChain, nint hWnd)
@@ -124,7 +112,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
             if (desc.OutputWindow != this.outputWindowHandle)
             {
                 Console.WriteLine("Swapchain outdated and so discarded.");
-                this.DiscardSwapchain();
+                //this.InvalidateRenderTarget();
                 this.InvalidateDevices();
             }
 
@@ -133,10 +121,10 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
                 this.InitializeDevices(swapChain, desc.OutputWindow);
             }
 
-            if (!this.SurfacesReady)
-            {
-                this.RefreshTargetView(swapChain);
-            }
+            //if (!this.SurfacesReady)
+            //{
+            //    this.RefreshTargetView(swapChain);
+            //}
 
             ImGuiIOPtr io = ImGui.GetIO();
             io.DisplaySize = screenDim;
@@ -148,26 +136,26 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
             return true;
         }
 
-        public unsafe void SetRenderContext(ComPtr<ID3D11DeviceContext> deviceContext)
-        {
-            deviceContext.Ref.OMSetRenderTargets(1, ref renderTargetView, null);
-        }
+        //public unsafe void SetRenderContext(ComPtr<ID3D11DeviceContext> deviceContext)
+        //{
+        //    deviceContext.Ref.OMSetRenderTargets(1, ref renderTargetView, null);
+        //}
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    unsafe 
-                    {
-                        if (renderTargetView != null)
-                            renderTargetView->Release();
-                    }
-                    //this.Context?.Dispose();
-                }
-                disposedValue = true;
-            }
+            //if (!disposedValue)
+            //{
+            //    if (disposing)
+            //    {
+            //        unsafe 
+            //        {
+            //            if (renderTargetView != null)
+            //                renderTargetView->Release();
+            //        }
+            //        //this.Context?.Dispose();
+            //    }
+            //    disposedValue = true;
+            //}
         }
 
         public void Dispose()

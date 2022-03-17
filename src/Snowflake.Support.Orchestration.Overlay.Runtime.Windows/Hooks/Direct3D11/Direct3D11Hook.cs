@@ -79,8 +79,8 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
             resizeBuffersLock = true;
             try
             {
-                Console.WriteLine($"rz {width}x{height}");
-                this.ImGuiInst.DiscardSwapchain();
+                Console.WriteLine($"rz {width}x{height} a");
+                //this.ImGuiInst.InvalidateRenderTarget();
                 return this.ResizeBuffersHook.OriginalFunction(swapChain, bufferCount, width, height, newFormat, swapChainFlags);
             }
             finally
@@ -169,8 +169,8 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Direct3D
 
                         ImGui.UpdatePlatformWindows();
                         ImGui.RenderPlatformWindowsDefault(IntPtr.Zero, IntPtr.Zero);
-                        ImGuiInst.SetRenderContext(deviceContext);
                         var drawData = ImGui.GetDrawData();
+                        //ImGuiInst.SetRenderContext(deviceContext);
                         this.ImGuiInst.Render(drawData);
                         this.Overlay.ReleaseSync();
                     }

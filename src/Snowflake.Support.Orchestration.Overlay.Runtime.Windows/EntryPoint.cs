@@ -8,6 +8,7 @@ using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Render;
 using Snowflake.Orchestration.Ingame;
 using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.OpenGL;
 using Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Vulkan;
+using Silk.NET.Vulkan;
 
 namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows
 {
@@ -16,21 +17,31 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows
     {
         public static int Main(nint args, int sizeBytes)
         {
+            Vanara.PInvoke.Kernel32.AllocConsole();
+
             try
             {
-
-                return Main();
+                unsafe
+                {
+                    nint* handles = (nint*)args;
+                    if (handles != null) 
+                    {
+                        Console.WriteLine($"ip: {handles[0]}, dp: {handles[1]},  {sizeBytes}");
+                        return Main(new Instance(handles[0]), new Device(handles[1]));
+                    }
+                }
+                return Main(null, null);
             } 
-            catch
+            catch(Exception e)
             {
-                Console.ReadLine();
+                Console.WriteLine($"failed:\n{e}");
+                //Console.ReadLine();
                 return 1;
             }
         }
 
-        private static int Main()
+        private static int Main(Instance? i, Device? d)
         {
-            Vanara.PInvoke.Kernel32.AllocConsole();
             Console.WriteLine("Hello from C#! (" + RuntimeInformation.FrameworkDescription + ")");
             var ipc = new IngameIpc(Guid.Empty);
 
@@ -43,7 +54,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows
                 var result = await ipc.ConnectAsync();
                 Console.WriteLine($"IPC Connection: {result}");
                 ipc.Listen();
-                new VulkanHook(ipc).Activate();
+                new VulkanHook(i, d, ipc).Activate();
 
                 new Direct3D11Hook(ipc).Activate();
                 new OpenGLHook(ipc).Activate();

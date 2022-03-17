@@ -48,21 +48,26 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Vulkan
         public unsafe delegate void vkAcquireNextImageKHR(Device device, SwapchainKHR swapChain, ulong timeout, Silk.NET.Vulkan.Semaphore semaphore, Fence fence, uint* pImageIndex);
 
 
-        public unsafe VulkanHook(IngameIpc ingameIpc)
+        public unsafe VulkanHook(Instance? i, Device? d, IngameIpc ingameIpc)
         {
             this.IngameIpc = ingameIpc;
             this.VK = Vk.GetApi();
+
             var handle = Kernel32.GetModuleHandle("vulkan-1");
-            var vqPHr = (long)this.VK.GetInstanceProcAddr(new(null), "vkQueuePresentKHR").Handle;
-            Console.WriteLine($"{handle.GetProcAddress("vkQueuePresentKHR"):x}, {this.VK.Context.GetProcAddress("vkQueuePresentKHR"):x}, {vqPHr:x}");
             
+            if (i != null && d != null)
+            {
+                this.VK.CurrentInstance = i;
+                this.VK.CurrentDevice = d;
+
+                long x = (long)this.VK.GetDeviceProcAddr(d.Value, "vkQueuePresentKHR").Handle;
+                //Console.WriteLine($"{x:x}");
+                this.VkQueuePresentKHRHook = ReloadedHooks.Instance.CreateHook<vkQueuePresentKHR>(QueuePresentKHRFn, x);
+            }
+
             unsafe {
                 this.VkCreateInstanceHook = ReloadedHooks.Instance.CreateHook<vkCreateInstance>(CreateInstanceImpl, this.VK.Context.GetProcAddress("vkCreateInstance")).Activate();
                 this.VkCreateDeviceHook = ReloadedHooks.Instance.CreateHook<vkCreateDevice>(CreateDeviceImpl, this.VK.Context.GetProcAddress("vkCreateDevice")).Activate();
-
-                //this.VkQueuePresentKHRHook  = ReloadedHooks.Instance.CreateHook<vkQueuePresentKHR>(QueuePresentKHRFn, (long)this.VK.GetInstanceProcAddr(new(null), "vkQueuePresentKHR").Handle);
-                //this.VkCmdDrawIndexImpl = ReloadedHooks.Instance.CreateHook<vkCmdDrawIndexed>(CmdDrawIndexedImpl, this.VK.Context.GetProcAddress("vkCmdDrawIndexed"));
-                //this.VkAcquireNextImageKHRHook = ReloadedHooks.Instance.CreateHook<vkAcquireNextImageKHR>(AcquireNextImageImpl, this.VK.Context.GetProcAddress("vkCmdDrawIndexed"));
             }
             this.IngameIpc.CommandReceived += CommandReceivedHandler;
         }
@@ -96,24 +101,6 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Vulkan
                 long x = (long)this.VK.GetDeviceProcAddr(*device, "vkQueuePresentKHR").Handle;
                 Console.WriteLine($"{x:x}");
                 this.VkQueuePresentKHRHook = ReloadedHooks.Instance.CreateHook<vkQueuePresentKHR>(QueuePresentKHRFn, x).Activate();
-
-                //LayerDeviceCreateInfo* layerCreateInfo = (LayerDeviceCreateInfo*)pCreateInfo->PNext;
-
-                //while (layerCreateInfo != null && (layerCreateInfo->SType != StructureType.LoaderDeviceCreateInfo ||
-                //          layerCreateInfo->LayerFunction != 0))
-                //{
-                //    layerCreateInfo = (LayerDeviceCreateInfo*)layerCreateInfo->PNext;
-                //}
-
-                //if (layerCreateInfo->pLayerInfo == null)
-                //{
-                //    Console.WriteLine("bruh layerinfo null");
-                //    return this.VkCreateDeviceHook.OriginalFunction(physicalDevice, pCreateInfo, pAllocator, device);
-                //}
-                //byte* p = (byte*)Marshal.StringToHGlobalAnsi("vkQueuePresentKHR");
-
-                //this.VkQueuePresentKHRHook = ReloadedHooks.Instance.CreateHook<vkQueuePresentKHR>(QueuePresentKHRFn, (long)layerCreateInfo->pLayerInfo->pfnNextGetDeviceProcAddr(*device, p).Handle);
-                //Marshal.FreeHGlobal((nint)p);
             }
             return res;
         }
@@ -149,9 +136,9 @@ namespace Snowflake.Support.Orchestration.Overlay.Runtime.Windows.Hooks.Vulkan
         public void Activate()
         {
             Console.WriteLine("Activated Vulkan Hooks");
-            //this.VkQueuePresentKHRHook.Activate();
-            //this.VkCmdDrawIndexImpl.Activate();
-            //this.VkAcquireNextImageKHRHook.Activate();
+            this.VkCreateInstanceHook.Activate();
+            this.VkCreateDeviceHook.Activate();
+            this.VkQueuePresentKHRHook?.Activate();
         }
 
         private void CommandReceivedHandler(GameWindowCommand command)
