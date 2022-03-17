@@ -9,19 +9,19 @@ namespace Snowflake.Orchestration.Ingame
 {
 
 
-    [StructLayout(LayoutKind.Explicit, Pack = 0)]
+    [StructLayout(LayoutKind.Explicit, Pack = 1)]
     public struct GameWindowCommand
     {
         public const byte GameWindowMagic = 0x9F;
 
         [FieldOffset(0)] public byte Magic;
         [FieldOffset(1)] public GameWindowCommandType Type;
-        [FieldOffset(6)] public HandshakeEventParams HandshakeEvent;
-        [FieldOffset(6)] public WindowResizeEventParams ResizeEvent;
-        [FieldOffset(6)] public WindowMessageEventParams WindowMessageEvent;
-        [FieldOffset(6)] public MouseEventParams MouseEvent;
-        [FieldOffset(6)] public CursorEventParams CursorEvent;
-        [FieldOffset(6)] public OverlayTextureEventParams TextureEvent;
+        [FieldOffset(2)] public HandshakeEventParams HandshakeEvent;
+        [FieldOffset(2)] public WindowResizeEventParams ResizeEvent;
+        [FieldOffset(2)] public WindowMessageEventParams WindowMessageEvent;
+        [FieldOffset(2)] public MouseEventParams MouseEvent;
+        [FieldOffset(2)] public CursorEventParams CursorEvent;
+        [FieldOffset(2)] public OverlayTextureEventParams TextureEvent;
 
         public ReadOnlyMemory<byte> ToBuffer()
         {

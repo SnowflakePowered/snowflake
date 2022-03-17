@@ -25,7 +25,15 @@ namespace Snowflake.Input.Tests.Windows
         [Fact]
         public void InjectRetroArch()
         {
-            var retroArchProcess = Process.Start("E:\\Emulators\\RetroArch\\retroarch.exe");
+            //E:\Emulators\yuzu
+            var startInfo = new ProcessStartInfo("E:\\Emulators\\RetroArch\\retroarch.exe");
+
+            //var startInfo = new ProcessStartInfo("E:\\Emulators\\yuzu\\yuzu.exe");
+
+            //startInfo.EnvironmentVariables.Add("VK_INSTANCE_LAYERS", "VK_LAYER_SABINOKAKU_injection");
+            //startInfo.EnvironmentVariables.Add("ENABLE_SABINOKAKU_VULKAN", "1");
+            var retroArchProcess = Process.Start(startInfo);
+
             var injector = new Injector(retroArchProcess);
             Debugger.Break();
             injector.Inject(@"D:\coding\snowflake\src\Snowflake.Support.Orchestration.Overlay.Runtime.Windows\bin\Debug\net6.0\kaku-x64.dll");

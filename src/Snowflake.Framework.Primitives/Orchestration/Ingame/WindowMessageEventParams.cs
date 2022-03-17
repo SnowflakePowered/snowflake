@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Snowflake.Orchestration.Ingame
 {
 
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct WindowMessageEventParams
     {
         public int Message;

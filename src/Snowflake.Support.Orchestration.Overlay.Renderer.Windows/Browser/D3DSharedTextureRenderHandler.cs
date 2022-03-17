@@ -87,7 +87,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
                         TextureHandle = this.SharedTextureHandle,
                         Width = this.TargetTextureDescription.Width,
                         Height = this.TargetTextureDescription.Height,
-                        Size = this.TargetTextureDescription.Width * this.TargetTextureDescription.Height * CEFBufferBPP
+                        Size = this.TargetTextureDescription.Width * this.TargetTextureDescription.Height * CEFBufferBPP * 2
                     }
                 });
         }
@@ -108,10 +108,15 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
             return false;
         }
 
-        public void Resize(System.Drawing.Size size)
+        public void Resize(System.Drawing.Size size, bool force = false)
         {
             Console.WriteLine("Resize buffer requested");
-            
+            if (!force && size.Height == this.TargetTextureDescription.Height && size.Width == this.TargetTextureDescription.Width)
+            {
+                Console.WriteLine("Resize would not change size, throttling.");
+                return;
+            }
+
             nint texPtr = this.Device.CreateNewCefTargetTexture(size);
             unsafe
             {
@@ -156,7 +161,7 @@ namespace Snowflake.Support.Orchestration.Overlay.Renderer.Windows
                     SourceProcessId = Environment.ProcessId,
                     Width = this.TargetTextureDescription.Width,
                     Height = this.TargetTextureDescription.Height,
-                    Size = this.TargetTextureDescription.Width * this.TargetTextureDescription.Height * CEFBufferBPP,
+                    Size = this.TargetTextureDescription.Width * this.TargetTextureDescription.Height * CEFBufferBPP * 2,
                 }
             });
         }
