@@ -87,12 +87,11 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Orchestration
                            .Build();
                     var instance = orchestrator.ProvisionEmulationInstance(game, controllers, input.CollectionID, save);
 
-                    var guid = Guid.NewGuid();
-                    if (ctx.GetGameCache().TryAdd(guid, instance))
+                    if (ctx.GetGameCache().TryAdd(instance.Guid, instance))
                         return new EmulationInstancePayload()
                         {
                             GameEmulation = instance,
-                            InstanceID = guid
+                            InstanceID = instance.Guid
                         };
                     return ErrorBuilder.New()
                            .SetCode("ORCH_ERR_CREATE")

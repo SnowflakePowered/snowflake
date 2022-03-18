@@ -6,6 +6,8 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Management;
 using Snowflake.Support.InputEnumerators.Windows;
+using System.Diagnostics;
+using Reloaded.Injector;
 
 namespace Snowflake.Input.Tests.Windows
 {
@@ -18,6 +20,23 @@ namespace Snowflake.Input.Tests.Windows
         {
             var e = new WindowsDeviceEnumerator();
             var devices = e.QueryConnectedDevices().ToList();
+        }
+
+        [Fact]
+        public void InjectRetroArch()
+        {
+            //E:\Emulators\yuzu
+            var startInfo = new ProcessStartInfo("E:\\Emulators\\RetroArch\\retroarch.exe");
+
+            //var startInfo = new ProcessStartInfo("E:\\Emulators\\yuzu\\yuzu.exe");
+
+            //startInfo.EnvironmentVariables.Add("VK_INSTANCE_LAYERS", "VK_LAYER_SABINOKAKU_injection");
+            //startInfo.EnvironmentVariables.Add("ENABLE_SABINOKAKU_VULKAN", "1");
+            var retroArchProcess = Process.Start(startInfo);
+
+            var injector = new Injector(retroArchProcess);
+            Debugger.Break();
+            injector.Inject(@"D:\coding\snowflake\src\Snowflake.Support.Orchestration.Overlay.Runtime.Windows\bin\Debug\net6.0\kaku-x64.dll");
         }
     }
 }

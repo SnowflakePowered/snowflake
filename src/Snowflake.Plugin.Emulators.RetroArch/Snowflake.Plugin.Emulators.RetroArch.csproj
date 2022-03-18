@@ -4,8 +4,6 @@
     <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>Snowflake</RootNamespace>
     <_SnowflakeUseDevelopmentSDK>true</_SnowflakeUseDevelopmentSDK>
-    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
-    <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)Generated</CompilerGeneratedFilesOutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Cover' ">
