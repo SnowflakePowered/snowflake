@@ -10,10 +10,12 @@ namespace Snowflake.Filesystem.Library
 {
     internal class ContentLibrary : IContentLibrary
     {
-        public ContentLibrary(SubFileSystem subFs)
+        public ContentLibrary(Guid libraryId, SubFileSystem subFs)
         {
-
+            this.LibraryID = libraryId;
         }
+
+        public Guid LibraryID { get; }
 
         public IDirectory OpenLibrary(IGame game)
         {

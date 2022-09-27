@@ -30,7 +30,7 @@ namespace Snowflake.Model.Database
             using var context = new DatabaseContext(this.Options.Options);
             // model path is Zio-format
             return context.ContentLibraries.AsEnumerable()
-                .Select(model => new ContentLibrary(
+                .Select(model => new ContentLibrary(model.LibraryId,
                     this.FileSystem.GetOrCreateSubFileSystem(model.Path)));
         }
 
@@ -43,14 +43,16 @@ namespace Snowflake.Model.Database
 
             UPath path = this.FileSystem.ConvertPathFromInternal(directory.FullName);
             using var context = new DatabaseContext(this.Options.Options);
-            if (context.ContentLibraries.Find(path) is ContentLibraryModel library)
+            if (context.ContentLibraries.Where(l => l.Path == path) is ContentLibraryModel library)
             {
-                return new ContentLibrary(this.FileSystem.GetOrCreateSubFileSystem(library.Path));
+                return new ContentLibrary(library.LibraryId, this.FileSystem.GetOrCreateSubFileSystem(library.Path));
             }
 
-            context.ContentLibraries.Add(new() { Path = (string)path });
+            var libraryId = Guid.NewGuid();
+
+            context.ContentLibraries.Add(new() { Path = (string)path, LibraryId = libraryId });
             context.SaveChanges();
-            return new ContentLibrary(this.FileSystem.GetOrCreateSubFileSystem(path));
+            return new ContentLibrary(libraryId, this.FileSystem.GetOrCreateSubFileSystem(path));
         }
     }
 }
