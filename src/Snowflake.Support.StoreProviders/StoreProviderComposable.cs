@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Snowflake.Extensibility.Configuration;
+using Snowflake.Filesystem.Library;
 using Snowflake.Input.Controller;
 using Snowflake.Loader;
 using Snowflake.Model.Database;
@@ -79,6 +80,10 @@ namespace Snowflake.Support.StoreProviders
             var portStore = new EmulatedPortStore(optionsBuilder);
             serviceContainer.Get<IServiceRegistrationProvider>()
                 .RegisterService<IEmulatedPortStore>(portStore);
+
+            var contentStore = new ContentLibraryStore(physicalFs, optionsBuilder);
+            serviceContainer.Get<IServiceRegistrationProvider>()
+                .RegisterService<IContentLibraryStore>(contentStore);
         }
     }
 }

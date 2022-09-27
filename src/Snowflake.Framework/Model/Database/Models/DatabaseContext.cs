@@ -24,6 +24,8 @@ namespace Snowflake.Model.Database.Models
 
         public DbSet<PortDeviceEntryModel> PortDeviceEntries { get; set; }
 
+        public DbSet<ContentLibraryModel> ContentLibraries { get; set; }
+
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
         {
@@ -46,6 +48,8 @@ namespace Snowflake.Model.Database.Models
             GameRecordConfigurationProfileModel.SetupModel(modelBuilder);
 
             PortDeviceEntryModel.SetupModel(modelBuilder);
+
+            ContentLibraryModel.SetupModel(modelBuilder);
         }
     }
 }
