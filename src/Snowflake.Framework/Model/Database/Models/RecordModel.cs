@@ -15,6 +15,8 @@ namespace Snowflake.Model.Database.Models
 
         public List<RecordMetadataModel> Metadata { get; set; }
 
+        public ContentLibraryModel ContentLibrary { get; set; }
+
         internal static void SetupModel(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<RecordModel>()

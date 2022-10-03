@@ -1,5 +1,6 @@
 ﻿using HotChocolate.Types;
 using Microsoft.DotNet.PlatformAbstractions;
+using Snowflake.Filesystem.Library;
 using Snowflake.Remoting.GraphQL;
 using Snowflake.Remoting.GraphQL.Model.Filesystem;
 using Snowflake.Remoting.GraphQL.Model.Filesystem.Contextual;
@@ -37,6 +38,11 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.Filesystem
                 .Type<OSDirectoryContentsInterface>()
                 .Description("Provides normalized OS-dependent filesystem access." +
                 "Returns null if the specified path does not exist.");
+
+            descriptor.Field("contentLibrary")
+                .Resolve(context => context.SnowflakeService<IContentLibraryStore>()?.GetLibraries())
+                .Type<ListType<NonNullType<ContentLibraryType>>>()
+                .Description("Lists the available content libraries.");
         }
     }
 }

@@ -6,6 +6,7 @@ using Snowflake.Filesystem;
 using Snowflake.Model.Records;
 using Snowflake.Model.Records.File;
 using Snowflake.Model.Records.Game;
+using Snowflake.Filesystem.Library;
 
 namespace Snowflake.Model.Database.Extensions
 {
@@ -18,7 +19,7 @@ namespace Snowflake.Model.Database.Extensions
                 PlatformID = @this.PlatformID,
                 RecordID = @this.RecordID,
                 RecordType = "game",
-                Metadata = @this.Metadata.AsModel()
+                Metadata = @this.Metadata.AsModel(),
             };
         }
 
@@ -41,6 +42,15 @@ namespace Snowflake.Model.Database.Extensions
                 RecordID = @this.file.FileGuid,
                 RecordType = "file",
                 Metadata = new MetadataCollection(@this.file.FileGuid).AsModel()
+            };
+        }
+
+        public static ContentLibraryModel AsModel(this IContentLibrary @this)
+        {
+            return new ContentLibraryModel()
+            {
+                LibraryID = @this.LibraryID,
+                Path = @this.Path.FullName,
             };
         }
     }

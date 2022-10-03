@@ -12,7 +12,8 @@ namespace Snowflake.Model.Records
     {
         internal GameRecord(PlatformId platform,
             Guid recordId,
-            IMetadataCollection metadata)
+            IMetadataCollection metadata
+        )
         {
             this.PlatformID = platform;
             this.RecordID = recordId;
@@ -28,7 +29,6 @@ namespace Snowflake.Model.Records
         }
 
         public IMetadataCollection Metadata { get; }
-
         public Guid RecordID { get; }
     }
 }

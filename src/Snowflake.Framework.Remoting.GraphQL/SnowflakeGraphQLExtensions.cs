@@ -47,10 +47,10 @@ namespace Snowflake.Remoting.GraphQL
         public static T SnowflakeService<T>(this IResolverContext context)
             where T : class
         {
-            if (!context.ContextData.TryGetValue(SnowflakeGraphQLExtensions.ServicesNamespace, out object container)) 
-                return null;
-            var serviceContainer = (IServiceContainer)container;
-            return serviceContainer.Get<T>();
+            if (context.ContextData.TryGetValue(SnowflakeGraphQLExtensions.ServicesNamespace, out object container) && (container is IServiceContainer serviceContainer))
+                return serviceContainer.Get<T>();
+
+            return null;
         }
 
         /// <summary>

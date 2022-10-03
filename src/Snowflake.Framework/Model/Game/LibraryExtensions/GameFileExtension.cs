@@ -10,9 +10,9 @@ namespace Snowflake.Model.Game.LibraryExtensions
 {
     internal class GameFileExtension : IGameFileExtension
     {
-        public GameFileExtension(IFileSystem gameFsRoot, FileRecordLibrary files)
+        public GameFileExtension(IDirectory gameFsRoot, FileRecordLibrary files)
         {
-            this._Root = new Directory(gameFsRoot);
+            this._Root = gameFsRoot;
             this.FileRecordLibrary = files;
             this.SavesRoot = this._Root.OpenDirectory("saves");
             this.ProgramRoot = this._Root.OpenDirectory("program");
