@@ -11,15 +11,22 @@ namespace Snowflake.Model.Database.Models
     {
         public string Path { get; set; }
 
-        public Guid LibraryId { get; set; }
+        public Guid LibraryID { get; set; }
+
+        public List<RecordModel> Records { get; set; }
+
         internal static void SetupModel(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ContentLibraryModel>()
-                .HasKey(p => p.LibraryId);
+                .HasKey(p => p.LibraryID);
 
             modelBuilder.Entity<ContentLibraryModel>()
                 .Property(p => p.Path)
                 .IsRequired();
+
+            modelBuilder.Entity<ContentLibraryModel>()
+                .HasMany(g => g.Records)
+                .WithOne(p => p.ContentLibrary);
         }
     }
 }

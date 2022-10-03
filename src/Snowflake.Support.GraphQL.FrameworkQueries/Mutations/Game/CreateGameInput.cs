@@ -12,6 +12,8 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
         : RelayMutationBase
     {
         public PlatformId PlatformID { get; set; }
+
+        public Guid LibraryID { get; set; }
     }
 
     internal sealed class CreateGameInputType
@@ -26,6 +28,11 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
                 .Name("platformId")
                 .Description("The Stone platform ID of the platform of this game.")
                 .Type<NonNullType<PlatformIdType>>();
+
+            descriptor.Field(i => i.LibraryID)
+                .Name("libraryId")
+                .Description("The ID of the content library to store files for this game.")
+                .Type<NonNullType<UuidType>>();
         }
     }
 }

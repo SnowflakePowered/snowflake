@@ -1,4 +1,4 @@
-﻿using HotChocolate.Types;
+﻿ using HotChocolate.Types;
 using Snowflake.Remoting.GraphQL.Model.Game;
 using Snowflake.Model.Game;
 using Snowflake.Model.Game.LibraryExtensions;
@@ -19,8 +19,18 @@ namespace Snowflake.Support.GraphQLFrameworkQueries.Queries.LibraryExtensions
 
             descriptor.Field("files")
                 .Type<GameFileExtensionType>()
-                .Description("Provides access to the game's files.")
-                .Resolve(context => context.Parent<IGame>().WithFiles());
+                .Description("Provides access to the game's files. If this game does not have a registered content library, returns null.")
+                .Resolve(context =>
+                {
+                    try
+                    {
+                        return context.Parent<IGame>().WithFiles();
+                    }
+                    catch
+                    {
+                        return null;
+                    }
+                });
         }
     }
 }

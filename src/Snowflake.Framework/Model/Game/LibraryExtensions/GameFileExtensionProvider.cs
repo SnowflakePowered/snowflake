@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Snowflake.Filesystem.Library;
 using Snowflake.Model.Database;
 using Snowflake.Model.Game.LibraryExtensions;
 using Snowflake.Model.Records.File;
@@ -14,21 +16,24 @@ namespace Snowflake.Model.Game.LibraryExtensions
     {
         public GameFileExtensionProvider
         (FileRecordLibrary fileLibrary,
-            IFileSystem gameFolderFs)
+            ContentLibraryStore contentLibrary)
         {
             this.FileLibrary = fileLibrary;
-            this.GameFolderRoot = gameFolderFs;
+            this.ContentLibrary = contentLibrary;
         }
 
         internal FileRecordLibrary FileLibrary { get; }
 
-        internal IFileSystem GameFolderRoot { get; }
-
+        internal ContentLibraryStore ContentLibrary { get; }
         public IGameFileExtension MakeExtension(IGameRecord record)
         {
-            var gameFsRoot = this.GameFolderRoot
-                .GetOrCreateSubFileSystem((UPath) "/" / record.RecordID.ToString());
-            return new GameFileExtension(gameFsRoot, this.FileLibrary);
+            var libraryRoot = this.ContentLibrary.GetRecordLibrary(record);
+
+            if (libraryRoot == null)
+            {
+                throw new FileNotFoundException("Game is missing associated content library.");
+            }
+            return new GameFileExtension(libraryRoot.OpenRecordLibrary(record.RecordID), this.FileLibrary);
         }
 
         public void UpdateFile(IFileRecord file)

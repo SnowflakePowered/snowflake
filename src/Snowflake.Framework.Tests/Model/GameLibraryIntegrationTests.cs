@@ -30,7 +30,7 @@ namespace Snowflake.Model.Tests
             optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
             var glib = new GameRecordLibrary(optionsBuilder);
             var gl = new GameLibrary(glib);
-            var game = gl.CreateGame("NINTENDO_NES");
+            gl.CreateGame("NINTENDO_NES");
         }
 
         [Fact]
@@ -212,7 +212,7 @@ namespace Snowflake.Model.Tests
             optionsBuilder.UseSqlite($"Data Source={Path.GetTempFileName()}");
             var glib = new GameRecordLibrary(optionsBuilder);
             var gl = new GameLibrary(glib);
-            var game = await gl.CreateGameAsync("NINTENDO_NES");
+            await gl.CreateGameAsync("NINTENDO_NES");
         }
 
         [Fact]
@@ -324,6 +324,7 @@ namespace Snowflake.Model.Tests
             var glib = new GameRecordLibrary(optionsBuilder);
             var flib = new FileRecordLibrary(optionsBuilder);
 
+            
             var gl = new GameLibrary(glib);
             gl.AddExtension<GameFileExtensionProvider, IGameFileExtension
             >(new GameFileExtensionProvider(flib, gfs));

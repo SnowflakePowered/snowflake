@@ -1,5 +1,6 @@
 ﻿using HotChocolate.Subscriptions;
 using HotChocolate.Types;
+using Snowflake.Filesystem.Library;
 using Snowflake.Model.Game;
 using Snowflake.Model.Records;
 using Snowflake.Remoting.GraphQL;
@@ -25,9 +26,18 @@ namespace Snowflake.Support.GraphQL.FrameworkQueries.Mutations.Game
                 .Resolve(async ctx =>
                 {
                     var gameLibrary = ctx.SnowflakeService<IGameLibrary>();
-
+                    var contextStore = ctx.SnowflakeService<IContentLibraryStore>();
                     CreateGameInput args = ctx.ArgumentValue<CreateGameInput>("input");
                     var game = await gameLibrary.CreateGameAsync(args.PlatformID);
+                    
+                    // todo: expose async
+                    var library = contextStore.GetLibrary(args.LibraryID);
+                    if (library == null)
+                    {
+                        throw new Exception("Content library is unknown");
+                    }
+                    contextStore.SetRecordLibrary(library, game.Record);
+
                     return new GamePayload()
                     {
                         Game = game,

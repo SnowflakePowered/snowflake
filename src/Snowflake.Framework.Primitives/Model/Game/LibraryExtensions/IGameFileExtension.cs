@@ -127,7 +127,7 @@ namespace Snowflake.Model.Game.LibraryExtensions
     }
 
     /// <summary>
-    /// Fluent extensions to provide access to game configuration access.
+    /// Fluent extensions to provide access to game filesystem access.
     /// </summary>
     public static class GameFileExtensionExtensions
     {

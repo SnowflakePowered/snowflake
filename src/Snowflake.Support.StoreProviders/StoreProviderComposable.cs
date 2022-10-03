@@ -52,9 +52,18 @@ namespace Snowflake.Support.StoreProviders
             var appDataPath = physicalFs.ConvertPathFromInternal(contentDirectory.ApplicationData.FullName);
             var gameFs = physicalFs.GetOrCreateSubFileSystem(appDataPath / "games");
 
+       
+
+            var contentStore = new ContentLibraryStore(physicalFs, optionsBuilder);
+            serviceContainer.Get<IServiceRegistrationProvider>()
+                .RegisterService<IContentLibraryStore>(contentStore);
+
+            // Create the default directory
+            contentStore.CreateLibrary(Directory.CreateDirectory(gameFs.ConvertPathToInternal(@"\")));
+
             // Add default extensions
             gameLibrary.AddExtension<IGameFileExtensionProvider,
-                IGameFileExtension>(new GameFileExtensionProvider(fileLibrary, gameFs));
+                IGameFileExtension>(new GameFileExtensionProvider(fileLibrary, contentStore));
 
             gameLibrary.AddExtension<IGameConfigurationExtensionProvider,
                 IGameConfigurationExtension>(new GameConfigurationExtensionProvider(configStore));
@@ -81,9 +90,6 @@ namespace Snowflake.Support.StoreProviders
             serviceContainer.Get<IServiceRegistrationProvider>()
                 .RegisterService<IEmulatedPortStore>(portStore);
 
-            var contentStore = new ContentLibraryStore(physicalFs, optionsBuilder);
-            serviceContainer.Get<IServiceRegistrationProvider>()
-                .RegisterService<IContentLibraryStore>(contentStore);
         }
     }
 }
